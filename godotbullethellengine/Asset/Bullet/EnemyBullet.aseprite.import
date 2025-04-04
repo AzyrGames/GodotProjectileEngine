@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c20dl46vo5537"
+path="res://.godot/imported/EnemyBullet.aseprite-0e4c18a1bde7bcb9ddf99430ac1e2dce.res"
+
+[deps]
+
+source_file="res://Asset/Projectile/Bullet/EnemyBullet.aseprite"
+dest_files=["res://.godot/imported/EnemyBullet.aseprite-0e4c18a1bde7bcb9ddf99430ac1e2dce.res"]
+
+[params]
+

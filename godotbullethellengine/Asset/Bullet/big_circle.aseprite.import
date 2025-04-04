@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dhug7ftb5m6y2"
+path="res://.godot/imported/big_circle.aseprite-4be77e615a39d22f122396f067432785.res"
+
+[deps]
+
+source_file="res://Asset/Projectile/Bullet/big_circle.aseprite"
+dest_files=["res://.godot/imported/big_circle.aseprite-4be77e615a39d22f122396f067432785.res"]
+
+[params]
+

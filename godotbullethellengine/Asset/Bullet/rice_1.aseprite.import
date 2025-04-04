@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bqop8mdhryath"
+path="res://.godot/imported/rice_1.aseprite-163788050f3c2c2c081b4c8a6d577c61.res"
+
+[deps]
+
+source_file="res://Asset/Projectile/Bullet/rice_1.aseprite"
+dest_files=["res://.godot/imported/rice_1.aseprite-163788050f3c2c2c081b4c8a6d577c61.res"]
+
+[params]
+

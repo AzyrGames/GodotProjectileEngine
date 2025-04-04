@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://pkx7xrnkvilu"
+path="res://.godot/imported/arrow.aseprite-60c56b7b7af36af05d0b9f2dbbd2589d.res"
+
+[deps]
+
+source_file="res://Asset/Projectile/Bullet/arrow.aseprite"
+dest_files=["res://.godot/imported/arrow.aseprite-60c56b7b7af36af05d0b9f2dbbd2589d.res"]
+
+[params]
+
