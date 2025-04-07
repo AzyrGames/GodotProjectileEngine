@@ -29,7 +29,7 @@ func _add_bullet_straight_spread(instance: Dictionary) -> Array:
 	var _new_instances : Array = []
 
 	var _half_total_width : float = (spread_amount - 1) * spread_value / 2.0
-	var _bullet_position : Vector2 = instance.direction
+	var _bullet_position : Vector2 = instance.position
 
 	for i in range(spread_amount):
 		var _new_instance := instance.duplicate()

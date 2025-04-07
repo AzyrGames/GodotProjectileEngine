@@ -19,19 +19,26 @@ enum DURATION_TYPE {
 
 @export var timing_wave : Array[BulletTimingWave]
 
-
-
 @export var loop_type : LOOP_TYPE = LOOP_TYPE.LOOP_FROM_START
 @export var loop_amout : int = -1
-var loop_count : int
+
+
+@export_group("Start delay")
+@export var do_start_delay : bool = false
+@export var start_delay_time : float = 0.5
+@export var is_rand_start_delay : bool = false
+@export var start_delay_min : float = 0.0
+@export var start_delay_max : float = 2.0
+
 
 
 var start_delay_timer : Timer
-var start_delay_time : = 0.5
 
 var shoot_cooldown_timer: Timer
 var shoot_cooldown_time : float = 2
 
+
+var loop_count : int
 
 signal spawn_timed
 
@@ -40,7 +47,10 @@ signal scheduler_completed
 
 func _ready() -> void:
 	setup_shoot_cooldown_timer()
-	start_next_interval()
+	if do_start_delay:
+		setup_start_delay_timer()
+	else:
+		start_next_interval()
 
 
 
@@ -110,6 +120,12 @@ func start_next_interval() -> void:
 
 	shoot_cooldown_timer.start(timing_interval.pop_front())
 
+
+func stop_scheduler() -> void:
+	shoot_cooldown_timer.stop()
+	timing_interval.clear()
+	pass
+
 func setup_shoot_cooldown_timer() -> void:
 	shoot_cooldown_timer = Timer.new()
 	shoot_cooldown_timer.autostart = false
@@ -127,73 +143,14 @@ func setup_start_delay_timer() -> void:
 	start_delay_timer = Timer.new()
 	start_delay_timer.autostart = true
 	start_delay_timer.one_shot = true
+	if is_rand_start_delay:
+		start_delay_time = randf_range(start_delay_min, start_delay_max)
+
 	start_delay_timer.wait_time = start_delay_time
 	start_delay_timer.timeout.connect(_on_start_delay_timer_timeout)
 	add_child(start_delay_timer)
 	
 func _on_start_delay_timer_timeout() -> void:
 	# start_bullet_pattern_scheduler()
+	start_next_interval()
 	pass
-
-# func setup_duration_timer() -> void:
-# 	duration_timer = Timer.new()
-# 	duration_timer.autostart = true
-# 	duration_timer.one_shot = true
-# 	duration_timer.wait_time = duration_value
-# 	duration_timer.timeout.connect(_on_duration_timer_timeout)
-# 	add_child(duration_timer)
-	
-
-# func _on_duration_timer_timeout() -> void:
-# 	scheduler_stopped.emit()
-# 	duration_value = 0.0
-# 	shot_interval_timer.stop()
-# 	shot_interval_timer.queue_free()
-# 	duration_timer.queue_free()
-# 	is_active = false
-	
-
-# func setup_shot_interval_timer() -> void:
-# 	shot_interval_timer = Timer.new()
-# 	shot_interval_timer.autostart = true
-# 	shot_interval_timer.one_shot = true
-# 	#if bullet_pattern_scheduler.interval_values.size() <= 0:
-# 		#bullet_pattern_scheduler.interval_values.append(0.05)
-# 	current_interval_index = 0
-# 	shot_interval_timer.wait_time = bullet_pattern_scheduler.interval_values[current_interval_index]
-# 	shot_interval_timer.timeout.connect(_on_shot_interval_timeout)
-# 	add_child(shot_interval_timer)
-	
-
-# func _on_shot_interval_timeout() -> void:
-	
-# 	if bullet_pattern_scheduler.durration_type == bullet_pattern_scheduler.DURATION_TYPE.AMOUNT:
-# 		duration_value -= 1
-
-# 	if duration_value <= 0:
-# 		shot_interval_timer.queue_free()
-# 		scheduler_stopped.emit()
-# 		return
-
-# 	pattern_spawned.emit()
-
-
-
-# 	match bullet_pattern_scheduler.interval_loop_type:
-# 		bullet_pattern_scheduler.LOOP_TYPE.ONE_AND_KEEP:
-# 			if current_interval_index <  bullet_pattern_scheduler.interval_values.size() - 1:
-# 				current_interval_index += 1
-# 		bullet_pattern_scheduler.LOOP_TYPE.LOOP_FROM_START:
-# 			if current_interval_index ==  bullet_pattern_scheduler.interval_values.size() - 1:
-# 				current_interval_index = 0
-# 			else:
-# 				current_interval_index += 1
-# 		bullet_pattern_scheduler.LOOP_TYPE.LOOP_FROM_END:
-# 			if current_interval_index ==  bullet_pattern_scheduler.interval_values.size() - 1:
-# 				interval_index_direction = -1
-# 			elif current_interval_index == 0:
-# 				interval_index_direction = 1
-# 			current_interval_index += interval_index_direction
-
-# 	shot_interval_timer.wait_time = bullet_pattern_scheduler.interval_values[current_interval_index]
-# 	shot_interval_timer.start()

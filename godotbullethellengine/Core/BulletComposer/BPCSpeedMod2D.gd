@@ -10,7 +10,8 @@ class_name BPCSpeedMod2D
 
 func process_pattern(pattern_packs: Array) -> Array:
 	for i in range(len(pattern_packs)):
-		pattern_packs[i].speed_mod = start_value + i * increase_step
-
+		if pattern_packs[i].has("speed_mod"):
+			pattern_packs[i].speed_mod += start_value + i * increase_step
+		else:
+			pattern_packs[i].speed_mod = start_value + i * increase_step
 	return pattern_packs
-

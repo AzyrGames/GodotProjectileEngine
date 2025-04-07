@@ -1,6 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
-
+Testing/
 # Godot-specific ignores
 .import/
 export.cfg

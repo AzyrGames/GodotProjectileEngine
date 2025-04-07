@@ -37,12 +37,16 @@ enum RotationType {
 
 @export var rotation_process_type : RotationType
 
+func _ready() -> void:
+	# target = Global.player
+	pass
 
 func _physics_process(delta: float) -> void:
 	if rotation_process_type == RotationType.PHYSICS:
 		rotation += rotation_speed * delta
 
 func process_pattern(pattern_packs: Array) -> Array:
+	var _rand := RandomNumberGenerator.new()
 	for instance : Dictionary in pattern_packs:
 		match direction_type:
 			DirectionType.FIXED:
@@ -53,7 +57,7 @@ func process_pattern(pattern_packs: Array) -> Array:
 					instance.direction = instance.position.direction_to(target.global_position)
 				pass
 
-		var _rand_angle : float = randf_range(-random_angle / 2.0, random_angle / 2.0)
+		var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
 
 		instance.direction = instance.direction.rotated(deg_to_rad(rotation + _rand_angle))
 

@@ -13,7 +13,12 @@ config_version=5
 config/name="GodotBulletHellEngine"
 run/main_scene="uid://ddtiopou308re"
 config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
+
+[autoload]
+
+BulletHell="*res://Core/BulletHell.gd"
 
 [display]
 
@@ -27,3 +32,7 @@ window/stretch/scale_mode="integer"
 [physics]
 
 2d/physics_engine="Rapier2D"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
