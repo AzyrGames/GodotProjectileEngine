@@ -59,7 +59,7 @@ func process_pattern(pattern_packs: Array) -> Array:
 
 		var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
 
-		instance.direction = instance.direction.rotated(deg_to_rad(rotation + _rand_angle))
+		instance.direction = instance.direction.rotated(deg_to_rad(rotation + _rand_angle)).normalized()
 
 	if rotation_process_type == RotationType.PATTERN:
 		rotation += rotation_speed
