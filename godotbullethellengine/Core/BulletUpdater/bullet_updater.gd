@@ -73,12 +73,19 @@ func update_bullet_instances(delta: float) -> void:
 	# print(bullet_active_index)
 	var _speed_change_sample: float
 	var _speed_change_sample_value: float
-	var _move_speed_change_max_tick := bullet_template_2d.move_speed_change_max_tick
-	var _move_speed_cache_value := bullet_template_2d.move_speed_cache_value
+	var _move_speed_curve_max_tick := bullet_template_2d.move_speed_curve_max_tick
+	var _move_speed_curve_cache := bullet_template_2d.move_speed_curve_cache
 	var _move_speed_change_type := bullet_template_2d.move_speed_change_type
 	var _is_move_speed_change := bullet_template_2d.is_move_speed_change
-	var _is_caching_move_speed_change := bullet_template_2d.is_caching_move_speed_change
+	# var _is_caching_move_speed_change := bullet_template_2d.is_caching_move_speed_change
 	var _move_speed_change_loop := bullet_template_2d.move_speed_change_loop
+
+	var _move_speed_math_max_tick := bullet_template_2d.move_speed_math_max_tick
+	var _move_speed_math_cache := bullet_template_2d.move_speed_math_cache
+	var _move_speed_math_type := bullet_template_2d.move_speed_math_type
+	var _is_move_speed_change_math := bullet_template_2d.is_move_speed_change_math
+	# var _is_caching_move_speed_change := bullet_template_2d.is_caching_move_speed_change
+	var _move_speed_math_loop := bullet_template_2d.move_speed_math_loop
 
 
 	var _is_move_direction_change := bullet_template_2d.is_move_direction_change
@@ -113,28 +120,50 @@ func update_bullet_instances(delta: float) -> void:
 		# Velocity
 
 		if _is_move_speed_change:
-			match _move_speed_change_loop:
-				0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-					if _bullet_instance.life_time_tick < _move_speed_change_max_tick:
-						_speed_change_sample = _bullet_instance.life_time_tick
-					else:
-						_speed_change_sample = _move_speed_change_max_tick - 1
-				1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-					_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_change_max_tick
-					pass
-				2: #BulletTemplate2D.LoopType.PING_PONG:
-					pass
+			if bullet_template_2d.is_move_speed_change_curve:
+				match _move_speed_change_loop:
+					0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
+						if _bullet_instance.life_time_tick < _move_speed_curve_max_tick:
+							_speed_change_sample = _bullet_instance.life_time_tick
+						else:
+							_speed_change_sample = _move_speed_curve_max_tick - 1
+					1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
+						_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_curve_max_tick
+						pass
+					2: #BulletTemplate2D.LoopType.PING_PONG:
+						pass
 
-			_speed_change_sample_value = _move_speed_cache_value[_speed_change_sample]
-			
-			match _move_speed_change_type:
-				0:
-					_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
-					pass
-				1:
-					_bullet_instance.move_speed = _speed_change_sample_value
-					pass
+				_speed_change_sample_value = _move_speed_curve_cache[_speed_change_sample]
+				
+				match _move_speed_change_type:
+					0:
+						_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
+						pass
+					1:
+						_bullet_instance.move_speed = _speed_change_sample_value
+						pass
+			if _is_move_speed_change_math:
+				match _move_speed_math_loop:
+					0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
+						if _bullet_instance.life_time_tick < _move_speed_math_max_tick:
+							_speed_change_sample = _bullet_instance.life_time_tick
+						else:
+							_speed_change_sample = _move_speed_math_max_tick - 1
+					1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
+						_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_math_max_tick
+						pass
+					2: #BulletTemplate2D.LoopType.PING_PONG:
+						pass
 
+				_speed_change_sample_value = _move_speed_math_cache[_speed_change_sample]
+				
+				match _move_speed_math_type:
+					0:
+						_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
+						pass
+					1:
+						_bullet_instance.move_speed = _speed_change_sample_value
+						pass
 		if _is_move_direction_change:
 			match _move_direction_change_loop:
 				0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
@@ -259,7 +288,7 @@ func create_bullet_pool() -> void:
 	bullet_max_pooling = bullet_template_2d.bullet_pooling_amount
 	var _collision_rid : RID = 	bullet_template_2d.collision_shape.get_rid()
 	var _bullet_instance : BulletInstance2D
-	bullet_template_2d.caching_move_speed_change_value()
+	bullet_template_2d.caching_move_speed_change()
 
 	for i in range(bullet_max_pooling):
 		PS.area_add_shape(bullet_area_rid, _collision_rid, _transform, true)

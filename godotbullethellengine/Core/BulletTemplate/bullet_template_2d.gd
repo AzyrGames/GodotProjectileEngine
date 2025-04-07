@@ -33,22 +33,40 @@ class_name BulletTemplate2D
 @export_group("Move speed Change")
 
 enum MoveSpeedChangeType{
-	MODIFICATION, 
+	MULTIPLIER, 
 	HARD_VALUE, 
 }
+
 enum LoopType {
 	ONCE_AND_KEEP, 
 	LOOP_FROM_START, 
 	PING_PONG,
 }
+
 @export var is_move_speed_change : bool = false
+
+@export_subgroup("Curve")
+@export var is_move_speed_change_curve : bool = false
 @export var move_speed_change_type : MoveSpeedChangeType
 @export var move_speed_change_loop : LoopType
 @export var move_speed_curve : Curve
-@export var is_caching_move_speed_change : bool = true
+# @export var is_caching_move_speed_change : bool = true
 
-var move_speed_cache_value : Array[float]
-var move_speed_change_max_tick : int
+var move_speed_curve_cache : Array[float]
+var move_speed_curve_max_tick : int
+
+
+@export_subgroup("Math Equation")
+@export var is_move_speed_change_math : bool = false
+## Time : t
+@export_multiline var move_speed_math_equation : String
+@export var move_speed_math_max_time : float = 1.0
+@export var move_speed_math_type : MoveSpeedChangeType
+@export var move_speed_math_loop : LoopType
+
+var move_speed_math_cache : PackedFloat32Array
+var move_speed_math_max_tick : int
+
 
 
 @export_group("Move Direction Change")
@@ -81,16 +99,39 @@ enum MoveDirectionChangeType{
 		collision_mask = value
 		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
 
+
 var bullet_area_rid : RID
 
 func _ready() -> void:
 	BulletHell.template_nodes.get_or_add(template_id, self)
 
 
-func caching_move_speed_change_value() -> void:
+func caching_move_speed_change() -> void:
+	print("eh")
 	if !is_move_speed_change: return
-	var _tick_time := 1.0 / Engine.physics_ticks_per_second
-	move_speed_change_max_tick = int(move_speed_curve.max_domain / _tick_time)
-	for i in range(move_speed_change_max_tick):
-		move_speed_cache_value.append(move_speed_curve.sample(_tick_time * i))
+	if is_move_speed_change_curve:
+		caching_move_speed_curve_value()
+	if is_move_speed_change_math:
+		caching_move_speed_math_value() 
 	pass
+
+func caching_move_speed_curve_value() -> void:
+	var _tick_time := 1.0 / Engine.physics_ticks_per_second
+	move_speed_curve_max_tick = int(move_speed_curve.max_domain / _tick_time)
+	for i in range(move_speed_curve_max_tick):
+		move_speed_curve_cache.append(move_speed_curve.sample(_tick_time * i))
+	pass
+
+
+func caching_move_speed_math_value() -> void:
+	var _tick_time := 1.0 / Engine.physics_ticks_per_second
+	var _expression := Expression.new()
+	move_speed_math_max_tick = int(move_speed_math_max_time / _tick_time)
+
+	var _result : Variant
+	_expression.parse(move_speed_math_equation, ["t"])
+	for i in range(move_speed_math_max_tick + 1):
+		_result = _expression.execute([_tick_time * i])
+		if _result:
+			move_speed_math_cache.append(_result)
+	print("Hello: ", move_speed_math_cache)
