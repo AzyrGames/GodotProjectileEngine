@@ -1,4 +1,4 @@
-@tool
+# @tool
 extends Node2D
 class_name BulletSpawner2D
 
@@ -57,7 +57,6 @@ func spawn_bullet() -> void:
 	if !BulletHell.bullet_environment.bullet_updater_node.has(bullet_area):
 		create_bullet_updater()
 
-
 	BulletHell.bullet_environment.bullet_updater_node.get(bullet_area).spawn_bullet(pattern_packs)
 
 	pass
@@ -72,6 +71,8 @@ func create_bullet_updater() -> void:
 	_bullet_updater.bullet_template_2d = bullet_template_2d
 
 	BulletHell.bullet_environment.add_child(_bullet_updater)
+	bullet_area = _bullet_updater.bullet_area_rid 
+
 	BulletHell.bullet_environment.bullet_updater_node.get_or_add(bullet_area, _bullet_updater)
 
 	pass

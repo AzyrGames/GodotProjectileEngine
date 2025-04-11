@@ -29,6 +29,10 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
+[global_group]
+
+HomingTarget=""
+
 [physics]
 
 2d/physics_engine="Rapier2D"

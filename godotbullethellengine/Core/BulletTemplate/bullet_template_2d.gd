@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name BulletTemplate2D
 
@@ -23,6 +24,11 @@ class_name BulletTemplate2D
 @export var use_animation : bool = false
 @export var animated_sprite : SpriteFrames
 @export var animation_name : String
+
+@export_category("Bullet")
+@export var bullet_damage : int = 1
+@export var bullet_pooling_amount : int = 500
+
 
 @export_category("Movement")
 
@@ -56,6 +62,7 @@ var move_speed_curve_cache : Array[float]
 var move_speed_curve_max_tick : int
 
 
+
 @export_subgroup("Math Equation")
 @export var is_move_speed_change_math : bool = false
 ## Time : t
@@ -66,7 +73,6 @@ var move_speed_curve_max_tick : int
 
 var move_speed_math_cache : PackedFloat32Array
 var move_speed_math_max_tick : int
-
 
 
 @export_group("Move Direction Change")
@@ -83,11 +89,40 @@ enum MoveDirectionChangeType{
 @export var move_direction_curve2d : Curve2D 
 
 
+@export_group("Homing")
 
-@export_category("Bullet")
-@export var bullet_damage : int = 1
-@export var bullet_pooling_amount : int = 500
-@export_group("Collision")
+enum HomingTargetType{
+	FIXED_POSITION,
+	GROUP,
+	SPECIAL_NODE,
+	NODE_PATH,
+	MOUSE_POSITION
+}
+enum HomingGroupSelection{
+	NEAREST,
+	RANDOM,
+}
+@export var is_homing: bool = false
+
+@export var homing_steer_speed : float = 10.0
+
+@export var homing_delay_time : float
+@export var homing_delay_distance : float
+
+@export var homing_stop_time : float
+@export var homing_stop_distance : float
+
+
+@export var homing_target_type : HomingTargetType
+@export_subgroup("Target Type")
+@export var homing_fixed_position: Vector2
+@export var homing_group: String
+@export var homing_group_seletion: HomingGroupSelection
+@export var homing_special_node_id : String
+@export var homing_node_path : Node2D
+
+
+@export_category("Collision")
 @export var collision_shape : Shape2D
 @export_flags_2d_physics var collision_layer : int = 0:
 	set(value):
@@ -101,6 +136,12 @@ enum MoveDirectionChangeType{
 
 
 var bullet_area_rid : RID
+
+
+
+func _enter_tree() -> void:
+	if !collision_shape:
+		collision_shape = CircleShape2D.new()
 
 func _ready() -> void:
 	BulletHell.template_nodes.get_or_add(template_id, self)

@@ -13,9 +13,9 @@ enum DirectionType {
 	RANDOM,
 }
 
-@export var direction_type : DirectionType
+# @export var direction_type : DirectionType
 
-@export var target : Node2D
+# @export var target : Node2D
 
 @export var direction : Vector2 = Vector2.RIGHT
 ## Rotate direction by rotation degree
@@ -48,15 +48,15 @@ func _physics_process(delta: float) -> void:
 func process_pattern(pattern_packs: Array) -> Array:
 	var _rand := RandomNumberGenerator.new()
 	for instance : Dictionary in pattern_packs:
-		match direction_type:
-			DirectionType.FIXED:
-				instance.direction = direction.normalized()
-				pass
-			DirectionType.TARGET:
-				if target:
-					instance.direction = instance.position.direction_to(target.global_position)
-				pass
-
+		# match direction_type:
+		# 	DirectionType.FIXED:
+		# 		instance.direction = direction.normalized()
+		# 		pass
+		# 	DirectionType.TARGET:
+		# 		if target:
+		# 			instance.direction = instance.position.direction_to(target.global_position)
+		# 		pass
+		instance.direction = direction.normalized()
 		var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
 
 		instance.direction = instance.direction.rotated(deg_to_rad(rotation + _rand_angle)).normalized()

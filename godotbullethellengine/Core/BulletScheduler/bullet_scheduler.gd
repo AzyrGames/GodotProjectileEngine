@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name BulletScheduler
 
@@ -44,6 +45,11 @@ signal spawn_timed
 
 signal scheduler_completed
 
+func _enter_tree() -> void:
+	if timing_wave: return
+	var bullet_timing_wave := BulletTimingWave.new()
+	bullet_timing_wave.timing_wave = [1.0]
+	timing_wave = [bullet_timing_wave]
 
 func _ready() -> void:
 	setup_shoot_cooldown_timer()
