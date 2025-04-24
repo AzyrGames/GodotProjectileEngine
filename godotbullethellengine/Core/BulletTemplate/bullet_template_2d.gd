@@ -3,30 +3,67 @@ extends Resource
 class_name BulletTemplate2D
 
 
-@export_category("Texture")
+@export_group("Bullet")
+@export var bullet_damage : int = 1
+
+@export var move_speed : float = 100
+@export var direction_rotation_speed : float = 0.0
+
+@export_subgroup("Destroy")
+
+
+@export var life_time_max : float = 5.0
+@export var life_distance_max : float = 300.0
+@export var destroy_on_collision : bool = false
+
+@export_subgroup("Pooling")
+@export var bullet_pooling_amount : int = 500
+
 @export_group("Texture")
 
 @export var texture : Texture2D
-@export var texture_render_priority : int = 0
+@export var texture_z_index : int = 0
+@export var texture_rotate_direction: bool = false
+
+# @export var texture_offset : Vector2 = Vector2.ZERO
+@export_range(-360.0, 360.0) var texture_rotation : float
+@export var texture_scale : Vector2 = Vector2.ONE
+# @export_range(-89.9, 89.9) var texture_skew : float
+
+@export_subgroup("Texture Advanced")
+enum TextureScaleChangeType{
+	MULTIPLIER, 
+	HARD_VALUE, 
+}
 @export var texture_rotation_speed : float = 0.0
 
+@export var is_texture_scale_change : bool = false
+@export var texture_scale_curve : Curve
+@export var texture_scale_type : TextureScaleChangeType
+@export var texture_scale_loop : LoopType
+
+var texture_scale_cache : PackedFloat32Array
+var texture_scale_max_tick : int
+
 ## Rotate texture base on direction. This overwrite Texture Rotation Speed
-@export var texture_rotate_direction: bool = false
-@export_group("Animation")
+
+@export_subgroup("Animation")
 @export var use_animation : bool = false
 @export var animated_sprite : SpriteFrames
 @export var animation_name : String
 
-@export_category("Bullet")
-@export var bullet_damage : int = 1
-@export var bullet_pooling_amount : int = 500
 
+@export_group("Collision")
+@export var collision_shape : Shape2D
+@export_flags_2d_physics var collision_layer : int = 0:
+	set(value):
+		collision_layer = value
+		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_layer)
 
-@export_category("Movement")
-
-@export var move_speed : float = 100
-@export var direction_rotation_speed : float = 0.0
-@export var life_time_max : float = 5.0
+@export_flags_2d_physics var collision_mask : int = 0:
+	set(value):
+		collision_mask = value
+		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
 
 @export_group("Move speed Change")
 
@@ -113,19 +150,6 @@ enum HomingGroupSelection{
 @export var homing_special_node_id : String
 
 
-@export_category("Collision")
-@export var collision_shape : Shape2D
-@export_flags_2d_physics var collision_layer : int = 0:
-	set(value):
-		collision_layer = value
-		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_layer)
-
-@export_flags_2d_physics var collision_mask : int = 0:
-	set(value):
-		collision_mask = value
-		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
-
-
 var bullet_area_rid : RID
 
 
@@ -136,6 +160,12 @@ var bullet_area_rid : RID
 # func _ready() -> void:
 # 	BulletHell.template_nodes.get_or_add(template_id, self)
 
+func caching_texture_scale_curve_value() -> void:
+	if !is_texture_scale_change: return
+	var _tick_time := 1.0 / Engine.physics_ticks_per_second
+	texture_scale_max_tick = int(texture_scale_curve.max_domain / _tick_time)
+	for i in range(texture_scale_max_tick):
+		texture_scale_cache.append(texture_scale_curve.sample(_tick_time * i))
 
 func caching_move_speed_change() -> void:
 	if !is_move_speed_change: return
