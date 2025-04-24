@@ -20,6 +20,7 @@ var pattern_packs: Array
 		else:
 			disconnect_bullet_scheduler()
 
+var bullet_updater_2d : BulletUpdater2D
 
 var bullet_count: int = 0
 
@@ -54,10 +55,11 @@ func spawn_bullet() -> void:
 	if !BulletHell.bullet_environment:
 		print_debug("No Projectile Environment")
 		return
-	if !BulletHell.bullet_environment.bullet_updater_node.has(bullet_area):
+
+	if !bullet_updater_2d:
 		create_bullet_updater()
 
-	BulletHell.bullet_environment.bullet_updater_node.get(bullet_area).spawn_bullet(pattern_packs)
+	bullet_updater_2d.spawn_bullet(pattern_packs)
 
 	pass
 
@@ -73,7 +75,8 @@ func create_bullet_updater() -> void:
 	BulletHell.bullet_environment.add_child(_bullet_updater)
 	bullet_area = _bullet_updater.bullet_area_rid 
 
-	BulletHell.bullet_environment.bullet_updater_node.get_or_add(bullet_area, _bullet_updater)
+	BulletHell.bullet_updater_2d_nodes.get_or_add(bullet_area, _bullet_updater)
+	bullet_updater_2d = _bullet_updater
 
 	pass
 
@@ -83,5 +86,4 @@ func setup_bullet_scheduler() -> void:
 	pass
 
 func disconnect_bullet_scheduler() -> void:
-	print("Hey")
 	pass

@@ -142,8 +142,8 @@ func _enter_tree() -> void:
 	if !collision_shape:
 		collision_shape = CircleShape2D.new()
 
-func _ready() -> void:
-	BulletHell.template_nodes.get_or_add(template_id, self)
+# func _ready() -> void:
+# 	BulletHell.template_nodes.get_or_add(template_id, self)
 
 
 func caching_move_speed_change() -> void:
