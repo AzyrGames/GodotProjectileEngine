@@ -104,7 +104,7 @@ func update_bullet_instances(delta: float) -> void:
 	# var _homing_node_position := bullet_template_2d.homing_node_path.global_position
 	var _homing_steer_speed := bullet_template_2d.homing_steer_speed
 	var _homing_target_nodes := get_tree().get_nodes_in_group("HomingTarget")
-	print(BulletHell.bullet_homing_targets)
+	# print(BulletHell.bullet_homing_targets)
 	var _homing_special_nodes := BulletHell.bullet_homing_targets[bullet_template_2d.homing_special_node_id]
 	var _homing_distance_check : float = 0.0
 	var _homing_distance_check_value : float = 0.0

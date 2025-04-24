@@ -138,7 +138,6 @@ enum HomingGroupSelection{
 var bullet_area_rid : RID
 
 
-
 func _enter_tree() -> void:
 	if !collision_shape:
 		collision_shape = CircleShape2D.new()
@@ -175,4 +174,3 @@ func caching_move_speed_math_value() -> void:
 		_result = _expression.execute([_tick_time * i])
 		if _result:
 			move_speed_math_cache.append(_result)
-	print("Hello: ", move_speed_math_cache)
