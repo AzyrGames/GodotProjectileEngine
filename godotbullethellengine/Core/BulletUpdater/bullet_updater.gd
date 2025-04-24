@@ -96,18 +96,18 @@ func update_bullet_instances(delta: float) -> void:
 	var _move_direction_sample: float 
 	var _baked_rotation : Transform2D
 
-	var _is_homing : bool = bullet_template_2d.is_homing
-	var _homing_target_type := bullet_template_2d.homing_target_type
-	var _homing_target_position : Vector2 = Vector2.ZERO
-	var _homing_target_direction : Vector2 = Vector2.ZERO
-	var _homing_fixed_position := bullet_template_2d.homing_fixed_position
-	# var _homing_node_position := bullet_template_2d.homing_node_path.global_position
-	var _homing_steer_speed := bullet_template_2d.homing_steer_speed
-	var _homing_target_nodes := get_tree().get_nodes_in_group("HomingTarget")
-	# print(BulletHell.bullet_homing_targets)
-	var _homing_special_nodes := BulletHell.bullet_homing_targets[bullet_template_2d.homing_special_node_id]
-	var _homing_distance_check : float = 0.0
-	var _homing_distance_check_value : float = 0.0
+	# var _is_homing : bool = bullet_template_2d.is_homing
+	# var _homing_target_type := bullet_template_2d.homing_target_type
+	# var _homing_target_position : Vector2 = Vector2.ZERO
+	# var _homing_target_direction : Vector2 = Vector2.ZERO
+	# var _homing_fixed_position := bullet_template_2d.homing_fixed_position
+	# # var _homing_node_position := bullet_template_2d.homing_node_path.global_position
+	# var _homing_steer_speed := bullet_template_2d.homing_steer_speed
+	# var _homing_target_nodes := get_tree().get_nodes_in_group("HomingTarget")
+	# # print(BulletHell.bullet_homing_targets)
+	# var _homing_special_nodes := BulletHell.bullet_homing_targets[bullet_template_2d.homing_special_node_id]
+	# var _homing_distance_check : float = 0.0
+	# var _homing_distance_check_value : float = 0.0
 
 	
 
@@ -208,40 +208,40 @@ func update_bullet_instances(delta: float) -> void:
 			pass
 
 
-		if _is_homing:
-			match _homing_target_type:
-				0:
-					_homing_target_position = _homing_fixed_position
-				1:
-					if _homing_target_nodes.size() == 0:
-						_homing_target_position = Vector2.ZERO
-					elif _homing_target_nodes.size() == 1:
-						_homing_target_position = _homing_target_nodes[0].global_position
-					else:
-						_homing_distance_check = 9999999
-						for _node in _homing_target_nodes:
-							_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
-							if _homing_distance_check_value < _homing_distance_check :
-								_homing_distance_check = _homing_distance_check_value
-								_homing_target_position = _node.global_position
-				2:
-					if _homing_special_nodes.size() == 0:
-						_homing_target_position = Vector2.ZERO
-					elif _homing_special_nodes.size() == 1:
-						_homing_target_position = _homing_special_nodes[0].global_position
-					else:
-						_homing_distance_check = 9999999
-						for _node in _homing_special_nodes:
-							_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
-							if _homing_distance_check_value < _homing_distance_check :
-								_homing_distance_check = _homing_distance_check_value
-								_homing_target_position = _node.global_position
-				3:
-					# _homing_target_position = _homing_node_position
-					pass
+		# if _is_homing:
+		# 	match _homing_target_type:
+		# 		0:
+		# 			_homing_target_position = _homing_fixed_position
+		# 		1:
+		# 			if _homing_target_nodes.size() == 0:
+		# 				_homing_target_position = Vector2.ZERO
+		# 			elif _homing_target_nodes.size() == 1:
+		# 				_homing_target_position = _homing_target_nodes[0].global_position
+		# 			else:
+		# 				_homing_distance_check = 9999999
+		# 				for _node in _homing_target_nodes:
+		# 					_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
+		# 					if _homing_distance_check_value < _homing_distance_check :
+		# 						_homing_distance_check = _homing_distance_check_value
+		# 						_homing_target_position = _node.global_position
+		# 		2:
+		# 			if _homing_special_nodes.size() == 0:
+		# 				_homing_target_position = Vector2.ZERO
+		# 			elif _homing_special_nodes.size() == 1:
+		# 				_homing_target_position = _homing_special_nodes[0].global_position
+		# 			else:
+		# 				_homing_distance_check = 9999999
+		# 				for _node in _homing_special_nodes:
+		# 					_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
+		# 					if _homing_distance_check_value < _homing_distance_check :
+		# 						_homing_distance_check = _homing_distance_check_value
+		# 						_homing_target_position = _node.global_position
+		# 		3:
+		# 			# _homing_target_position = _homing_node_position
+		# 			pass
 					
-			_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
-			_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
+		# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
+		# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
 
 		# Todo: Test caching velocity
 		_bullet_instance.velocity = _bullet_instance.move_speed * _bullet_instance.move_direction * delta
