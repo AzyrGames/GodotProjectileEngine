@@ -1,15 +1,7 @@
-@tool
-extends Node
+
+extends Resource
 class_name BulletTemplate2D
 
-
-@export_group("ID")
-@export var template_id : String:
-	set(value):
-		BulletHell.template_nodes.erase(template_id)
-		BulletHell.template_nodes.get_or_add(template_id, self)
-		template_id = value
-		pass
 
 @export_category("Texture")
 @export_group("Texture")
@@ -119,7 +111,6 @@ enum HomingGroupSelection{
 @export var homing_group: String
 @export var homing_group_seletion: HomingGroupSelection
 @export var homing_special_node_id : String
-@export var homing_node_path : Node2D
 
 
 @export_category("Collision")
@@ -138,16 +129,15 @@ enum HomingGroupSelection{
 var bullet_area_rid : RID
 
 
-func _enter_tree() -> void:
-	if !collision_shape:
-		collision_shape = CircleShape2D.new()
+# func _enter_tree() -> void:
+# 	if !collision_shape:
+# 		collision_shape = CircleShape2D.new()
 
 # func _ready() -> void:
 # 	BulletHell.template_nodes.get_or_add(template_id, self)
 
 
 func caching_move_speed_change() -> void:
-	print("eh")
 	if !is_move_speed_change: return
 	if is_move_speed_change_curve:
 		caching_move_speed_curve_value()
