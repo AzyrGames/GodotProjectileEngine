@@ -1,5 +1,7 @@
 
 extends Resource
+
+extends Resource
 class_name BulletTemplate2D
 
 

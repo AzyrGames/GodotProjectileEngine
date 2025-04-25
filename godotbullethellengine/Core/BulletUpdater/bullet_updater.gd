@@ -290,8 +290,8 @@ func update_bullet_instances(delta: float) -> void:
 					# _homing_target_position = _homing_node_position
 					pass
 					
-			_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
-			_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
+		# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
+		# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
 
 		# Todo: Test caching velocity
 		_bullet_instance.velocity = _bullet_instance.move_speed * _bullet_instance.move_direction * delta
