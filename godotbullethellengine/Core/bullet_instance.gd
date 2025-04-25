@@ -22,9 +22,12 @@ var texture_rotation_speed : float = 0.0
 
 
 var transform : Transform2D
+var base_texture_rotation : float = 0
 var texture_rotation : float = 0
-var scale : Vector2 = Vector2.ONE
-var skew : float = 0
+var base_texture_scale : Vector2 = Vector2.ONE
+
+var texture_scale : Vector2 = Vector2.ONE
+var texture_skew : float = 0.0
 var global_position : Vector2 = Vector2.ZERO
 
 
