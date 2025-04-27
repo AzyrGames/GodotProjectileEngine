@@ -26,6 +26,10 @@ var bullet_damage : int
 
 var bullet_remove_index : Array = []
 
+var _bullet_life_time_max : float
+var _bullet_life_distance_max : float
+
+
 var PS := PhysicsServer2D
 var _bullet_instance : BulletInstance2D
 
@@ -33,7 +37,6 @@ var spawner_destroyed : bool = false
 
 var _active_instances : Array[BulletInstance2D]
 var _template_components : Array[BTCBase]
-
 
 
 func _ready() -> void:
@@ -77,23 +80,26 @@ func update_bullet_instances(delta: float) -> void:
 
 	_template_components = bullet_template_2d.template_components
 
+	_bullet_life_time_max  = bullet_template_2d.life_time_max
+	_bullet_life_distance_max  = bullet_template_2d.life_distance_max
+
+
 	for index : int in bullet_active_index:
 		_bullet_instance = bullet_instance_array[index]
-
 		# Life Time & Distance
 		_bullet_instance.life_time += delta
-		_bullet_instance.life_time_tick += 1
+
+		if _bullet_instance.life_time >= _bullet_life_time_max:
+			bullet_remove_index.append(index)
+			continue
+
 		_bullet_instance.life_distance += _bullet_instance.velocity.length()
-
-		if _bullet_instance.life_time >= _bullet_instance.life_time_max:
-			if index not in bullet_remove_index:
-				bullet_remove_index.append(index)
+		if _bullet_instance.life_distance >= _bullet_life_distance_max:
+			bullet_remove_index.append(index)
 			continue
+		
+		_bullet_instance.life_time_tick += 1
 
-		if _bullet_instance.life_distance >= _bullet_instance.life_distance_max:
-			if index not in bullet_remove_index:
-				bullet_remove_index.append(index)
-			continue
 
 	if bullet_remove_index.size() > 0:
 		for index : int in bullet_remove_index:
@@ -193,7 +199,6 @@ func create_bullet_pool() -> void:
 	bullet_max_pooling = bullet_template_2d.bullet_pooling_amount
 	var _collision_rid : RID = 	bullet_template_2d.collision_shape.get_rid()
 
-
 	for i in range(bullet_max_pooling):
 		PS.area_add_shape(bullet_area_rid, _collision_rid, _transform, true)
 
@@ -209,10 +214,10 @@ func create_bullet_pool() -> void:
 		_bullet_instance.texture_scale = bullet_template_2d.texture_scale
 
 		_bullet_instance.base_move_speed = bullet_template_2d.move_speed
-		_bullet_instance.life_time_max = bullet_template_2d.life_time_max
-		_bullet_instance.life_distance_max = bullet_template_2d.life_distance_max
 
-		
+		# _bullet_instance.life_time_max = bullet_template_2d.life_time_max
+		# _bullet_instance.life_distance_max = bullet_template_2d.life_distance_max
+
 
 
 		bullet_instance_array.append(_bullet_instance)
