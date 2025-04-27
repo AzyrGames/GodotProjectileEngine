@@ -36,7 +36,7 @@ var global_position : Vector2 = Vector2.ZERO
 
 var life_time : float
 var life_time_tick : int
-var life_time_max : float = -1.0
+# var life_time_max : float = -1.0
 
 var life_distance : float 
-var life_distance_max : float = -1.0
+# var life_distance_max : float = -1.0
