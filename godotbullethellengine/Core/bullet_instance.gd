@@ -1,6 +1,7 @@
 extends Object
 class_name BulletInstance2D
 
+
 var area_index : int
 
 var texture_rotate_direction : bool = false
