@@ -12,4 +12,3 @@ var bullet_environment : BulletEnvironment2D
 # var 
 
 var bullet_homing_targets : Dictionary[String, Array]
-

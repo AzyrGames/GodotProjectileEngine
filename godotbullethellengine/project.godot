@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GodotBulletHellEngine"
-run/main_scene="uid://ddtiopou308re"
+run/main_scene="uid://bwlil5b4xqya"
 config/features=PackedStringArray("4.4", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
