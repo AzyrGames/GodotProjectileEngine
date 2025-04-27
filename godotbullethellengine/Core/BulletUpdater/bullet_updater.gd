@@ -6,6 +6,8 @@ var bullet_texture : Texture2D
 var bullet_animated_sprite : SpriteFrames
 var bullet_animation_name : String
 var use_animation : bool
+var _animation_speed : float 
+var _animation_frame_count : int 
 var bullet_texture_draw_offset : Vector2
 
 var _texture_rotate_direction : bool 
@@ -28,54 +30,9 @@ var PS := PhysicsServer2D
 var _bullet_instance : BulletInstance2D
 
 var spawner_destroyed : bool = false
-var _animation_speed : float 
-var _animation_frame_count : int 
 
-var _texture_scale_sample : float
-var _texture_scale_sample_value: float
-var _is_texture_scale_change : bool
-var _texture_scale_max_tick : int
-var _texture_scale_cache : PackedFloat32Array
-var _texture_scale_type : int
-var _texture_scale_loop : int
-
-
-var _speed_change_sample: float
-var _speed_change_sample_value: float
-var _move_speed_curve_max_tick : int 
-var _move_speed_curve_cache : PackedFloat32Array 
-var _move_speed_change_type : BulletTemplate2D.MoveSpeedChangeType 
-var _is_move_speed_change : bool 
-# var _is_caching_move_speed_change := bullet_template_2d.is_caching_move_speed_change
-var _move_speed_change_loop : BulletTemplate2D.LoopType 
-
-
-var _is_move_speed_change_math : int 
-var _move_speed_math_max_tick :int 
-var _move_speed_math_cache : PackedFloat32Array 
-var _move_speed_math_type : BulletTemplate2D.MoveSpeedChangeType 
-var _move_speed_math_loop : BulletTemplate2D.LoopType 
-
-
-var _is_move_direction_change : bool 
-var _move_direction_curve2d : Curve2D 
-var _move_direction_change_loop : BulletTemplate2D.LoopType 
-var _move_direction_change_type : BulletTemplate2D.MoveDirectionChangeType 
-
-
-var _move_direction_sample: float 
-var _baked_rotation : Transform2D
-
-var _is_homing : bool 
-var _homing_target_type : BulletTemplate2D.HomingTargetType 
-var _homing_target_position : Vector2 
-var _homing_target_direction : Vector2 
-var _homing_fixed_position : Vector2 
-var _homing_steer_speed : float  
-var _homing_target_nodes : Array 
-var _homing_special_nodes : Array
-var _homing_distance_check : float 
-var _homing_distance_check_value : float 
+var _active_instances : Array[BulletInstance2D]
+var _template_components : Array[BTCBase]
 
 
 
@@ -114,51 +71,11 @@ func draw_bullet_texture() -> void:
 		draw_texture(bullet_texture, bullet_texture_draw_offset)
 
 
-
 func update_bullet_instances(delta: float) -> void:
 	
 	_texture_rotate_direction = bullet_template_2d.texture_rotate_direction
 
-	_is_texture_scale_change = bullet_template_2d.is_texture_scale_change
-	if _is_texture_scale_change:
-		_texture_scale_max_tick = bullet_template_2d.texture_scale_max_tick
-		_texture_scale_cache = bullet_template_2d.texture_scale_cache
-		_texture_scale_type = bullet_template_2d.texture_scale_type
-		_texture_scale_loop = bullet_template_2d.texture_scale_loop
-
-
-	_is_move_speed_change  = bullet_template_2d.is_move_speed_change
-	if _is_move_speed_change:
-		_move_speed_curve_max_tick  = bullet_template_2d.move_speed_curve_max_tick
-		_move_speed_curve_cache  = bullet_template_2d.move_speed_curve_cache
-		_move_speed_change_type  = bullet_template_2d.move_speed_change_type
-		_move_speed_change_loop = bullet_template_2d.move_speed_change_loop
-
-	_is_move_speed_change_math  = bullet_template_2d.is_move_speed_change_math
-	if _is_move_speed_change_math:
-		_move_speed_math_max_tick  = bullet_template_2d.move_speed_math_max_tick
-		_move_speed_math_cache  = bullet_template_2d.move_speed_math_cache
-		_move_speed_math_type  = bullet_template_2d.move_speed_math_type
-		_move_speed_math_loop  = bullet_template_2d.move_speed_math_loop
-
-	_is_move_direction_change = bullet_template_2d.is_move_direction_change
-	if _is_move_direction_change:
-		_move_direction_curve2d = bullet_template_2d.move_direction_curve2d
-		_move_direction_change_loop = bullet_template_2d.move_direction_change_loop
-		_move_direction_change_type = bullet_template_2d.move_direction_change_type
-
-
-	_is_homing = bullet_template_2d.is_homing
-	if _is_homing:
-		_homing_target_type = bullet_template_2d.homing_target_type
-		_homing_target_position = Vector2.ZERO
-		_homing_target_direction = Vector2.ZERO
-		_homing_fixed_position = bullet_template_2d.homing_fixed_position
-		_homing_steer_speed = bullet_template_2d.homing_steer_speed
-		_homing_target_nodes = get_tree().get_nodes_in_group("HomingTarget")
-		_homing_special_nodes = BulletHell.bullet_homing_targets[bullet_template_2d.homing_special_node_id]
-		_homing_distance_check = 0.0
-		_homing_distance_check_value = 0.0
+	_template_components = bullet_template_2d.template_components
 
 	for index : int in bullet_active_index:
 		_bullet_instance = bullet_instance_array[index]
@@ -178,172 +95,38 @@ func update_bullet_instances(delta: float) -> void:
 				bullet_remove_index.append(index)
 			continue
 
-		# Animation
-		if use_animation:
-			var _frame_time : float = _bullet_instance.animation_frame_tick * _animation_speed
-			if _bullet_instance.life_time >= _frame_time:
-				_bullet_instance.animation_frame += 1
-				if _bullet_instance.animation_frame >= _animation_frame_count:
-					_bullet_instance.animation_frame = 0
-				_bullet_instance.animation_frame_tick += 1
-
-		# Velocity
-
-		if _is_move_speed_change:
-			if _is_move_speed_change:
-				match _move_speed_change_loop:
-					0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-						if _bullet_instance.life_time_tick < _move_speed_curve_max_tick:
-							_speed_change_sample = _bullet_instance.life_time_tick
-						else:
-							_speed_change_sample = _move_speed_curve_max_tick - 1
-					1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-						_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_curve_max_tick
-						pass
-					2: #BulletTemplate2D.LoopType.PING_PONG:
-						pass
-
-				_speed_change_sample_value = _move_speed_curve_cache[_speed_change_sample]
-				
-				match _move_speed_change_type:
-					0:
-						_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
-						pass
-					1:
-						_bullet_instance.move_speed = _speed_change_sample_value
-						pass
-			if _is_move_speed_change_math:
-				match _move_speed_math_loop:
-					0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-						if _bullet_instance.life_time_tick < _move_speed_math_max_tick:
-							_speed_change_sample = _bullet_instance.life_time_tick
-						else:
-							_speed_change_sample = _move_speed_math_max_tick - 1
-					1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-						_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_math_max_tick
-						pass
-					2: #BulletTemplate2D.LoopType.PING_PONG:
-						pass
-
-				_speed_change_sample_value = _move_speed_math_cache[_speed_change_sample]
-				
-				match _move_speed_math_type:
-					0:
-						_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
-						pass
-					1:
-						_bullet_instance.move_speed = _speed_change_sample_value
-						pass
-		if _is_move_direction_change:
-			match _move_direction_change_loop:
-				0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-					_move_direction_sample = _bullet_instance.life_distance
-					pass
-				1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-					_move_direction_sample = fmod(_bullet_instance.life_distance, _move_direction_curve2d.get_baked_length())
-					pass
-				2: #BulletTemplate2D.LoopType.PING_PONG:
-					pass
-	
-			_baked_rotation = _move_direction_curve2d.sample_baked_with_rotation(_move_direction_sample)
-
-			match _move_direction_change_type:
-				0: #BulletTemplate2D.MoveDirectionChangeType.ROTATION:
-					_bullet_instance.move_direction = _bullet_instance.base_move_direction.rotated(_baked_rotation.get_rotation())
-					pass
-				1: #BulletTemplate2D.MoveDirectionChangeType.HARD_DIRECTION:
-					_bullet_instance.move_direction = Vector2.RIGHT.rotated(_baked_rotation.get_rotation())
-					pass
-				2:
-					_bullet_instance.global_position = _baked_rotation.get_origin() - _bullet_instance.velocity
-			pass
-
-		if _is_homing:
-			match _homing_target_type:
-				0:
-					_homing_target_position = _homing_fixed_position
-				1:
-					if _homing_target_nodes.size() == 0:
-						_homing_target_position = Vector2.ZERO
-					elif _homing_target_nodes.size() == 1:
-						_homing_target_position = _homing_target_nodes[0].global_position
-					else:
-						_homing_distance_check = 9999999
-						for _node : Node2D in _homing_target_nodes:
-							_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
-							if _homing_distance_check_value < _homing_distance_check :
-								_homing_distance_check = _homing_distance_check_value
-								_homing_target_position = _node.global_position
-				2:
-					if _homing_special_nodes.size() == 0:
-						_homing_target_position = Vector2.ZERO
-					elif _homing_special_nodes.size() == 1:
-						_homing_target_position = _homing_special_nodes[0].global_position
-					else:
-						_homing_distance_check = 9999999
-						for _node : Node2D in _homing_special_nodes:
-							_homing_distance_check_value = _bullet_instance.global_position.distance_squared_to(_node.global_position)
-							if _homing_distance_check_value < _homing_distance_check :
-								_homing_distance_check = _homing_distance_check_value
-								_homing_target_position = _node.global_position
-				3:
-					# _homing_target_position = _homing_node_position
-					pass
-					
-		# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
-		# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
-
-		# Todo: Test caching velocity
-		_bullet_instance.velocity = _bullet_instance.move_speed * _bullet_instance.move_direction * delta
-		_bullet_instance.global_position += _bullet_instance.velocity
-
-		# Instance Transform
-
-		if _bullet_instance.texture_rotation_speed != 0:
-			_bullet_instance.texture_rotation += deg_to_rad(_bullet_instance.texture_rotation_speed)
-		
-		if _texture_rotate_direction:
-			_bullet_instance.texture_rotation = _bullet_instance.move_direction.angle()
-
-		if _is_texture_scale_change:
-			match _texture_scale_loop:
-				0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-					if _bullet_instance.life_time_tick < _texture_scale_max_tick:
-						_texture_scale_sample = _bullet_instance.life_time_tick
-					else:
-						_texture_scale_sample = _texture_scale_max_tick - 1
-				1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-					_texture_scale_sample =_bullet_instance.life_time_tick % _texture_scale_max_tick
-					pass
-				2: #BulletTemplate2D.LoopType.PING_PONG:
-					pass
-
-			_texture_scale_sample_value = _texture_scale_cache[_texture_scale_sample]
-
-			match _move_speed_math_type:
-				0:
-					_bullet_instance.texture_scale = _bullet_instance.base_texture_scale * _texture_scale_sample_value
-					pass
-				1:
-					pass
-
-		_bullet_instance.transform = Transform2D(
-			_bullet_instance.texture_rotation, 
-			_bullet_instance.texture_scale, 
-			_bullet_instance.texture_skew, 
-			_bullet_instance.global_position
-			)
-
-		PS.area_set_shape_transform(bullet_area_rid, index, _bullet_instance.transform)
-		
-		bullet_instance_array[index] = _bullet_instance
-
 	if bullet_remove_index.size() > 0:
 		for index : int in bullet_remove_index:
 			bullet_active_index.erase(index)
 			PS.area_set_shape_disabled(bullet_area_rid, index, true)
 		bullet_remove_index.clear()
+	
+	_active_instances.clear()
+	for index : int in bullet_active_index:
+		_active_instances.append(bullet_instance_array[index])
+	
+	if _active_instances.size() <= 0: return
 
+
+	for _template_component : BTCBase in _template_components:
+		_template_component.process_template(_active_instances)
+
+	for _active_instance : BulletInstance2D in _active_instances:
+		_active_instance.move_speed = _active_instance.base_move_speed * _active_instance.move_speed_modifier + _active_instance.move_speed_static
+		_active_instance.velocity = _active_instance.move_speed * _active_instance.move_direction * delta
+		_active_instance.global_position += _active_instance.velocity
+
+		if _texture_rotate_direction:
+			_active_instance.texture_rotation = _active_instance.move_direction.angle()
+
+		_active_instance.transform = Transform2D(
+			_active_instance.texture_rotation, 
+			_active_instance.texture_scale, 
+			_active_instance.texture_skew, 
+			_active_instance.global_position
+			)
+
+		PS.area_set_shape_transform(bullet_area_rid, _active_instance.area_index, _active_instance.transform)
 
 func spawn_bullet(pattern_packs: Array) -> void:
 	for instance : Dictionary in pattern_packs:
@@ -354,18 +137,15 @@ func spawn_bullet(pattern_packs: Array) -> void:
 		_bullet_instance.global_position = instance.position
 		_bullet_instance.move_speed = _bullet_instance.base_move_speed
 		if instance.has("speed_mod"):
-			_bullet_instance.move_speed  *= instance.speed_mod
+			_bullet_instance.move_speed_modifier  = instance.speed_mod
 
 
 		if _bullet_instance.texture_rotate_direction:
 			_bullet_instance.texture_rotation = instance.direction.angle()
 
-		# _bullet_instance.scale = Vector2.ONE
-
 		_bullet_instance.life_time = 0.0
 		_bullet_instance.life_time_tick = 0
 		_bullet_instance.life_distance = 0.0
-
 
 		_bullet_instance.transform = Transform2D(
 			_bullet_instance.texture_rotation, 
@@ -389,11 +169,11 @@ func spawn_bullet(pattern_packs: Array) -> void:
 			bullet_pooling_index = 0
 	pass
 
+#region Setup BulletUpdater
+
 func setup_bullet_updater() -> void:
 	setup_bullet_area_rid()
 	create_bullet_pool()
-
-
 	pass
 
 func setup_bullet_area_rid() -> void:
@@ -412,8 +192,6 @@ func create_bullet_pool() -> void:
 	var _transform := Transform2D()
 	bullet_max_pooling = bullet_template_2d.bullet_pooling_amount
 	var _collision_rid : RID = 	bullet_template_2d.collision_shape.get_rid()
-	bullet_template_2d.caching_texture_scale_curve_value()
-	bullet_template_2d.caching_move_speed_change()
 
 
 	for i in range(bullet_max_pooling):
@@ -421,6 +199,8 @@ func create_bullet_pool() -> void:
 
 		_bullet_instance = BulletInstance2D.new()
 
+		_bullet_instance.area_index = i
+		
 		_bullet_instance.base_texture_rotation = bullet_template_2d.texture_rotation
 
 		_bullet_instance.texture_rotation = bullet_template_2d.texture_rotation
@@ -428,18 +208,19 @@ func create_bullet_pool() -> void:
 		_bullet_instance.base_texture_scale = bullet_template_2d.texture_scale
 		_bullet_instance.texture_scale = bullet_template_2d.texture_scale
 
-		# _bullet_instance.texture_skew = bullet_template_2d.texture_skew
-
-
-		# _bullet_instance.texture_rotate_direction = bullet_template_2d.texture_rotate_direction
-		_bullet_instance.texture_rotation_speed = bullet_template_2d.texture_rotation_speed
-
 		_bullet_instance.base_move_speed = bullet_template_2d.move_speed
 		_bullet_instance.life_time_max = bullet_template_2d.life_time_max
 		_bullet_instance.life_distance_max = bullet_template_2d.life_distance_max
 
 		
+
+
 		bullet_instance_array.append(_bullet_instance)
+
+func setup_area_callback(_bullet_area: RID) -> void:
+	PS.area_set_monitor_callback(_bullet_area, _body_monitor_callback)
+	PS.area_set_area_monitor_callback(_bullet_area, _area_monitor_callback)
+	pass
 
 func clear_bullet_updater() -> void:
 	for instance : BulletInstance2D in bullet_instance_array:
@@ -447,12 +228,7 @@ func clear_bullet_updater() -> void:
 		PS.area_clear_shapes(bullet_area_rid)
 
 
-func setup_area_callback(_bullet_area: RID) -> void:
-	PS.area_set_monitor_callback(_bullet_area, _body_monitor_callback)
-	PS.area_set_area_monitor_callback(_bullet_area, _area_monitor_callback)
-	pass
-
-
+#endregion
 
 func _body_monitor_callback(status: int, area_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx:int) -> void:
 	if status == PS.AREA_BODY_ADDED:
@@ -474,3 +250,43 @@ func process_bullet_collided(instance_index: int) -> void:
 	if instance_index not in bullet_remove_index:
 		bullet_remove_index.append(instance_index)
 	pass
+
+# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
+# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
+
+
+
+# Instance Transform
+
+# if _bullet_instance.texture_rotation_speed != 0:
+# 	_bullet_instance.texture_rotation += deg_to_rad(_bullet_instance.texture_rotation_speed)
+
+
+
+# if _is_texture_scale_change:
+# 	match _texture_scale_loop:
+# 		0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
+# 			if _bullet_instance.life_time_tick < _texture_scale_max_tick:
+# 				_texture_scale_sample = _bullet_instance.life_time_tick
+# 			else:
+# 				_texture_scale_sample = _texture_scale_max_tick - 1
+# 		1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
+# 			_texture_scale_sample =_bullet_instance.life_time_tick % _texture_scale_max_tick
+# 			pass
+# 		2: #BulletTemplate2D.LoopType.PING_PONG:
+# 			pass
+
+# 	_texture_scale_sample_value = _texture_scale_cache[_texture_scale_sample]
+
+# 	match _move_speed_math_type:
+# 		0:
+# 			_bullet_instance.texture_scale = _bullet_instance.base_texture_scale * _texture_scale_sample_value
+# 			pass
+# 		1:
+# 			pass
+
+# if bullet_remove_index.size() > 0:
+# 	for index : int in bullet_remove_index:
+# 		bullet_active_index.erase(index)
+# 		PS.area_set_shape_disabled(bullet_area_rid, index, true)
+#bullet_remove_index.clear()
