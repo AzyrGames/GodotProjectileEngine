@@ -51,7 +51,6 @@ func _ready() -> void:
 	setup_bullet_scheduler()
 
 
-
 func _process(delta: float) -> void:
 	pass
 

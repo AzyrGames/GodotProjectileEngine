@@ -41,3 +41,6 @@ var life_time_tick : int
 
 var life_distance : float 
 # var life_distance_max : float = -1.0
+
+
+var is_trigger : bool = false
