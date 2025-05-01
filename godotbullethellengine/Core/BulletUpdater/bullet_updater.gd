@@ -173,6 +173,7 @@ func spawn_bullet(pattern_packs: Array) -> void:
 
 		if bullet_template_2d.trigger_conditions.size() > 0:
 			_bullet_instance.is_trigger = true
+			_bullet_instance.trigger_dict = {}
 
 
 		if bullet_pooling_index not in bullet_active_index:

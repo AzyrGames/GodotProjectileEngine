@@ -44,3 +44,4 @@ var life_distance : float
 
 
 var is_trigger : bool = false
+var trigger_dict : Dictionary
