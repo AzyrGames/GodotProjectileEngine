@@ -32,7 +32,7 @@ func create_pattern(_position: Vector2, _composer_var : Dictionary) -> Array:
 	]
 	for pattern_component in get_children():
 		if pattern_component is not BPCBase: continue
-		if !pattern_component.active: continue 
+		if !pattern_component.active: continue
 		pattern_packs = pattern_component.process_pattern(pattern_packs, _composer_var)
 
 	return pattern_packs

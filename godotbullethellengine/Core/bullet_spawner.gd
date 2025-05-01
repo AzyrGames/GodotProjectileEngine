@@ -2,16 +2,18 @@
 extends Node2D
 class_name BulletSpawner2D
 
-@export var active : bool = true
-
+@export var active : bool = true:
+	set(value):
+		if value:
+			setup_bullet_spawner()
+		active = value
 
 var bullet_area : RID
-
-@export var bullet_template_2d : BulletTemplate2D
 
 @export var bullet_composer_name : String
 var bullet_composer : BulletComposer2D
 
+@export var bullet_template_2d : BulletTemplate2D
 @export var bullet_scheduler : BulletScheduler
 
 var pattern_packs: Array
@@ -30,6 +32,7 @@ var bullet_count: int = 0
 
 
 signal spawn_timed
+signal scheduler_completed
 
 func _exit_tree() -> void:
 	pass
@@ -39,18 +42,39 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	setup_bullet_spawner()
+	pass
+
+func setup_bullet_spawner() -> void:
 	bullet_composer = BulletHell.bullet_composer_nodes.get(bullet_composer_name)
 	if !bullet_composer:
 		print_debug(bullet_composer_name + " BulletComposer ID is not valid")
 		return
+
+	bullet_updater_2d = BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
+	if !bullet_updater_2d:
+		create_bullet_updater()
+
+
 	setup_bullet_scheduler()
 	setup_shoot_cooldown_timer()
+
+
+
 	if bullet_scheduler.do_start_delay:
 		setup_start_delay_timer()
 	else:
 		start_next_interval()
 
 
+
+func clear_bullet_spawner() -> void:
+	if shoot_cooldown_timer:
+		shoot_cooldown_timer.queue_free()
+	if start_delay_timer:
+		start_delay_timer.queue_free()
+	timing_wave_index = 0
+	timing_wave_index_direction = 0
 
 func _process(delta: float) -> void:
 	pass
@@ -69,9 +93,6 @@ func spawn_bullet() -> void:
 
 	pattern_packs = bullet_composer.create_pattern(global_position, composer_var)
 
-	if !bullet_updater_2d:
-		create_bullet_updater()
-
 	bullet_updater_2d.spawn_bullet(pattern_packs)
 
 	pass
@@ -87,7 +108,7 @@ func create_bullet_updater() -> void:
 
 	BulletHell.bullet_environment.add_child(_bullet_updater)
 	bullet_area = _bullet_updater.bullet_area_rid 
-
+	bullet_template_2d.bullet_area_rid = _bullet_updater.bullet_area_rid 
 	BulletHell.bullet_updater_2d_nodes.get_or_add(bullet_area, _bullet_updater)
 	bullet_updater_2d = _bullet_updater
 
@@ -96,6 +117,8 @@ func create_bullet_updater() -> void:
 
 func setup_bullet_scheduler() -> void:
 	spawn_timed.connect(spawn_bullet)
+	if bullet_scheduler.destroy_after_finish:
+		scheduler_completed.connect(queue_free)
 	pass
 
 func disconnect_bullet_scheduler() -> void:
@@ -107,7 +130,7 @@ func get_next_timing_wave() -> BulletTimingWave:
 
 	if bullet_scheduler.loop_amout > 0:
 		if loop_count >= bullet_scheduler.loop_amout:
-			bullet_scheduler.scheduler_completed.emit()
+			scheduler_completed.emit()
 			shoot_cooldown_timer.stop()
 			return null
 		loop_count += 1
