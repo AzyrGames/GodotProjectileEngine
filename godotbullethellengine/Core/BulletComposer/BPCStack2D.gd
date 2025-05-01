@@ -7,7 +7,7 @@ class_name BPCStack2D
 @export var stack_distance : float = 15.0
 
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_pattern_packs := []
 	for instance : Dictionary in pattern_packs:
 		for i in stack_amount:

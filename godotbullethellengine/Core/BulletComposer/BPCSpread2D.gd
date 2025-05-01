@@ -13,7 +13,7 @@ enum SpreadType {
 @export var spread_type : SpreadType = SpreadType.STRAIGHT
 @export var spread_value : float = 5
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_pattern_packs := []
 	match spread_type:
 		SpreadType.STRAIGHT:

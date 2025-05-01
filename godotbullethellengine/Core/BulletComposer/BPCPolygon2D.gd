@@ -11,7 +11,7 @@ class_name BPCPolygon2D
 #@export_group("Polygon Randomizer")
 
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_bullet_packs := []
 	for instance : Dictionary in pattern_packs:
 

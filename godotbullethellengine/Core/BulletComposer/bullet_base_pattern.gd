@@ -5,6 +5,6 @@ class_name BPCBase
 
 @export var active: bool = true
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	return pattern_packs
 

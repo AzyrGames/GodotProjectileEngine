@@ -5,7 +5,7 @@ class_name BPCGroup
 
 
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_pattern_packs := []
 	for instance : Dictionary in pattern_packs:
 		var _sub_pattern_packs := [instance]

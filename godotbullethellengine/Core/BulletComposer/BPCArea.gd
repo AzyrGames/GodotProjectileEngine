@@ -5,7 +5,7 @@ class_name BPCArea
 @export var area_shape: Shape2D
 @export var navigation_map : NavigationMesh
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_bullet_packs := []
 	for instance : Dictionary in pattern_packs:
 		var _new_instance := instance.duplicate(true)

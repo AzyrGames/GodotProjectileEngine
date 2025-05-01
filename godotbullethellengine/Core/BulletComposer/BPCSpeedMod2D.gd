@@ -8,7 +8,7 @@ class_name BPCSpeedMod2D
 @export var start_value : float = 1.0
 
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	for i in range(len(pattern_packs)):
 		if pattern_packs[i].has("speed_mod"):
 			pattern_packs[i].speed_mod += start_value + i * increase_step

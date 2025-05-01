@@ -21,7 +21,7 @@ enum PointType {
 
 var _curve_point_idx : int = 0
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_bullet_packs := []
 	for instance : Dictionary in pattern_packs:
 		_new_bullet_packs.append_array(get_custom_shape_points(instance))

@@ -8,7 +8,7 @@ class_name BPCLoop
 func _physics_process(delta: float) -> void:
 	pass
 
-func process_pattern(pattern_packs: Array) -> Array:
+func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	if !active: return pattern_packs
 
 	var _new_pattern_packs := []
