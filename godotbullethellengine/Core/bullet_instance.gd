@@ -1,6 +1,7 @@
 extends Object
 class_name BulletInstance2D
 
+
 var area_index : int
 
 var texture_rotate_direction : bool = false
@@ -40,3 +41,7 @@ var life_time_tick : int
 
 var life_distance : float 
 # var life_distance_max : float = -1.0
+
+
+var is_trigger : bool = false
+var trigger_dict : Dictionary

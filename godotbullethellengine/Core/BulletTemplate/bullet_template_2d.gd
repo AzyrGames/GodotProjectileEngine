@@ -41,6 +41,11 @@ class_name BulletTemplate2D
 		collision_mask = value
 		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
 
+@export_group("Trigger")
+@export var trigger_name : String
+@export var trigger_conditions: Array[BulletTriggerCondition2D]
+
+
 @export_group("Template Component")
 ##@experimental: 
 ##Bullet Template Component is an experimental component for modifying properties of 

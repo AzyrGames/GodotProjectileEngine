@@ -106,7 +106,7 @@ func update_bullet_instances(delta: float) -> void:
 			bullet_active_index.erase(index)
 			PS.area_set_shape_disabled(bullet_area_rid, index, true)
 		bullet_remove_index.clear()
-	
+
 	_active_instances.clear()
 	for index : int in bullet_active_index:
 		_active_instances.append(bullet_instance_array[index])
@@ -133,6 +133,11 @@ func update_bullet_instances(delta: float) -> void:
 			)
 
 		PS.area_set_shape_transform(bullet_area_rid, _active_instance.area_index, _active_instance.transform)
+	
+	for _trigger_condition in bullet_template_2d.trigger_conditions:
+		_trigger_condition.check_trigger_condition(_active_instances)
+		pass
+
 
 func spawn_bullet(pattern_packs: Array) -> void:
 	for instance : Dictionary in pattern_packs:
@@ -165,6 +170,11 @@ func spawn_bullet(pattern_packs: Array) -> void:
 		PS.area_set_shape_disabled(bullet_area_rid, bullet_pooling_index, false)
 	
 		bullet_instance_array[bullet_pooling_index] = _bullet_instance
+
+		if bullet_template_2d.trigger_conditions.size() > 0:
+			_bullet_instance.is_trigger = true
+			_bullet_instance.trigger_dict = {}
+
 
 		if bullet_pooling_index not in bullet_active_index:
 			bullet_active_index.append(bullet_pooling_index)
