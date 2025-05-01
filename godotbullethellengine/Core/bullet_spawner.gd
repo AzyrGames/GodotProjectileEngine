@@ -43,12 +43,13 @@ func _ready() -> void:
 	if !bullet_composer:
 		print_debug(bullet_composer_name + " BulletComposer ID is not valid")
 		return
+	setup_bullet_scheduler()
 	setup_shoot_cooldown_timer()
 	if bullet_scheduler.do_start_delay:
 		setup_start_delay_timer()
 	else:
 		start_next_interval()
-	setup_bullet_scheduler()
+
 
 
 
