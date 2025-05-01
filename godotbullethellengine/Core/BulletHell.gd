@@ -12,3 +12,5 @@ var bullet_environment : BulletEnvironment2D
 # var 
 
 var bullet_homing_targets : Dictionary[String, Array]
+
+var bullet_composer_nodes : Dictionary[String, BulletComposer2D]

@@ -9,7 +9,8 @@ var bullet_area : RID
 
 @export var bullet_template_2d : BulletTemplate2D
 
-@export var bullet_composer : BulletComposer2D
+@export var bullet_composer_name : String
+var bullet_composer : BulletComposer2D
 
 @export var bullet_scheduler : BulletScheduler
 
@@ -17,8 +18,6 @@ var pattern_packs: Array
 
 var start_delay_timer : Timer
 var shoot_cooldown_timer: Timer
-
-
 
 var timing_wave_index : int = 0
 var timing_wave_index_direction : int
@@ -32,8 +31,6 @@ var bullet_count: int = 0
 
 signal spawn_timed
 
-
-
 func _exit_tree() -> void:
 	pass
 
@@ -42,13 +39,17 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	bullet_composer = BulletHell.bullet_composer_nodes.get(bullet_composer_name)
+	if !bullet_composer:
+		print_debug(bullet_composer_name + " BulletComposer ID is not valid")
+		return
 	setup_shoot_cooldown_timer()
 	if bullet_scheduler.do_start_delay:
 		setup_start_delay_timer()
 	else:
 		start_next_interval()
-
 	setup_bullet_scheduler()
+
 
 
 func _process(delta: float) -> void:
