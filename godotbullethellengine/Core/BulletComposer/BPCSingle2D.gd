@@ -9,20 +9,17 @@ class_name BPCSingle2D
 
 enum DirectionType {
 	FIXED,
-	TARGET,
-	RANDOM,
+	GROUP_NAME,
+	MOUSE,
 }
 
-# @export var direction_type : DirectionType
-
-# @export var target : Node2D
+@export var direction_type : DirectionType
 
 @export var direction : Vector2 = Vector2.RIGHT
 ## Rotate direction by rotation degree
+@export var group_name : String
 
 @export_range(0, 360) var random_angle : float = 0.0
-
-
 
 @export_group("Rotation")
 
@@ -40,15 +37,12 @@ enum RotationType {
 var composer_var_array : Array[Dictionary]
 
 func _ready() -> void:
-	# target = Global.player
 	pass
 
 func _physics_process(delta: float) -> void:
 	if rotation_process_type == RotationType.PHYSICS:
 		for _composer_var in composer_var_array:
-			var _rotation : Variant = _composer_var.get_or_add("rotation", rotation)
-			_rotation += deg_to_rad(rotation_speed) * delta
-			_composer_var.set("rotation", _rotation)
+			_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(rotation_speed) * delta)
 			pass
 
 
@@ -57,25 +51,36 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 		composer_var_array.append(_composer_var)
 		pass
 	var _rand := RandomNumberGenerator.new()
+	var _target_node : Node2D
 	for instance : Dictionary in pattern_packs:
-		# match direction_type:
-		# 	DirectionType.FIXED:
-		# 		instance.direction = direction.normalized()
-		# 		pass
-		# 	DirectionType.TARGET:
-		# 		if target:
-		# 			instance.direction = instance.position.direction_to(target.global_position)
-		# 		pass
-		instance.direction = direction.normalized()
-		var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
+		match direction_type:
+			DirectionType.FIXED:
+				instance.direction = direction.normalized()
+				pass
+			DirectionType.GROUP_NAME:
+				_target_node = get_first_node2d_group(group_name)
+				if _target_node:
+					instance.direction = instance.position.direction_to(_target_node.global_position)
+			DirectionType.MOUSE:
+				instance.direction = instance.position.direction_to(owner.get_global_mouse_position())
+				
 
+		if random_angle != 0:
+			var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
+			_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle))
 
-
-		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle)).normalized()
+		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation)).normalized()
 
 	if rotation_process_type == RotationType.PATTERN:
-		var _rotation : Variant = _composer_var.get_or_add("rotation", rotation)
-		_rotation += deg_to_rad(rotation_speed)
-		_composer_var.set("rotation", _rotation)
+		_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(rotation_speed))
 
 	return pattern_packs
+
+## Search and return the first Node2D in a Group, return null if not founded
+func get_first_node2d_group(_group_name : String) -> Node2D:
+	if group_name == null:
+		return
+	for _node: Node in get_tree().get_nodes_in_group(group_name):
+		if _node is Node2D:
+			return _node
+	return
