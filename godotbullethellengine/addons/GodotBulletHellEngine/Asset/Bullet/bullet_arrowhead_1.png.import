@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://psxtpca1c73l"
-path="res://.godot/imported/bullet_arrowhead_1.png-5c44383176a59e4c524371068670e791.ctex"
+path="res://.godot/imported/bullet_arrowhead_1.png-f943a40831b09c6fe1ed46542f2efbe4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://godotbullethellengine/addons/GodotBulletHellEngine/Asset/Bullet/bullet_arrowhead_1.png"
-dest_files=["res://.godot/imported/bullet_arrowhead_1.png-5c44383176a59e4c524371068670e791.ctex"]
+source_file="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_arrowhead_1.png"
+dest_files=["res://.godot/imported/bullet_arrowhead_1.png-f943a40831b09c6fe1ed46542f2efbe4.ctex"]
 
 [params]
 
