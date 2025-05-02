@@ -1,0 +1,91 @@
+[gd_scene load_steps=17 format=3 uid="uid://b2io6x21wp1mq"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_ls63n"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_bwm3q"]
+[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/bullet_template_2d.gd" id="3_0obt0"]
+[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="4_f82uf"]
+[ext_resource type="Texture2D" uid="uid://dyyikksfl1dd2" path="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_3.png" id="5_5la5n"]
+[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="6_p3n4c"]
+[ext_resource type="Script" uid="uid://cpk6t02ukyus8" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTriggerCondition/btc_time.gd" id="7_dm0rh"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_scheduler.gd" id="8_5kslc"]
+[ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_timing_wave.gd" id="9_im1f0"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="10_ojpva"]
+[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="11_uk6hd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
+
+[sub_resource type="Resource" id="Resource_va0kt"]
+script = ExtResource("7_dm0rh")
+time = 1.0
+is_active = true
+one_shot = true
+metadata/_custom_type_script = "uid://cpk6t02ukyus8"
+
+[sub_resource type="Resource" id="Resource_a4k3l"]
+script = ExtResource("3_0obt0")
+move_speed = 100.0
+direction_rotation = 0.0
+bullet_pooling_amount = 500
+life_time_max = 10.0
+life_distance_max = 300.0
+texture = ExtResource("5_5la5n")
+texture_z_index = 0
+texture_rotate_direction = false
+texture_rotation = 0.0
+texture_scale = Vector2(1, 1)
+use_animation = false
+animation_name = ""
+collision_shape = SubResource("CircleShape2D_6hxpl")
+collision_layer = 0
+collision_mask = 0
+trigger_name = ""
+trigger_conditions = Array[ExtResource("6_p3n4c")]([SubResource("Resource_va0kt")])
+template_modules = Array[ExtResource("4_f82uf")]([])
+metadata/_custom_type_script = "uid://ccmfe73clp6p3"
+
+[sub_resource type="Resource" id="Resource_lv6ti"]
+script = ExtResource("9_im1f0")
+timing_wave = Array[float]([1.0])
+weight = 1.0
+metadata/_custom_type_script = "uid://c6uimt4tdvilk"
+
+[sub_resource type="Resource" id="Resource_ruy20"]
+script = ExtResource("8_5kslc")
+timing_wave = Array[ExtResource("9_im1f0")]([SubResource("Resource_lv6ti")])
+loop_type = 1
+loop_amout = -1
+destroy_after_finish = false
+do_start_delay = false
+start_delay_time = 0.5
+is_rand_start_delay = false
+start_delay_min = 0.0
+start_delay_max = 2.0
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TestBpcSingleTarget" type="Node2D"]
+
+[node name="BulletEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_ls63n")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BulletSpawner2D2" type="Node2D" parent="."]
+script = ExtResource("2_bwm3q")
+bullet_composer_name = "simple"
+bullet_template_2d = SubResource("Resource_a4k3l")
+bullet_scheduler = SubResource("Resource_ruy20")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="BulletComposer2D" type="Node2D" parent="."]
+script = ExtResource("10_ojpva")
+composer_name = "simple"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="BPCSingle2D" type="Node" parent="BulletComposer2D"]
+script = ExtResource("11_uk6hd")
+direction_type = 2
+metadata/_custom_type_script = "uid://bhju4glf6a5nr"
+
+[node name="Node2D" type="Node2D" parent="." groups=["TargetNode"]]
+position = Vector2(98, 112)

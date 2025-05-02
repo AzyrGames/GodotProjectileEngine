@@ -14,11 +14,10 @@ config/name="GodotBulletHellEngine"
 run/main_scene="uid://bwlil5b4xqya"
 config/features=PackedStringArray("4.4", "Forward Plus")
 run/max_fps=60
-config/icon="res://icon.svg"
 
 [autoload]
 
-BulletHell="*res://Core/BulletHell.gd"
+BulletHell="*res://addons/GodotBulletHellEngine/Core/BulletHell.gd"
 
 [display]
 
@@ -28,6 +27,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GodotBulletHellEngin/plugin.cfg")
 
 [global_group]
 
