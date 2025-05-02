@@ -1,12 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
-Testing/
-addons/
 # Godot-specific ignores
 .import/
 export.cfg
 export_credentials.cfg
-
 # Imported translations (automatically generated from CSV files)
 *.translation
 
@@ -16,3 +13,4 @@ data_*/
 mono_crash.*.json
 
 .vscode/
+project.godot
