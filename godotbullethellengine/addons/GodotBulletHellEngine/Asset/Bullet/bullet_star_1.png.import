@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df2a144pxogn2"
-path="res://.godot/imported/enemy_bullet_2.png-d7da137ee0074573e008561977ee983b.ctex"
+uid="uid://b6j1n8v6vliwk"
+path="res://.godot/imported/bullet_star_1.png-3d884d4239d57f94909e7c9af553b99f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GodotBulletHellEngine/Asset/Bullet/enemy_bullet_2.png"
-dest_files=["res://.godot/imported/enemy_bullet_2.png-d7da137ee0074573e008561977ee983b.ctex"]
+source_file="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_star_1.png"
+dest_files=["res://.godot/imported/bullet_star_1.png-3d884d4239d57f94909e7c9af553b99f.ctex"]
 
 [params]
 

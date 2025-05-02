@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xtqnjd2pv33p"
-path="res://.godot/imported/enemy_bullet_4.png-c2c221385395ab6d3e8c301e746df5f1.ctex"
+uid="uid://d0u3dixs4nwan"
+path="res://.godot/imported/bullet_big_cirle_1.png-cb67e9906db59bd7c628376c5195db22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GodotBulletHellEngine/Asset/Bullet/enemy_bullet_4.png"
-dest_files=["res://.godot/imported/enemy_bullet_4.png-c2c221385395ab6d3e8c301e746df5f1.ctex"]
+source_file="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_big_cirle_1.png"
+dest_files=["res://.godot/imported/bullet_big_cirle_1.png-cb67e9906db59bd7c628376c5195db22.ctex"]
 
 [params]
 
