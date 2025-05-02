@@ -4,7 +4,7 @@
 .import/
 export.cfg
 export_credentials.cfg
-
+project.godot
 # Imported translations (automatically generated from CSV files)
 *.translation
 

@@ -14,19 +14,11 @@ config/name="GodotBulletHellEngine"
 config/features=PackedStringArray("4.4", "Forward Plus")
 run/max_fps=60
 
-[autoload]
-
-BulletHell="*res://addons/GodotBulletHellEngine/Core/BulletHell.gd"
-
 [display]
 
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/GodotBulletHellEngine/plugin.cfg")
 
 [global_group]
 
