@@ -46,10 +46,10 @@ class_name BulletTemplate2D
 @export var trigger_conditions: Array[BulletTriggerCondition2D]
 
 
-@export_group("Template Component")
+@export_group("Template Module")
 ##@experimental: 
 ##Bullet Template Component is an experimental component for modifying properties of 
 ##BulletInstance2D based on BulletTemplate2D in real-time
-@export var template_components : Array[BTCBase]
+@export var template_modules : Array[BulletTemplateModule]
 
 var bullet_area_rid : RID

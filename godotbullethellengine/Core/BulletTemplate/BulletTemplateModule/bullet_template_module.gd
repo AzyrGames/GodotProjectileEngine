@@ -1,5 +1,5 @@
 extends Resource
-class_name BTCBase
+class_name BulletTemplateModule
 
 
 @export var is_active: bool = true

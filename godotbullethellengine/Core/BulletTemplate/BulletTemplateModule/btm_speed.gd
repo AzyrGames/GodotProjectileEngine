@@ -1,5 +1,5 @@
-extends BTCBase
-class_name BTCSpeed
+extends BulletTemplateModule
+class_name BTMSpeed
 
 enum MoveSpeedChangeType{
 	MULTIPLIER, 
@@ -15,6 +15,7 @@ enum LoopType {
 @export var move_speed_change_type : MoveSpeedChangeType
 @export var move_speed_change_loop : LoopType
 @export var move_speed_curve : Curve
+
 # @export var is_caching_move_speed_change : bool = true
 
 var _is_cached : bool = false
@@ -38,46 +39,39 @@ func process_template(active_bullet_instances: Array[BulletInstance2D]) -> void:
 
 	for _bullet_instance in active_bullet_instances:
 		_speed_change_sample = _bullet_instance.life_time_tick
-		if _speed_change_sample >= move_speed_curve_max_tick:
-			_speed_change_sample = move_speed_curve_max_tick - 1
+		match move_speed_change_loop:
+			0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
+				if _bullet_instance.life_time_tick < move_speed_curve_max_tick:
+					_speed_change_sample = _bullet_instance.life_time_tick
+				else:
+					_speed_change_sample = move_speed_curve_max_tick - 1
+			1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
+				_speed_change_sample =_bullet_instance.life_time_tick % move_speed_curve_max_tick
+				pass
+			2: #BulletTemplate2D.LoopType.PING_PONG:
+				_speed_change_sample = _bullet_instance.life_time_tick % move_speed_curve_max_tick * sign(pow(-1, int(_bullet_instance.life_time_tick / move_speed_curve_max_tick + 1)))
+
+				pass
+		
 		_speed_change_sample_value = move_speed_curve_cache[_speed_change_sample]
 
-		_bullet_instance.move_speed_modifier = _speed_change_sample_value
-
-
-	# match move_speed_change_loop:
-	# 	0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-	# 		if _bullet_instance.life_time_tick < _move_speed_curve_max_tick:
-	# 			_speed_change_sample = _bullet_instance.life_time_tick
-	# 		else:
-	# 			_speed_change_sample = _move_speed_curve_max_tick - 1
-	# 	1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-	# 		_speed_change_sample =_bullet_instance.life_time_tick % _move_speed_curve_max_tick
-	# 		pass
-	# 	2: #BulletTemplate2D.LoopType.PING_PONG:
-	# 		pass
-
-	# _speed_change_sample_value = _move_speed_curve_cache[_speed_change_sample]
-	
-	# match _move_speed_change_type:
-	# 	0:
-	# 		_bullet_instance.move_speed = _bullet_instance.base_move_speed * _speed_change_sample_value
-	# 		pass
-	# 	1:
-	# 		_bullet_instance.move_speed = _speed_change_sample_value
-	# 		pass
-
-
-
+		match move_speed_change_type:
+			0:
+				_bullet_instance.move_speed_modifier = _speed_change_sample_value
+				pass
+			1:
+				_bullet_instance.move_speed_modifier = 0.0 
+				_bullet_instance.move_speed_static = _speed_change_sample_value
+				pass
 	pass
 
 
 func caching_move_speed_curve_value() -> void:
 	var _tick_time := 1.0 / Engine.physics_ticks_per_second
+	move_speed_curve_cache.clear()
 	move_speed_curve_max_tick = int(move_speed_curve.max_domain / _tick_time)
 	for i in range(move_speed_curve_max_tick):
 		move_speed_curve_cache.append(move_speed_curve.sample(_tick_time * i))
-	
 	_is_cached = true
 	pass
 

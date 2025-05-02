@@ -36,7 +36,7 @@ var _bullet_instance : BulletInstance2D
 var spawner_destroyed : bool = false
 
 var _active_instances : Array[BulletInstance2D]
-var _template_components : Array[BTCBase]
+var _template_modules : Array[BulletTemplateModule]
 
 
 func _ready() -> void:
@@ -78,7 +78,7 @@ func update_bullet_instances(delta: float) -> void:
 	
 	_texture_rotate_direction = bullet_template_2d.texture_rotate_direction
 
-	_template_components = bullet_template_2d.template_components
+	_template_modules = bullet_template_2d.template_modules
 
 	_bullet_life_time_max  = bullet_template_2d.life_time_max
 	_bullet_life_distance_max  = bullet_template_2d.life_distance_max
@@ -114,8 +114,8 @@ func update_bullet_instances(delta: float) -> void:
 	if _active_instances.size() <= 0: return
 
 
-	for _template_component : BTCBase in _template_components:
-		_template_component.process_template(_active_instances)
+	for _template_module : BulletTemplateModule in _template_modules:
+		_template_module.process_template(_active_instances)
 
 	for _active_instance : BulletInstance2D in _active_instances:
 		_active_instance.move_speed = _active_instance.base_move_speed * _active_instance.move_speed_modifier + _active_instance.move_speed_static
