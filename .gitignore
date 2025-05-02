@@ -13,4 +13,4 @@ data_*/
 mono_crash.*.json
 
 .vscode/
-godotbullethellengine/project.godot
+project.godot
