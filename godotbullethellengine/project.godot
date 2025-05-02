@@ -32,6 +32,7 @@ window/stretch/scale_mode="integer"
 [global_group]
 
 HomingTarget=""
+TargetNode=""
 
 [physics]
 
