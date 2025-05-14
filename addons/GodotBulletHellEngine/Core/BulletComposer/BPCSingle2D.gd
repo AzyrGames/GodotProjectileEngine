@@ -64,12 +64,12 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 			DirectionType.MOUSE:
 				instance.direction = instance.position.direction_to(owner.get_global_mouse_position())
 				
-
+		var _rand_angle : float
 		if random_angle != 0:
-			var _rand_angle : float = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
-			_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle))
+			_rand_angle = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
+			# _composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + )
 
-		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation)).normalized()
+		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle)).normalized()
 
 	if rotation_process_type == RotationType.PATTERN:
 		_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(rotation_speed))

@@ -20,10 +20,15 @@ func spawner_destroyed(area_rid: RID) -> void:
 
 
 func bullet_collided(bullet_area_rid: RID, shape_idx: int) -> void:
-	if BulletHell.bullet_updater_2d_nodes.has(bullet_area_rid):
-		BulletHell.bullet_updater_2d_nodes[bullet_area_rid].process_bullet_collided(shape_idx)
+	if !BulletHell.bullet_updater_2d_nodes.has(bullet_area_rid): return
+	if !is_instance_valid(BulletHell.bullet_updater_2d_nodes[bullet_area_rid]):
+		return
+
+	BulletHell.bullet_updater_2d_nodes[bullet_area_rid].process_bullet_collided(shape_idx)
 
 func get_bullet_damage(bullet_area_rid: RID) -> int:
+	if !BulletHell.bullet_updater_2d_nodes.has(bullet_area_rid): return 0
+	if !is_instance_valid(BulletHell.bullet_updater_2d_nodes[bullet_area_rid]):	return 0
 	if BulletHell.bullet_updater_2d_nodes.has(bullet_area_rid):
 		return BulletHell.bullet_updater_2d_nodes[bullet_area_rid].bullet_damage
 	return 0

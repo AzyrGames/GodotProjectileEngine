@@ -3,6 +3,7 @@ class_name BulletUpdater2D
 
 
 var bullet_texture : Texture2D
+var bullet_texture_modulate : Color
 var bullet_animated_sprite : SpriteFrames
 var bullet_animation_name : String
 var use_animation : bool
@@ -61,8 +62,10 @@ func _draw() -> void:
 func draw_bullet_texture() -> void:
 	z_index = bullet_template_2d.texture_z_index
 	bullet_texture = bullet_template_2d.texture
+	bullet_texture_modulate = bullet_template_2d.texture_modulate
 	bullet_texture_draw_offset = Vector2.ZERO - bullet_template_2d.texture.get_size() * 0.5
 	use_animation = bullet_template_2d.use_animation
+	
 	for index : int in bullet_active_index:
 		draw_set_transform_matrix(bullet_instance_array[index].transform)
 		# if bullet_template_2d.use_animation:
@@ -71,7 +74,7 @@ func draw_bullet_texture() -> void:
 		# 		bullet_template_2d.bullet_texture_draw_offset
 		# 		)
 		# else:
-		draw_texture(bullet_texture, bullet_texture_draw_offset)
+		draw_texture(bullet_texture, bullet_texture_draw_offset, bullet_texture_modulate)
 
 
 func update_bullet_instances(delta: float) -> void:
@@ -135,7 +138,7 @@ func update_bullet_instances(delta: float) -> void:
 		PS.area_set_shape_transform(bullet_area_rid, _active_instance.area_index, _active_instance.transform)
 	
 	for _trigger_condition in bullet_template_2d.trigger_conditions:
-		_trigger_condition.check_trigger_condition(_active_instances)
+		_trigger_condition.check_trigger_condition(bullet_template_2d.trigger_name, _active_instances)
 		pass
 
 
@@ -214,6 +217,7 @@ func create_bullet_pool() -> void:
 
 		_bullet_instance = BulletInstance2D.new()
 
+		_bullet_instance.area_rid = bullet_area_rid
 		_bullet_instance.area_index = i
 		
 		_bullet_instance.base_texture_rotation = bullet_template_2d.texture_rotation
@@ -266,42 +270,14 @@ func process_bullet_collided(instance_index: int) -> void:
 		bullet_remove_index.append(instance_index)
 	pass
 
-# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
-# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
 
+func get_active_bullet_count() -> int:
+	return _active_instances.size()
+	pass
 
-
-# Instance Transform
-
-# if _bullet_instance.texture_rotation_speed != 0:
-# 	_bullet_instance.texture_rotation += deg_to_rad(_bullet_instance.texture_rotation_speed)
-
-
-
-# if _is_texture_scale_change:
-# 	match _texture_scale_loop:
-# 		0: #BulletTemplate2D.LoopType.ONCE_AND_KEEP:
-# 			if _bullet_instance.life_time_tick < _texture_scale_max_tick:
-# 				_texture_scale_sample = _bullet_instance.life_time_tick
-# 			else:
-# 				_texture_scale_sample = _texture_scale_max_tick - 1
-# 		1: #BulletTemplate2D.LoopType.LOOP_FROM_START:
-# 			_texture_scale_sample =_bullet_instance.life_time_tick % _texture_scale_max_tick
-# 			pass
-# 		2: #BulletTemplate2D.LoopType.PING_PONG:
-# 			pass
-
-# 	_texture_scale_sample_value = _texture_scale_cache[_texture_scale_sample]
-
-# 	match _move_speed_math_type:
-# 		0:
-# 			_bullet_instance.texture_scale = _bullet_instance.base_texture_scale * _texture_scale_sample_value
-# 			pass
-# 		1:
-# 			pass
-
-# if bullet_remove_index.size() > 0:
-# 	for index : int in bullet_remove_index:
-# 		bullet_active_index.erase(index)
-# 		PS.area_set_shape_disabled(bullet_area_rid, index, true)
-#bullet_remove_index.clear()
+func clear_bullet() -> void:
+	for _index in range(bullet_max_pooling):
+		bullet_active_index.erase(_index)
+		PS.area_set_shape_disabled(bullet_area_rid, _index, true)
+	bullet_active_index.clear()
+	pass

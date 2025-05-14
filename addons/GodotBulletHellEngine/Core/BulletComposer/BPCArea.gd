@@ -9,7 +9,7 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	var _new_bullet_packs := []
 	for instance : Dictionary in pattern_packs:
 		var _new_instance := instance.duplicate(true)
-		_new_instance.position = get_random_point_in_shape(area_shape, _new_instance.position)
+		_new_instance.position += get_random_point_in_shape(area_shape, _new_instance.position)
 		_new_bullet_packs.append(_new_instance)
 	return _new_bullet_packs
 

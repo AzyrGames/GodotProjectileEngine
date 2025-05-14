@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxbdrmy4joq1r"]
+[gd_scene load_steps=19 format=3 uid="uid://dxbdrmy4joq1r"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_eo422"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_5vpdi"]
 [ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/bullet_template_2d.gd" id="3_vyypf"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="4_n1gly"]
+[ext_resource type="Script" uid="uid://blwtsicg4kg8d" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTemplateModule/btm_direction.gd" id="5_2lcou"]
 [ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_circle_1.png" id="5_n8a0l"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="6_b06c0"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_scheduler.gd" id="8_avibu"]
@@ -13,6 +14,26 @@
 [ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCPolygon2D.gd" id="13_vyypf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
+
+[sub_resource type="Curve2D" id="Curve2D_ad06j"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 10, 10)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_816n0"]
+script = ExtResource("5_2lcou")
+is_move_direction_change_curve = false
+move_direction_change_type = 0
+move_direction_change_loop = 0
+move_direction_curve = SubResource("Curve2D_ad06j")
+is_move_direction_change_math = false
+move_direction_math_equation = ""
+move_direction_math_max_time = 1.0
+move_direction_math_type = 0
+move_direction_math_loop = 0
+is_active = true
+metadata/_custom_type_script = "uid://blwtsicg4kg8d"
 
 [sub_resource type="Resource" id="Resource_eo422"]
 script = ExtResource("3_vyypf")
@@ -33,7 +54,7 @@ collision_layer = 0
 collision_mask = 0
 trigger_name = ""
 trigger_conditions = Array[ExtResource("6_b06c0")]([])
-template_modules = Array[ExtResource("4_n1gly")]([])
+template_modules = Array[ExtResource("4_n1gly")]([SubResource("Resource_816n0")])
 metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
 [sub_resource type="Resource" id="Resource_lv6ti"]

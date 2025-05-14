@@ -18,10 +18,8 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 		for pattern_component in get_children():
 			if pattern_component is not BPCBase: continue
 			if !pattern_component.active: continue 
-			_new_child_packs = pattern_component.process_pattern(_new_child_packs)
+			_new_child_packs = pattern_component.process_pattern(_new_child_packs, _composer_var)
 
 		for pack : Dictionary in _new_child_packs:
 			_new_pattern_packs.append(pack.duplicate(true))
 	return _new_pattern_packs
-
-

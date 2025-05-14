@@ -6,6 +6,8 @@ class_name BulletSpawner2D
 	set(value):
 		if value:
 			setup_bullet_spawner()
+			if start_delay_timer:
+				start_delay_timer.start()
 		active = value
 
 var bullet_area : RID
@@ -35,6 +37,7 @@ signal spawn_timed
 signal scheduler_completed
 
 func _exit_tree() -> void:
+	disconnect_bullet_scheduler()
 	pass
 
 func _enter_tree() -> void:
@@ -43,18 +46,23 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	setup_bullet_spawner()
+	if start_delay_timer:
+		start_delay_timer.start()
+
 	pass
 
 func setup_bullet_spawner() -> void:
 	bullet_composer = BulletHell.bullet_composer_nodes.get(bullet_composer_name)
+	# print()
 	if !bullet_composer:
 		print_debug(bullet_composer_name + " BulletComposer ID is not valid")
 		return
 
-	bullet_updater_2d = BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
-	if !bullet_updater_2d:
+	if !is_instance_valid(BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)):
+		# print("create Bullet updater")
 		create_bullet_updater()
 
+	bullet_updater_2d = BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
 
 	setup_bullet_scheduler()
 	setup_shoot_cooldown_timer()
@@ -92,7 +100,7 @@ func spawn_bullet() -> void:
 		return
 
 	pattern_packs = bullet_composer.create_pattern(global_position, composer_var)
-
+	# print(bullet_updater_2d)
 	bullet_updater_2d.spawn_bullet(pattern_packs)
 
 	pass
@@ -122,6 +130,8 @@ func setup_bullet_scheduler() -> void:
 	pass
 
 func disconnect_bullet_scheduler() -> void:
+	spawn_timed.disconnect(spawn_bullet)
+
 	pass
 
 
@@ -205,7 +215,7 @@ func _on_shoot_cooldown_timer_timeout() -> void:
 
 func setup_start_delay_timer() -> void:
 	start_delay_timer = Timer.new()
-	start_delay_timer.autostart = true
+	start_delay_timer.autostart = false
 	start_delay_timer.one_shot = true
 	if bullet_scheduler.is_rand_start_delay:
 		bullet_scheduler.start_delay_time = randf_range(bullet_scheduler.start_delay_min, bullet_scheduler.start_delay_max)

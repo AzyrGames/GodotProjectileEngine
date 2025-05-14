@@ -6,5 +6,5 @@ class_name BulletTriggerCondition2D
 @export var one_shot : bool = true
 
 
-func check_trigger_condition(active_bullet_instances: Array[BulletInstance2D]) -> void:
+func check_trigger_condition(trigger_name: String, active_bullet_instances: Array[BulletInstance2D]) -> void:
 	pass

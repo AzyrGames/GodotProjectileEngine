@@ -3,7 +3,7 @@ class_name BulletInstance2D
 
 
 var area_index : int
-
+var area_rid : RID
 var texture_rotate_direction : bool = false
 
 var animation_frame : int
@@ -21,8 +21,8 @@ var move_speed_static : float = 0
 var base_move_direction : Vector2 = Vector2.ZERO
 var move_direction : Vector2 = Vector2.ZERO
 
-var direction_rotation_speed : float = 0.0
-var texture_rotation_speed : float = 0.0
+# var direction_rotation_speed : float = 0.0
+# var texture_rotation_speed : float = 0.0
 
 
 var transform : Transform2D
