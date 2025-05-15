@@ -2,6 +2,8 @@
 
 Godot Bullet Hell Engine is a plugin made for [GodotEngine](https://godotengine.org) that helps create and spawn massive amounts of bullets/projectiles easily and efficiently.
 
+This addon is a Work In Progress, breaking changes!
+
 **GodotBulletHellEngine** Features:
 - Easy to use
 - Use **Object pooling** to improve performance
