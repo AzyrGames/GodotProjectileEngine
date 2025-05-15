@@ -28,7 +28,7 @@ enum DURATION_TYPE {
 
 @export_group("Start delay")
 @export var do_start_delay : bool = false
-@export var start_delay_time : float = 0.5
+@export var start_delay_time : float = 1.0
 @export var is_rand_start_delay : bool = false
 @export var start_delay_min : float = 0.0
 @export var start_delay_max : float = 2.0

@@ -5,9 +5,9 @@ class_name BulletSpawner2D
 @export var active : bool = true:
 	set(value):
 		if value:
-			setup_bullet_spawner()
-			if start_delay_timer:
-				start_delay_timer.start()
+			activate_bullet_spawner()
+		else:
+			deactive_bullet_spanwer()
 		active = value
 
 var bullet_area : RID
@@ -45,34 +45,27 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	setup_bullet_spawner()
-	if start_delay_timer:
-		start_delay_timer.start()
+	if active:
+		setup_bullet_spawner()
+		if start_delay_timer:
+			start_delay_timer.start()
 
 	pass
 
 func setup_bullet_spawner() -> void:
 	bullet_composer = BulletHell.bullet_composer_nodes.get(bullet_composer_name)
-	# print()
+
 	if !bullet_composer:
 		print_debug(bullet_composer_name + " BulletComposer ID is not valid")
 		return
 
 	if !is_instance_valid(BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)):
-		# print("create Bullet updater")
 		create_bullet_updater()
 
 	bullet_updater_2d = BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
 
 	setup_bullet_scheduler()
-	setup_shoot_cooldown_timer()
 
-
-
-	if bullet_scheduler.do_start_delay:
-		setup_start_delay_timer()
-	else:
-		start_next_interval()
 
 
 
@@ -100,7 +93,6 @@ func spawn_bullet() -> void:
 		return
 
 	pattern_packs = bullet_composer.create_pattern(global_position, composer_var)
-	# print(bullet_updater_2d)
 	bullet_updater_2d.spawn_bullet(pattern_packs)
 
 	pass
@@ -123,21 +115,47 @@ func create_bullet_updater() -> void:
 	pass
 
 
+#region Scheduler
+
 func setup_bullet_scheduler() -> void:
+	if !shoot_cooldown_timer:
+		setup_shoot_cooldown_timer()
+
+	if bullet_scheduler.do_start_delay:
+		if !start_delay_timer:  
+			setup_start_delay_timer()
+		start_delay_timer.start()
+	else:
+		start_next_scheduler_timing_interval()
+
 	spawn_timed.connect(spawn_bullet)
+
+
 	if bullet_scheduler.destroy_after_finish:
 		scheduler_completed.connect(queue_free)
 	pass
 
 func disconnect_bullet_scheduler() -> void:
-	spawn_timed.disconnect(spawn_bullet)
+	if !shoot_cooldown_timer: return
 
+	shoot_cooldown_timer.stop()
+	if start_delay_timer:
+		start_delay_timer.stop()
+		pass
+	spawn_timed.disconnect(spawn_bullet)
 	pass
 
 
+func activate_bullet_spawner() -> void:
+	setup_bullet_spawner()
+	pass
 
-func get_next_timing_wave() -> BulletTimingWave:
+func deactive_bullet_spanwer() -> void:
+	disconnect_bullet_scheduler()
+	reset_scheduler_interval()
+	pass
 
+func get_next_scheduler_timing_wave() -> BulletTimingWave:
 	if bullet_scheduler.loop_amout > 0:
 		if loop_count >= bullet_scheduler.loop_amout:
 			scheduler_completed.emit()
@@ -186,14 +204,20 @@ func get_next_timing_wave() -> BulletTimingWave:
 
 var timing_interval : Array[float] = []
 
-func start_next_interval() -> void:
+func start_next_scheduler_timing_interval() -> void:
 	if timing_interval.size() == 0:
-		var _timing_wave := get_next_timing_wave()
+		var _timing_wave := get_next_scheduler_timing_wave()
 		if ! _timing_wave: return
 		timing_interval.append_array(_timing_wave.timing_wave)
+	print(timing_interval)
 
 	spawn_timed.emit()
 	shoot_cooldown_timer.start(timing_interval.pop_front())
+
+func reset_scheduler_interval() -> void:
+	timing_interval.clear()
+	timing_wave_index = 0
+	pass
 
 
 func stop_scheduler() -> void:
@@ -202,6 +226,7 @@ func stop_scheduler() -> void:
 	pass
 
 func setup_shoot_cooldown_timer() -> void:
+	if shoot_cooldown_timer: return
 	shoot_cooldown_timer = Timer.new()
 	shoot_cooldown_timer.autostart = false
 	shoot_cooldown_timer.one_shot = true
@@ -209,22 +234,28 @@ func setup_shoot_cooldown_timer() -> void:
 	add_child(shoot_cooldown_timer)
 
 func _on_shoot_cooldown_timer_timeout() -> void:
-	start_next_interval()
+	start_next_scheduler_timing_interval()
 	pass
 
 
 func setup_start_delay_timer() -> void:
+	if start_delay_timer: return
+
 	start_delay_timer = Timer.new()
 	start_delay_timer.autostart = false
 	start_delay_timer.one_shot = true
+
 	if bullet_scheduler.is_rand_start_delay:
 		bullet_scheduler.start_delay_time = randf_range(bullet_scheduler.start_delay_min, bullet_scheduler.start_delay_max)
-
 	start_delay_timer.wait_time = bullet_scheduler.start_delay_time
+
 	start_delay_timer.timeout.connect(_on_start_delay_timer_timeout)
+
 	add_child(start_delay_timer)
 	
 func _on_start_delay_timer_timeout() -> void:
 
-	start_next_interval()
+	start_next_scheduler_timing_interval()
 	pass
+
+#endregion

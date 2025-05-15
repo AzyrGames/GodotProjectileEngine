@@ -35,12 +35,14 @@ class_name BulletTemplate2D
 @export_flags_2d_physics var collision_layer : int = 0:
 	set(value):
 		collision_layer = value
-		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_layer)
+		if bullet_area_rid:
+			PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_layer)
 
 @export_flags_2d_physics var collision_mask : int = 0:
 	set(value):
 		collision_mask = value
-		PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
+		if bullet_area_rid:
+			PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
 
 @export_group("Trigger")
 @export var trigger_name : String

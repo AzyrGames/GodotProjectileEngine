@@ -382,4 +382,3 @@ func caching_move_direction_math_value() -> void:
 # 		bullet_active_index.erase(index)
 # 		PS.area_set_shape_disabled(bullet_area_rid, index, true)
 #bullet_remove_index.clear()
-
