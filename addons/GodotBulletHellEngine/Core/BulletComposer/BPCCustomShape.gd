@@ -39,12 +39,12 @@ func get_custom_shape_points(_instance: Dictionary) -> Array:
 			elif point_per_spawn < 0:
 				for i in range(shape_path.point_count):
 					var _new_instance := _instance.duplicate()
-					_new_instance.position = shape_path.get_point_position(i)
+					_new_instance.position = shape_path.get_point_position(i) + _instance.position
 					_new_pack.append(_new_instance)
 			else:
 				for i in range(point_per_spawn):
 					var _new_instance := _instance.duplicate()
-					_new_instance.position = shape_path.get_point_position(_curve_point_idx)
+					_new_instance.position = shape_path.get_point_position(_curve_point_idx) + _instance.position
 					_new_pack.append(_new_instance)
 					_curve_point_idx += 1
 					if _curve_point_idx >= shape_path.point_count:
@@ -56,13 +56,13 @@ func get_custom_shape_points(_instance: Dictionary) -> Array:
 			elif point_per_spawn < 0:
 				for baked_point in shape_path.get_baked_points():
 					var _new_instance := _instance.duplicate()
-					_new_instance.position = baked_point
+					_new_instance.position = baked_point + _instance.position
 					_new_pack.append(_new_instance)
 			else:
 				var _baked_point := shape_path.get_baked_points()
 				for i in range(point_per_spawn):
 					var _new_instance := _instance.duplicate()
-					_new_instance.position = _baked_point[_curve_point_idx]
+					_new_instance.position = _baked_point[_curve_point_idx] + _instance.position
 					_new_pack.append(_new_instance)
 					_curve_point_idx += 1
 					if _curve_point_idx >= _baked_point.size():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxbdrmy4joq1r"]
+[gd_scene load_steps=18 format=3 uid="uid://dxbdrmy4joq1r"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_eo422"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_5vpdi"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="10_wt5si"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="11_5ia8x"]
 [ext_resource type="Script" uid="uid://diebaxds24ls3" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCStack2D.gd" id="11_tw13i"]
+[ext_resource type="Script" uid="uid://ddcmnskvuvj3v" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCCustomShape.gd" id="12_2lcou"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
 
@@ -55,6 +56,13 @@ start_delay_min = 0.0
 start_delay_max = 2.0
 metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
+[sub_resource type="Curve2D" id="Curve2D_2lcou"]
+bake_interval = 10.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, -100)
+}
+point_count = 3
+
 [node name="TestBpcSingleTarget" type="Node2D"]
 
 [node name="BulletEnvironment2D" type="Node2D" parent="."]
@@ -77,10 +85,17 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="BPCSingle2D" type="Node" parent="BulletComposer2D"]
 script = ExtResource("11_5ia8x")
+direction = Vector2(1, 1)
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
+
+[node name="BPCCustomShape" type="Node" parent="BulletComposer2D"]
+script = ExtResource("12_2lcou")
+shape_path = SubResource("Curve2D_2lcou")
+point_per_spawn = 3
+metadata/_custom_type_script = "uid://ddcmnskvuvj3v"
 
 [node name="BPCStack2D" type="Node" parent="BulletComposer2D"]
 script = ExtResource("11_tw13i")
-stack_amount = 10
+stack_amount = 4
 stack_distance = 20.0
 metadata/_custom_type_script = "uid://diebaxds24ls3"
