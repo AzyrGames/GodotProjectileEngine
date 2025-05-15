@@ -59,7 +59,6 @@ func get_random_point_in_shape(shape: Shape2D, origin_pos: Vector2) -> Vector2:
 			if _is_point_in_polygon(point, points):
 				return point
 			_while_false_safe += 1
-			print(_while_false_safe)
 		return origin_pos
 	else:
 		print_debug(shape, " is not supported Shape2D! Return Original bullet instance Position")

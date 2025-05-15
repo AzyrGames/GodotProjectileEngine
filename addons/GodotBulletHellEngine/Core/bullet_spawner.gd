@@ -121,21 +121,28 @@ func create_bullet_updater() -> void:
 func setup_bullet_scheduler() -> void:
 	if !shoot_cooldown_timer:
 		setup_shoot_cooldown_timer()
-
-	spawn_timed.connect(spawn_pattern)
+	if !spawn_timed.is_connected(spawn_pattern):
+		spawn_timed.connect(spawn_pattern)
 
 	if bullet_scheduler.do_start_delay:
 		if !start_delay_timer:  
 			setup_start_delay_timer()
 		start_delay_timer.start()
 	else:
-		spawn_timed.emit()
 		start_next_scheduler_timing_interval()
 
-
+	if !scheduler_completed.is_connected(_on_bullet_scheduler_completed):
+		scheduler_completed.connect(_on_bullet_scheduler_completed)
 
 	if bullet_scheduler.destroy_after_finish:
 		scheduler_completed.connect(queue_free)
+
+	pass
+
+func _on_bullet_scheduler_completed() -> void:
+	if bullet_scheduler.destroy_after_finish:
+		queue_free()
+	active = false
 
 	pass
 
@@ -146,15 +153,15 @@ func disconnect_bullet_scheduler() -> void:
 	if start_delay_timer:
 		start_delay_timer.stop()
 		pass
+	scheduler_completed.disconnect(_on_bullet_scheduler_completed)
 	spawn_timed.disconnect(spawn_pattern)
 	pass
 
 
 func activate_bullet_spawner() -> void:
+	connect_audio()
 	setup_bullet_spawner()
 	setup_bullet_scheduler()
-
-	connect_audio()
 
 	pass
 
@@ -166,13 +173,11 @@ func deactive_bullet_spanwer() -> void:
 
 func play_audio() -> void:
 	if !audio_stream: return
-	# print("audio")
 	audio_stream.playing = true
 	pass
 
 func connect_audio() -> void:
 	if !audio_stream: return
-	print("He")
 	spawn_timed.connect(play_audio)
 	pass
 
@@ -242,6 +247,7 @@ func start_next_scheduler_timing_interval() -> void:
 func reset_scheduler_interval() -> void:
 	timing_interval.clear()
 	timing_wave_index = 0
+	loop_count = 0
 	pass
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://chs7lfvhf0qma"]
+[gd_scene load_steps=16 format=3 uid="uid://chs7lfvhf0qma"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_5uxi6"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_ss7x4"]
@@ -8,13 +8,13 @@
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="6_wsp0m"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_scheduler.gd" id="7_18jnx"]
 [ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_timing_wave.gd" id="8_lu7fk"]
+[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotBulletHellEngine/Asset/Audio/laserShoot.wav" id="9_5uxi6"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="9_40710"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="10_myyaq"]
-[ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCPolygon2D.gd" id="11_paq1n"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3uc8j"]
 
-[sub_resource type="Resource" id="Resource_eo422"]
+[sub_resource type="Resource" id="Resource_43m15"]
 script = ExtResource("3_mv3ry")
 move_speed = 100.0
 bullet_pooling_amount = 500
@@ -28,7 +28,7 @@ texture_rotation = 0.0
 texture_scale = Vector2(1, 1)
 use_animation = false
 animation_name = ""
-collision_shape = SubResource("CircleShape2D_6hxpl")
+collision_shape = SubResource("CircleShape2D_3uc8j")
 collision_layer = 0
 collision_mask = 0
 trigger_name = ""
@@ -36,31 +36,19 @@ trigger_conditions = Array[ExtResource("6_wsp0m")]([])
 template_modules = Array[ExtResource("4_jfwbh")]([])
 metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
-[sub_resource type="Resource" id="Resource_tw13i"]
+[sub_resource type="Resource" id="Resource_ss7x4"]
 script = ExtResource("8_lu7fk")
-timing_wave = Array[float]([0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0])
+timing_wave = Array[float]([0.2, 0.2, 1.0])
 weight = 1.0
 metadata/_custom_type_script = "uid://c6uimt4tdvilk"
 
-[sub_resource type="Resource" id="Resource_ad06j"]
-script = ExtResource("8_lu7fk")
-timing_wave = Array[float]([0.5, 0.5, 1.0])
-weight = 1.0
-metadata/_custom_type_script = "uid://c6uimt4tdvilk"
-
-[sub_resource type="Resource" id="Resource_816n0"]
-script = ExtResource("8_lu7fk")
-timing_wave = Array[float]([0.1, 1.0])
-weight = 1.0
-metadata/_custom_type_script = "uid://c6uimt4tdvilk"
-
-[sub_resource type="Resource" id="Resource_2lcou"]
+[sub_resource type="Resource" id="Resource_5uxi6"]
 script = ExtResource("7_18jnx")
-timing_wave = Array[ExtResource("8_lu7fk")]([SubResource("Resource_tw13i"), SubResource("Resource_ad06j"), SubResource("Resource_816n0")])
-loop_type = 3
-loop_amout = -1
+timing_wave = Array[ExtResource("8_lu7fk")]([SubResource("Resource_ss7x4")])
+loop_type = 1
+loop_amout = 1
 destroy_after_finish = false
-do_start_delay = true
+do_start_delay = false
 start_delay_time = 1.0
 is_rand_start_delay = false
 start_delay_min = 0.0
@@ -75,26 +63,25 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="BulletComposer2D" type="Node2D" parent="."]
+[node name="BulletComposer2D3" type="Node2D" parent="."]
 script = ExtResource("9_40710")
 composer_name = "simple_1"
 metadata/_custom_type_script = "uid://bc73oiea731jc"
 
-[node name="BPCSingle2D" type="Node" parent="BulletComposer2D"]
+[node name="BPCSingle2D" type="Node" parent="BulletComposer2D3"]
 script = ExtResource("10_myyaq")
-rotation_speed = 0.174533
+rotation_speed = 1.5708
 rotation_process_type = 1
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
-[node name="BPCPolygon2D" type="Node" parent="BulletComposer2D"]
-script = ExtResource("11_paq1n")
-polygon_sides = 30
-spread_out = true
-metadata/_custom_type_script = "uid://httdfxyybbie"
-
-[node name="BulletSpawner2D2" type="Node2D" parent="."]
+[node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("audio_stream")]
 script = ExtResource("2_ss7x4")
 bullet_composer_name = "simple_1"
-bullet_template_2d = SubResource("Resource_eo422")
-bullet_scheduler = SubResource("Resource_2lcou")
+bullet_template_2d = SubResource("Resource_43m15")
+bullet_scheduler = SubResource("Resource_5uxi6")
+audio_stream = NodePath("AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BulletSpawner2D"]
+stream = ExtResource("9_5uxi6")
+volume_db = -20.0

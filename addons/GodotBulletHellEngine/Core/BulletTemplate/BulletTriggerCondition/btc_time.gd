@@ -1,7 +1,7 @@
 extends BulletTriggerCondition2D
 class_name BTCTime
 
-@export var time : float
+@export var time : float = 1.0
 
 func check_trigger_condition(trigger_name: String, active_bullet_instances: Array[BulletInstance2D]) -> void:
 	if !is_active : return
@@ -15,6 +15,4 @@ func check_trigger_condition(trigger_name: String, active_bullet_instances: Arra
 				continue
 			trigger_times += 1 
 			_bullet_instance.trigger_dict.set("trigger_times", trigger_times)
-
-
 	pass
