@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dxbdrmy4joq1r"]
+[gd_scene load_steps=25 format=3 uid="uid://dxbdrmy4joq1r"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_eo422"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_5vpdi"]
@@ -11,7 +11,13 @@
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="10_wt5si"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="11_5ia8x"]
 [ext_resource type="Script" uid="uid://diebaxds24ls3" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCStack2D.gd" id="11_tw13i"]
-[ext_resource type="Script" uid="uid://ddcmnskvuvj3v" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCCustomShape.gd" id="12_2lcou"]
+[ext_resource type="Script" uid="uid://eg6m5x1621je" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCArea.gd" id="12_2lcou"]
+[ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCPolygon2D.gd" id="13_vyypf"]
+[ext_resource type="Script" uid="uid://5bsqmbay6ayh" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCGroup.gd" id="13_xc3v4"]
+[ext_resource type="Script" uid="uid://vdqr1u5vxo53" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCLoop.gd" id="14_8hcx8"]
+[ext_resource type="Script" uid="uid://c5ihqm6fyupbk" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSpeedMod2D.gd" id="15_c0uv1"]
+[ext_resource type="Script" uid="uid://oop4ldiu5lnc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSpread2D.gd" id="16_v13v7"]
+[ext_resource type="Script" uid="uid://ddcmnskvuvj3v" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCCustomShape.gd" id="18_c0uv1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
 
@@ -39,7 +45,7 @@ metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
 [sub_resource type="Resource" id="Resource_tw13i"]
 script = ExtResource("9_jkm88")
-timing_wave = Array[float]([1.0])
+timing_wave = Array[float]([0.1])
 weight = 1.0
 metadata/_custom_type_script = "uid://c6uimt4tdvilk"
 
@@ -56,12 +62,13 @@ start_delay_min = 0.0
 start_delay_max = 2.0
 metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
-[sub_resource type="Curve2D" id="Curve2D_2lcou"]
-bake_interval = 10.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_2lcou"]
+
+[sub_resource type="Curve2D" id="Curve2D_v13v7"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, -100)
+"points": PackedVector2Array(0, 0, 0, 0, 1, 0)
 }
-point_count = 3
+point_count = 1
 
 [node name="TestBpcSingleTarget" type="Node2D"]
 
@@ -72,13 +79,14 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BulletSpawner2D2" type="Node2D" parent="."]
+position = Vector2(245, -80)
 script = ExtResource("2_5vpdi")
 bullet_composer_name = "simple_1"
 bullet_template_2d = SubResource("Resource_eo422")
 bullet_scheduler = SubResource("Resource_2lcou")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="BulletComposer2D" type="Node2D" parent="."]
+[node name="BulletComposer2D" type="Node" parent="."]
 script = ExtResource("10_wt5si")
 composer_name = "simple_1"
 metadata/_custom_type_script = "uid://bc73oiea731jc"
@@ -88,14 +96,38 @@ script = ExtResource("11_5ia8x")
 direction = Vector2(1, 1)
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
-[node name="BPCCustomShape" type="Node" parent="BulletComposer2D"]
-script = ExtResource("12_2lcou")
-shape_path = SubResource("Curve2D_2lcou")
-point_per_spawn = 3
-metadata/_custom_type_script = "uid://ddcmnskvuvj3v"
-
 [node name="BPCStack2D" type="Node" parent="BulletComposer2D"]
 script = ExtResource("11_tw13i")
 stack_amount = 4
 stack_distance = 20.0
 metadata/_custom_type_script = "uid://diebaxds24ls3"
+
+[node name="BPCArea" type="Node" parent="BulletComposer2D"]
+script = ExtResource("12_2lcou")
+area_shape = SubResource("CircleShape2D_2lcou")
+metadata/_custom_type_script = "uid://eg6m5x1621je"
+
+[node name="BPCGroup" type="Node" parent="BulletComposer2D"]
+script = ExtResource("13_xc3v4")
+metadata/_custom_type_script = "uid://5bsqmbay6ayh"
+
+[node name="BPCLoop" type="Node" parent="BulletComposer2D"]
+script = ExtResource("14_8hcx8")
+metadata/_custom_type_script = "uid://vdqr1u5vxo53"
+
+[node name="BPCSpeedMod2D" type="Node" parent="BulletComposer2D"]
+script = ExtResource("15_c0uv1")
+metadata/_custom_type_script = "uid://c5ihqm6fyupbk"
+
+[node name="BPCSpread2D" type="Node" parent="BulletComposer2D"]
+script = ExtResource("16_v13v7")
+metadata/_custom_type_script = "uid://oop4ldiu5lnc"
+
+[node name="BPCPolygon2D" type="Node" parent="BulletComposer2D"]
+script = ExtResource("13_vyypf")
+metadata/_custom_type_script = "uid://httdfxyybbie"
+
+[node name="BPCCustomShape" type="Node" parent="BulletComposer2D"]
+script = ExtResource("18_c0uv1")
+shape_path = SubResource("Curve2D_v13v7")
+metadata/_custom_type_script = "uid://ddcmnskvuvj3v"

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 class_name BulletComposer2D
 
 @export var composer_name : String:
