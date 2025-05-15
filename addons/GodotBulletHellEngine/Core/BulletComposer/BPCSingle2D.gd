@@ -24,12 +24,12 @@ enum DirectionType {
 @export_group("Rotation")
 
 @export_range(-360, 360, 0.1, "radians_as_degrees") var rotation : float = 0
-@export var rotation_speed : float = 0
+@export_range(-360, 360, 0.1, "radians_as_degrees") var rotation_speed : float = 0
 
 
 enum RotationType {
 	PHYSICS, ## rotation speed change in physics_process
-	PATTERN ## rotation speed each time pattern was processed
+	TICKS ## rotation speed each time pattern was processed
 }
 
 @export var rotation_process_type : RotationType
@@ -42,7 +42,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if rotation_process_type == RotationType.PHYSICS:
 		for _composer_var in composer_var_array:
-			_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(rotation_speed) * delta)
+			_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + rotation_speed * delta)
 			pass
 
 
@@ -67,12 +67,11 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 		var _rand_angle : float
 		if random_angle != 0:
 			_rand_angle = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
-			# _composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + )
 
 		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle)).normalized()
 
-	if rotation_process_type == RotationType.PATTERN:
-		_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + deg_to_rad(rotation_speed))
+	if rotation_process_type == RotationType.TICKS:
+		_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + rotation_speed)
 
 	return pattern_packs
 

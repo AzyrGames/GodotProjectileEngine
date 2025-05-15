@@ -78,7 +78,6 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="BulletSpawner2D2" type="Node2D" parent="."]
 script = ExtResource("2_5vpdi")
-active = false
 bullet_composer_name = "simple_1"
 bullet_template_2d = SubResource("Resource_eo422")
 bullet_scheduler = SubResource("Resource_2lcou")
