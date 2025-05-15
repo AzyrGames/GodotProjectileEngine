@@ -142,7 +142,7 @@ func update_bullet_instances(delta: float) -> void:
 		pass
 
 
-func spawn_bullet(pattern_packs: Array) -> void:
+func spawn_bullet_pattern(pattern_packs: Array) -> void:
 	for instance : Dictionary in pattern_packs:
 		_bullet_instance = bullet_instance_array[bullet_pooling_index]
 		_bullet_instance.base_move_direction = instance.direction

@@ -5,8 +5,6 @@ class_name BulletTemplate2D
 
 
 @export var move_speed : float = 100
-@export_range(-360, 360, 0.1, "radians_as_degrees") var direction_rotation : float = 0.0
-
 @export var bullet_pooling_amount : int = 500
 
 @export var life_time_max : float = 10.0
@@ -20,7 +18,6 @@ class_name BulletTemplate2D
 @export var texture_modulate : Color = Color(1, 1, 1, 1)
 @export var texture_rotate_direction: bool = false
 
-# @export var texture_offset : Vector2 = Vector2.ZERO
 @export_range(-360.0, 360.0) var texture_rotation : float
 @export var texture_scale : Vector2 = Vector2.ONE
 

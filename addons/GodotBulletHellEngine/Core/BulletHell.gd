@@ -5,15 +5,9 @@ extends Node
 signal bullet_trigger_activated(trigger_name: String, bullet_instance: BulletInstance2D)
 
 var active_bullet_count : int
-
-# var bullet_template_2d_nodes : Dictionary[RID, BulletTemplate2D]
+var bullet_environment : BulletEnvironment2D
 
 var bullet_updater_2d_nodes : Dictionary[RID, BulletUpdater2D]
-
-var bullet_environment : BulletEnvironment2D
-# var 
-
-var bullet_homing_targets : Dictionary[String, Array]
 
 var bullet_composer_nodes : Dictionary[String, BulletComposer2D]
 
@@ -21,8 +15,6 @@ var bullet_composer_nodes : Dictionary[String, BulletComposer2D]
 
 func get_bullet_count() -> int:
 	active_bullet_count = 0
-	# if !bullet_updater_2d_nodes: return
-	# if !bullet_template_2d_nodes.size() <= 0: return 0
 
 	for bullet_updater in bullet_updater_2d_nodes.values():
 		if bullet_updater:
@@ -34,7 +26,6 @@ func get_bullet_count() -> int:
 
 
 func clear() -> void:
-	# bullet_template_2d_nodes.clear()
 	bullet_updater_2d_nodes.clear()
 	bullet_composer_nodes.clear()
 	pass

@@ -1,9 +1,6 @@
 extends Node2D
 class_name BulletComposer2D
 
-# @export var spawn_timing: 
-# @export var spawn_maker : Marker2D
-
 @export var composer_name : String:
 	set(value):
 		if composer_name != null:
@@ -36,6 +33,3 @@ func create_pattern(_position: Vector2, _composer_var : Dictionary) -> Array:
 		pattern_packs = pattern_component.process_pattern(pattern_packs, _composer_var)
 
 	return pattern_packs
-
-
-# func _get_spawn_maker_pos() -> Vector2:

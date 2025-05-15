@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dxbdrmy4joq1r"]
+[gd_scene load_steps=16 format=3 uid="uid://dxbdrmy4joq1r"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_eo422"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_5vpdi"]
@@ -10,14 +10,13 @@
 [ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_timing_wave.gd" id="9_jkm88"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="10_wt5si"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="11_5ia8x"]
-[ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCPolygon2D.gd" id="13_vyypf"]
+[ext_resource type="Script" uid="uid://diebaxds24ls3" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCStack2D.gd" id="11_tw13i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
 
 [sub_resource type="Resource" id="Resource_eo422"]
 script = ExtResource("3_vyypf")
 move_speed = 100.0
-direction_rotation = 0.0
 bullet_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 300.0
@@ -39,29 +38,17 @@ metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
 [sub_resource type="Resource" id="Resource_tw13i"]
 script = ExtResource("9_jkm88")
-timing_wave = Array[float]([0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0])
-weight = 1.0
-metadata/_custom_type_script = "uid://c6uimt4tdvilk"
-
-[sub_resource type="Resource" id="Resource_ad06j"]
-script = ExtResource("9_jkm88")
-timing_wave = Array[float]([0.5, 0.5, 1.0])
-weight = 1.0
-metadata/_custom_type_script = "uid://c6uimt4tdvilk"
-
-[sub_resource type="Resource" id="Resource_816n0"]
-script = ExtResource("9_jkm88")
-timing_wave = Array[float]([0.1, 1.0])
+timing_wave = Array[float]([1.0])
 weight = 1.0
 metadata/_custom_type_script = "uid://c6uimt4tdvilk"
 
 [sub_resource type="Resource" id="Resource_2lcou"]
 script = ExtResource("8_avibu")
-timing_wave = Array[ExtResource("9_jkm88")]([SubResource("Resource_tw13i"), SubResource("Resource_ad06j"), SubResource("Resource_816n0")])
-loop_type = 3
+timing_wave = Array[ExtResource("9_jkm88")]([SubResource("Resource_tw13i")])
+loop_type = 1
 loop_amout = -1
 destroy_after_finish = false
-do_start_delay = true
+do_start_delay = false
 start_delay_time = 1.0
 is_rand_start_delay = false
 start_delay_min = 0.0
@@ -92,8 +79,8 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 script = ExtResource("11_5ia8x")
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
-[node name="BPCPolygon2D" type="Node" parent="BulletComposer2D"]
-script = ExtResource("13_vyypf")
-polygon_sides = 10
-spread_out = true
-metadata/_custom_type_script = "uid://httdfxyybbie"
+[node name="BPCStack2D" type="Node" parent="BulletComposer2D"]
+script = ExtResource("11_tw13i")
+stack_amount = 10
+stack_distance = 20.0
+metadata/_custom_type_script = "uid://diebaxds24ls3"

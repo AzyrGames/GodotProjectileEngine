@@ -13,9 +13,6 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 		_new_bullet_packs.append(_new_instance)
 	return _new_bullet_packs
 
-# func _add_bullet_(instance: Dictionary) -> Array:
-
-
 func get_random_point_in_shape(shape: Shape2D, origin_pos: Vector2) -> Vector2:
 	if shape is CircleShape2D:
 		var radius = shape.radius

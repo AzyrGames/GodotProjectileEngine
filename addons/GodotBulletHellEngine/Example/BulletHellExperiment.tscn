@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://chs7lfvhf0qma"]
+[gd_scene load_steps=18 format=3 uid="uid://chs7lfvhf0qma"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_5uxi6"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_ss7x4"]
@@ -11,14 +11,12 @@
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="9_40710"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="10_myyaq"]
 [ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCPolygon2D.gd" id="11_paq1n"]
-[ext_resource type="Script" uid="uid://oop4ldiu5lnc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSpread2D.gd" id="12_ss7x4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
 
 [sub_resource type="Resource" id="Resource_eo422"]
 script = ExtResource("3_mv3ry")
 move_speed = 100.0
-direction_rotation = 0.0
 bullet_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 300.0
@@ -77,13 +75,6 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="BulletSpawner2D2" type="Node2D" parent="."]
-script = ExtResource("2_ss7x4")
-bullet_composer_name = "simple_1"
-bullet_template_2d = SubResource("Resource_eo422")
-bullet_scheduler = SubResource("Resource_2lcou")
-metadata/_custom_type_script = "uid://cnqgcej10tinn"
-
 [node name="BulletComposer2D" type="Node2D" parent="."]
 script = ExtResource("9_40710")
 composer_name = "simple_1"
@@ -97,10 +88,13 @@ metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="BPCPolygon2D" type="Node" parent="BulletComposer2D"]
 script = ExtResource("11_paq1n")
-polygon_sides = 10
+polygon_sides = 30
 spread_out = true
 metadata/_custom_type_script = "uid://httdfxyybbie"
 
-[node name="BPCSpread2D" type="Node" parent="BulletComposer2D"]
-script = ExtResource("12_ss7x4")
-metadata/_custom_type_script = "uid://oop4ldiu5lnc"
+[node name="BulletSpawner2D2" type="Node2D" parent="."]
+script = ExtResource("2_ss7x4")
+bullet_composer_name = "simple_1"
+bullet_template_2d = SubResource("Resource_eo422")
+bullet_scheduler = SubResource("Resource_2lcou")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"

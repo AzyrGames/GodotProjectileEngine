@@ -86,14 +86,14 @@ func _physics_process(delta: float) -> void:
 
 var composer_var : Dictionary
 
-func spawn_bullet() -> void:
+func spawn_pattern() -> void:
 	if !active: return
 	if !BulletHell.bullet_environment:
 		print_debug("No Projectile Environment")
 		return
 
 	pattern_packs = bullet_composer.create_pattern(global_position, composer_var)
-	bullet_updater_2d.spawn_bullet(pattern_packs)
+	bullet_updater_2d.spawn_bullet_pattern(pattern_packs)
 
 	pass
 
@@ -128,7 +128,7 @@ func setup_bullet_scheduler() -> void:
 	else:
 		start_next_scheduler_timing_interval()
 
-	spawn_timed.connect(spawn_bullet)
+	spawn_timed.connect(spawn_pattern)
 
 
 	if bullet_scheduler.destroy_after_finish:
@@ -142,7 +142,7 @@ func disconnect_bullet_scheduler() -> void:
 	if start_delay_timer:
 		start_delay_timer.stop()
 		pass
-	spawn_timed.disconnect(spawn_bullet)
+	spawn_timed.disconnect(spawn_pattern)
 	pass
 
 
@@ -209,7 +209,6 @@ func start_next_scheduler_timing_interval() -> void:
 		var _timing_wave := get_next_scheduler_timing_wave()
 		if ! _timing_wave: return
 		timing_interval.append_array(_timing_wave.timing_wave)
-	print(timing_interval)
 
 	spawn_timed.emit()
 	shoot_cooldown_timer.start(timing_interval.pop_front())
