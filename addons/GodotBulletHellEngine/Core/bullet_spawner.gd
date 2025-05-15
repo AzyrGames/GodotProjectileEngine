@@ -18,6 +18,8 @@ var bullet_composer : BulletComposer2D
 @export var bullet_template_2d : BulletTemplate2D
 @export var bullet_scheduler : BulletScheduler
 
+@export var audio_stream: AudioStreamPlayer
+
 var pattern_packs: Array
 
 var start_delay_timer : Timer
@@ -46,9 +48,10 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if active:
-		setup_bullet_spawner()
-		if start_delay_timer:
-			start_delay_timer.start()
+		activate_bullet_spawner()
+		# setup_bullet_spawner()
+		# if start_delay_timer:
+		# 	start_delay_timer.start()
 
 	pass
 
@@ -63,8 +66,6 @@ func setup_bullet_spawner() -> void:
 		create_bullet_updater()
 
 	bullet_updater_2d = BulletHell.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
-
-	setup_bullet_scheduler()
 
 
 
@@ -121,18 +122,21 @@ func setup_bullet_scheduler() -> void:
 	if !shoot_cooldown_timer:
 		setup_shoot_cooldown_timer()
 
+	spawn_timed.connect(spawn_pattern)
+
 	if bullet_scheduler.do_start_delay:
 		if !start_delay_timer:  
 			setup_start_delay_timer()
 		start_delay_timer.start()
 	else:
+		spawn_timed.emit()
 		start_next_scheduler_timing_interval()
 
-	spawn_timed.connect(spawn_pattern)
 
 
 	if bullet_scheduler.destroy_after_finish:
 		scheduler_completed.connect(queue_free)
+
 	pass
 
 func disconnect_bullet_scheduler() -> void:
@@ -148,11 +152,33 @@ func disconnect_bullet_scheduler() -> void:
 
 func activate_bullet_spawner() -> void:
 	setup_bullet_spawner()
+	setup_bullet_scheduler()
+
+	connect_audio()
+
 	pass
 
 func deactive_bullet_spanwer() -> void:
 	disconnect_bullet_scheduler()
 	reset_scheduler_interval()
+	disconnect_audio()
+	pass
+
+func play_audio() -> void:
+	if !audio_stream: return
+	# print("audio")
+	audio_stream.playing = true
+	pass
+
+func connect_audio() -> void:
+	if !audio_stream: return
+	print("He")
+	spawn_timed.connect(play_audio)
+	pass
+
+func disconnect_audio() -> void:
+	if !audio_stream: return
+	spawn_timed.disconnect(play_audio)
 	pass
 
 func get_next_scheduler_timing_wave() -> BulletTimingWave:
