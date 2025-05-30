@@ -22,6 +22,7 @@ script = ExtResource("7_k6apa")
 time = 1.0
 is_active = true
 one_shot = true
+destroy_on_trigger = true
 metadata/_custom_type_script = "uid://cpk6t02ukyus8"
 
 [sub_resource type="Resource" id="Resource_xq217"]
