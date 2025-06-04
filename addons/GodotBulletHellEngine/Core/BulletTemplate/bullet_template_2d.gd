@@ -13,6 +13,7 @@ class_name BulletTemplate2D
 @export_group("Texture")
 
 @export var texture : Texture2D
+@export var texture_visible : bool = true
 @export var texture_z_index : int = 0
 #Rotate the texture based on the direction.
 @export var texture_modulate : Color = Color(1, 1, 1, 1)

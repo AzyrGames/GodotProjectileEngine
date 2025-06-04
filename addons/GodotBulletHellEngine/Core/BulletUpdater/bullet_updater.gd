@@ -3,6 +3,7 @@ class_name BulletUpdater2D
 
 
 var bullet_texture : Texture2D
+var bullet_texture_visible : bool
 var bullet_texture_modulate : Color
 var bullet_animated_sprite : SpriteFrames
 var bullet_animation_name : String
@@ -60,6 +61,7 @@ func _draw() -> void:
 	draw_bullet_texture()
 
 func draw_bullet_texture() -> void:
+	if !bullet_template_2d.texture_visible: return
 	z_index = bullet_template_2d.texture_z_index
 	bullet_texture = bullet_template_2d.texture
 	bullet_texture_modulate = bullet_template_2d.texture_modulate
