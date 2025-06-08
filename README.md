@@ -1,13 +1,6 @@
-# Godot Bullet Hell Engine
+# Godot Projectile Engine
 
-Godot Bullet Hell Engine is a plugin made for [GodotEngine](https://godotengine.org) that helps create and spawn massive amounts of bullets/projectiles easily and efficiently.
+The Godot Projectile Engine is an addon designed for [Godot Engine](https://godotengine.org) that facilitates the creation and spawning of massive amounts of projectiles with ease and efficiency.
 
-This addon is a Work In Progress, breaking changes!
+This addon is a Work In Progress and contains many breaking changes!
 
-**GodotBulletHellEngine** Features:
-- Easy to use
-- Use **Object pooling** to improve performance
-- Use the Component system for a fast and easy bullet pattern-making process
-- Using Area2D Collision
-- Customizable Texture, size, rotation,...
-- Customizable Speed, direction, moving path, ...
