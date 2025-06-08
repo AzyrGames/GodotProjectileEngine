@@ -1,16 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://chs7lfvhf0qma"]
+[gd_scene load_steps=18 format=3 uid="uid://chs7lfvhf0qma"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/BulletEnvironment/bullet_environment.gd" id="1_5uxi6"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/BulletSpawner/bullet_spawner.gd" id="2_ss7x4"]
 [ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/bullet_template_2d.gd" id="3_mv3ry"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="4_jfwbh"]
+[ext_resource type="Script" uid="uid://eg6m5x1621je" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BulletPatternComponent/BPCArea.gd" id="4_ss7x4"]
 [ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_circle_1.png" id="5_plb11"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="6_wsp0m"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_scheduler.gd" id="7_18jnx"]
 [ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotBulletHellEngine/Core/BulletScheduler/bullet_timing_wave.gd" id="8_lu7fk"]
 [ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotBulletHellEngine/Asset/Audio/laserShoot.wav" id="9_5uxi6"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/bullet_composer.gd" id="9_40710"]
-[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BPCSingle2D.gd" id="10_myyaq"]
+[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotBulletHellEngine/Core/BulletComposer/BulletPatternComponent/BPCSingle2D.gd" id="10_myyaq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ss7x4"]
+radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3uc8j"]
 
@@ -74,6 +78,11 @@ script = ExtResource("10_myyaq")
 rotation_speed = 1.5708
 rotation_process_type = 1
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
+
+[node name="BPCArea" type="Node" parent="BulletComposer2D3"]
+script = ExtResource("4_ss7x4")
+area_shape = SubResource("CircleShape2D_ss7x4")
+metadata/_custom_type_script = "uid://eg6m5x1621je"
 
 [node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("audio_stream")]
 script = ExtResource("2_ss7x4")
