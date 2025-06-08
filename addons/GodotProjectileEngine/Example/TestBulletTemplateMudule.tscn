@@ -1,16 +1,16 @@
 [gd_scene load_steps=16 format=3 uid="uid://dxbdrmy4joq1r"]
 
-[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotProjectileEngine/Core/ProjectileEnvironment/projectile_environment.gd" id="1_eo422"]
-[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotProjectileEngine/Core/ProjectileSpawner/projectile_spawner.gd" id="2_5vpdi"]
-[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/projectile_template_2d.gd" id="3_vyypf"]
-[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTemplateModule/projectile_template_module.gd" id="4_n1gly"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Bullet/bullet_circle_1.png" id="5_n8a0l"]
-[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTriggerCondition/projectile_trigger_condition.gd" id="6_b06c0"]
-[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_scheduler.gd" id="8_avibu"]
-[ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_wave.gd" id="9_jkm88"]
-[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotProjectileEngine/Example/Asset/Audio/laserShoot.wav" id="9_tw13i"]
-[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotProjectileEngine/Core/PatternComposer/pattern_composer.gd" id="10_wt5si"]
-[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotProjectileEngine/Core/PatternComposer/ProjectilePatternComponent/PPCSingle2D.gd" id="11_5ia8x"]
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotProjectileEngine/Core/BulletEnvironment/bullet_environment.gd" id="1_eo422"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotProjectileEngine/Core/BulletSpawner/bullet_spawner.gd" id="2_5vpdi"]
+[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/bullet_template_2d.gd" id="3_vyypf"]
+[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="4_n1gly"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Asset/Bullet/bullet_circle_1.png" id="5_n8a0l"]
+[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="6_b06c0"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/BulletScheduler/bullet_scheduler.gd" id="8_avibu"]
+[ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotProjectileEngine/Core/BulletScheduler/bullet_timing_wave.gd" id="9_jkm88"]
+[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotProjectileEngine/Asset/Audio/laserShoot.wav" id="9_tw13i"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/GodotProjectileEngine/Core/BulletComposer/bullet_composer.gd" id="10_wt5si"]
+[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/GodotProjectileEngine/Core/BulletComposer/BulletPatternComponent/BPCSingle2D.gd" id="11_5ia8x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6hxpl"]
 
@@ -57,7 +57,7 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TestBpcSingleTarget" type="Node2D"]
 
-[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+[node name="BulletEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_eo422")
 metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
@@ -76,11 +76,11 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 stream = ExtResource("9_tw13i")
 volume_db = -20.0
 
-[node name="PatternComposer2D" type="Node" parent="."]
+[node name="BulletComposer2D" type="Node" parent="."]
 script = ExtResource("10_wt5si")
 composer_name = "simple_1"
 metadata/_custom_type_script = "uid://bc73oiea731jc"
 
-[node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
+[node name="BPCSingle2D" type="Node" parent="BulletComposer2D"]
 script = ExtResource("11_5ia8x")
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
