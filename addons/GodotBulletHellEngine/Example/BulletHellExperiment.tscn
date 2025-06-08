@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://chs7lfvhf0qma"]
 
-[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/bullet_environment.gd" id="1_5uxi6"]
-[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/bullet_spawner.gd" id="2_ss7x4"]
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotBulletHellEngine/Core/BulletEnvironment/bullet_environment.gd" id="1_5uxi6"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotBulletHellEngine/Core/BulletSpawner/bullet_spawner.gd" id="2_ss7x4"]
 [ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/bullet_template_2d.gd" id="3_mv3ry"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotBulletHellEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="4_jfwbh"]
 [ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotBulletHellEngine/Asset/Bullet/bullet_circle_1.png" id="5_plb11"]
@@ -21,6 +21,7 @@ bullet_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 300.0
 texture = ExtResource("5_plb11")
+texture_visible = true
 texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
 texture_rotate_direction = false
@@ -46,7 +47,7 @@ metadata/_custom_type_script = "uid://c6uimt4tdvilk"
 script = ExtResource("7_18jnx")
 timing_wave = Array[ExtResource("8_lu7fk")]([SubResource("Resource_ss7x4")])
 loop_type = 1
-loop_amout = 1
+loop_amout = -1
 destroy_after_finish = false
 do_start_delay = false
 start_delay_time = 1.0
