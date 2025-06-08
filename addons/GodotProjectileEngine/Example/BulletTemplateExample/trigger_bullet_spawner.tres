@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="BulletTemplate2D" load_steps=6 format=3 uid="uid://32opcbcipb7c"]
+[gd_resource type="Resource" script_class="ProjectileTemplate2D" load_steps=6 format=3 uid="uid://32opcbcipb7c"]
 
-[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/bullet_template_2d.gd" id="1_thups"]
-[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/BulletTemplateModule/bullet_template_module.gd" id="2_j8wxk"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Asset/Bullet/bullet_circle_1.png" id="3_34qnb"]
-[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/BulletTemplate/BulletTriggerCondition/bullet_trigger_condition.gd" id="4_lyf73"]
+[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/projectile_template_2d.gd" id="1_thups"]
+[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTemplateModule/projectile_template_module.gd" id="2_j8wxk"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Bullet/bullet_circle_1.png" id="3_34qnb"]
+[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTriggerCondition/projectile_trigger_condition.gd" id="4_lyf73"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_336a5"]
 radius = 5.0
