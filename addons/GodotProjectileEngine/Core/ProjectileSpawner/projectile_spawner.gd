@@ -93,7 +93,7 @@ func spawn_pattern() -> void:
 		print_debug("No Projectile Environment")
 		return
 
-	pattern_packs = bullet_composer.create_pattern(global_position, composer_var)
+	pattern_packs = bullet_composer.request_pattern(global_position, composer_var)
 	bullet_updater_2d.spawn_bullet_pattern(pattern_packs)
 
 	pass

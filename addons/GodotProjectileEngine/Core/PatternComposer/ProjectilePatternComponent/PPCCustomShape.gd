@@ -72,5 +72,3 @@ func get_custom_shape_points(_instance: Dictionary) -> Array:
 		_curve_point_idx = 0
 
 	return _new_pack
-
-

@@ -84,3 +84,12 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_wi7lg")
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
+
+[node name="PatternComposer2D2" type="Node" parent="."]
+script = ExtResource("10_o5g0d")
+composer_name = "simple_2"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PPCSingle2D" type="Node" parent="PatternComposer2D2"]
+script = ExtResource("11_wi7lg")
+metadata/_custom_type_script = "uid://bhju4glf6a5nr"
