@@ -2,16 +2,11 @@ extends Node2D
 class_name BulletEnvironment2D
 
 
-func _enter_tree() -> void:
-	if BulletHell.bullet_environment: return 
-	BulletHell.bullet_environment = self
-	pass
-func _exit_tree() -> void:
-	BulletHell.bullet_environment = null
-	pass
-
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	BulletHell.bullet_environment = self
 	pass # Replace with function body.
+
 
 
 func _physics_process(delta: float) -> void:
@@ -30,7 +25,6 @@ func bullet_collided(bullet_area_rid: RID, shape_idx: int) -> void:
 		return
 
 	BulletHell.bullet_updater_2d_nodes[bullet_area_rid].process_bullet_collided(shape_idx)
-
 
 func get_bullet_damage(bullet_area_rid: RID) -> int:
 	if !BulletHell.bullet_updater_2d_nodes.has(bullet_area_rid): return 0
