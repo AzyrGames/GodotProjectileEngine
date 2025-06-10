@@ -14,3 +14,4 @@ mono_crash.*.json
 
 .vscode/
 project.godot
+Test/
