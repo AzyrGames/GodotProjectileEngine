@@ -12,6 +12,5 @@ export_credentials.cfg
 data_*/
 mono_crash.*.json
 
+# VSCode-specific ignores
 .vscode/
-project.godot
-Test/

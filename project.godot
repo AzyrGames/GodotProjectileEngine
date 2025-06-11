@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="GodotProjectileEngine"
+config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
+
+[autoload]
+
+ProjectileEngine="*res://addons/GodotProjectileEngine/GodotProjectileEngine.gd"
+
+[display]
+
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GodotProjectileEngine/plugin.cfg")
+
+[global_group]
+
+HomingTarget=""
+TargetNode=""
+
+[physics]
+
+2d/physics_engine="Rapier2D"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
