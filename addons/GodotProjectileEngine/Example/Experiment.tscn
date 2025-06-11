@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://chs7lfvhf0qma"]
+[gd_scene load_steps=15 format=3 uid="uid://chs7lfvhf0qma"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/GodotProjectileEngine/Core/ProjectileEnvironment/projectile_environment.gd" id="1_3jruw"]
 [ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotProjectileEngine/Example/Asset/Audio/laserShoot.wav" id="2_7xiqb"]
@@ -37,15 +37,9 @@ trigger_conditions = Array[ExtResource("7_d4dpm")]([])
 template_modules = Array[ExtResource("5_m040t")]([])
 metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
-[sub_resource type="Resource" id="Resource_ss7x4"]
-script = ExtResource("9_3vsd0")
-timing_wave = Array[float]([0.2, 0.2, 1.0])
-weight = 1.0
-metadata/_custom_type_script = "uid://c6uimt4tdvilk"
-
-[sub_resource type="Resource" id="Resource_5uxi6"]
+[sub_resource type="Resource" id="Resource_3jruw"]
 script = ExtResource("8_ixyja")
-timing_wave = Array[ExtResource("9_3vsd0")]([SubResource("Resource_ss7x4")])
+timing_wave = Array[ExtResource("9_3vsd0")]([])
 loop_type = 1
 loop_amout = -1
 destroy_after_finish = false
@@ -72,7 +66,7 @@ volume_db = -20.0
 script = ExtResource("3_4my7g")
 bullet_composer_name = "simple_1"
 bullet_template_2d = SubResource("Resource_43m15")
-bullet_scheduler = SubResource("Resource_5uxi6")
+timing_scheduler = SubResource("Resource_3jruw")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
