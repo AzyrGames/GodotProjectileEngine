@@ -1,18 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbxy347n3t7je"]
+[gd_scene load_steps=14 format=3 uid="uid://dbxy347n3t7je"]
 
 [ext_resource type="Script" uid="uid://b3yr2gtochpwu" path="res://experiments/experiment_timing_scheduler/test_timing_scheduler.gd" id="1_xryrm"]
 [ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_cooldown.gd" id="2_f5ixd"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="2_xryrm"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="4_kgfhc"]
+[ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_2d.gd" id="5_ekkbc"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_f5pqv"]
+[ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCSingle2D.gd" id="6_f5pqv"]
+[ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_module/projectile_template_module.gd" id="6_klc8c"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_star_1.png" id="7_7435j"]
+[ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_trigger_condition/projectile_trigger_condition.gd" id="8_jbyt8"]
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="11_klc8c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ekkbc"]
+
+[sub_resource type="Resource" id="Resource_wjid1"]
+script = ExtResource("5_ekkbc")
+move_speed = 100.0
+bullet_pooling_amount = 500
+life_time_max = 10.0
+life_distance_max = 300.0
+texture = ExtResource("7_7435j")
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+texture_rotate_direction = false
+texture_rotation = 0.0
+texture_scale = Vector2(1, 1)
+use_animation = false
+animation_name = ""
+collision_shape = SubResource("CircleShape2D_ekkbc")
+collision_layer = 0
+collision_mask = 0
+trigger_name = ""
+trigger_conditions = Array[ExtResource("8_jbyt8")]([])
+template_modules = Array[ExtResource("6_klc8c")]([])
+metadata/_custom_type_script = "uid://ccmfe73clp6p3"
 
 [node name="TestTimingScheduler" type="Node2D" node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("1_xryrm")
 timing_scheduler = NodePath("TimingScheduler")
 
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("11_klc8c")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("4_kgfhc")
+bullet_composer_name = "pattern_2"
+bullet_template_2d = SubResource("Resource_wjid1")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
 [node name="TimingScheduler" type="Node" parent="."]
 script = ExtResource("2_xryrm")
-active = true
 metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCCooldown" type="Node" parent="TimingScheduler"]
 script = ExtResource("2_f5ixd")
 metadata/_custom_type_script = "uid://b1ha7icvjophi"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("5_f5pqv")
+composer_name = "pattern_2"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("6_f5pqv")
+metadata/_custom_type_script = "uid://bhju4glf6a5nr"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
