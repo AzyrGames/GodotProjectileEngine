@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbxy347n3t7je"]
+[gd_scene load_steps=15 format=3 uid="uid://dbxy347n3t7je"]
 
 [ext_resource type="Script" uid="uid://b3yr2gtochpwu" path="res://experiments/experiment_timing_scheduler/test_timing_scheduler.gd" id="1_xryrm"]
 [ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_cooldown.gd" id="2_f5ixd"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_module/projectile_template_module.gd" id="6_klc8c"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_star_1.png" id="7_7435j"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_trigger_condition/projectile_trigger_condition.gd" id="8_jbyt8"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="10_7435j"]
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="11_klc8c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekkbc"]
@@ -64,13 +65,9 @@ metadata/_custom_type_script = "uid://b1ha7icvjophi"
 script = ExtResource("2_f5ixd")
 metadata/_custom_type_script = "uid://b1ha7icvjophi"
 
-[node name="TSCCooldown3" type="Node" parent="TimingScheduler"]
-script = ExtResource("2_f5ixd")
-metadata/_custom_type_script = "uid://b1ha7icvjophi"
-
-[node name="TSCCooldown4" type="Node" parent="TimingScheduler"]
-script = ExtResource("2_f5ixd")
-metadata/_custom_type_script = "uid://b1ha7icvjophi"
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("10_7435j")
+repeat_count = 5
 
 [node name="PatternComposer2D" type="Node" parent="."]
 script = ExtResource("5_f5pqv")
