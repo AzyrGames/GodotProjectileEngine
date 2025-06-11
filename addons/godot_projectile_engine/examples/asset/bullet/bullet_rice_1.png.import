@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0u3dixs4nwan"
-path="res://.godot/imported/bullet_big_cirle_1.png-e8fcb2b6ca4c557489952676a46780f0.ctex"
+uid="uid://daxkxvl7s1nr3"
+path="res://.godot/imported/bullet_rice_1.png-48399870964daaec7b6094a75b52cbed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GodotProjectileEngine/Example/Asset/Bullet/bullet_big_cirle_1.png"
-dest_files=["res://.godot/imported/bullet_big_cirle_1.png-e8fcb2b6ca4c557489952676a46780f0.ctex"]
+source_file="res://addons/godot_projectile_engine/examples/Asset/Bullet/bullet_rice_1.png"
+dest_files=["res://.godot/imported/bullet_rice_1.png-48399870964daaec7b6094a75b52cbed.ctex"]
 
 [params]
 
