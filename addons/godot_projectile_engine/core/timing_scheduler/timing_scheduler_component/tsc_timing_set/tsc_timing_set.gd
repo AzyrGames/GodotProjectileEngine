@@ -4,12 +4,15 @@ class_name TSCTimingSet
 ## Manages complex timing patterns using a TimingSet resource.
 ## Handles sequential and random playback modes with repeat logic.
 
-@export var timing_set: TimingSet  # Resource defining timing intervals and behavior
+
+## TimingSet Resource containing timing intervals and playback parameters for sequenced or randomized execution.
+@export var timing_set: TimingSet  
 
 var _timing_set_index: int = -1  # Current index in timing entries
 var _current_repeat_count: int = 0  # Number of completed cycles
 var _current_interval: float = 0.0  # Current interval duration
 var _shuffled_entries: Array[float] = []  # Shuffled entries for RANDOM mode
+
 
 func _validate_property(property: Dictionary) -> void:
 	# Ensure proper resource type hinting for timing_set
@@ -17,15 +20,13 @@ func _validate_property(property: Dictionary) -> void:
 		property.hint = PROPERTY_HINT_RESOURCE_TYPE
 		property.hint_string = "TimingSet"
 
+
 func _ready() -> void:
 	# Validate required resource and disable component if missing
 	if not timing_set:
 		push_warning("No TimingSet resource assigned to TSCTimingSet")
 		active = false
 
-func start_tsc():
-	# Initialize base component and start timing logic
-	super.start_tsc()
 
 ## Resets internal state and stops the timer
 func stop_tsc() -> void:
@@ -35,6 +36,7 @@ func stop_tsc() -> void:
 	_current_interval = 0.0
 	_shuffled_entries = []
 
+
 ## Advances to the next timing interval based on current mode
 func start_next_timing_value() -> void:
 	# Exit early if invalid state or completion conditions met
@@ -42,7 +44,7 @@ func start_next_timing_value() -> void:
 		tsc_completed.emit()
 		stop_tsc()
 		return
-
+	# Check repeat condition or repeat indefinitely by doing nothing
 	if timing_set.repeat_count > 0 and _current_repeat_count >= timing_set.repeat_count:
 		tsc_completed.emit()
 		stop_tsc()
@@ -59,9 +61,11 @@ func start_next_timing_value() -> void:
 	tsc_timed.emit()
 	timing_timer.start(_current_interval)
 
+
 ## Triggers next interval when timer completes
 func on_timing_timer_timeout() -> void:
 	start_next_timing_value()
+
 
 ## Retrieves next interval value based on playback mode
 func get_next_timing_value() -> float:
