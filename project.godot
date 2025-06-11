@@ -16,7 +16,7 @@ run/max_fps=60
 
 [autoload]
 
-ProjectileEngine="*res://addons/GodotProjectileEngine/GodotProjectileEngine.gd"
+ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd"
 
 [display]
 
@@ -26,7 +26,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotProjectileEngine/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotProjectileEngine/plugin.cfg", "res://addons/godot_projectile_engine/plugin.cfg")
 
 [global_group]
 
