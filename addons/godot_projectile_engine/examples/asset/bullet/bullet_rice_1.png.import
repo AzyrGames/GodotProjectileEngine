@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://daxkxvl7s1nr3"
-path="res://.godot/imported/bullet_rice_1.png-48399870964daaec7b6094a75b52cbed.ctex"
+path="res://.godot/imported/bullet_rice_1.png-9eca894296ebf59480977cda7b30d56e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/examples/Asset/Bullet/bullet_rice_1.png"
-dest_files=["res://.godot/imported/bullet_rice_1.png-48399870964daaec7b6094a75b52cbed.ctex"]
+source_file="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png"
+dest_files=["res://.godot/imported/bullet_rice_1.png-9eca894296ebf59480977cda7b30d56e.ctex"]
 
 [params]
 
