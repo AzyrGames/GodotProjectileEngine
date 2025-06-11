@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dbxy347n3t7je"]
 
-[ext_resource type="Script" uid="uid://b3yr2gtochpwu" path="res://Test/test_timing_scheduler.gd" id="1_xryrm"]
-[ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/TimingSchedulerComponent/tsc_cooldown.gd" id="2_f5ixd"]
-[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_scheduler.gd" id="2_xryrm"]
+[ext_resource type="Script" uid="uid://b3yr2gtochpwu" path="res://tests/test_timing_scheduler.gd" id="1_xryrm"]
+[ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_cooldown.gd" id="2_f5ixd"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="2_xryrm"]
 
 [node name="TestTimingScheduler" type="Node2D" node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("1_xryrm")
