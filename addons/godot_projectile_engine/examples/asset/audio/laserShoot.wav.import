@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b7ka75wcwrtcq"
-path="res://.godot/imported/laserShoot.wav-451642eb5ff4ee363657a79f8fabdc42.sample"
+path="res://.godot/imported/laserShoot.wav-b017a74e55f05e82856db554a521f68f.sample"
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/examples/Asset/Audio/laserShoot.wav"
-dest_files=["res://.godot/imported/laserShoot.wav-451642eb5ff4ee363657a79f8fabdc42.sample"]
+source_file="res://addons/godot_projectile_engine/examples/asset/audio/laserShoot.wav"
+dest_files=["res://.godot/imported/laserShoot.wav-b017a74e55f05e82856db554a521f68f.sample"]
 
 [params]
 
