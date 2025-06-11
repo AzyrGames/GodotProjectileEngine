@@ -4,11 +4,12 @@ class_name BulletSpawner2D
 
 @export var active : bool = true:
 	set(value):
-		if value:
+		active = value
+		if active:
 			activate_bullet_spawner()
 		else:
 			deactive_bullet_spanwer()
-		active = value
+
 
 var bullet_area : RID
 
@@ -42,6 +43,15 @@ func _ready() -> void:
 		activate_bullet_spawner()
 	pass
 
+
+func _process(delta: float) -> void:
+	pass
+
+
+func _physics_process(delta: float) -> void:
+	pass
+
+
 func setup_bullet_spawner() -> void:
 	bullet_composer = ProjectileEngine.bullet_composer_nodes.get(bullet_composer_name)
 
@@ -55,12 +65,18 @@ func setup_bullet_spawner() -> void:
 	bullet_updater_2d = ProjectileEngine.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
 
 
-func _process(delta: float) -> void:
+func activate_bullet_spawner() -> void:
+	setup_bullet_spawner()
+	connect_timing_scheduler()
+	connect_audio()
+
 	pass
 
-
-func _physics_process(delta: float) -> void:
+func deactive_bullet_spanwer() -> void:
+	disconnect_timing_scheduler()
+	disconnect_audio()
 	pass
+
 
 var composer_var : Dictionary
 
@@ -69,7 +85,6 @@ func spawn_pattern() -> void:
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
-
 	pattern_packs = bullet_composer.request_pattern(global_position, composer_var)
 	bullet_updater_2d.spawn_bullet_pattern(pattern_packs)
 
@@ -77,7 +92,6 @@ func spawn_pattern() -> void:
 
 
 var remove_array : Array
-
 
 func create_bullet_updater() -> void:
 	var _bullet_updater := ProjectileUpdater2D.new()
@@ -92,28 +106,30 @@ func create_bullet_updater() -> void:
 
 	pass
 
+func connect_timing_scheduler() -> void:
+	if !timing_scheduler: return
+	timing_scheduler.scheduler_timed.connect(spawn_pattern)
+	timing_scheduler.start_scheduler()
+	pass
+
+func disconnect_timing_scheduler() -> void:
+	if !timing_scheduler: return
+	timing_scheduler.scheduler_timed.disconnect(spawn_pattern)
+	timing_scheduler.stop_scheduler()
+	pass
+
+
 func play_audio() -> void:
 	if !audio_stream: return
 	audio_stream.playing = true
 	pass
 
-
 func connect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.timing_timed.connect(play_audio)
+	timing_scheduler.scheduler_timed.connect(play_audio)
 	pass
 
 func disconnect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.timing_timed.disconnect(play_audio)
-	pass
-
-
-func activate_bullet_spawner() -> void:
-	connect_audio()
-	setup_bullet_spawner()
-	pass
-
-func deactive_bullet_spanwer() -> void:
-	disconnect_audio()
+	timing_scheduler.scheduler_timed.disconnect(play_audio)
 	pass
