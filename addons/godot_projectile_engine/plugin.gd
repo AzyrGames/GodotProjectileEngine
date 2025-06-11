@@ -4,7 +4,7 @@ extends EditorPlugin
 
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
-	add_autoload_singleton("ProjectileEngine", "res://addons/GodotProjectileEngine/GodotProjectileEngine.gd")
+	add_autoload_singleton("ProjectileEngine", "res://addons/godot_projectile_engine/GodotProjectileEngine.gd")
 	pass
 
 
