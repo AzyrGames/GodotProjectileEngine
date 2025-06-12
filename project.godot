@@ -12,31 +12,11 @@ config_version=5
 
 config/name="GodotProjectileEngine"
 config/features=PackedStringArray("4.4", "Forward Plus")
-run/max_fps=60
 
 [autoload]
 
 ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd"
 
-[display]
-
-window/size/window_width_override=1280
-window/size/window_height_override=720
-window/stretch/mode="canvas_items"
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg")
-
-[global_group]
-
-HomingTarget=""
-TargetNode=""
-
-[physics]
-
-2d/physics_engine="Rapier2D"
-
-[rendering]
-
-textures/canvas_textures/default_texture_filter=0
