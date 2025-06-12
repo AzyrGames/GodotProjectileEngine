@@ -1,4 +1,5 @@
 extends ProjectileTemplate2D
 class_name ProjectileTemplateNode2D
 
-@export var projectile_node_2d : StringName
+## Path to Projectile2D Scene
+@export var projectile_2d_path : StringName
