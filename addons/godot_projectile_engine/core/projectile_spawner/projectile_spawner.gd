@@ -58,18 +58,21 @@ func setup_bullet_spawner() -> void:
 	if !bullet_composer:
 		print_debug(bullet_composer_name + " PatternComposer ID is not valid")
 		return
+	if bullet_template_2d is ProjectileTemplateResource2D:
+		if !is_instance_valid(ProjectileEngine.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)):
+			create_bullet_updater()
+		bullet_updater_2d = ProjectileEngine.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
 
-	if !is_instance_valid(ProjectileEngine.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)):
-		create_bullet_updater()
-
-	bullet_updater_2d = ProjectileEngine.bullet_updater_2d_nodes.get(bullet_template_2d.bullet_area_rid)
+	elif bullet_template_2d is ProjectileTemplateNode2D:
+		pass
+	else:
+		pass
 
 
 func activate_bullet_spawner() -> void:
 	setup_bullet_spawner()
 	connect_timing_scheduler()
 	connect_audio()
-
 	pass
 
 func deactive_bullet_spanwer() -> void:
@@ -80,14 +83,30 @@ func deactive_bullet_spanwer() -> void:
 
 var composer_var : Dictionary
 
+
 func spawn_pattern() -> void:
 	if !active: return
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
 	pattern_packs = bullet_composer.request_pattern(global_position, composer_var)
-	bullet_updater_2d.spawn_bullet_pattern(pattern_packs)
 
+	# match bullet_template_2d:
+	if bullet_template_2d is ProjectileTemplateResource2D:
+		_spawn_projectile_template_resource_2d()
+	elif bullet_template_2d is ProjectileTemplateResource2D:
+		_spawn_projectile_template_node_2d()
+	else:
+		pass
+	pass
+
+
+func _spawn_projectile_template_resource_2d() -> void:
+	bullet_updater_2d.spawn_bullet_pattern(pattern_packs)
+	pass
+
+
+func _spawn_projectile_template_node_2d() -> void:
 	pass
 
 
