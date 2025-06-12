@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://elu5weic5047"]
+
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d/projectile_2d.gd" id="1_i8tgq"]
+[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_big_cirle_1.png" id="2_nfe63"]
+
+[node name="Projectile2dTest1" type="Area2D"]
+script = ExtResource("1_i8tgq")
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="BulletBigCirle1" type="Sprite2D" parent="."]
+texture = ExtResource("2_nfe63")
