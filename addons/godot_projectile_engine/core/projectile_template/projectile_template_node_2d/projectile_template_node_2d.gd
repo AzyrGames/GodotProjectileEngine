@@ -1,0 +1,4 @@
+extends ProjectileTemplate2D
+class_name ProjectileTemplateNode2D
+
+@export var projectile_node_2d : StringName
