@@ -1,0 +1,4 @@
+extends ProjectileComponent
+class_name ProjectileComponentDestroy
+
+

@@ -1,18 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=8 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_big_cirle_1.png" id="2_nfe63"]
 [ext_resource type="Script" uid="uid://bhm7ycywlk6j8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_speed.gd" id="3_erm13"]
 [ext_resource type="Script" uid="uid://crj82fqrovcoh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_direction.gd" id="4_lphvn"]
 [ext_resource type="Script" uid="uid://btxma76cc7y4j" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_life_time.gd" id="4_yul1m"]
-[ext_resource type="Script" uid="uid://b1xv2gjlrcmkq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_rotation.gd" id="6_6r6gm"]
 [ext_resource type="Script" uid="uid://bbritea6jojfc" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_transform_2d.gd" id="7_6r6gm"]
 [ext_resource type="Script" uid="uid://bno8vtwtq4hqg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_life_distance.gd" id="7_cns50"]
-[ext_resource type="Script" uid="uid://bydmfadokwadh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_destroy.gd" id="9_7wm4u"]
-[ext_resource type="Script" uid="uid://brtdxka8818es" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_bouncing.gd" id="10_f0xrw"]
-[ext_resource type="Script" uid="uid://cqdm1c0ub256y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_piercing.gd" id="11_ouhur"]
-[ext_resource type="Script" uid="uid://duln11jkefv58" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_homing.gd" id="12_y7es0"]
-[ext_resource type="Script" uid="uid://c45xx8tm7yin1" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_trigger.gd" id="13_inat4"]
 
 [node name="Projectile2dTest1" type="Area2D"]
 script = ExtResource("1_i8tgq")
@@ -29,15 +23,9 @@ metadata/_custom_type_script = "uid://bbritea6jojfc"
 
 [node name="ProjectileComponentSpeed" type="Node" parent="."]
 script = ExtResource("3_erm13")
-metadata/_custom_type_script = "uid://bhm7ycywlk6j8"
 
 [node name="ProjectileComponentDirection" type="Node" parent="."]
 script = ExtResource("4_lphvn")
-metadata/_custom_type_script = "uid://crj82fqrovcoh"
-
-[node name="ProjectileComponentRotation" type="Node" parent="."]
-script = ExtResource("6_6r6gm")
-metadata/_custom_type_script = "uid://b1xv2gjlrcmkq"
 
 [node name="ProjectileComponentLifeTime" type="Node" parent="."]
 script = ExtResource("4_yul1m")
@@ -47,25 +35,5 @@ metadata/_custom_type_script = "uid://btxma76cc7y4j"
 script = ExtResource("7_cns50")
 projectile_update_position = NodePath("../ProjectileComponentTransform2D")
 metadata/_custom_type_script = "uid://bno8vtwtq4hqg"
-
-[node name="ProjectileComponentPiercing" type="Node" parent="."]
-script = ExtResource("11_ouhur")
-metadata/_custom_type_script = "uid://cqdm1c0ub256y"
-
-[node name="ProjectileComponentTrigger" type="Node" parent="."]
-script = ExtResource("13_inat4")
-metadata/_custom_type_script = "uid://c45xx8tm7yin1"
-
-[node name="ProjectileComponentDestroy" type="Node" parent="."]
-script = ExtResource("9_7wm4u")
-metadata/_custom_type_script = "uid://bydmfadokwadh"
-
-[node name="ProjectileComponentHoming" type="Node" parent="."]
-script = ExtResource("12_y7es0")
-metadata/_custom_type_script = "uid://duln11jkefv58"
-
-[node name="ProjectileComponentBoucing" type="Node" parent="."]
-script = ExtResource("10_f0xrw")
-metadata/_custom_type_script = "uid://brtdxka8818es"
 
 [node name="Timer" type="Timer" parent="."]

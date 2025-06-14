@@ -1,0 +1,5 @@
+extends ProjectileComponent
+class_name ProjectileComponentTrigger
+
+
+
