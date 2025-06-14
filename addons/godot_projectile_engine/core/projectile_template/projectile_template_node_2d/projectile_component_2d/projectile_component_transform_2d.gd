@@ -4,19 +4,11 @@ class_name ProjectileComponentTransform2D
 signal velocity_updated(_velocity: Vector2)
 signal position_updated(_position_delta: Vector2)
 
-@export_category("Position")
-@export var projectile_speed : ProjectileComponentSpeed
-@export var projectile_direction : ProjectileComponentDirection
-
-@export_category("Rotation")
-@export var projectile_rotation : ProjectileComponentDirection
-
-@export_category("Scale")
-@export var projectile_scale : ProjectileComponentDirection
-
+@export var projectile_position : ProjectileComponentPosition
+@export var projectile_rotation : ProjectileComponentRotation
+@export var projectile_scale : ProjectileComponentScale
 ## I hate skew, skew me
-@export_category("Skew")
-@export var projectile_skew : ProjectileComponentDirection
+@export var projectile_skew : ProjectileComponentSkew
 
 
 var velocity : Vector2
@@ -28,32 +20,27 @@ var skew_delta : float
 
 var _transform_2d : Transform2D
 
+func get_component_name() -> StringName:
+	return "projectile_component_transform_2d"
+
 func _physics_process(delta: float) -> void:
 	if !owner: return
 	if owner is not Projectile2D: return
+	# print(owner)
 	owner = owner as Projectile2D
+
+	_transform_2d = Transform2D(
+		projectile_rotation.rotation,
+		projectile_scale.scale, 
+		projectile_skew.skew,
+		projectile_position.position 
+		)
+
+	owner.transform = _transform_2d
 	
-	velocity = projectile_speed.speed * projectile_direction.direction * delta
-	velocity_updated.emit(velocity)
-	position_delta = velocity
-	rotation_delta = 2.0
-	scale_delta = Vector2(0.001, 0.001)
-	skew_delta = 0.0
-
-
-
-	# _transform_2d = Transform2D(
-	# 	owner.rotation + rotation_delta, 
-	# 	owner.scale + scale_delta, 
-	# 	owner.skew + skew_delta, 
-	# 	owner.position + position_delta
-	# 	)
-	# owner.transform = _transform_2d
 	# # owner.position += position_delta
 	# # owner.rotation += rotation_delta
 	# # owner.scale += scale_delta
 	# # owner.skew += skew_delta
-
-
 	# position_updated.emit(position_delta)
 	pass

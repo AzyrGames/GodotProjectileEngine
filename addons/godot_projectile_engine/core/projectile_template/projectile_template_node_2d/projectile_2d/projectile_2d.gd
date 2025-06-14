@@ -15,11 +15,13 @@ class_name Projectile2D
 
 func apply_pattern_pack(_pattern_pack: Dictionary) -> void:
 
-	if _pattern_pack.has("position"):
-		global_position = _pattern_pack.get("position")
+	print(_pattern_pack)
 
-	# if _pattern_pack.has("direction"):
-	# 	move_direction = _pattern_pack.get("direction")
+	if has_meta("projectile_component_position") and _pattern_pack.has("position"):
+		get_meta("projectile_component_position").position = _pattern_pack.get("position")
+
+	if has_meta("projectile_component_direction") and _pattern_pack.has("direction"):
+		get_meta("projectile_component_direction").direction = _pattern_pack.get("direction")
 
 	# if _pattern_pack.has("rotation"):
 	# 	rotation = _pattern_pack.get("rotation")

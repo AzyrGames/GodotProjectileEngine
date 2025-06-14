@@ -12,6 +12,8 @@ class_name ProjectileComponentLifeTime
 
 var current_life_time : float
 
+func get_component_name() -> StringName:
+	return "projectile_component_life_time"
 
 func _process(delta: float) -> void:
 	if !active: return

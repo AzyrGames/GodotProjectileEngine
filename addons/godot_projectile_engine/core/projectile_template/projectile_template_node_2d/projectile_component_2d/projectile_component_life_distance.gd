@@ -7,6 +7,8 @@ class_name ProjectileComponentLifeDistance
 
 var current_life_distance : float = 0.0
 
+func get_component_name() -> StringName:
+	return "projectile_component_life_distance"
 
 func _ready() -> void:
 	if !projectile_update_position: return

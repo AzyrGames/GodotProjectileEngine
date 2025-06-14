@@ -67,7 +67,6 @@ func setup_bullet_spawner() -> void:
 	elif bullet_template_2d is ProjectileTemplateNode2D:
 		var _node := _instance_node(bullet_template_2d.projectile_2d_path)
 		if _node is Projectile2D:
-			print("Hey Projectile")
 			_projectile_2d_instance = _node
 		else:
 			_projectile_2d_instance = null
@@ -119,8 +118,9 @@ func _spawn_projectile_template_node_2d() -> void:
 	for _pattern_pack : Dictionary in pattern_packs:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
-		_new_projectile_2d.apply_pattern_pack(_pattern_pack)
+		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
 		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d)
+		_new_projectile_2d.apply_pattern_pack(_pattern_pack)
 		pass
 	pass
 
