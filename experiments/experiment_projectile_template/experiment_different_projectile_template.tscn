@@ -1,14 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbkvy03ojapdo"]
+[gd_scene load_steps=12 format=3 uid="uid://dbkvy03ojapdo"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_a6xni"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_r0ng0"]
-[ext_resource type="Resource" uid="uid://cem25wgbe1uyh" path="res://addons/godot_projectile_engine/examples/bullet_template_scene/resources/experiment_different_projectile_template.tres" id="3_rhgna"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="3_rhgna"]
 [ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/tsc_timing_set.gd" id="5_hy8p2"]
 [ext_resource type="Script" uid="uid://ssup2p0b2bqp" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/timing_set.gd" id="6_rhgna"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_87q1v"]
 [ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCPolygon2D.gd" id="8_hy8p2"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="10_2g1ii"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCSingle2D.gd" id="11_jfbej"]
+
+[sub_resource type="Resource" id="Resource_a6xni"]
+script = ExtResource("3_rhgna")
+projectile_2d_path = &"uid://elu5weic5047"
+metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="Resource" id="Resource_6mpfu"]
 script = ExtResource("6_rhgna")
@@ -26,7 +31,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 [node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_r0ng0")
 bullet_composer_name = "pattern_2"
-bullet_template_2d = ExtResource("3_rhgna")
+bullet_template_2d = SubResource("Resource_a6xni")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
