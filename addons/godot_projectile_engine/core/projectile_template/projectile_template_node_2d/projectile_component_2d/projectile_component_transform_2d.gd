@@ -1,8 +1,7 @@
 extends ProjectileComponent
 class_name ProjectileComponentTransform2D
 
-signal velocity_updated(_velocity: Vector2)
-signal position_updated(_position_delta: Vector2)
+signal tranform_2d_updated(_transform: Transform2D)
 
 @export var projectile_position : ProjectileComponentPosition
 @export var projectile_rotation : ProjectileComponentRotation
@@ -24,10 +23,15 @@ func get_component_name() -> StringName:
 	return "projectile_component_transform_2d"
 
 func _physics_process(delta: float) -> void:
+	update_projectile_transform_2d()
+	pass
+
+func update_projectile_transform_2d() -> void:
 	if !owner: return
 	if owner is not Projectile2D: return
-	# print(owner)
 	owner = owner as Projectile2D
+
+	owner.get_transform()
 
 	_transform_2d = Transform2D(
 		projectile_rotation.rotation,
@@ -37,10 +41,5 @@ func _physics_process(delta: float) -> void:
 		)
 
 	owner.transform = _transform_2d
-	
-	# # owner.position += position_delta
-	# # owner.rotation += rotation_delta
-	# # owner.scale += scale_delta
-	# # owner.skew += skew_delta
-	# position_updated.emit(position_delta)
+	tranform_2d_updated.emit(_transform_2d)
 	pass

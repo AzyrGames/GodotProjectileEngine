@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=18 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_big_cirle_1.png" id="2_nfe63"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cqdm1c0ub256y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_piercing.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://duln11jkefv58" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_homing.gd" id="12_y7es0"]
 [ext_resource type="Script" uid="uid://c45xx8tm7yin1" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component_trigger.gd" id="13_inat4"]
+[ext_resource type="Script" uid="uid://bebbnvdrrml2k" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_component_2d/projectile_component.gd" id="17_inat4"]
 
 [node name="Projectile2dTest1" type="Area2D"]
 script = ExtResource("1_i8tgq")
@@ -24,7 +25,9 @@ metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 [node name="BulletBigCirle1" type="Sprite2D" parent="."]
 texture = ExtResource("2_nfe63")
 
-[node name="ProjectileComponentTransform2D" type="Node" parent="." node_paths=PackedStringArray("projectile_position", "projectile_rotation", "projectile_scale", "projectile_skew")]
+[node name="ProjectileComponent" type="Node2D" parent="."]
+
+[node name="ProjectileComponentTransform2D" type="Node" parent="ProjectileComponent" node_paths=PackedStringArray("projectile_position", "projectile_rotation", "projectile_scale", "projectile_skew")]
 script = ExtResource("7_6r6gm")
 projectile_position = NodePath("ProjectileComponentPosition")
 projectile_rotation = NodePath("ProjectileComponentRotation")
@@ -32,58 +35,63 @@ projectile_scale = NodePath("ProjectileComponentScale")
 projectile_skew = NodePath("ProjectileComponentSkew")
 metadata/_custom_type_script = "uid://bbritea6jojfc"
 
-[node name="ProjectileComponentPosition" type="Node" parent="ProjectileComponentTransform2D" node_paths=PackedStringArray("projectile_speed", "projectile_direction")]
+[node name="ProjectileComponentPosition" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D" node_paths=PackedStringArray("projectile_speed", "projectile_direction")]
 script = ExtResource("5_ouhur")
 projectile_speed = NodePath("ProjectileComponentSpeed")
 projectile_direction = NodePath("ProjectileComponentDirection")
 metadata/_custom_type_script = "uid://d4hd0gjvv2j67"
 
-[node name="ProjectileComponentSpeed" type="Node" parent="ProjectileComponentTransform2D/ProjectileComponentPosition"]
+[node name="ProjectileComponentSpeed" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("3_erm13")
 metadata/_custom_type_script = "uid://ntvjnkgxdlex"
 
-[node name="ProjectileComponentDirection" type="Node" parent="ProjectileComponentTransform2D/ProjectileComponentPosition"]
+[node name="ProjectileComponentDirection" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("4_lphvn")
 metadata/_custom_type_script = "uid://crj82fqrovcoh"
 
-[node name="ProjectileComponentScale" type="Node" parent="ProjectileComponentTransform2D"]
+[node name="ProjectileComponentScale" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("8_inat4")
 metadata/_custom_type_script = "uid://coycecwx8ox0y"
 
-[node name="ProjectileComponentRotation" type="Node" parent="ProjectileComponentTransform2D"]
+[node name="ProjectileComponentSkew" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
+script = ExtResource("10_56u1b")
+metadata/_custom_type_script = "uid://coast68s7ikf3"
+
+[node name="ProjectileComponentRotation" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("6_6r6gm")
 metadata/_custom_type_script = "uid://b1xv2gjlrcmkq"
 
-[node name="ProjectileComponentSkew" type="Node" parent="ProjectileComponentTransform2D"]
-script = ExtResource("10_56u1b")
-
-[node name="ProjectileComponentLifeTime" type="Node" parent="."]
+[node name="ProjectileComponentLifeTime" type="Node" parent="ProjectileComponent"]
 script = ExtResource("4_yul1m")
 metadata/_custom_type_script = "uid://btxma76cc7y4j"
 
-[node name="ProjectileComponentLifeDistance" type="Node" parent="." node_paths=PackedStringArray("projectile_update_position")]
+[node name="ProjectileComponentLifeDistance" type="Node" parent="ProjectileComponent" node_paths=PackedStringArray("projectile_transform_2d")]
 script = ExtResource("7_cns50")
-projectile_update_position = NodePath("../ProjectileComponentTransform2D")
+projectile_transform_2d = NodePath("../ProjectileComponentTransform2D")
 metadata/_custom_type_script = "uid://bno8vtwtq4hqg"
 
-[node name="ProjectileComponentPiercing" type="Node" parent="."]
+[node name="ProjectileComponentPiercing" type="Node" parent="ProjectileComponent"]
 script = ExtResource("11_ouhur")
 metadata/_custom_type_script = "uid://cqdm1c0ub256y"
 
-[node name="ProjectileComponentTrigger" type="Node" parent="."]
+[node name="ProjectileComponentTrigger" type="Node" parent="ProjectileComponent"]
 script = ExtResource("13_inat4")
 metadata/_custom_type_script = "uid://c45xx8tm7yin1"
 
-[node name="ProjectileComponentDestroy" type="Node" parent="."]
+[node name="ProjectileComponentDestroy" type="Node" parent="ProjectileComponent"]
 script = ExtResource("9_7wm4u")
 metadata/_custom_type_script = "uid://bydmfadokwadh"
 
-[node name="ProjectileComponentHoming" type="Node" parent="."]
+[node name="ProjectileComponentHoming" type="Node" parent="ProjectileComponent"]
 script = ExtResource("12_y7es0")
 metadata/_custom_type_script = "uid://duln11jkefv58"
 
-[node name="ProjectileComponentBoucing" type="Node" parent="."]
+[node name="ProjectileComponentBouncing" type="Node" parent="ProjectileComponent"]
 script = ExtResource("10_f0xrw")
 metadata/_custom_type_script = "uid://brtdxka8818es"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="ProjectileComponent2" type="Node" parent="."]
+script = ExtResource("17_inat4")
+metadata/_custom_type_script = "uid://bebbnvdrrml2k"

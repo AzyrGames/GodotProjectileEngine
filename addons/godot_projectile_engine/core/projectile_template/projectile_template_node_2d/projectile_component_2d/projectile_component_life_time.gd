@@ -3,13 +3,6 @@ class_name ProjectileComponentLifeTime
 
 ## Projectile Life Time update every process (Rendered) frame time
 
-# enum UpdateMode {
-# 	IDLE, ## Update the timing every process (rendered) frame
-# 	PHYSICS, ## Update the timing every physics process frame
-# }
-
-# @export var update_mode : UpdateMode = UpdateMode.PHYSICS
-
 var current_life_time : float
 
 func get_component_name() -> StringName:
@@ -17,14 +10,12 @@ func get_component_name() -> StringName:
 
 func _process(delta: float) -> void:
 	if !active: return
-	current_life_time += delta
+	update_life_time()
 	pass
 
-# func _physics_process(delta: float) -> void:
-# 	if !active: return
-# 	if update_mode == UpdateMode.PHYSICS:
-# 		current_life_time += delta
-# 	pass
+func update_life_time() -> void:
+	current_life_time += get_process_delta_time()
+	pass
 
 func get_life_time() -> float:
 	return current_life_time
