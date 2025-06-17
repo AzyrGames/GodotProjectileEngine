@@ -17,7 +17,6 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd"
 
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg")
