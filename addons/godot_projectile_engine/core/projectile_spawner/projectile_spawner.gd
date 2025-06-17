@@ -118,8 +118,9 @@ func _spawn_projectile_template_node_2d() -> void:
 	for _pattern_pack : Dictionary in pattern_packs:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
+
 		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
-		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d)
+		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
 		_new_projectile_2d.apply_pattern_pack(_pattern_pack)
 		pass
 	pass

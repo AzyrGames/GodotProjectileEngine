@@ -1,0 +1,2 @@
+extends ProjectileBehavior
+class_name ProjectileBehaviorDirection

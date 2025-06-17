@@ -1,6 +1,13 @@
 extends Node
 class_name ProjectileComponent
 
+
+## component_registered is emited when component is succesfully registered
+signal component_registered(_owner: Node, _component: ProjectileComponent)
+
+## component_deregistered is emited when component is succesfully deregistered
+signal component_deregistered(_owner: Node, _component: ProjectileComponent)
+
 @export var active : bool = true:
 	set(value):
 		active = value
@@ -9,13 +16,9 @@ class_name ProjectileComponent
 		else:
 			deactive_compoment()
 
+@export var allow_external_modification: bool = false
 
-## component_registered is emited when component is succesfully registered
-signal component_registered(_owner: Node, _component: ProjectileComponent)
-
-## component_deregistered is emited when component is succesfully deregistered
-signal component_deregistered(_owner: Node, _component: ProjectileComponent)
-
+var component_context : Dictionary
 
 func _enter_tree() -> void:
 	_register_component()
@@ -49,6 +52,22 @@ func active_component() -> void:
 
 
 func deactive_compoment() -> void:
+	pass
+
+
+func add_value(_value) -> void:
+	pass
+
+
+func multiple_value(_value) -> void:
+	pass
+
+
+func override_value(_value) -> void:
+	pass
+
+
+func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context: Dictionary) -> void:
 	pass
 
 

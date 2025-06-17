@@ -1,0 +1,2 @@
+extends ProjectileBehaviorSpeed
+class_name ProjectileSpeedCurve
