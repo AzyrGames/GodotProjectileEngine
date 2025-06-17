@@ -12,11 +12,11 @@ config_version=5
 
 config/name="GodotProjectileEngine"
 config/features=PackedStringArray("4.4", "Forward Plus")
-run/max_fps=60
 
 [autoload]
 
 ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd"
+
 
 [editor_plugins]
 
