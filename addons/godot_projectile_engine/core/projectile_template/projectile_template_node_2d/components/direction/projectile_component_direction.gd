@@ -7,7 +7,7 @@ func get_component_name() -> StringName:
 	return "projectile_component_direction"
 
 # Public read-only access, unless allow_external_modification
-@export var direction: float = 100.0:
+@export var direction: Vector2 = Vector2.RIGHT:
 	set(value):
 		_initial_direction = value
 		if allow_external_modification:
@@ -18,25 +18,30 @@ func get_component_name() -> StringName:
 
 @export var component_behaviors : Array[ProjectileBehaviorDirection] = []
 
-var _intenal_direction : float
-@export_storage var _initial_direction : float
+var _intenal_direction : Vector2
+@export_storage var _initial_direction : Vector2 = Vector2.RIGHT
 
 
 # --- SAFE MODIFICATION API ---
-func add_value(_value: float) -> void:
+func add_value(_value: Vector2) -> void:
 	if allow_external_modification:
 		_intenal_direction += _value
 	pass
 
-func multiple_value(_value: float) -> void:
+func multiple_value(_value: Vector2) -> void:
 	if allow_external_modification:
 		_intenal_direction *= _value
 	pass
 
 
-func override_value(_value: float) -> void:
+func override_value(_value: Vector2) -> void:
 	if allow_external_modification:
 		_intenal_direction = _value
+	pass
+
+
+func force_apply_value(_value: Vector2) -> void:
+	_intenal_direction = _value
 	pass
 
 

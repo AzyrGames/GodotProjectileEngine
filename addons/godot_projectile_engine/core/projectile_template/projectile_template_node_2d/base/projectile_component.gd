@@ -67,6 +67,10 @@ func override_value(_value) -> void:
 	pass
 
 
+func force_apply_value(_value) -> void:
+	pass
+
+
 func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context: Dictionary) -> void:
 	pass
 

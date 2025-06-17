@@ -8,10 +8,10 @@ func get_component_name() -> StringName:
 
 # Public read-only access, unless allow_external_modification
 @export var speed: float = 100.0:
-	set(value):
-		_initial_speed = value
+	set(_value):
+		_initial_speed = _value
 		if allow_external_modification:
-			_intenal_speed = value
+			_intenal_speed = _value
 		notify_property_list_changed()
 	get:
 		return _intenal_speed
@@ -19,7 +19,7 @@ func get_component_name() -> StringName:
 @export var component_behaviors : Array[ProjectileBehaviorSpeed] = []
 
 var _intenal_speed : float
-@export_storage var _initial_speed : float
+@export_storage var _initial_speed : float = 100.0
 
 
 # --- SAFE MODIFICATION API ---
@@ -37,6 +37,11 @@ func multiple_value(_value: float) -> void:
 func override_value(_value: float) -> void:
 	if allow_external_modification:
 		_intenal_speed = _value
+	pass
+
+
+func force_apply_value(_value: float) -> void:
+	_intenal_speed = _value
 	pass
 
 

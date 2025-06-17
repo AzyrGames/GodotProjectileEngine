@@ -9,6 +9,6 @@ func apply_pattern_pack(_pattern_pack: Dictionary) -> void:
 		get_meta("projectile_component_position").position = _pattern_pack.get("position")
 
 	if has_meta("projectile_component_direction") and _pattern_pack.has("direction"):
-		get_meta("projectile_component_direction").direction = _pattern_pack.get("direction")
+		get_meta("projectile_component_direction").force_apply_value(_pattern_pack.get("direction"))
 
 	pass
