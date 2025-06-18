@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://drg85m51aqbj7"
 script = ExtResource("6_rhgna")
 entries = Array[float]([0.1])
 playback_mode = 0
-repeat_count = 50
+repeat_count = 20
 metadata/_custom_type_script = "uid://ssup2p0b2bqp"
 
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
@@ -51,12 +51,12 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_jfbej")
-rotation_speed = 3.14159
+rotation_speed = 0.174533
+rotation_process_type = 1
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_hy8p2")
-polygon_sides = 3
 spread_out = true
 metadata/_custom_type_script = "uid://httdfxyybbie"
 

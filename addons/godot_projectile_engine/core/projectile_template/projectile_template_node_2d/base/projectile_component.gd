@@ -16,9 +16,8 @@ signal component_deregistered(_owner: Node, _component: ProjectileComponent)
 		else:
 			deactive_compoment()
 
-@export var allow_external_modification: bool = false
-
 var component_context : Dictionary
+
 
 func _enter_tree() -> void:
 	_register_component()
@@ -33,7 +32,7 @@ func _exit_tree() -> void:
 ## Pesudo Abstract function to set/get component's name
 func get_component_name() -> StringName:
 	return &""
-	# pass
+
 
 func get_component(_component_name: StringName) -> Object:
 	if !owner: return null
@@ -44,8 +43,9 @@ func get_component(_component_name: StringName) -> Object:
 
 	if _projectile_component is ProjectileComponent:
 		return _projectile_component
-	
+
 	return null
+
 
 func active_component() -> void:
 	pass
@@ -55,23 +55,41 @@ func deactive_compoment() -> void:
 	pass
 
 
-func add_value(_value) -> void:
-	pass
-
-
-func multiple_value(_value) -> void:
-	pass
-
-
-func override_value(_value) -> void:
-	pass
-
-
-func force_apply_value(_value) -> void:
-	pass
-
-
 func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context: Dictionary) -> void:
+	pass
+
+
+func update_behavior_context(_behaviors: Array[ProjectileBehavior]) -> void:
+	var _behavior_contexts: Array[ProjectileEngine.BehviorContext] = []
+	for _behavior in _behaviors:
+		if !_behavior: continue
+		if !_behavior.active: continue
+		_behavior_contexts.append_array(_behavior.behavior_context_request())
+	component_context.clear()
+	for _behavior_context in _behavior_contexts:
+		if component_context.has(_behavior_context): continue
+		match _behavior_context:
+			ProjectileEngine.BehviorContext.PHYSICS_DELTA:
+				component_context.get_or_add(
+					ProjectileEngine.BehviorContext.PHYSICS_DELTA,
+					get_physics_process_delta_time()
+					)
+			ProjectileEngine.BehviorContext.LIFE_TIME_SECOND:
+				var _projectile_component := get_component("projectile_component_life_time")
+				if !_projectile_component: continue ## Todo: Maybe add a warning here
+				var _life_time_second = _projectile_component.life_time_second
+				component_context.get_or_add(
+					ProjectileEngine.BehviorContext.LIFE_TIME_SECOND, 
+					_life_time_second
+					)
+				pass
+			ProjectileEngine.BehviorContext.BASE_SPEED:
+				var _projectile_component := get_component("projectile_component_speed")
+				if !_projectile_component: continue ## Todo: Maybe add a warning here
+				component_context.get_or_add(
+					ProjectileEngine.BehviorContext.BASE_SPEED, 
+					_projectile_component.base_speed
+					)
 	pass
 
 
@@ -102,7 +120,3 @@ func _deregister_component() -> void:
 
 	component_deregistered.emit(owner, self)
 	pass
-
-
-func process_projectile_component() -> Variant:
-	return

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ProjectileSpeedCurve" load_steps=3 format=3 uid="uid://cwhuu7a21lytd"]
+
+[ext_resource type="Script" uid="uid://bnautbd467qq2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_curve.gd" id="1_txmnn"]
+
+[sub_resource type="Curve" id="Curve_70kml"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+bake_resolution = 5
+_data = [Vector2(0, 0.858961), 0.0, 0.0, 0, 0, Vector2(0.224292, 0.943797), 0.0, 0.0, 0, 0, Vector2(0.245634, -1.04984), 0.0, 0.0, 0, 0, Vector2(0.29414, -0.0530217), 0.0, 0.0, 0, 0, Vector2(0.715173, -0.0318127), 0.0, 0.0, 0, 0, Vector2(0.752037, 1.24072), 0.0, 0.0, 0, 0, Vector2(0.790842, -1.17709), 0.0, 0.0, 0, 0]
+point_count = 7
+
+[resource]
+script = ExtResource("1_txmnn")
+speed_modify_method = 1
+speed_curve_loop_method = 2
+speed_curve_sample_method = 0
+speed_curve = SubResource("Curve_70kml")
+active = true
+metadata/_custom_type_script = "uid://bnautbd467qq2"
