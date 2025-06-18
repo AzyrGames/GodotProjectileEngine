@@ -1,17 +1,28 @@
 extends Resource
 class_name ProjectileBehavior
 
+## Base class for all projectile behaviors in the projectile engine.
+##
+## Provides core functionality and interface that all behavior implementations
+## must follow. Behaviors modify projectile properties over time.
+
+## Enum defining when the behavior should be sampled/processed
 enum SampleMethod {
+	## Samples behavior every projecitle life time in tick
 	# LIFE_TIME_TICK,
+	## Samples behavior every projecitle life time in second
 	LIFE_TIME_SECOND,
+	## Samples behavior based on projecitle life 
 	# LIFE_DISTANCE,
 }
 
+## Whether this behavior is currently active
 @export var active : bool = true
 
-func behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
+## Requests additional context data needed by this behavior
+func _behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
 	return []
 
-
+## Processes the behavior and returns modified values
 func process_behavior(_value, _context):
 	pass

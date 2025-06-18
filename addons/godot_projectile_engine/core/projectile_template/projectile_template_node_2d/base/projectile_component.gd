@@ -64,7 +64,7 @@ func update_behavior_context(_behaviors: Array[ProjectileBehavior]) -> void:
 	for _behavior in _behaviors:
 		if !_behavior: continue
 		if !_behavior.active: continue
-		_behavior_contexts.append_array(_behavior.behavior_context_request())
+		_behavior_contexts.append_array(_behavior._behavior_context_request())
 	component_context.clear()
 	for _behavior_context in _behavior_contexts:
 		if component_context.has(_behavior_context): continue

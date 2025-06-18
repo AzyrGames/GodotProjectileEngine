@@ -119,7 +119,7 @@ func caching_move_direction_math_value() -> void:
 
 
 # enum TextureScaleChangeType{
-# 	MULTIPLIER, 
+# 	MULTIPLICATION, 
 # 	HARD_VALUE, 
 # }
 # @export var texture_rotation_speed : float = 0.0
@@ -137,7 +137,7 @@ func caching_move_direction_math_value() -> void:
 # @export_group("Move speed Change")
 
 # enum MoveSpeedChangeType{
-# 	MULTIPLIER, 
+# 	MULTIPLICATION, 
 # 	HARD_VALUE, 
 # }
 
