@@ -2,22 +2,10 @@ extends ProjectileBehaviorSpeed
 class_name ProjectileSpeedCurve
 
 
-enum SpeedModifyMethod{
-	ADDTITION,
-	MULTIPLIER,
-	OVERRIDE,
-}
-
 enum LoopMethod {
 	ONCE_AND_DONE, ## Loop Once and keep the last value
 	LOOP_FROM_START, ## Loop start to end and restart
 	LOOP_FROM_END, ## Ping pong
-}
-
-enum SampleMethod {
-	# LIFE_TIME_TICK,
-	LIFE_TIME_SECOND,
-	# LIFE_DISTANCE,
 }
 
 
@@ -35,16 +23,12 @@ var _speed_curve_sample : float
 var _speed_curve_sample_value : float
 var _result_value : float
 
+
 func behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
 	return [
 		ProjectileEngine.BehviorContext.LIFE_TIME_SECOND,
 		ProjectileEngine.BehviorContext.BASE_SPEED
 		]
-	pass
-
-func _init() -> void:
-	# _speed_curve_sample
-
 	pass
 
 
