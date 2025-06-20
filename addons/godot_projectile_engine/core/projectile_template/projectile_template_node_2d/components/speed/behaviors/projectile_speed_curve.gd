@@ -37,10 +37,10 @@ var _result_value : float
 
 
 ## Returns required context values for this behavior
-func _behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
-		ProjectileEngine.BehviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehviorContext.BASE_SPEED
+		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
+		ProjectileEngine.BehaviorContext.BASE_SPEED
 	]
 
 
@@ -51,10 +51,10 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 		caching_speed_curve_value()
 	
 	# Return original value if required context is missing
-	if not _context.has(ProjectileEngine.BehviorContext.LIFE_TIME_SECOND): 
+	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
 		return _value
 		
-	var _context_life_time_second := _context.get(ProjectileEngine.BehviorContext.LIFE_TIME_SECOND) as float
+	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
 	match speed_curve_loop_method:
 		LoopMethod.ONCE_AND_DONE:
@@ -71,12 +71,12 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	
 	match speed_modify_method:
 		SpeedModifyMethod.ADDTITION:
-			if !_context.has(ProjectileEngine.BehviorContext.BASE_SPEED): _result_value = _value
-			_result_value = _context.get(ProjectileEngine.BehviorContext.BASE_SPEED) + _speed_curve_sample_value
+			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
+			_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) + _speed_curve_sample_value
 			pass
 		SpeedModifyMethod.MULTIPLICATION:
-			if !_context.has(ProjectileEngine.BehviorContext.BASE_SPEED): _result_value = _value
-			_result_value = _context.get(ProjectileEngine.BehviorContext.BASE_SPEED) * _speed_curve_sample_value
+			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
+			_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) * _speed_curve_sample_value
 			pass
 		SpeedModifyMethod.OVERRIDE:
 			_result_value = _speed_curve_sample_value

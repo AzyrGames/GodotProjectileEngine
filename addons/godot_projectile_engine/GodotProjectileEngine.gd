@@ -4,11 +4,15 @@ extends Node
 
 signal bullet_trigger_activated(trigger_name: String, bullet_instance: ProjectileInstance2D)
 
-enum BehviorContext{
+enum BehaviorContext{
 	PHYSICS_DELTA,
 	LIFE_TIME_TICK,
 	LIFE_TIME_SECOND,
 	BASE_SPEED,
+	BASE_DIRECTION,
+	RANDOM_NUMBER_GENERATOR,
+	ARRAY_VARIABLE,
+	
 }
 
 

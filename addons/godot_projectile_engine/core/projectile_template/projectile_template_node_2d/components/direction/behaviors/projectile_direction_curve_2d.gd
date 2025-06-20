@@ -1,0 +1,2 @@
+extends ProjectileBehaviorDirection
+class_name ProjectileDirectionCurve2D

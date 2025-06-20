@@ -20,7 +20,10 @@ enum SampleMethod {
 @export var active : bool = true
 
 ## Requests additional context data needed by this behavior
-func _behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
+	return []
+
+func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return []
 
 ## Processes the behavior and returns modified values

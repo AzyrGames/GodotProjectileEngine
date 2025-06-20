@@ -13,6 +13,6 @@ var velocity : Vector2 = Vector2.ZERO
 
 
 func _physics_process(delta: float) -> void:
-	velocity = projectile_speed.speed * projectile_direction.direction * delta
+	velocity = projectile_speed.speed * projectile_direction.direction * projectile_direction.raw_direction.length() * delta
 	position += velocity
 	pass

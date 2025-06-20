@@ -13,15 +13,15 @@ class_name ProjectileSpeedAcceleration
 @export var max_speed : float = 500.0
 
 ## Returns required context values for this behavior
-func _behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
-		ProjectileEngine.BehviorContext.PHYSICS_DELTA
+		ProjectileEngine.BehaviorContext.PHYSICS_DELTA
 	]
 
 ## Processes speed behavior by applying acceleration
 func process_behavior(_value: float, _context: Dictionary) -> float:
-	if _context.has(ProjectileEngine.BehviorContext.PHYSICS_DELTA):
+	if _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
 		# Calculate new speed using frame-rate independent acceleration
-		var delta := _context.get(ProjectileEngine.BehviorContext.PHYSICS_DELTA) as float
+		var delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA) as float
 		return move_toward(_value, max_speed, acceleration_speed * delta)
 	return _value

@@ -21,10 +21,10 @@ var _expression : Expression
 var _result_value : float
 
 ## Returns required context values for this behavior
-func _behavior_context_request() -> Array[ProjectileEngine.BehviorContext]:
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
-		ProjectileEngine.BehviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehviorContext.BASE_SPEED
+		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
+		ProjectileEngine.BehaviorContext.BASE_SPEED
 	]
 
 
@@ -39,11 +39,11 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	_expression.parse(speed_expression, [speed_expression_variable])
 
 	# Return original value if required context is missing
-	if not _context.has(ProjectileEngine.BehviorContext.LIFE_TIME_SECOND): 
+	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
 		return _value
 
 	# Get current time/distance value for expression
-	var _context_life_time_second := _context.get(ProjectileEngine.BehviorContext.LIFE_TIME_SECOND) as float
+	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
 	# Execute expression with current value
 	_speed_expression_result = _expression.execute([_context_life_time_second])
@@ -55,15 +55,15 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	# Apply expression result based on modification method
 	match speed_modify_method:
 		SpeedModifyMethod.ADDTITION:
-			if !_context.has(ProjectileEngine.BehviorContext.BASE_SPEED): 
+			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): 
 				_result_value = _value
 			else:
 				_result_value = _value + _speed_expression_result
 		SpeedModifyMethod.MULTIPLICATION:
-			if !_context.has(ProjectileEngine.BehviorContext.BASE_SPEED): 
+			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): 
 				_result_value = _value
 			else:
-				_result_value = _context.get(ProjectileEngine.BehviorContext.BASE_SPEED) * _speed_expression_result
+				_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) * _speed_expression_result
 		SpeedModifyMethod.OVERRIDE:
 			_result_value = _speed_expression_result
 

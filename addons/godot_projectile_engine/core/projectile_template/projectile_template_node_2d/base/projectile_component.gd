@@ -18,6 +18,8 @@ signal component_deregistered(_owner: Node, _component: ProjectileComponent)
 
 var component_context : Dictionary
 
+var _normal_component_context : Dictionary
+var _persist_component_context : Dictionary
 
 func _enter_tree() -> void:
 	_register_component()
@@ -60,37 +62,73 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 
 
 func update_behavior_context(_behaviors: Array[ProjectileBehavior]) -> void:
-	var _behavior_contexts: Array[ProjectileEngine.BehviorContext] = []
+	var _behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
+	var _persist_behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
+
 	for _behavior in _behaviors:
 		if !_behavior: continue
 		if !_behavior.active: continue
-		_behavior_contexts.append_array(_behavior._behavior_context_request())
+		_behavior_contexts.append_array(_behavior._request_behavior_context())
+		_persist_behavior_contexts.append_array(_behavior._request_persist_behavior_context())
+
 	component_context.clear()
+
+	if _behavior_contexts.is_empty() and _persist_behavior_contexts.is_empty():
+		return
+
+	_normal_component_context.clear()
 	for _behavior_context in _behavior_contexts:
-		if component_context.has(_behavior_context): continue
-		match _behavior_context:
-			ProjectileEngine.BehviorContext.PHYSICS_DELTA:
-				component_context.get_or_add(
-					ProjectileEngine.BehviorContext.PHYSICS_DELTA,
-					get_physics_process_delta_time()
-					)
-			ProjectileEngine.BehviorContext.LIFE_TIME_SECOND:
-				var _projectile_component := get_component("projectile_component_life_time")
-				if !_projectile_component: continue ## Todo: Maybe add a warning here
-				var _life_time_second = _projectile_component.life_time_second
-				component_context.get_or_add(
-					ProjectileEngine.BehviorContext.LIFE_TIME_SECOND, 
-					_life_time_second
-					)
-				pass
-			ProjectileEngine.BehviorContext.BASE_SPEED:
-				var _projectile_component := get_component("projectile_component_speed")
-				if !_projectile_component: continue ## Todo: Maybe add a warning here
-				component_context.get_or_add(
-					ProjectileEngine.BehviorContext.BASE_SPEED, 
-					_projectile_component.base_speed
-					)
-	pass
+		_normal_component_context.get_or_add(
+			_behavior_context, 
+			process_behavior_context_request(_behavior_context)
+			)
+
+	for _persist_behavior_context in _persist_component_context.keys():
+		if !_persist_behavior_contexts.has(_persist_behavior_context):
+			_persist_component_context.erase(_persist_behavior_context)
+
+	for _persist_behavior_context in _persist_behavior_contexts:
+		if _persist_component_context.has(_persist_behavior_context):
+			continue
+		_persist_component_context.get_or_add(
+			_persist_behavior_context, 
+			process_behavior_context_request(_persist_behavior_context)
+			)
+	
+	component_context.merge(_normal_component_context, true)
+	component_context.merge(_persist_component_context, true)
+	# print(component_context)
+
+
+
+func process_behavior_context_request(_behavior_context: ProjectileEngine.BehaviorContext) -> Variant:
+	match _behavior_context:
+		ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
+			return get_physics_process_delta_time()
+		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
+			var _projectile_component := get_component("projectile_component_life_time")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.life_time_second
+		ProjectileEngine.BehaviorContext.BASE_SPEED:
+			var _projectile_component := get_component("projectile_component_speed")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.base_speed
+		ProjectileEngine.BehaviorContext.BASE_DIRECTION:
+			var _projectile_component := get_component("projectile_component_direction")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.base_direction
+		ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
+			var _rng_array := []
+			_rng_array.append(RandomNumberGenerator.new())
+			_rng_array.append(false)
+			return _rng_array
+		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+			return [0]
+		_:
+			
+			return null
+
+	return null
 
 
 ## register component when the component enter scene tree
