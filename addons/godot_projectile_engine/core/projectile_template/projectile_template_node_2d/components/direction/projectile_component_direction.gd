@@ -5,11 +5,19 @@ class_name ProjectileComponentDirection
 func get_component_name() -> StringName:
 	return "projectile_component_direction"
 
-@export var direction: Vector2 = Vector2.RIGHT
+@export var direction: Vector2 = Vector2.RIGHT:
+	get():
+		# raw_direction += direction_addition
+		# return (raw_direction + direction_addition).normalized()
+		return direction.snappedf(0.001)
 
 @export var component_behaviors : Array[ProjectileBehaviorDirection] = []
 
 var base_direction : Vector2 = Vector2.RIGHT
+
+var direction_rotation : float = 0.0
+var direction_addition : Vector2
+
 
 var raw_direction : Vector2 = Vector2.RIGHT
 var _component_behavior_convert : Array[ProjectileBehavior]
@@ -38,7 +46,16 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 	for _behavior in _behaviors:
 		if !_behavior or !_behavior.active:
 			continue
-		var _new_direction : Vector2 = _behavior.process_behavior(direction, _context)
-		if _new_direction != direction:
-			raw_direction = _new_direction
+		var _new_direction_array : Array = _behavior.process_behavior(direction, _context)
+
+		if _new_direction_array[0] != direction:
+			raw_direction = _new_direction_array[0]
 			direction = raw_direction.normalized()
+
+		if _new_direction_array.size() == 2:
+			direction_rotation = _new_direction_array[1]
+
+		if _new_direction_array.size() == 3:
+			direction_addition = _new_direction_array[2]
+
+		

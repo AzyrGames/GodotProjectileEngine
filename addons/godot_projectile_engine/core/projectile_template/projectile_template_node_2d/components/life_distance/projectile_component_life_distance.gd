@@ -5,7 +5,7 @@ class_name ProjectileComponentLifeDistance
 
 @export var projectile_transform_2d : ProjectileComponentTransform2D
 
-var current_life_distance : float = 0.0
+var life_distance : float = 0.0
 var _last_transform_2d : Transform2D
 
 
@@ -21,12 +21,12 @@ func _ready() -> void:
 	projectile_transform_2d.tranform_2d_updated.connect(_on_transform_2d_updated)
 
 func update_life_distance(_transform_2d: Transform2D) -> void:
-	current_life_distance += _last_transform_2d.get_origin().distance_to(_transform_2d.get_origin())
+	life_distance += _last_transform_2d.get_origin().distance_to(_transform_2d.get_origin())
 	_last_transform_2d = _transform_2d
 	pass
 
 func get_life_distance() -> float:
-	return current_life_distance
+	return life_distance
 	pass
 
 func _on_transform_2d_updated(_transform_2d: Transform2D) -> void:

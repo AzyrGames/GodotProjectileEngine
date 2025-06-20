@@ -37,7 +37,7 @@ func _request_persist_behavior_context() -> Array:
 
 
 ## Processes direction behavior with random walk
-func process_behavior(_value: Vector2, _component_context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 	# Get delta time from _context
 	var _rng_array := _component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _component_context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
@@ -56,12 +56,12 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Vector
 		_noise_direction = _generate_new_noise(_component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)[0])
 		match direction_modify_method:
 			DirectionModifyMethod.ADDTITION:
-				return _value + _noise_direction
+				return [_value + _noise_direction]
 			DirectionModifyMethod.OVERRIDE:
-				return _noise_direction
+				return [_noise_direction]
 			_:
-				return _value
-	return _value
+				return [_value]
+	return [_value]
 
 ## Generates a new random direction vector
 func _generate_new_noise(_rng: RandomNumberGenerator) -> Vector2:

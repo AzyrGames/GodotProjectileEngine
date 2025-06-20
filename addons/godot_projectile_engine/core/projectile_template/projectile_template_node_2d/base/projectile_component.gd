@@ -109,6 +109,10 @@ func process_behavior_context_request(_behavior_context: ProjectileEngine.Behavi
 			var _projectile_component := get_component("projectile_component_life_time")
 			if !_projectile_component: null ## Todo: Maybe add a warning here
 			return _projectile_component.life_time_second
+		ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
+			var _projectile_component := get_component("projectile_component_life_distance")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.life_distance
 		ProjectileEngine.BehaviorContext.BASE_SPEED:
 			var _projectile_component := get_component("projectile_component_speed")
 			if !_projectile_component: null ## Todo: Maybe add a warning here
@@ -123,7 +127,7 @@ func process_behavior_context_request(_behavior_context: ProjectileEngine.Behavi
 			_rng_array.append(false)
 			return _rng_array
 		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-			return [0]
+			return []
 		_:
 			
 			return null

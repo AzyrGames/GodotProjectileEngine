@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=20 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_big_cirle_1.png" id="2_nfe63"]
@@ -7,19 +7,32 @@
 [ext_resource type="Script" uid="uid://bk7p705uwnekq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/position/projectile_component_position.gd" id="5_ouhur"]
 [ext_resource type="Script" uid="uid://bdk51xt0hiwtb" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/projectile_component_rotation.gd" id="6_6r6gm"]
 [ext_resource type="Script" uid="uid://ccbdeoqjc8e6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/transform_2d/projectile_component_transform_2d.gd" id="7_6r6gm"]
-[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="8_70kml"]
+[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="8_7wm4u"]
+[ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_curve_2d.gd" id="8_70kml"]
 [ext_resource type="Script" uid="uid://egh01yr3fqho" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/projectile_component_scale.gd" id="8_inat4"]
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="10_56u1b"]
+[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="10_ouhur"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
+[ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
 
-[sub_resource type="Resource" id="Resource_7wm4u"]
+[sub_resource type="Resource" id="Resource_f0xrw"]
 script = ExtResource("8_70kml")
+curve_2d = ExtResource("8_7wm4u")
+curve_strenght = 1.5
+direction_curve_sample_method = 1
+direction_modify_method = 0
+active = true
+metadata/_custom_type_script = "uid://cjtoo7n0xa5e2"
+
+[sub_resource type="Resource" id="Resource_y7es0"]
+script = ExtResource("10_ouhur")
 direction_expression_sample_method = 0
-direction_modify_method = 1
+direction_modify_method = 0
+expression_streght = 0.5
 direction_expression_variable = "t"
-direction_x_expression = "sin(t * 3.1415)"
-direction_y_expression = "cos(t) * 3.141 "
+direction_x_expression = "sin(t)"
+direction_y_expression = "cos(t)"
 active = true
 metadata/_custom_type_script = "uid://b6mye22ih14le"
 
@@ -58,7 +71,7 @@ metadata/_custom_type_script = "uid://cnsqe5loyr8wg"
 
 [node name="ProjectileComponentDirection" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("4_lphvn")
-component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_7wm4u")])
+component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_f0xrw"), SubResource("Resource_y7es0")])
 
 [node name="ProjectileComponentScale" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("8_inat4")
@@ -72,6 +85,11 @@ script = ExtResource("6_6r6gm")
 [node name="ProjectileComponentLifeTime" type="Node" parent="ProjectileComponent"]
 script = ExtResource("12_70kml")
 metadata/_custom_type_script = "uid://b5mbns78winfj"
+
+[node name="ProjectileComponentLifeDistance" type="Node" parent="ProjectileComponent" node_paths=PackedStringArray("projectile_transform_2d")]
+script = ExtResource("14_f0xrw")
+projectile_transform_2d = NodePath("../ProjectileComponentTransform2D")
+metadata/_custom_type_script = "uid://cgkooc2hci3xy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

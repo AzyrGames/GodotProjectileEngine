@@ -12,8 +12,8 @@ enum SampleMethod {
 	# LIFE_TIME_TICK,
 	## Samples behavior every projecitle life time in second
 	LIFE_TIME_SECOND,
-	## Samples behavior based on projecitle life 
-	# LIFE_DISTANCE,
+	## Samples behavior based on projecitle life distance traveled
+	LIFE_DISTANCE,
 }
 
 ## Whether this behavior is currently active
