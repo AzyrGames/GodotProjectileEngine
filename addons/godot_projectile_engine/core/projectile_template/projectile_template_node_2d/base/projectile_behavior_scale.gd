@@ -1,7 +1,7 @@
 extends ProjectileBehavior
 class_name ProjectileBehaviorScale
 
-enum SpeedModifyMethod{
+enum ScaleModifyMethod{
 	## Add value to the current speed
 	ADDTITION,
 	# ADDTITION_OVER_BASE,

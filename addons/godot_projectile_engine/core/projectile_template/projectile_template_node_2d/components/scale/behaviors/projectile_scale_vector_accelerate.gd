@@ -9,14 +9,11 @@ class_name ProjectileScaleVectorAccelerate
 
 ## Acceleration rate in units per second squared (how quickly speed increases)
 
-@export var scale_x_accel_speed: float = 1.0
-@export var scale_y_accel_speed: float = 1.0
-## Maximum speed the projectile can reach (in units per second)
-@export var max_scale_x : float = 3.0
-@export var max_scale_y : float = 3.0
+@export var scale_accel_speed: Vector2 = Vector2.ONE
 
-var _scale_x : float
-var _scale_y : float
+@export var scale_max : Vector2 = Vector2.ONE
+
+var _new_scale : Vector2 
 
 
 ## Returns required context values for this behavior
@@ -29,12 +26,12 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA): return _value
 
-	if _value == Vector2(max_scale_x, max_scale_y):
+	if _value == scale_max:
 		return _value
 
 	# Calculate new speed using frame-rate independent acceleration
 	var delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA) as float
-	_scale_x = move_toward(_value.x, max_scale_x, scale_x_accel_speed * delta)
-	_scale_y = move_toward(_value.y, max_scale_y, scale_y_accel_speed * delta)
+	_new_scale.x = move_toward(_value.x, scale_max.x, scale_accel_speed.x * delta)
+	_new_scale.y = move_toward(_value.y, scale_max.y, scale_accel_speed.y * delta)
 
-	return Vector2(_scale_x, _scale_y)
+	return _new_scale

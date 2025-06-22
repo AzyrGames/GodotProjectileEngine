@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=23 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="10_56u1b"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="10_70kml"]
 [ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="10_y7es0"]
-[ext_resource type="Script" uid="uid://c12moysetlpk1" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_vector_accelerate.gd" id="11_inat4"]
+[ext_resource type="Script" uid="uid://b3c5wa712omaj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_vector_curve.gd" id="11_inat4"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
 [ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="12_ouhur"]
@@ -23,14 +23,27 @@ script = ExtResource("8_y7es0")
 active = true
 metadata/_custom_type_script = "uid://b434oxe86dd25"
 
+[sub_resource type="Curve" id="Curve_inat4"]
+_data = [Vector2(0, 0.50358), 0.0, 0.0, 0, 0, Vector2(0.50176, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.508929), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_56u1b"]
+_limits = [0.0, 2.0, 0.0, 2.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.49422, 2), 0.0, 0.0, 0, 0, Vector2(2, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="Resource" id="Resource_0jmbi"]
 script = ExtResource("11_inat4")
-scale_x_accel_speed = 1.0
-scale_y_accel_speed = 1.0
-max_scale_x = 3.0
-max_scale_y = 2.0
+scale_modify_method_x = 1
+scale_curve_loop_method_x = 1
+scale_curve_sample_method_x = 0
+scale_curve_x = SubResource("Curve_inat4")
+scale_modify_method_y = 1
+scale_curve_loop_method_y = 0
+scale_curve_sample_method_y = 0
+scale_curve_y = SubResource("Curve_56u1b")
 active = true
-metadata/_custom_type_script = "uid://c12moysetlpk1"
+metadata/_custom_type_script = "uid://b3c5wa712omaj"
 
 [sub_resource type="Resource" id="Resource_y7es0"]
 script = ExtResource("12_ouhur")

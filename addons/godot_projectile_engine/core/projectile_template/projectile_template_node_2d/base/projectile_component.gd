@@ -105,35 +105,48 @@ func process_behavior_context_request(_behavior_context: ProjectileEngine.Behavi
 	match _behavior_context:
 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
 			return get_physics_process_delta_time()
+
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
 			var _projectile_component := get_component("projectile_component_life_time")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.life_time_second
+
 		ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
 			var _projectile_component := get_component("projectile_component_life_distance")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.life_distance
+
 		ProjectileEngine.BehaviorContext.BASE_SPEED:
 			var _projectile_component := get_component("projectile_component_speed")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.base_speed
+
 		ProjectileEngine.BehaviorContext.DIRECTION:
 			var _projectile_component := get_component("projectile_component_direction")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.get_direction()
+
 		ProjectileEngine.BehaviorContext.BASE_DIRECTION:
 			var _projectile_component := get_component("projectile_component_direction")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.base_direction
+
 		ProjectileEngine.BehaviorContext.ROTATION:
 			var _projectile_component := get_component("projectile_component_rotation")
-			if !_projectile_component: null ## Todo: Maybe add a warning here
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.get_rotation()
+
+		ProjectileEngine.BehaviorContext.BASE_SCALE:
+			var _projectile_component := get_component("projectile_component_scale")
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
+			return _projectile_component.base_scale
+
 		ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
 			var _rng_array := []
 			_rng_array.append(RandomNumberGenerator.new())
 			_rng_array.append(false)
 			return _rng_array
+
 		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
 			return []
 		_:
