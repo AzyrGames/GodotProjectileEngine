@@ -47,8 +47,8 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 		if !_behavior or !_behavior.active:
 			continue
 		var _new_direction_array : Array = _behavior.process_behavior(direction, _context)
-
 		if _new_direction_array[0] != direction:
+
 			raw_direction = _new_direction_array[0]
 			direction = raw_direction.normalized()
 
@@ -58,4 +58,25 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 		if _new_direction_array.size() == 3:
 			direction_addition = _new_direction_array[2]
 
-		
+
+func get_direction() -> Vector2:
+	var _final_direction := direction
+	# if direction_addition != Vector2.ZERO:
+	# 	_final_direction = (_final_direction + direction_addition).normalized()
+	# # print("pre: ", _final_direction)
+	if direction_rotation != 0.0:
+		# print("direction_rotation: ", rad_to_deg(direction_rotation))
+		# print(_final_direction, _final_direction.rotated(deg_to_rad(180)))
+		_final_direction = _final_direction.rotated(direction_rotation)
+	return _final_direction
+	pass
+
+
+func get_raw_direction() -> Vector2:
+	var _final_raw_direction := raw_direction
+	if direction_addition != Vector2.ZERO:
+		_final_raw_direction = _final_raw_direction + direction_addition
+	if direction_rotation != 0.0:
+		_final_raw_direction = _final_raw_direction.rotated(direction_rotation)
+	return _final_raw_direction
+	pass

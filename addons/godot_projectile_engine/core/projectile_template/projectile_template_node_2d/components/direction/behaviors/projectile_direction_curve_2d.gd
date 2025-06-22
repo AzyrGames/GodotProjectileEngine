@@ -44,18 +44,12 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 	if _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE).size() == 0:
 		_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE).append(curve_2d.sample_baked(0.0))
 		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE].append(0.0)
-		# _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE].append(Vector2.ZERO)
-
-	# print("life distance: ", life_distance)
 
 	var _next_curve_position: Vector2 = curve_2d.sample_baked(life_distance)
 	var _new_direction : Vector2
 	## last position is not the same so the direction == vector2.zero
 	if _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][0] != _next_curve_position:
 		_new_direction = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)[0].direction_to(_next_curve_position)
-		print("old: ", _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][0])
-		print("new: ", _next_curve_position)
-		print(_new_direction)
 		_new_direction = _new_direction
 		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][0] = _next_curve_position
 

@@ -34,7 +34,7 @@ func update_projectile_transform_2d() -> void:
 	owner.get_transform()
 
 	_transform_2d = Transform2D(
-		projectile_rotation.rotation,
+		projectile_rotation.get_rotation(),
 		projectile_scale.scale, 
 		projectile_skew.skew,
 		projectile_position.position 

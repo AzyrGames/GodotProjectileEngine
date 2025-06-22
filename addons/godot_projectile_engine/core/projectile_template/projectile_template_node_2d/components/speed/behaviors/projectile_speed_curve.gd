@@ -64,8 +64,10 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 			_speed_curve_sample = fmod(_context_life_time_second, speed_curve.max_domain)
 			pass
 		LoopMethod.LOOP_FROM_END:
-			_speed_curve_sample = fmod(_context_life_time_second, speed_curve.max_domain) * sign(pow(-1, int(_context_life_time_second / speed_curve.max_domain + 1)))
-			pass
+			if sign(pow(-1, int(_context_life_time_second / speed_curve.max_domain))) > 0:
+				_speed_curve_sample = fmod(_context_life_time_second, speed_curve.max_domain)
+			else:
+				_speed_curve_sample = speed_curve.max_domain - fmod(_context_life_time_second, speed_curve.max_domain)
 
 	_speed_curve_sample_value = speed_curve.sample_baked(_speed_curve_sample)
 	

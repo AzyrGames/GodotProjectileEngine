@@ -32,6 +32,7 @@ func _add_bullet_polygon(instance: Dictionary) -> Array:
 		if spread_out:
 			var _direction := Vector2.from_angle(_theta)
 			_direction = _direction.rotated(instance.direction.angle())
+			_new_instance.rotation = _direction.angle()
 			_new_instance.direction = _direction
 
 		_new_instance.position = _point

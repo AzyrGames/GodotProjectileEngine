@@ -67,8 +67,10 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 		var _rand_angle : float
 		if random_angle != 0:
 			_rand_angle = _rand.randf_range(-random_angle / 2.0, random_angle / 2.0)
+		var _final_rotation : float = _composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle)
+		instance.rotation = _final_rotation
+		instance.direction = instance.direction.rotated(_final_rotation).normalized()
 
-		instance.direction = instance.direction.rotated(_composer_var.get_or_add("rotation", rotation) + deg_to_rad(_rand_angle)).normalized()
 
 	if rotation_process_type == RotationType.TICKS:
 		_composer_var.set("rotation", _composer_var.get_or_add("rotation", rotation) + rotation_speed)

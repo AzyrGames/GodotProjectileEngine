@@ -117,10 +117,18 @@ func process_behavior_context_request(_behavior_context: ProjectileEngine.Behavi
 			var _projectile_component := get_component("projectile_component_speed")
 			if !_projectile_component: null ## Todo: Maybe add a warning here
 			return _projectile_component.base_speed
+		ProjectileEngine.BehaviorContext.DIRECTION:
+			var _projectile_component := get_component("projectile_component_direction")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.get_direction()
 		ProjectileEngine.BehaviorContext.BASE_DIRECTION:
 			var _projectile_component := get_component("projectile_component_direction")
 			if !_projectile_component: null ## Todo: Maybe add a warning here
 			return _projectile_component.base_direction
+		ProjectileEngine.BehaviorContext.ROTATION:
+			var _projectile_component := get_component("projectile_component_rotation")
+			if !_projectile_component: null ## Todo: Maybe add a warning here
+			return _projectile_component.get_rotation()
 		ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
 			var _rng_array := []
 			_rng_array.append(RandomNumberGenerator.new())

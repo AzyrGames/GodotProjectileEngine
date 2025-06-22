@@ -1,40 +1,41 @@
-[gd_scene load_steps=20 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=21 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_big_cirle_1.png" id="2_nfe63"]
+[ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
 [ext_resource type="Script" uid="uid://cnsqe5loyr8wg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/projectile_component_speed.gd" id="3_erm13"]
 [ext_resource type="Script" uid="uid://dipo0d1s8vqo" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/projectile_component_direction.gd" id="4_lphvn"]
 [ext_resource type="Script" uid="uid://bk7p705uwnekq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/position/projectile_component_position.gd" id="5_ouhur"]
 [ext_resource type="Script" uid="uid://bdk51xt0hiwtb" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/projectile_component_rotation.gd" id="6_6r6gm"]
 [ext_resource type="Script" uid="uid://ccbdeoqjc8e6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/transform_2d/projectile_component_transform_2d.gd" id="7_6r6gm"]
-[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="8_7wm4u"]
-[ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_curve_2d.gd" id="8_70kml"]
 [ext_resource type="Script" uid="uid://egh01yr3fqho" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/projectile_component_scale.gd" id="8_inat4"]
+[ext_resource type="Script" uid="uid://b434oxe86dd25" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_follow_rotation.gd" id="8_y7es0"]
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="10_56u1b"]
-[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="10_ouhur"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="10_70kml"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
+[ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_curve.gd" id="12_ouhur"]
 [ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
 
-[sub_resource type="Resource" id="Resource_f0xrw"]
-script = ExtResource("8_70kml")
-curve_2d = ExtResource("8_7wm4u")
-curve_strenght = 1.5
-direction_curve_sample_method = 1
-direction_modify_method = 0
+[sub_resource type="Resource" id="Resource_56u1b"]
+script = ExtResource("8_y7es0")
 active = true
-metadata/_custom_type_script = "uid://cjtoo7n0xa5e2"
+metadata/_custom_type_script = "uid://b434oxe86dd25"
+
+[sub_resource type="Curve" id="Curve_ouhur"]
+_limits = [-2.5, 2.5, 0.0, 5.0]
+_data = [Vector2(0.25, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(1.25, 2.5), 0.108274, 0.108274, 0, 0, Vector2(2.25, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(2.75, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(3.75, -2.5), 0.0, 0.0, 0, 0, Vector2(4.75, 3.72529e-08), 0.0, 0.0, 0, 0]
+point_count = 6
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
 
 [sub_resource type="Resource" id="Resource_y7es0"]
-script = ExtResource("10_ouhur")
-direction_expression_sample_method = 0
-direction_modify_method = 0
-expression_streght = 0.5
-direction_expression_variable = "t"
-direction_x_expression = "sin(t)"
-direction_y_expression = "cos(t)"
+script = ExtResource("12_ouhur")
+rotation_modify_method = 1
+rotation_curve_loop_method = 2
+rotation_curve_sample_method = 0
+rotation_curve = SubResource("Curve_ouhur")
 active = true
-metadata/_custom_type_script = "uid://b6mye22ih14le"
+metadata/_custom_type_script = "uid://didjqd7lmis6t"
 
 [sub_resource type="Animation" id="Animation_inat4"]
 resource_name = "new_animation"
@@ -49,7 +50,8 @@ script = ExtResource("1_i8tgq")
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="BulletBigCirle1" type="Sprite2D" parent="."]
-texture = ExtResource("2_nfe63")
+texture_filter = 1
+texture = ExtResource("2_y7es0")
 
 [node name="ProjectileComponent" type="Node2D" parent="."]
 
@@ -67,20 +69,23 @@ projectile_direction = NodePath("ProjectileComponentDirection")
 
 [node name="ProjectileComponentSpeed" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("3_erm13")
+speed = 150.0
 metadata/_custom_type_script = "uid://cnsqe5loyr8wg"
 
 [node name="ProjectileComponentDirection" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("4_lphvn")
-component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_f0xrw"), SubResource("Resource_y7es0")])
+component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_56u1b")])
 
 [node name="ProjectileComponentScale" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("8_inat4")
-
-[node name="ProjectileComponentSkew" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
-script = ExtResource("10_56u1b")
+scale = Vector2(3, 3)
 
 [node name="ProjectileComponentRotation" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("6_6r6gm")
+component_behaviors = Array[ExtResource("10_70kml")]([SubResource("Resource_y7es0")])
+
+[node name="ProjectileComponentSkew" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
+script = ExtResource("10_56u1b")
 
 [node name="ProjectileComponentLifeTime" type="Node" parent="ProjectileComponent"]
 script = ExtResource("12_70kml")

@@ -10,4 +10,12 @@ func apply_pattern_pack(_pattern_pack: Dictionary) -> void:
 
 	if has_meta("projectile_component_direction") and _pattern_pack.has("direction"):
 		get_meta("projectile_component_direction").direction = _pattern_pack.get("direction")
+
+	if has_meta("projectile_component_rotation") and _pattern_pack.has("rotation"):
+		# print("Hye")
+		get_meta("projectile_component_rotation").rotation = _pattern_pack.get("rotation")
+
+	if has_meta("projectile_component_tranfrom_2d"):
+		get_meta("projectile_component_tranfrom_2d").update_projectile_transform_2d()
+
 	pass

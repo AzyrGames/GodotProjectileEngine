@@ -5,6 +5,8 @@ class_name ProjectileDirectionRandomWalk
 @export var noise_frequency: float = 0.2
 @export var noise_seed: int = 0
 
+# Todo: Option to all random seed or all same random seed
+
 @export var direction_modify_method: DirectionModifyMethod
 
 var _noise_direction: Vector2 = Vector2.ZERO
@@ -28,11 +30,11 @@ func _request_behavior_context() -> Array:
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
 		]
 
+
 func _request_persist_behavior_context() -> Array:
 	return [
 		ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR,
 		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE,
-
 		]
 
 
@@ -42,6 +44,9 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 	var _rng_array := _component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _component_context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
 	var _variable_array: Array = _component_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+
+	if _variable_array.size() == 0:
+		_variable_array.append(0)
 
 	if !_rng_array[1]:
 		if noise_seed == 0:
@@ -55,8 +60,10 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 		_variable_array[0] += 1
 		_noise_direction = _generate_new_noise(_component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)[0])
 		match direction_modify_method:
+			DirectionModifyMethod.ROTATION:
+				return [_value, _noise_direction.angle()]
 			DirectionModifyMethod.ADDTITION:
-				return [_value + _noise_direction]
+				return [_value, 0.0,  _noise_direction]
 			DirectionModifyMethod.OVERRIDE:
 				return [_noise_direction]
 			_:
