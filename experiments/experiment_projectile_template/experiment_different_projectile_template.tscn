@@ -54,3 +54,6 @@ metadata/_custom_type_script = "uid://httdfxyybbie"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Node2D" type="Node2D" parent="." groups=["TestHoming"]]
+position = Vector2(96, 46)

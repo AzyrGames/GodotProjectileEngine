@@ -1,0 +1,7 @@
+[gd_resource type="ProjectileHomingSimple" format=3]
+
+[resource]
+target_group = "player"
+steer_speed = 3.0
+homing_strength = 0.8
+max_homing_distance = 500.0
