@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=20 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="10_70kml"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
-[ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_curve.gd" id="12_ouhur"]
+[ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="12_ouhur"]
 [ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
 
 [sub_resource type="Resource" id="Resource_56u1b"]
@@ -21,21 +21,14 @@ script = ExtResource("8_y7es0")
 active = true
 metadata/_custom_type_script = "uid://b434oxe86dd25"
 
-[sub_resource type="Curve" id="Curve_ouhur"]
-_limits = [-2.5, 2.5, 0.0, 5.0]
-_data = [Vector2(0.25, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(1.25, 2.5), 0.108274, 0.108274, 0, 0, Vector2(2.25, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(2.75, 3.72529e-08), 0.0, 0.0, 0, 0, Vector2(3.75, -2.5), 0.0, 0.0, 0, 0, Vector2(4.75, 3.72529e-08), 0.0, 0.0, 0, 0]
-point_count = 6
-metadata/_snap_enabled = true
-metadata/_snap_count = 100
-
 [sub_resource type="Resource" id="Resource_y7es0"]
 script = ExtResource("12_ouhur")
+rotation_expression_sample_method = 0
 rotation_modify_method = 1
-rotation_curve_loop_method = 2
-rotation_curve_sample_method = 0
-rotation_curve = SubResource("Curve_ouhur")
+rotation_expression_variable = "t"
+rotation_expression = "cos(t * 3.1415) "
 active = true
-metadata/_custom_type_script = "uid://didjqd7lmis6t"
+metadata/_custom_type_script = "uid://c71ywbr61cvc3"
 
 [sub_resource type="Animation" id="Animation_inat4"]
 resource_name = "new_animation"
