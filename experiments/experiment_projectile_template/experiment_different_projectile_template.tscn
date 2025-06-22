@@ -44,7 +44,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_jfbej")
-rotation = 3.14159
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]

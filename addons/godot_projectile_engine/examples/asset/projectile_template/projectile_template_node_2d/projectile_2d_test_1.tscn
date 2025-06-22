@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=21 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://b434oxe86dd25" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_follow_rotation.gd" id="8_y7es0"]
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="10_56u1b"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="10_70kml"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="10_y7es0"]
+[ext_resource type="Script" uid="uid://c12moysetlpk1" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_vector_accelerate.gd" id="11_inat4"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
 [ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="12_ouhur"]
@@ -21,6 +23,15 @@ script = ExtResource("8_y7es0")
 active = true
 metadata/_custom_type_script = "uid://b434oxe86dd25"
 
+[sub_resource type="Resource" id="Resource_0jmbi"]
+script = ExtResource("11_inat4")
+scale_x_accel_speed = 1.0
+scale_y_accel_speed = 1.0
+max_scale_x = 3.0
+max_scale_y = 2.0
+active = true
+metadata/_custom_type_script = "uid://c12moysetlpk1"
+
 [sub_resource type="Resource" id="Resource_y7es0"]
 script = ExtResource("12_ouhur")
 rotation_expression_sample_method = 0
@@ -29,14 +40,6 @@ rotation_expression_variable = "t"
 rotation_expression = "cos(t * 3.1415) "
 active = true
 metadata/_custom_type_script = "uid://c71ywbr61cvc3"
-
-[sub_resource type="Animation" id="Animation_inat4"]
-resource_name = "new_animation"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_56u1b"]
-_data = {
-&"new_animation": SubResource("Animation_inat4")
-}
 
 [node name="Projectile2dTest1" type="Area2D"]
 script = ExtResource("1_i8tgq")
@@ -71,7 +74,8 @@ component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_56u1
 
 [node name="ProjectileComponentScale" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("8_inat4")
-scale = Vector2(3, 3)
+scale = Vector2(1, 1)
+component_behaviors = Array[ExtResource("10_y7es0")]([SubResource("Resource_0jmbi")])
 
 [node name="ProjectileComponentRotation" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("6_6r6gm")
@@ -88,10 +92,3 @@ metadata/_custom_type_script = "uid://b5mbns78winfj"
 script = ExtResource("14_f0xrw")
 projectile_transform_2d = NodePath("../ProjectileComponentTransform2D")
 metadata/_custom_type_script = "uid://cgkooc2hci3xy"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_56u1b")
-}

@@ -13,7 +13,7 @@ enum SampleMethod {
 	## Samples behavior every projecitle life time in second
 	LIFE_TIME_SECOND,
 	## Samples behavior based on projecitle life distance traveled
-	# LIFE_DISTANCE,
+	LIFE_DISTANCE,
 }
 
 ## Whether this behavior is currently active
