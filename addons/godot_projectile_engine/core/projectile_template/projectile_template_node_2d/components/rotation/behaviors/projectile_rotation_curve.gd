@@ -17,7 +17,7 @@ enum LoopMethod {
 
 
 ## How the curve value modifies the rotation (add/multiply/override)
-@export var rotation_modify_method : RotationModifyMethod = RotationModifyMethod.ADDTITION
+@export var rotation_modify_method : RotationModifyMethod = RotationModifyMethod.ADDITION
 ## How the curve loops over time
 @export var rotation_curve_loop_method : LoopMethod = LoopMethod.ONCE_AND_DONE
 ## What value to use for sampling the curve (time/distance/etc)
@@ -74,7 +74,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	# print(_rotation_curve_sample_value)
 	
 	match rotation_modify_method:
-		RotationModifyMethod.ADDTITION:
+		RotationModifyMethod.ADDITION:
 			# if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
 			# _result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) + _rotation_curve_sample_value
 			_result_value = _value + _rotation_curve_sample_value

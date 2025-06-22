@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=21 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -12,47 +12,31 @@
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="10_56u1b"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="10_70kml"]
 [ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="10_y7es0"]
-[ext_resource type="Script" uid="uid://b3c5wa712omaj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_vector_curve.gd" id="11_inat4"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="11_ouhur"]
+[ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_accelerate.gd" id="12_56u1b"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
-[ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="12_ouhur"]
+[ext_resource type="Script" uid="uid://btri3e8whkvjv" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_spin.gd" id="12_ouhur"]
 [ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
 
-[sub_resource type="Resource" id="Resource_56u1b"]
+[sub_resource type="Resource" id="Resource_inat4"]
 script = ExtResource("8_y7es0")
 active = true
 metadata/_custom_type_script = "uid://b434oxe86dd25"
 
-[sub_resource type="Curve" id="Curve_inat4"]
-_data = [Vector2(0, 0.50358), 0.0, 0.0, 0, 0, Vector2(0.50176, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.508929), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Curve" id="Curve_56u1b"]
-_limits = [0.0, 2.0, 0.0, 2.0]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.49422, 2), 0.0, 0.0, 0, 0, Vector2(2, 1), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Resource" id="Resource_0jmbi"]
-script = ExtResource("11_inat4")
-scale_modify_method_x = 1
-scale_curve_loop_method_x = 1
-scale_curve_sample_method_x = 0
-scale_curve_x = SubResource("Curve_inat4")
-scale_modify_method_y = 1
-scale_curve_loop_method_y = 0
-scale_curve_sample_method_y = 0
-scale_curve_y = SubResource("Curve_56u1b")
+[sub_resource type="Resource" id="Resource_f0xrw"]
+script = ExtResource("12_56u1b")
+acceleration_speed = 1.0
+max_scale = 2.0
 active = true
-metadata/_custom_type_script = "uid://b3c5wa712omaj"
+metadata/_custom_type_script = "uid://d0yojlb4mvhsj"
 
 [sub_resource type="Resource" id="Resource_y7es0"]
 script = ExtResource("12_ouhur")
-rotation_expression_sample_method = 0
-rotation_modify_method = 1
-rotation_expression_variable = "t"
-rotation_expression = "cos(t * 3.1415) "
+spin_speed = 0.0174533
+process_mode = 1
+modify_method = 0
 active = true
-metadata/_custom_type_script = "uid://c71ywbr61cvc3"
+metadata/_custom_type_script = "uid://btri3e8whkvjv"
 
 [node name="Projectile2dTest1" type="Area2D"]
 script = ExtResource("1_i8tgq")
@@ -78,17 +62,15 @@ projectile_direction = NodePath("ProjectileComponentDirection")
 
 [node name="ProjectileComponentSpeed" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("3_erm13")
-speed = 150.0
 metadata/_custom_type_script = "uid://cnsqe5loyr8wg"
 
 [node name="ProjectileComponentDirection" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D/ProjectileComponentPosition"]
 script = ExtResource("4_lphvn")
-component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_56u1b")])
+component_behaviors = Array[ExtResource("11_ouhur")]([SubResource("Resource_inat4")])
 
 [node name="ProjectileComponentScale" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("8_inat4")
-scale = Vector2(1, 1)
-component_behaviors = Array[ExtResource("10_y7es0")]([SubResource("Resource_0jmbi")])
+component_behaviors = Array[ExtResource("10_y7es0")]([SubResource("Resource_f0xrw")])
 
 [node name="ProjectileComponentRotation" type="Node" parent="ProjectileComponent/ProjectileComponentTransform2D"]
 script = ExtResource("6_6r6gm")

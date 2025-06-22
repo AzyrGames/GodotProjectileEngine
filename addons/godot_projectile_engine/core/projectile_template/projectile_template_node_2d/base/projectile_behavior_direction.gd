@@ -4,7 +4,7 @@ class_name ProjectileBehaviorDirection
 enum DirectionModifyMethod{
 	## Add value to the current direction
 	ROTATION,
-	ADDTITION,
+	ADDITION,
 	OVERRIDE,
 }
 

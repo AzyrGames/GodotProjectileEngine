@@ -81,7 +81,7 @@ func process_behavior(value: Vector2, context: Dictionary) -> Array:
 			return [value, _parse_value.angle()]
 			pass
 		# Later ha, to complicated, need to track every behaviors that modify the addition.
-		DirectionModifyMethod.ADDTITION:
+		DirectionModifyMethod.ADDITION:
 			if _parse_value == Vector2.ZERO: 
 				return [value]
 			return [value, 0.0, _parse_value * expression_streght]

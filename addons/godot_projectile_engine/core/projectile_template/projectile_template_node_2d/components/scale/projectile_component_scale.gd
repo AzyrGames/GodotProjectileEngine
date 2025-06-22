@@ -5,7 +5,7 @@ class_name ProjectileComponentScale
 func get_component_name() -> StringName:
 	return "projectile_component_scale"
 
-@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale: Vector2
+@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale: Vector2 = Vector2.ONE
 
 @export var component_behaviors : Array[ProjectileBehaviorScale] = []
 

@@ -53,7 +53,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 
 	# Apply expression result based on modification method
 	match rotation_modify_method:
-		RotationModifyMethod.ADDTITION:
+		RotationModifyMethod.ADDITION:
 			_result_value = _value + _rotation_expression_result
 		RotationModifyMethod.OVERRIDE:
 			_result_value = _rotation_expression_result

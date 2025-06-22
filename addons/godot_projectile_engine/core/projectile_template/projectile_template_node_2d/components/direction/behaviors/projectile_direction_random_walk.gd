@@ -62,7 +62,7 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 		match direction_modify_method:
 			DirectionModifyMethod.ROTATION:
 				return [_value, _noise_direction.angle()]
-			DirectionModifyMethod.ADDTITION:
+			DirectionModifyMethod.ADDITION:
 				return [_value, 0.0,  _noise_direction]
 			DirectionModifyMethod.OVERRIDE:
 				return [_noise_direction]

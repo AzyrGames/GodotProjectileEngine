@@ -72,7 +72,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	_speed_curve_sample_value = speed_curve.sample_baked(_speed_curve_sample)
 	
 	match speed_modify_method:
-		SpeedModifyMethod.ADDTITION:
+		SpeedModifyMethod.ADDITION:
 			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
 			_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) + _speed_curve_sample_value
 			pass

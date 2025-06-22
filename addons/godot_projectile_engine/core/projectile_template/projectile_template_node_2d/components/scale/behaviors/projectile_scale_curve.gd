@@ -63,7 +63,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
 	# print(_base_scale)
 	match scale_modify_method:
-		ScaleModifyMethod.ADDTITION:
+		ScaleModifyMethod.ADDITION:
 			return _base_scale + Vector2.ONE * _scale_curve_sample_value
 		ScaleModifyMethod.MULTIPLICATION:
 			return _base_scale * _scale_curve_sample_value

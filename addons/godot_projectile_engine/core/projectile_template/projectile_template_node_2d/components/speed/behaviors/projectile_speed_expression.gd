@@ -54,7 +54,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 
 	# Apply expression result based on modification method
 	match speed_modify_method:
-		SpeedModifyMethod.ADDTITION:
+		SpeedModifyMethod.ADDITION:
 			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): 
 				_result_value = _value
 			else:

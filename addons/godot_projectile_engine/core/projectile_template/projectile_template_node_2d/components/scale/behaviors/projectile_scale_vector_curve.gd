@@ -79,7 +79,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		# Sample curve and apply modification
 		_scale_curve_sample_value_x = scale_curve_x.sample_baked(_scale_curve_sample_x)
 		match scale_modify_method_x:
-			ScaleModifyMethod.ADDTITION:
+			ScaleModifyMethod.ADDITION:
 				result.x = _base_scale.x + _scale_curve_sample_value_x
 			ScaleModifyMethod.MULTIPLICATION:
 				result.x = _base_scale.x * _scale_curve_sample_value_x
@@ -103,7 +103,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		# Sample curve and apply modification
 		_scale_curve_sample_value_y = scale_curve_y.sample_baked(_scale_curve_sample_y)
 		match scale_modify_method_y:
-			ScaleModifyMethod.ADDTITION:
+			ScaleModifyMethod.ADDITION:
 				result.y = _base_scale.y + _scale_curve_sample_value_y
 			ScaleModifyMethod.MULTIPLICATION:
 				result.y = _base_scale.y * _scale_curve_sample_value_y

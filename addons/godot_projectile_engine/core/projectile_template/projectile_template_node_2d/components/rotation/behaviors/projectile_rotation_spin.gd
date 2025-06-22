@@ -7,7 +7,7 @@ class_name ProjectileRotationSpin
 @export_range(0, 360, 0.1, "radians_as_degrees") var spin_speed : float = 0.0
 
 @export var process_mode : RotationProcessMode = RotationProcessMode.PHYSICS
-@export var modify_method: RotationModifyMethod = RotationModifyMethod.ADDTITION
+@export var modify_method: RotationModifyMethod = RotationModifyMethod.ADDITION
 
 
 ## Returns required context values for this behavior
@@ -38,7 +38,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 			_spin_value = spin_speed
 
 	match modify_method:
-		RotationModifyMethod.ADDTITION:
+		RotationModifyMethod.ADDITION:
 			return _value + _spin_value
 
 		RotationModifyMethod.OVERRIDE:

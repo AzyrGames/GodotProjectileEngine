@@ -60,7 +60,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 			return [_value, _new_direction.angle()]
 			pass
 		# Later ha, to complicated, need to track every behaviors that modify the addition.
-		DirectionModifyMethod.ADDTITION:
+		DirectionModifyMethod.ADDITION:
 			if _new_direction == Vector2.ZERO: 
 				return [_value]
 			return [_value, 0.0, _new_direction * curve_strenght]

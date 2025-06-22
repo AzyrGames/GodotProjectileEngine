@@ -2,7 +2,7 @@ extends ProjectileBehavior
 class_name ProjectileBehaviorRotation
 
 enum RotationModifyMethod{
-	ADDTITION,
+	ADDITION,
 	# MULTIPLICATION,
 	OVERRIDE,
 }

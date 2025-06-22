@@ -3,8 +3,8 @@ class_name ProjectileBehaviorScale
 
 enum ScaleModifyMethod{
 	## Add value to the current speed
-	ADDTITION,
-	# ADDTITION_OVER_BASE,
+	ADDITION,
+	# ADDITION_OVER_BASE,
 	## Multiple value to the current speed
 	MULTIPLICATION,
 	# MULTIPLICATION_OVER_BASE,
