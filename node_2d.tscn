@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc3d3tm862eb8"]
+
+[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="1_wtcfe"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = ExtResource("1_wtcfe")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]

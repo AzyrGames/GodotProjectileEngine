@@ -51,7 +51,8 @@ func request_pattern(_position: Vector2, _composer_var : Dictionary) -> Array:
 	var pattern_packs : Array = [
 		{
 			"direction" : Vector2.RIGHT,
-			"position" : _position
+			"position" : _position,
+			"rotation" : 0.0,
 		}
 	]
 

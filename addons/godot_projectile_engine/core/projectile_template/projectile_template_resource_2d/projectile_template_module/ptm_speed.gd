@@ -2,7 +2,7 @@ extends ProjectileTemplateModule
 class_name PTMSpeed
 
 enum MoveSpeedChangeType{
-	MULTIPLIER, 
+	MULTIPLICATION, 
 	HARD_VALUE, 
 }
 

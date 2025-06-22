@@ -11,7 +11,9 @@ config_version=5
 [application]
 
 config/name="GodotProjectileEngine"
+run/main_scene="uid://dbkvy03ojapdo"
 config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
 
 [autoload]
 
