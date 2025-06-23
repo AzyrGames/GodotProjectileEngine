@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=24 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -15,7 +15,10 @@
 [ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
 [ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="15_y7es0"]
 [ext_resource type="Script" uid="uid://jrux0ns07ryt" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/behaviors/projectile_bounce_ricochet.gd" id="16_y7es0"]
+[ext_resource type="Script" uid="uid://chg5nxeot0crs" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/projectile_component_destroy.gd" id="17_inat4"]
 [ext_resource type="Script" uid="uid://yhl0aii1go5n" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/projectile_component_bouncing.gd" id="18_0jmbi"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="18_84ii0"]
+[ext_resource type="Script" uid="uid://dcx8xuu3wp0bl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_boundary.gd" id="19_0jmbi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_84ii0"]
 radius = 5.0
@@ -29,6 +32,13 @@ metadata/_custom_type_script = "uid://bpntc8lt06yr8"
 script = ExtResource("16_y7es0")
 active = true
 metadata/_custom_type_script = "uid://jrux0ns07ryt"
+
+[sub_resource type="Resource" id="Resource_0jmbi"]
+script = ExtResource("19_0jmbi")
+destroy_on_enter = false
+emit_destroy_signal = true
+active = true
+metadata/_custom_type_script = "uid://dcx8xuu3wp0bl"
 
 [node name="Projectile2dTest1" type="Area2D"]
 collision_layer = 32
@@ -88,3 +98,8 @@ script = ExtResource("18_0jmbi")
 max_bounces = 5
 component_behaviors = Array[ExtResource("15_y7es0")]([SubResource("Resource_inat4")])
 metadata/_custom_type_script = "uid://yhl0aii1go5n"
+
+[node name="ProjectileComponentDestroy" type="Node" parent="ProjectileComponent"]
+script = ExtResource("17_inat4")
+component_behaviors = Array[ExtResource("18_84ii0")]([SubResource("Resource_0jmbi")])
+metadata/_custom_type_script = "uid://chg5nxeot0crs"

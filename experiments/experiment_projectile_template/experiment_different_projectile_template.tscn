@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbkvy03ojapdo"]
+[gd_scene load_steps=15 format=3 uid="uid://dbkvy03ojapdo"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_a6xni"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_r0ng0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCPolygon2D.gd" id="8_hy8p2"]
 [ext_resource type="Script" uid="uid://b86jmxbx6fbr4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_bouncing_helper.gd" id="9_rhgna"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="10_2g1ii"]
+[ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="10_6mpfu"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCSingle2D.gd" id="11_jfbej"]
 
 [sub_resource type="Resource" id="Resource_a6xni"]
@@ -20,6 +21,9 @@ size = Vector2(638, 71.5737)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rhgna"]
 radius = 50.03
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a6xni"]
+radius = 219.037
 
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
 
@@ -114,3 +118,11 @@ metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBouncingHelper2"]
 shape = SubResource("CircleShape2D_rhgna")
+
+[node name="ProjectileBoundary2D" type="Area2D" parent="."]
+script = ExtResource("10_6mpfu")
+metadata/_custom_type_script = "uid://byoirooyga8su"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBoundary2D"]
+position = Vector2(31, 6)
+shape = SubResource("CircleShape2D_a6xni")
