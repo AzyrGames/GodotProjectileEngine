@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=25 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -20,8 +20,6 @@
 [ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="18_84ii0"]
 [ext_resource type="Script" uid="uid://dcx8xuu3wp0bl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_boundary.gd" id="19_0jmbi"]
 [ext_resource type="Script" uid="uid://2bbeucwj5h8n" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/piercing/projectile_component_piercing.gd" id="20_84ii0"]
-[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="21_lv3f8"]
-[ext_resource type="Script" uid="uid://dr162ephfbbdq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/piercing/behaviors/projectile_behavior_simple_piercing.gd" id="22_qyalf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_84ii0"]
 radius = 5.0
@@ -30,17 +28,6 @@ radius = 5.0
 script = ExtResource("10_ouhur")
 active = true
 metadata/_custom_type_script = "uid://bpntc8lt06yr8"
-
-[sub_resource type="Resource" id="Resource_lv3f8"]
-script = ExtResource("22_qyalf")
-damage_reduction_per_pierce = 0.1
-speed_reduction_per_pierce = 0.05
-min_speed_threshold = 50.0
-apply_visual_effects = true
-scale_factor_per_pierce = 0.95
-emit_piercing_signal = true
-active = true
-metadata/_custom_type_script = "uid://dr162ephfbbdq"
 
 [sub_resource type="Resource" id="Resource_qyalf"]
 script = ExtResource("16_y7es0")
@@ -109,8 +96,7 @@ metadata/_custom_type_script = "uid://cgkooc2hci3xy"
 
 [node name="ProjectileComponentPiercing" type="Node" parent="ProjectileComponent"]
 script = ExtResource("20_84ii0")
-component_behaviors = Array[ExtResource("21_lv3f8")]([SubResource("Resource_lv3f8")])
-stop_on_max_piercing = true
+trigger_destroy_on_max_piercing = true
 metadata/_custom_type_script = "uid://2bbeucwj5h8n"
 
 [node name="ProjectileComponentBouncing" type="Node" parent="ProjectileComponent"]
