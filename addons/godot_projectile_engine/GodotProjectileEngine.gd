@@ -28,6 +28,7 @@ var bullet_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 
 var bullet_composer_nodes : Dictionary[String, PatternComposer2D]
 
+var projectile_boundary_2d : ProjectileBoundary2D
 
 
 func get_bullet_count() -> int:
