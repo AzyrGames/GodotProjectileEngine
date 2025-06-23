@@ -47,5 +47,8 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 	for _behavior in _behaviors:
 		if !_behavior or !_behavior.active:
 			continue
-		# Apply behavior modification to speed
 		speed = _behavior.process_behavior(speed, _context)
+
+
+func get_speed() -> float:
+	return speed
