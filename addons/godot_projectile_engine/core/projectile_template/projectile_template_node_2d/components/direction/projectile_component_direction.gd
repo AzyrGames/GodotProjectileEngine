@@ -7,8 +7,6 @@ func get_component_name() -> StringName:
 
 @export var direction: Vector2 = Vector2.RIGHT:
 	get():
-		# raw_direction += direction_addition
-		# return (raw_direction + direction_addition).normalized()
 		return direction.snappedf(0.001)
 
 @export var component_behaviors : Array[ProjectileBehaviorDirection] = []
