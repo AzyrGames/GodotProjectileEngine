@@ -16,11 +16,11 @@ script = ExtResource("3_rhgna")
 projectile_2d_path = &"uid://elu5weic5047"
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mpfu"]
+size = Vector2(207.749, 14.1861)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hy8p2"]
 size = Vector2(638, 71.5737)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_rhgna"]
-radius = 50.03
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6xni"]
 radius = 219.037
@@ -55,8 +55,7 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_jfbej")
-rotation_speed = 0.296706
-rotation_process_type = 1
+rotation = 1.8134
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]
@@ -71,6 +70,30 @@ metadata/_custom_type_script = "uid://httdfxyybbie"
 
 [node name="Node2D" type="Node2D" parent="." groups=["TestHoming"]]
 position = Vector2(96, 46)
+
+[node name="Area2D2" type="CharacterBody2D" parent="."]
+position = Vector2(-7, 33)
+collision_layer = 256
+collision_mask = 32
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("RectangleShape2D_6mpfu")
+
+[node name="Area2D3" type="CharacterBody2D" parent="."]
+position = Vector2(-8, 67)
+collision_layer = 256
+collision_mask = 32
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D3"]
+shape = SubResource("RectangleShape2D_6mpfu")
+
+[node name="Area2D4" type="CharacterBody2D" parent="."]
+position = Vector2(0, 106)
+collision_layer = 256
+collision_mask = 32
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D4"]
+shape = SubResource("RectangleShape2D_6mpfu")
 
 [node name="Area2D" type="CharacterBody2D" parent="."]
 position = Vector2(-52, 14)
@@ -105,9 +128,6 @@ motion_mode = 1
 script = ExtResource("9_rhgna")
 metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBouncingHelper"]
-shape = SubResource("CircleShape2D_rhgna")
-
 [node name="ProjectileBouncingHelper2" type="CharacterBody2D" parent="."]
 position = Vector2(214, 54)
 collision_layer = 32
@@ -116,13 +136,10 @@ motion_mode = 1
 script = ExtResource("9_rhgna")
 metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBouncingHelper2"]
-shape = SubResource("CircleShape2D_rhgna")
-
 [node name="ProjectileBoundary2D" type="Area2D" parent="."]
 script = ExtResource("10_6mpfu")
 metadata/_custom_type_script = "uid://byoirooyga8su"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBoundary2D"]
-position = Vector2(31, 6)
+position = Vector2(38, 3)
 shape = SubResource("CircleShape2D_a6xni")
