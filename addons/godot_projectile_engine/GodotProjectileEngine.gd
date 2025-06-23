@@ -3,6 +3,7 @@ extends Node
 
 
 signal bullet_trigger_activated(trigger_name: String, bullet_instance: ProjectileInstance2D)
+signal projectile_trigger_activated(trigger_name: String, projectile_node: Node2D)
 
 enum BehaviorContext{
 	PHYSICS_DELTA,
@@ -31,6 +32,10 @@ var bullet_composer_nodes : Dictionary[String, PatternComposer2D]
 var projectile_boundary_2d : ProjectileBoundary2D
 
 
+func _ready() -> void:
+	bullet_trigger_activated.connect(_test_projectile_resource_trigger)
+	projectile_trigger_activated.connect(_test_projectile_trigger_activated)
+
 func get_bullet_count() -> int:
 	active_bullet_count = 0
 
@@ -51,4 +56,11 @@ func clear() -> void:
 func clear_bullet() -> void:
 	for _bullet_udpater_node in bullet_updater_2d_nodes.values():
 		_bullet_udpater_node.clear_bullet()
+	pass
+
+func _test_projectile_resource_trigger(trigger_name: String, bullet_instance: ProjectileInstance2D) -> void:
+	pass
+
+func _test_projectile_trigger_activated(trigger_name: String, projectile_node: Node2D) -> void:
+	print("Hello: ", trigger_name, " - ", projectile_node)
 	pass
