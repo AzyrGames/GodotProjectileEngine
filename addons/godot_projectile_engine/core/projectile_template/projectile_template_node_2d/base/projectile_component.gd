@@ -14,7 +14,7 @@ signal component_deregistered(_owner: Node, _component: ProjectileComponent)
 		if value:
 			active_component()
 		else:
-			deactive_compoment()
+			deactivate_component()
 
 var component_context : Dictionary
 
@@ -53,7 +53,7 @@ func active_component() -> void:
 	pass
 
 
-func deactive_compoment() -> void:
+func deactivate_component() -> void:
 	pass
 
 
@@ -120,6 +120,11 @@ func process_behavior_context_request(_behavior_context: ProjectileEngine.Behavi
 			var _projectile_component := get_component("projectile_component_speed")
 			if !_projectile_component: return null ## Todo: Maybe add a warning here
 			return _projectile_component.base_speed
+
+		ProjectileEngine.BehaviorContext.DIRECTION_COMPONENT:
+			var _projectile_component := get_component("projectile_component_direction")
+			if !_projectile_component: return null ## Todo: Maybe add a warning here
+			return _projectile_component
 
 		ProjectileEngine.BehaviorContext.DIRECTION:
 			var _projectile_component := get_component("projectile_component_direction")

@@ -2,18 +2,11 @@ extends ProjectileBehavior
 class_name ProjectileBehaviorBouncing
 
 
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
-	return [_value, 0.0]
+func process_behavior(_value, _context: Dictionary) -> bool:
+	return false
 
 
-
-
-
-
-
-# ## Behavior resource that defines how projectiles should bounce.
-# ## Provides various bouncing modes and customization options.
-
+#region AI suggestion. Do not touch
 # ## Bouncing behavior types
 # enum BounceType {
 # 	PERFECT_REFLECTION,    ## Perfect elastic collision with no energy loss
@@ -323,3 +316,4 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 # 			behavior.energy_retention = 0.8
 	
 # 	return behavior
+#endregion

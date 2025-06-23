@@ -58,6 +58,7 @@ metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_hy8p2")
 spread_out = true
+active = false
 metadata/_custom_type_script = "uid://httdfxyybbie"
 
 [node name="Camera2D" type="Camera2D" parent="."]
