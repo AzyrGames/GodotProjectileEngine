@@ -1,5 +1,5 @@
 extends ProjectileBehaviorHoming
-class_name ProjectileHomingTarget
+class_name ProjectileHomingAdvanced
 
 ## Target-based homing behavior that steers projectiles toward specific targets
 
@@ -183,5 +183,4 @@ func _get_projectile_owner(_context: Dictionary) -> Node:
 	if _context.has("projectile_owner"):
 		return _context["projectile_owner"]
 	
-	# This would need to be set by the component system
 	return null

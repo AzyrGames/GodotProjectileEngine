@@ -4,7 +4,7 @@ class_name ProjectileHomingSimple
 ## Simple homing behavior that steers projectiles toward a target group
 
 ## Group name to target
-@export var target_group: String = "player"
+@export var target_group: String = ""
 
 ## Speed at which the projectile steers toward target (radians per second)
 @export var steer_speed: float = 5.0
