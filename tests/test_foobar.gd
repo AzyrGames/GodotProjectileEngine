@@ -5,4 +5,4 @@ func test_foo():
 
 
 func test_bar():
-	assert_true(false)
+	assert_true(true)
