@@ -24,5 +24,4 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      - name: Run GUT Tests
-        uses: yeslayla/run-gut-tests-action@v1.1.0
+      - uses: yeslayla/run-gut-tests-action@v1.1.0
