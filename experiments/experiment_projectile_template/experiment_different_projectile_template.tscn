@@ -56,8 +56,8 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("7_jihcw")
-duration = 0.5
-repeat_count = 1
+duration = 0.3
+repeat_count = 20
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="PatternComposer2D" type="Node" parent="."]
@@ -67,14 +67,13 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_jfbej")
-rotation_speed = 0.191986
+rotation_speed = 0.331613
 rotation_process_type = 1
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_hy8p2")
 spread_out = true
-active = false
 metadata/_custom_type_script = "uid://httdfxyybbie"
 
 [node name="Camera2D" type="Camera2D" parent="."]
