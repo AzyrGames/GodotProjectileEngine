@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotProjectileEngine/Core/ProjectileSpawner/projectile_spawner.gd" id="3_4my7g"]
 [ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/projectile_template_2d.gd" id="4_tthpb"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTemplateModule/projectile_template_module.gd" id="5_m040t"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Bullet/bullet_circle_1.png" id="6_3x0gh"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Projectile/projectile_circle_1.png" id="6_3x0gh"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTriggerCondition/projectile_trigger_condition.gd" id="7_d4dpm"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_scheduler.gd" id="8_ixyja"]
 [ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_wave.gd" id="9_3vsd0"]
@@ -17,7 +17,7 @@
 [sub_resource type="Resource" id="Resource_43m15"]
 script = ExtResource("4_tthpb")
 move_speed = 100.0
-bullet_pooling_amount = 500
+projectile_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 300.0
 texture = ExtResource("6_3x0gh")
@@ -62,10 +62,10 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 stream = ExtResource("2_7xiqb")
 volume_db = -20.0
 
-[node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("audio_stream")]
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("audio_stream")]
 script = ExtResource("3_4my7g")
-bullet_composer_name = "simple_1"
-bullet_template_2d = SubResource("Resource_43m15")
+projectile_composer_name = "simple_1"
+projectile_template_2d = SubResource("Resource_43m15")
 timing_scheduler = SubResource("Resource_3jruw")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"

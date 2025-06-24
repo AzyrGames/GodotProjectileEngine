@@ -1,4 +1,4 @@
-## Bullet Pattern Component Base
+## Projectile Pattern Component Base
 
 extends ProjectilePatternComponent
 class_name PPCPolygon2D
@@ -12,15 +12,15 @@ class_name PPCPolygon2D
 
 
 func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
-	var _new_bullet_packs := []
+	var _new_projectile_packs := []
 	for instance : Dictionary in pattern_packs:
 
-		_new_bullet_packs.append_array(_add_bullet_polygon(instance))
+		_new_projectile_packs.append_array(_add_projectile_polygon(instance))
 
-	return _new_bullet_packs
+	return _new_projectile_packs
 
 
-func _add_bullet_polygon(instance: Dictionary) -> Array:
+func _add_projectile_polygon(instance: Dictionary) -> Array:
 	var _new_polygon_instances : Array = []
 	for i in range(polygon_sides):
 		var _new_instance := instance.duplicate()

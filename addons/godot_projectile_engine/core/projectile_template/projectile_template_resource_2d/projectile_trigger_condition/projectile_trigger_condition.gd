@@ -8,5 +8,5 @@ class_name ProjectileTriggerCondition2D
 @export var destroy_on_trigger : bool = true
 
 
-func check_trigger_condition(trigger_name: String, active_bullet_instances: Array[ProjectileInstance2D]) -> void:
+func check_trigger_condition(trigger_name: String, active_projectile_instances: Array[ProjectileInstance2D]) -> void:
 	pass

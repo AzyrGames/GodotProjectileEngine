@@ -2,38 +2,38 @@ extends Node2D
 class_name ProjectileUpdater2D
 
 
-var bullet_texture : Texture2D
-var bullet_texture_visible : bool
-var bullet_texture_modulate : Color
-var bullet_animated_sprite : SpriteFrames
-var bullet_animation_name : String
+var projectile_texture : Texture2D
+var projectile_texture_visible : bool
+var projectile_texture_modulate : Color
+var projectile_animated_sprite : SpriteFrames
+var projectile_animation_name : String
 var use_animation : bool
 var _animation_speed : float 
 var _animation_frame_count : int 
-var bullet_texture_draw_offset : Vector2
+var projectile_texture_draw_offset : Vector2
 
 var _texture_rotate_direction : bool 
 
-var bullet_template_2d : ProjectileTemplate2D
+var projectile_template_2d : ProjectileTemplate2D
 
 
-var bullet_instance_array : Array
-var bullet_active_index : Array
+var projectile_instance_array : Array
+var projectile_active_index : Array
 
-var bullet_area_rid : RID
-var bullet_pooling_index : int = 0
-var bullet_max_pooling : int
+var projectile_area_rid : RID
+var projectile_pooling_index : int = 0
+var projectile_max_pooling : int
 
-var bullet_damage : int
+var projectile_damage : int
 
-var bullet_remove_index : Array = []
+var projectile_remove_index : Array = []
 
-var _bullet_life_time_max : float
-var _bullet_life_distance_max : float
+var _projectile_life_time_max : float
+var _projectile_life_distance_max : float
 
 
 var PS := PhysicsServer2D
-var _bullet_instance : ProjectileInstance2D
+var _projectile_instance : ProjectileInstance2D
 
 var spawner_destroyed : bool = false
 
@@ -42,15 +42,15 @@ var _template_modules : Array[ProjectileTemplateModule]
 
 
 func _ready() -> void:
-	setup_bullet_updater()
+	setup_projectile_updater()
 
 
 func _physics_process(delta: float) -> void:
-	update_bullet_instances(delta)
+	update_projectile_instances(delta)
 	
-	# Free Bullet Updater after spawner destroyed and no active bullet instances
-	if spawner_destroyed and bullet_active_index.size() <= 0:
-		clear_bullet_updater()
+	# Free Projectile Updater after spawner destroyed and no active projectile instances
+	if spawner_destroyed and projectile_active_index.size() <= 0:
+		clear_projectile_updater()
 		queue_free()
 
 	queue_redraw()
@@ -58,63 +58,63 @@ func _physics_process(delta: float) -> void:
 
 
 func _draw() -> void:
-	draw_bullet_texture()
+	draw_projectile_texture()
 
-func draw_bullet_texture() -> void:
-	if !bullet_template_2d.texture_visible: return
-	z_index = bullet_template_2d.texture_z_index
-	bullet_texture = bullet_template_2d.texture
-	bullet_texture_modulate = bullet_template_2d.texture_modulate
-	bullet_texture_draw_offset = Vector2.ZERO - bullet_template_2d.texture.get_size() * 0.5
-	use_animation = bullet_template_2d.use_animation
+func draw_projectile_texture() -> void:
+	if !projectile_template_2d.texture_visible: return
+	z_index = projectile_template_2d.texture_z_index
+	projectile_texture = projectile_template_2d.texture
+	projectile_texture_modulate = projectile_template_2d.texture_modulate
+	projectile_texture_draw_offset = Vector2.ZERO - projectile_template_2d.texture.get_size() * 0.5
+	use_animation = projectile_template_2d.use_animation
 	
-	for index : int in bullet_active_index:
-		draw_set_transform_matrix(bullet_instance_array[index].transform)
-		# if bullet_template_2d.use_animation:
-		# 	draw_texture(bullet_template_2d.bullet_animated_sprite.get_frame_texture(
-		# 		bullet_template_2d.bullet_animation_name, bullet_instance_array[index].animation_frame), 
-		# 		bullet_template_2d.bullet_texture_draw_offset
+	for index : int in projectile_active_index:
+		draw_set_transform_matrix(projectile_instance_array[index].transform)
+		# if projectile_template_2d.use_animation:
+		# 	draw_texture(projectile_template_2d.projectile_animated_sprite.get_frame_texture(
+		# 		projectile_template_2d.projectile_animation_name, projectile_instance_array[index].animation_frame), 
+		# 		projectile_template_2d.projectile_texture_draw_offset
 		# 		)
 		# else:
-		draw_texture(bullet_texture, bullet_texture_draw_offset, bullet_texture_modulate)
+		draw_texture(projectile_texture, projectile_texture_draw_offset, projectile_texture_modulate)
 
 
-func update_bullet_instances(delta: float) -> void:
+func update_projectile_instances(delta: float) -> void:
 	
-	_texture_rotate_direction = bullet_template_2d.texture_rotate_direction
+	_texture_rotate_direction = projectile_template_2d.texture_rotate_direction
 
-	_template_modules = bullet_template_2d.template_modules
+	_template_modules = projectile_template_2d.template_modules
 
-	_bullet_life_time_max  = bullet_template_2d.life_time_max
-	_bullet_life_distance_max  = bullet_template_2d.life_distance_max
+	_projectile_life_time_max  = projectile_template_2d.life_time_max
+	_projectile_life_distance_max  = projectile_template_2d.life_distance_max
 
 
-	for index : int in bullet_active_index:
-		_bullet_instance = bullet_instance_array[index]
+	for index : int in projectile_active_index:
+		_projectile_instance = projectile_instance_array[index]
 		# Life Time & Distance
-		_bullet_instance.life_time += delta
+		_projectile_instance.life_time += delta
 
-		if _bullet_instance.life_time >= _bullet_life_time_max:
-			bullet_remove_index.append(index)
+		if _projectile_instance.life_time >= _projectile_life_time_max:
+			projectile_remove_index.append(index)
 			continue
 
-		_bullet_instance.life_distance += _bullet_instance.velocity.length()
-		if _bullet_instance.life_distance >= _bullet_life_distance_max:
-			bullet_remove_index.append(index)
+		_projectile_instance.life_distance += _projectile_instance.velocity.length()
+		if _projectile_instance.life_distance >= _projectile_life_distance_max:
+			projectile_remove_index.append(index)
 			continue
 		
-		_bullet_instance.life_time_tick += 1
+		_projectile_instance.life_time_tick += 1
 
 
-	if bullet_remove_index.size() > 0:
-		for index : int in bullet_remove_index:
-			bullet_active_index.erase(index)
-			PS.area_set_shape_disabled(bullet_area_rid, index, true)
-		bullet_remove_index.clear()
+	if projectile_remove_index.size() > 0:
+		for index : int in projectile_remove_index:
+			projectile_active_index.erase(index)
+			PS.area_set_shape_disabled(projectile_area_rid, index, true)
+		projectile_remove_index.clear()
 
 	_active_instances.clear()
-	for index : int in bullet_active_index:
-		_active_instances.append(bullet_instance_array[index])
+	for index : int in projectile_active_index:
+		_active_instances.append(projectile_instance_array[index])
 	
 	if _active_instances.size() <= 0: return
 
@@ -137,116 +137,116 @@ func update_bullet_instances(delta: float) -> void:
 			_active_instance.global_position
 			)
 
-		PS.area_set_shape_transform(bullet_area_rid, _active_instance.area_index, _active_instance.transform)
+		PS.area_set_shape_transform(projectile_area_rid, _active_instance.area_index, _active_instance.transform)
 	
-	for _trigger_condition in bullet_template_2d.trigger_conditions:
-		_trigger_condition.check_trigger_condition(bullet_template_2d.trigger_name, _active_instances)
+	for _trigger_condition in projectile_template_2d.trigger_conditions:
+		_trigger_condition.check_trigger_condition(projectile_template_2d.trigger_name, _active_instances)
 		pass
 
 
-func spawn_bullet_pattern(pattern_packs: Array) -> void:
+func spawn_projectile_pattern(pattern_packs: Array) -> void:
 	for instance : Dictionary in pattern_packs:
-		_bullet_instance = bullet_instance_array[bullet_pooling_index]
-		_bullet_instance.base_move_direction = instance.direction
-		_bullet_instance.move_direction =_bullet_instance.base_move_direction
+		_projectile_instance = projectile_instance_array[projectile_pooling_index]
+		_projectile_instance.base_move_direction = instance.direction
+		_projectile_instance.move_direction =_projectile_instance.base_move_direction
 
-		_bullet_instance.global_position = instance.position
-		_bullet_instance.move_speed = _bullet_instance.base_move_speed
+		_projectile_instance.global_position = instance.position
+		_projectile_instance.move_speed = _projectile_instance.base_move_speed
 		if instance.has("speed_mod"):
-			_bullet_instance.move_speed_modifier  = instance.speed_mod
+			_projectile_instance.move_speed_modifier  = instance.speed_mod
 
 
-		if _bullet_instance.texture_rotate_direction:
-			_bullet_instance.texture_rotation = instance.direction.angle()
+		if _projectile_instance.texture_rotate_direction:
+			_projectile_instance.texture_rotation = instance.direction.angle()
 
-		_bullet_instance.life_time = 0.0
-		_bullet_instance.life_time_tick = 0
-		_bullet_instance.life_distance = 0.0
+		_projectile_instance.life_time = 0.0
+		_projectile_instance.life_time_tick = 0
+		_projectile_instance.life_distance = 0.0
 
-		_bullet_instance.transform = Transform2D(
-			_bullet_instance.texture_rotation, 
-			_bullet_instance.texture_scale, 
-			_bullet_instance.texture_skew,
-			_bullet_instance.global_position
+		_projectile_instance.transform = Transform2D(
+			_projectile_instance.texture_rotation, 
+			_projectile_instance.texture_scale, 
+			_projectile_instance.texture_skew,
+			_projectile_instance.global_position
 			)
 		
 
-		PS.area_set_shape_transform(bullet_area_rid, bullet_pooling_index, _bullet_instance.transform)
-		PS.area_set_shape_disabled(bullet_area_rid, bullet_pooling_index, false)
+		PS.area_set_shape_transform(projectile_area_rid, projectile_pooling_index, _projectile_instance.transform)
+		PS.area_set_shape_disabled(projectile_area_rid, projectile_pooling_index, false)
 	
-		bullet_instance_array[bullet_pooling_index] = _bullet_instance
+		projectile_instance_array[projectile_pooling_index] = _projectile_instance
 
-		if bullet_template_2d.trigger_conditions.size() > 0:
-			_bullet_instance.is_trigger = true
-			_bullet_instance.trigger_dict = {}
+		if projectile_template_2d.trigger_conditions.size() > 0:
+			_projectile_instance.is_trigger = true
+			_projectile_instance.trigger_dict = {}
 
 
-		if bullet_pooling_index not in bullet_active_index:
-			bullet_active_index.append(bullet_pooling_index)
+		if projectile_pooling_index not in projectile_active_index:
+			projectile_active_index.append(projectile_pooling_index)
 
-		bullet_pooling_index += 1
+		projectile_pooling_index += 1
 
-		if bullet_pooling_index >= bullet_max_pooling:
-			bullet_pooling_index = 0
+		if projectile_pooling_index >= projectile_max_pooling:
+			projectile_pooling_index = 0
 	pass
 
-#region Setup BulletUpdater
+#region Setup ProjectileUpdater
 
-func setup_bullet_updater() -> void:
-	setup_bullet_area_rid()
-	create_bullet_pool()
+func setup_projectile_updater() -> void:
+	setup_projectile_area_rid()
+	create_projectile_pool()
 	pass
 
-func setup_bullet_area_rid() -> void:
+func setup_projectile_area_rid() -> void:
 
-	bullet_area_rid = PS.area_create()
+	projectile_area_rid = PS.area_create()
 
-	PS.area_set_space(bullet_area_rid, get_world_2d().space)
-	PS.area_set_collision_layer(bullet_area_rid, bullet_template_2d.collision_layer)
-	PS.area_set_collision_mask(bullet_area_rid, bullet_template_2d.collision_mask)
-	PS.area_set_monitorable(bullet_area_rid, true)
-	PS.area_set_transform(bullet_area_rid, Transform2D())
+	PS.area_set_space(projectile_area_rid, get_world_2d().space)
+	PS.area_set_collision_layer(projectile_area_rid, projectile_template_2d.collision_layer)
+	PS.area_set_collision_mask(projectile_area_rid, projectile_template_2d.collision_mask)
+	PS.area_set_monitorable(projectile_area_rid, true)
+	PS.area_set_transform(projectile_area_rid, Transform2D())
 
-	bullet_template_2d.bullet_area_rid = bullet_area_rid
+	projectile_template_2d.projectile_area_rid = projectile_area_rid
 
-func create_bullet_pool() -> void:
+func create_projectile_pool() -> void:
 	var _transform := Transform2D()
-	bullet_max_pooling = bullet_template_2d.bullet_pooling_amount
-	var _collision_rid : RID = 	bullet_template_2d.collision_shape.get_rid()
+	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
+	var _collision_rid : RID = 	projectile_template_2d.collision_shape.get_rid()
 
-	for i in range(bullet_max_pooling):
-		PS.area_add_shape(bullet_area_rid, _collision_rid, _transform, true)
+	for i in range(projectile_max_pooling):
+		PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
 
-		_bullet_instance = ProjectileInstance2D.new()
+		_projectile_instance = ProjectileInstance2D.new()
 
-		_bullet_instance.area_rid = bullet_area_rid
-		_bullet_instance.area_index = i
+		_projectile_instance.area_rid = projectile_area_rid
+		_projectile_instance.area_index = i
 		
-		_bullet_instance.base_texture_rotation = bullet_template_2d.texture_rotation
+		_projectile_instance.base_texture_rotation = projectile_template_2d.texture_rotation
 
-		_bullet_instance.texture_rotation = bullet_template_2d.texture_rotation
+		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
 		
-		_bullet_instance.base_texture_scale = bullet_template_2d.texture_scale
-		_bullet_instance.texture_scale = bullet_template_2d.texture_scale
+		_projectile_instance.base_texture_scale = projectile_template_2d.texture_scale
+		_projectile_instance.texture_scale = projectile_template_2d.texture_scale
 
-		_bullet_instance.base_move_speed = bullet_template_2d.move_speed
+		_projectile_instance.base_move_speed = projectile_template_2d.move_speed
 
-		# _bullet_instance.life_time_max = bullet_template_2d.life_time_max
-		# _bullet_instance.life_distance_max = bullet_template_2d.life_distance_max
+		# _projectile_instance.life_time_max = projectile_template_2d.life_time_max
+		# _projectile_instance.life_distance_max = projectile_template_2d.life_distance_max
 
 
 
-		bullet_instance_array.append(_bullet_instance)
+		projectile_instance_array.append(_projectile_instance)
 
-func setup_area_callback(_bullet_area: RID) -> void:
-	PS.area_set_monitor_callback(_bullet_area, _body_monitor_callback)
-	PS.area_set_area_monitor_callback(_bullet_area, _area_monitor_callback)
+func setup_area_callback(_projectile_area: RID) -> void:
+	PS.area_set_monitor_callback(_projectile_area, _body_monitor_callback)
+	PS.area_set_area_monitor_callback(_projectile_area, _area_monitor_callback)
 	pass
 
-func clear_bullet_updater() -> void:
-	for instance : ProjectileInstance2D in bullet_instance_array:
+func clear_projectile_updater() -> void:
+	for instance : ProjectileInstance2D in projectile_instance_array:
 		instance.queue_free()
-		PS.area_clear_shapes(bullet_area_rid)
+		PS.area_clear_shapes(projectile_area_rid)
 
 
 #endregion
@@ -267,19 +267,19 @@ func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_
 		pass
 
 
-func process_bullet_collided(instance_index: int) -> void:
-	if instance_index not in bullet_remove_index:
-		bullet_remove_index.append(instance_index)
+func process_projectile_collided(instance_index: int) -> void:
+	if instance_index not in projectile_remove_index:
+		projectile_remove_index.append(instance_index)
 	pass
 
 
-func get_active_bullet_count() -> int:
+func get_active_projectile_count() -> int:
 	return _active_instances.size()
 	pass
 
-func clear_bullet() -> void:
-	for _index in range(bullet_max_pooling):
-		bullet_active_index.erase(_index)
-		PS.area_set_shape_disabled(bullet_area_rid, _index, true)
-	bullet_active_index.clear()
+func clear_projectile() -> void:
+	for _index in range(projectile_max_pooling):
+		projectile_active_index.erase(_index)
+		PS.area_set_shape_disabled(projectile_area_rid, _index, true)
+	projectile_active_index.clear()
 	pass

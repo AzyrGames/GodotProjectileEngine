@@ -1,4 +1,4 @@
-## Bullet Pattern Component Base
+## Projectile Pattern Component Base
 
 extends ProjectilePatternComponent
 class_name PPCStack2D

@@ -62,7 +62,7 @@ metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_84ii0")
 
-[node name="BulletBigCirle1" type="Sprite2D" parent="."]
+[node name="ProjectileBigCirle1" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_y7es0")
 

@@ -2,8 +2,8 @@ extends Node
 
 
 
-signal bullet_trigger_activated(trigger_name: String, bullet_instance: ProjectileInstance2D)
-signal projectile_trigger_activated(trigger_name: String, projectile_node: Node2D)
+signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
+signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 
 enum BehaviorContext{
 	PHYSICS_DELTA,
@@ -22,44 +22,47 @@ enum BehaviorContext{
 }
 
 
-var active_bullet_count : int
+var active_projectile_count : int
 var projectile_environment : ProjectileEnvironment2D
 
-var bullet_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
+var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 
-var bullet_composer_nodes : Dictionary[String, PatternComposer2D]
+var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
 var projectile_boundary_2d : ProjectileBoundary2D
 
 
 func _ready() -> void:
-	bullet_trigger_activated.connect(_test_projectile_resource_trigger)
-	projectile_trigger_activated.connect(_test_projectile_trigger_activated)
+	projectile_instance_triggered.connect(_test_projectile_instance_triggered)
+	projectile_node_triggered.connect(_test_projectile_node_triggered)
 
-func get_bullet_count() -> int:
-	active_bullet_count = 0
+func get_projectile_count() -> int:
+	active_projectile_count = 0
 
-	for bullet_updater in bullet_updater_2d_nodes.values():
-		if bullet_updater:
-			active_bullet_count += bullet_updater.get_active_bullet_count()
+	for projectile_updater in projectile_updater_2d_nodes.values():
+		if projectile_updater:
+			active_projectile_count += projectile_updater.get_active_projectile_count()
 		pass
 	
-	return active_bullet_count
+	return active_projectile_count
 	pass
 
 
 func clear() -> void:
-	bullet_updater_2d_nodes.clear()
-	bullet_composer_nodes.clear()
+	projectile_updater_2d_nodes.clear()
+	projectile_composer_nodes.clear()
 	pass
 
-func clear_bullet() -> void:
-	for _bullet_udpater_node in bullet_updater_2d_nodes.values():
-		_bullet_udpater_node.clear_bullet()
+func clear_projectile() -> void:
+	for _projectile_udpater_node in projectile_updater_2d_nodes.values():
+		_projectile_udpater_node.clear_projectile()
 	pass
 
-func _test_projectile_resource_trigger(trigger_name: String, bullet_instance: ProjectileInstance2D) -> void:
+func _test_projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D) -> void:
+	print("Projectile instance triggered: ", trigger_name , " - ", projectile_instance)
 	pass
 
-func _test_projectile_trigger_activated(trigger_name: String, projectile_node: Node2D) -> void:
+func _test_projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D) -> void:
+	print("Projectile node2d triggered: ", trigger_name , " - ", projectile_node)
+
 	pass

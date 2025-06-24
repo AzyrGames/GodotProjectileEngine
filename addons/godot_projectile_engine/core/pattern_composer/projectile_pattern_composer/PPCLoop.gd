@@ -1,4 +1,4 @@
-## Loop through all Bullet Pattern Components a number of times
+## Loop through all Projectile Pattern Components a number of times
 extends ProjectilePatternComponent
 class_name PPCLoop
 

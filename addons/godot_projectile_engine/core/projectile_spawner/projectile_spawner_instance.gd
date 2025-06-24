@@ -1,2 +1,2 @@
 extends Node2D
-class_name BulletSpawnerInstance2D
+class_name ProjectileSpawnerInstance2D

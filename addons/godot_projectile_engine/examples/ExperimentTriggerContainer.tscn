@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotProjectileEngine/Core/ProjectileSpawner/projectile_spawner.gd" id="2_k6apa"]
 [ext_resource type="Script" uid="uid://ccmfe73clp6p3" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/projectile_template_2d.gd" id="3_84ijo"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTemplateModule/projectile_template_module.gd" id="4_xq217"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Bullet/bullet_circle_1.png" id="5_xunqu"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/GodotProjectileEngine/Example/Asset/Projectile/projectile_circle_1.png" id="5_xunqu"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTriggerCondition/projectile_trigger_condition.gd" id="6_54our"]
 [ext_resource type="Script" uid="uid://cpk6t02ukyus8" path="res://addons/GodotProjectileEngine/Core/ProjectileTemplate/ProjectileTriggerCondition/ptc_time.gd" id="7_k6apa"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_scheduler.gd" id="7_ryp03"]
@@ -28,7 +28,7 @@ metadata/_custom_type_script = "uid://cpk6t02ukyus8"
 [sub_resource type="Resource" id="Resource_xq217"]
 script = ExtResource("3_84ijo")
 move_speed = 100.0
-bullet_pooling_amount = 500
+projectile_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 600.0
 texture_visible = false
@@ -69,7 +69,7 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 [sub_resource type="Resource" id="Resource_edbko"]
 script = ExtResource("3_84ijo")
 move_speed = 100.0
-bullet_pooling_amount = 500
+projectile_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 600.0
 texture = ExtResource("5_xunqu")
@@ -116,19 +116,19 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="Camera2D2" type="Camera2D" parent="."]
 
-[node name="BulletSpawner2D2" type="Node2D" parent="."]
+[node name="ProjectileSpawner2D2" type="Node2D" parent="."]
 script = ExtResource("2_k6apa")
-bullet_composer_name = "simple_1"
-bullet_template_2d = SubResource("Resource_xq217")
-bullet_scheduler = SubResource("Resource_xunqu")
+projectile_composer_name = "simple_1"
+projectile_template_2d = SubResource("Resource_xq217")
+projectile_scheduler = SubResource("Resource_xunqu")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="BulletSpawner2D3" type="Node2D" parent="."]
+[node name="ProjectileSpawner2D3" type="Node2D" parent="."]
 position = Vector2(0, -403)
 script = ExtResource("2_k6apa")
-bullet_composer_name = "simple_3"
-bullet_template_2d = SubResource("Resource_edbko")
-bullet_scheduler = SubResource("Resource_ryp03")
+projectile_composer_name = "simple_3"
+projectile_template_2d = SubResource("Resource_edbko")
+projectile_scheduler = SubResource("Resource_ryp03")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="PatternComposer2D2" type="Node2D" parent="."]
@@ -174,10 +174,10 @@ polygon_sides = 10
 spread_out = true
 metadata/_custom_type_script = "uid://httdfxyybbie"
 
-[node name="BulletTriggerSpawner" type="Node2D" parent="." node_paths=PackedStringArray("bullet_spawner_node")]
+[node name="ProjectileTriggerSpawner" type="Node2D" parent="." node_paths=PackedStringArray("projectile_spawner_node")]
 script = ExtResource("12_84ijo")
 active = true
 trigger_name = "trigger_1"
-bullet_spawner_node = NodePath("../BulletSpawner2D3")
-bullet_spawner_scene = "uid://db3auw0xdm8ak"
+projectile_spawner_node = NodePath("../ProjectileSpawner2D3")
+projectile_spawner_scene = "uid://db3auw0xdm8ak"
 metadata/_custom_type_script = "uid://p2i1fb33bf1x"

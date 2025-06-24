@@ -1,4 +1,4 @@
-## Bullet Pattern Component Base
+## Projectile Pattern Component Base
 
 extends ProjectilePatternComponent
 class_name PPCCustomShape
@@ -14,7 +14,7 @@ enum PointType {
 @export var point_type : PointType
 
 ## Point per spawn, -1 to get all point with Point Type
-## 0 to return Original Bullet Instance
+## 0 to return Original Projectile Instance
 @export var point_per_spawn : int = 1
 
 @export var reset_per_spawn : bool = false
@@ -22,12 +22,12 @@ enum PointType {
 var _curve_point_idx : int = 0
 
 func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
-	var _new_bullet_packs := []
+	var _new_projectile_packs := []
 	for instance : Dictionary in pattern_packs:
-		_new_bullet_packs.append_array(get_custom_shape_points(instance))
+		_new_projectile_packs.append_array(get_custom_shape_points(instance))
 		pass
 
-	return _new_bullet_packs
+	return _new_projectile_packs
 
 func get_custom_shape_points(_instance: Dictionary) -> Array:
 	var _new_pack : Array = []

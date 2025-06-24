@@ -1,4 +1,4 @@
-## Bullet Pattern Component Base
+## Projectile Pattern Component Base
 extends ProjectilePatternComponent
 class_name PPCArea
 
@@ -6,13 +6,13 @@ class_name PPCArea
 # @export var navigation_map : NavigationMesh
 
 func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
-	var _new_bullet_packs := []
+	var _new_projectile_packs := []
 	for instance : Dictionary in pattern_packs:
 		var _new_instance := instance.duplicate(true)
 		_new_instance.position = get_random_point_in_shape(area_shape, _new_instance.position) + instance.position
-		_new_bullet_packs.append(_new_instance)
+		_new_projectile_packs.append(_new_instance)
 
-	return _new_bullet_packs
+	return _new_projectile_packs
 
 func get_random_point_in_shape(shape: Shape2D, origin_pos: Vector2) -> Vector2:
 	if shape is CircleShape2D:
@@ -62,7 +62,7 @@ func get_random_point_in_shape(shape: Shape2D, origin_pos: Vector2) -> Vector2:
 			_while_false_safe += 1
 		return origin_pos
 	else:
-		print_debug(shape, " is not supported Shape2D! Return Original bullet instance Position")
+		print_debug(shape, " is not supported Shape2D! Return Original projectile instance Position")
 		return origin_pos
 
 	return origin_pos

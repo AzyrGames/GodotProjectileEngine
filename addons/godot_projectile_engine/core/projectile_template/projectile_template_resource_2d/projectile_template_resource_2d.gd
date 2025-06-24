@@ -1,7 +1,7 @@
 extends ProjectileTemplate2D
 class_name ProjectileTemplateResource2D
 @export var move_speed : float = 100
-@export var bullet_pooling_amount : int = 500
+@export var projectile_pooling_amount : int = 500
 
 @export var life_time_max : float = 10.0
 @export var life_distance_max : float = 300.0
@@ -29,14 +29,14 @@ class_name ProjectileTemplateResource2D
 @export_flags_2d_physics var collision_layer : int = 0:
 	set(value):
 		collision_layer = value
-		if bullet_area_rid:
-			PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_layer)
+		if projectile_area_rid:
+			PhysicsServer2D.area_set_collision_layer(projectile_area_rid, collision_layer)
 
 @export_flags_2d_physics var collision_mask : int = 0:
 	set(value):
 		collision_mask = value
-		if bullet_area_rid:
-			PhysicsServer2D.area_set_collision_layer(bullet_area_rid, collision_mask)
+		if projectile_area_rid:
+			PhysicsServer2D.area_set_collision_layer(projectile_area_rid, collision_mask)
 
 @export_group("Trigger")
 @export var trigger_name : String
@@ -45,8 +45,8 @@ class_name ProjectileTemplateResource2D
 
 @export_group("Template Module")
 ##@experimental: 
-##Bullet Template Component is an experimental component for modifying properties of 
+##Projectile Template Component is an experimental component for modifying properties of 
 ##ProjectileInstance2D based on ProjectileTemplate2D in real-time
 @export var template_modules : Array[ProjectileTemplateModule]
 
-var bullet_area_rid : RID
+var projectile_area_rid : RID
