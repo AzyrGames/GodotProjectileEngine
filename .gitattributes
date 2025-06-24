@@ -2,8 +2,6 @@
 * text=auto eol=lf
 
 # Only include the addons folder when downloading from the Asset Library.
-/**				export-ignore
-/addons/gut		export-ignore
-/addons/gut/**		export-ignore
-/addons/godot_projectile_engine			!export-ignore
-/addons/godot_projectile_engine/** 		!export-ignore
+/** export-ignore
+/addons/gut export-ignore
+/addons/godot_projectile_engine !export-ignore
