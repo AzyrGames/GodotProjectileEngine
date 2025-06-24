@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - uses: croconut/godot-tester@v5.2
         with:
           # required
@@ -55,8 +55,8 @@ jobs:
           # default is GUTs default: 'res://.gutconfig.json'; set this to load a different config file
           config-file: "res://.gutconfig.json" 
           # designate a custom url to download the godot binary from (e.g. https://download_url.com/godot/example_download.zip)
-          custom-godot-dl-url: ""
+          custom-godot-dl-url: "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip"
           # designate a custom path to execute the godot binary (e.g. relative_filename.exe)
-          custom-godot-binary-path: ""
+          custom-godot-binary-path: "Godot_v4.4.1-stable_linux.x86_64"
           # relative path to the xml file to read / write GUT's results from, recommended
           # for direct-scene users to check this file if you have issues
