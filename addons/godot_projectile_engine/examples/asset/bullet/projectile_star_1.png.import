@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://psxtpca1c73l"
-path="res://.godot/imported/bullet_arrowhead_1.png-e17be4a72e8926816ab9ac3b58fa9bf6.ctex"
+uid="uid://b6j1n8v6vliwk"
+path="res://.godot/imported/projectile_star_1.png-5f42f79b0817f1d32241a071701566a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_arrowhead_1.png"
-dest_files=["res://.godot/imported/bullet_arrowhead_1.png-e17be4a72e8926816ab9ac3b58fa9bf6.ctex"]
+source_file="res://addons/godot_projectile_engine/examples/asset/bullet/projectile_star_1.png"
+dest_files=["res://.godot/imported/projectile_star_1.png-5f42f79b0817f1d32241a071701566a2.ctex"]
 
 [params]
 
