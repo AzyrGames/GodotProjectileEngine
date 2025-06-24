@@ -62,5 +62,4 @@ func _test_projectile_resource_trigger(trigger_name: String, bullet_instance: Pr
 	pass
 
 func _test_projectile_trigger_activated(trigger_name: String, projectile_node: Node2D) -> void:
-	print("Hello: ", trigger_name, " - ", projectile_node)
 	pass

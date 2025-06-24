@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://elu5weic5047"]
+[gd_scene load_steps=29 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
 [ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_rice_1.png" id="2_y7es0"]
@@ -13,12 +13,16 @@
 [ext_resource type="Script" uid="uid://bpntc8lt06yr8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_follow_direction.gd" id="10_ouhur"]
 [ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="12_70kml"]
 [ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="14_f0xrw"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="15_y7es0"]
+[ext_resource type="Script" uid="uid://jrux0ns07ryt" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/behaviors/projectile_bounce_ricochet.gd" id="16_y7es0"]
 [ext_resource type="Script" uid="uid://chg5nxeot0crs" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/projectile_component_destroy.gd" id="17_inat4"]
 [ext_resource type="Script" uid="uid://yhl0aii1go5n" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/projectile_component_bouncing.gd" id="18_0jmbi"]
-[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="18_84ii0"]
-[ext_resource type="Script" uid="uid://ctkwawb5af10" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/behaviors/projectile_behavior_trigger_time.gd" id="19_0jmbi"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="18_84ii0"]
+[ext_resource type="Script" uid="uid://dcx8xuu3wp0bl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_boundary.gd" id="19_0jmbi"]
 [ext_resource type="Script" uid="uid://brqtc7oaccbn8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/projectile_component_trigger.gd" id="19_nnnqt"]
 [ext_resource type="Script" uid="uid://2bbeucwj5h8n" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/piercing/projectile_component_piercing.gd" id="20_84ii0"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="22_qyalf"]
+[ext_resource type="Script" uid="uid://com1bcixecyvf" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/behaviors/projectile_behavior_trigger_distance.gd" id="23_qyalf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_84ii0"]
 radius = 5.0
@@ -28,14 +32,26 @@ script = ExtResource("10_ouhur")
 active = true
 metadata/_custom_type_script = "uid://bpntc8lt06yr8"
 
-[sub_resource type="Resource" id="Resource_0jmbi"]
+[sub_resource type="Resource" id="Resource_nnnqt"]
+script = ExtResource("16_y7es0")
+active = true
+metadata/_custom_type_script = "uid://jrux0ns07ryt"
+
+[sub_resource type="Resource" id="Resource_84ii0"]
 script = ExtResource("19_0jmbi")
-trigger_time = 1.0
-trigger_name = "Yes"
+destroy_on_enter = false
+emit_destroy_signal = true
+active = true
+metadata/_custom_type_script = "uid://dcx8xuu3wp0bl"
+
+[sub_resource type="Resource" id="Resource_qyalf"]
+script = ExtResource("23_qyalf")
+trigger_distance = 100.0
+trigger_name = "gggg"
 one_shot = false
 destroy_on_trigger = true
 active = true
-metadata/_custom_type_script = "uid://ctkwawb5af10"
+metadata/_custom_type_script = "uid://com1bcixecyvf"
 
 [node name="Projectile2dTest1" type="Area2D"]
 collision_layer = 32
@@ -99,14 +115,15 @@ metadata/_custom_type_script = "uid://2bbeucwj5h8n"
 [node name="ProjectileComponentBouncing" type="Node" parent="ProjectileComponent"]
 script = ExtResource("18_0jmbi")
 max_bounces = 2
-active = false
+component_behaviors = Array[ExtResource("15_y7es0")]([SubResource("Resource_nnnqt")])
 metadata/_custom_type_script = "uid://yhl0aii1go5n"
 
 [node name="ProjectileComponentDestroy" type="Node" parent="ProjectileComponent"]
 script = ExtResource("17_inat4")
+component_behaviors = Array[ExtResource("18_84ii0")]([SubResource("Resource_84ii0")])
 metadata/_custom_type_script = "uid://chg5nxeot0crs"
 
 [node name="ProjectileComponentTrigger" type="Node" parent="ProjectileComponent"]
 script = ExtResource("19_nnnqt")
-component_behaviors = Array[ExtResource("18_84ii0")]([SubResource("Resource_0jmbi")])
+component_behaviors = Array[ExtResource("22_qyalf")]([SubResource("Resource_qyalf")])
 metadata/_custom_type_script = "uid://brqtc7oaccbn8"
