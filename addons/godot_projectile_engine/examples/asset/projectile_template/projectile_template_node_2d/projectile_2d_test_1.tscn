@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://elu5weic5047"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_i8tgq"]
-[ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/bullet/projectile_rice_1.png" id="2_y7es0"]
+[ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_rice_1.png" id="2_y7es0"]
 [ext_resource type="Script" uid="uid://cnsqe5loyr8wg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/projectile_component_speed.gd" id="3_erm13"]
 [ext_resource type="Script" uid="uid://dipo0d1s8vqo" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/projectile_component_direction.gd" id="4_lphvn"]
 [ext_resource type="Script" uid="uid://bk7p705uwnekq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/position/projectile_component_position.gd" id="5_ouhur"]

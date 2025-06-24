@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6j1n8v6vliwk"
-path="res://.godot/imported/projectile_star_1.png-5f42f79b0817f1d32241a071701566a2.ctex"
+uid="uid://xej5ti53m73n"
+path="res://.godot/imported/projectile_circle_1.png-ee00bd7199a4b21773087681d1bd65c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/examples/asset/bullet/projectile_star_1.png"
-dest_files=["res://.godot/imported/projectile_star_1.png-5f42f79b0817f1d32241a071701566a2.ctex"]
+source_file="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png"
+dest_files=["res://.godot/imported/projectile_circle_1.png-ee00bd7199a4b21773087681d1bd65c2.ctex"]
 
 [params]
 

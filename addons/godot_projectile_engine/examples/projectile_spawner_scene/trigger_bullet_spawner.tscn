@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://db3auw0xdm8ak"]
 
-[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/GodotProjectileEngine/Core/ProjectileSpawner/projectile_spawner.gd" id="1_123ey"]
-[ext_resource type="Resource" uid="uid://32opcbcipb7c" path="res://addons/GodotProjectileEngine/Example/ProjectileTemplateExample/trigger_projectile_spawner.tres" id="2_wlt44"]
-[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/GodotProjectileEngine/Example/Asset/Audio/laserShoot.wav" id="5_6ubm5"]
-[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_scheduler.gd" id="5_rotdx"]
-[ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/GodotProjectileEngine/Core/TimingScheduler/timing_wave.gd" id="6_ibgeu"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="1_123ey"]
+[ext_resource type="Resource" uid="uid://32opcbcipb7c" path="res://addons/godot_projectile_engine/examples/projectile_template_scene/trigger_bullet_spawner.tres" id="2_wlt44"]
+[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/godot_projectile_engine/examples/asset/audio/laserShoot.wav" id="5_6ubm5"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="5_rotdx"]
+[ext_resource type="Script" uid="uid://c6uimt4tdvilk" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_wave.gd" id="6_ibgeu"]
 
 [sub_resource type="Resource" id="Resource_wlt44"]
 script = ExtResource("6_ibgeu")

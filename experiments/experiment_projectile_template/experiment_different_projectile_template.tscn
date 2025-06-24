@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_r0ng0"]
 [ext_resource type="Script" uid="uid://bhf2xsmr57y7f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_template_resource_2d.gd" id="3_6mpfu"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_template_module/projectile_template_module.gd" id="4_a6xni"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/bullet/projectile_big_cirle_1.png" id="5_a6xni"]
+[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="5_a6xni"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_trigger_condition/projectile_trigger_condition.gd" id="5_r0ng0"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_87q1v"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="7_jihcw"]
