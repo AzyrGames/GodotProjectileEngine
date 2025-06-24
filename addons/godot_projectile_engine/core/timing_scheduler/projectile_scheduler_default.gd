@@ -41,9 +41,9 @@
 
 # # # func _enter_tree() -> void:
 # # # 	if timing_wave: return
-# # # 	var bullet_timing_wave := TimingWave.new()
-# # # 	bullet_timing_wave.timing_wave = [1.0]
-# # # 	timing_wave = [bullet_timing_wave]
+# # # 	var projectile_timing_wave := TimingWave.new()
+# # # 	projectile_timing_wave.timing_wave = [1.0]
+# # # 	timing_wave = [projectile_timing_wave]
 
 # # # func _ready() -> void:
 # # # 	setup_shoot_cooldown_timer()

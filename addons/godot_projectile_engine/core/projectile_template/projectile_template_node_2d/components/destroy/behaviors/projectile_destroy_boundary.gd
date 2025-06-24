@@ -2,7 +2,7 @@ extends ProjectileBehaviorDestroy
 class_name ProjectileDestroyBoundary
 
 ## Boundary-based destroy behavior that destroys projectiles when they leave ProjectileBoundary2D.
-## This node requite ProjetileBoundary2D
+## This node requite ProjectileBoundary2D
 
 ## Whether to destroy when entering boundary (true) or leaving boundary (false)
 @export var destroy_on_enter: bool = false

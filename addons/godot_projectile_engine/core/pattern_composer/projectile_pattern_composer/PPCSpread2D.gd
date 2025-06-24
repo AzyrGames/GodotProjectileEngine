@@ -1,4 +1,4 @@
-## Bullet Pattern Component Base
+## Projectile Pattern Component Base
 extends ProjectilePatternComponent
 class_name PPCSpread2D
 #@export_group("Spread Properties")
@@ -18,23 +18,23 @@ func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
 	match spread_type:
 		SpreadType.STRAIGHT:
 			for instance : Dictionary in pattern_packs:
-				_new_pattern_packs.append_array(_add_bullet_straight_spread(instance))
+				_new_pattern_packs.append_array(_add_projectile_straight_spread(instance))
 		SpreadType.ANGLE:
 			for instance : Dictionary in pattern_packs:
-				_new_pattern_packs.append_array(_add_bullet_angle_spread(instance))
+				_new_pattern_packs.append_array(_add_projectile_angle_spread(instance))
 	return _new_pattern_packs
 
 
-func _add_bullet_straight_spread(instance: Dictionary) -> Array:
+func _add_projectile_straight_spread(instance: Dictionary) -> Array:
 	var _new_instances : Array = []
 
 	var _half_total_width : float = (spread_amount - 1) * spread_value / 2.0
-	var _bullet_position : Vector2 = instance.position
+	var _projectile_position : Vector2 = instance.position
 
 	for i in range(spread_amount):
 		var _new_instance := instance.duplicate()
 		var _offset : float = (i * spread_value) - _half_total_width
-		var _point : Vector2 = _bullet_position + instance.direction.rotated(deg_to_rad(90)) * _offset
+		var _point : Vector2 = _projectile_position + instance.direction.rotated(deg_to_rad(90)) * _offset
 
 		_new_instance.position = _point
 
@@ -42,7 +42,7 @@ func _add_bullet_straight_spread(instance: Dictionary) -> Array:
 
 	return _new_instances
 
-func _add_bullet_angle_spread(instance: Dictionary) -> Array:
+func _add_projectile_angle_spread(instance: Dictionary) -> Array:
 	var _new_instances : Array = []
 
 	var _half_total_deg : float = (spread_amount - 1) * spread_value / 2.0

@@ -20,24 +20,24 @@ func _physics_process(delta: float) -> void:
 
 
 func spawner_destroyed(area_rid: RID) -> void:
-	if !ProjectileEngine.bullet_updater_2d_nodes.get(area_rid): return
-	ProjectileEngine.bullet_updater_2d_nodes.get(area_rid).spawner_destroyed = true
+	if !ProjectileEngine.projectile_updater_2d_nodes.get(area_rid): return
+	ProjectileEngine.projectile_updater_2d_nodes.get(area_rid).spawner_destroyed = true
 	pass
 
 
-func bullet_collided(bullet_area_rid: RID, shape_idx: int) -> void:
-	if !ProjectileEngine.bullet_updater_2d_nodes.has(bullet_area_rid): return
-	if !is_instance_valid(ProjectileEngine.bullet_updater_2d_nodes[bullet_area_rid]):
+func projectile_collided(projectile_area_rid: RID, shape_idx: int) -> void:
+	if !ProjectileEngine.projectile_updater_2d_nodes.has(projectile_area_rid): return
+	if !is_instance_valid(ProjectileEngine.projectile_updater_2d_nodes[projectile_area_rid]):
 		return
 
-	ProjectileEngine.bullet_updater_2d_nodes[bullet_area_rid].process_bullet_collided(shape_idx)
+	ProjectileEngine.projectile_updater_2d_nodes[projectile_area_rid].process_projectile_collided(shape_idx)
 
 
-func get_bullet_damage(bullet_area_rid: RID) -> int:
-	if !ProjectileEngine.bullet_updater_2d_nodes.has(bullet_area_rid): return 0
-	if !is_instance_valid(ProjectileEngine.bullet_updater_2d_nodes[bullet_area_rid]):	return 0
-	if ProjectileEngine.bullet_updater_2d_nodes.has(bullet_area_rid):
-		return ProjectileEngine.bullet_updater_2d_nodes[bullet_area_rid].bullet_damage
+func get_projectile_damage(projectile_area_rid: RID) -> int:
+	if !ProjectileEngine.projectile_updater_2d_nodes.has(projectile_area_rid): return 0
+	if !is_instance_valid(ProjectileEngine.projectile_updater_2d_nodes[projectile_area_rid]):	return 0
+	if ProjectileEngine.projectile_updater_2d_nodes.has(projectile_area_rid):
+		return ProjectileEngine.projectile_updater_2d_nodes[projectile_area_rid].projectile_damage
 	return 0
 
 

@@ -11,21 +11,21 @@ enum TriggerMode {
 	EQUAL
 }
 
-func check_trigger_condition(trigger_name: String, active_bullet_instances: Array[ProjectileInstance2D]) -> void:
+func check_trigger_condition(trigger_name: String, active_projectile_instances: Array[ProjectileInstance2D]) -> void:
 	if !is_active : return
-	for _bullet_instance in active_bullet_instances:
-		if !_bullet_instance.is_trigger: continue
+	for _projectile_instance in active_projectile_instances:
+		if !_projectile_instance.is_trigger: continue
 		
 		var should_trigger = false
 		match trigger_mode:
 			TriggerMode.BELOW:
-				should_trigger = _bullet_instance.move_speed < target_speed
+				should_trigger = _projectile_instance.move_speed < target_speed
 			TriggerMode.ABOVE:
-				should_trigger = _bullet_instance.move_speed > target_speed
+				should_trigger = _projectile_instance.move_speed > target_speed
 			TriggerMode.EQUAL:
-				should_trigger = abs(_bullet_instance.move_speed - target_speed) <= speed_threshold
+				should_trigger = abs(_projectile_instance.move_speed - target_speed) <= speed_threshold
 		
 		if should_trigger:
-			ProjectileEngine.bullet_trigger_activated.emit(trigger_name, _bullet_instance)
+			ProjectileEngine.projectile_instance_triggered.emit(trigger_name, _projectile_instance)
 			if one_shot:
-				_bullet_instance.is_trigger = false
+				_projectile_instance.is_trigger = false

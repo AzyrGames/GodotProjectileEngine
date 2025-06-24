@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="4_kgfhc"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_f5pqv"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCSingle2D.gd" id="6_f5pqv"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/bullet/bullet_circle_1.png" id="6_jbyt8"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png" id="6_jbyt8"]
 [ext_resource type="Script" uid="uid://dxxa5ut8kg1hk" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_template_module/projectile_template_module.gd" id="6_klc8c"]
 [ext_resource type="Script" uid="uid://bvdoyeb45s1hp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_trigger_condition/projectile_trigger_condition.gd" id="8_jbyt8"]
 [ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/tsc_timing_set.gd" id="10_jbyt8"]
@@ -18,7 +18,7 @@
 [sub_resource type="Resource" id="Resource_wjid1"]
 script = ExtResource("4_7435j")
 move_speed = 100.0
-bullet_pooling_amount = 500
+projectile_pooling_amount = 500
 life_time_max = 10.0
 life_distance_max = 300.0
 texture = ExtResource("6_jbyt8")
@@ -53,10 +53,10 @@ timing_scheduler = NodePath("TimingScheduler")
 script = ExtResource("11_klc8c")
 metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
-[node name="BulletSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("4_kgfhc")
-bullet_composer_name = "pattern_2"
-bullet_template_2d = SubResource("Resource_wjid1")
+projectile_composer_name = "pattern_2"
+projectile_template_2d = SubResource("Resource_wjid1")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 

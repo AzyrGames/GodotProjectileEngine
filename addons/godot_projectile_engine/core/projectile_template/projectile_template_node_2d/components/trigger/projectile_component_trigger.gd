@@ -51,7 +51,7 @@ func _handle_trigger_activated(trigger_behavior: ProjectileBehaviorTrigger, _con
 		return
 	
 	# Emit the new projectile trigger signal for ProjectileTemplateNode2D
-	ProjectileEngine.projectile_trigger_activated.emit(trigger_behavior.trigger_name, owner)
+	ProjectileEngine.projectile_node_triggered.emit(trigger_behavior.trigger_name, owner)
 	
 	# Handle destroy_on_trigger
 	if trigger_behavior.destroy_on_trigger:

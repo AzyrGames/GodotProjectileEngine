@@ -3,11 +3,11 @@ class_name PTCDistance
 
 @export var distance : float = 100.0
 
-func check_trigger_condition(trigger_name: String, active_bullet_instances: Array[ProjectileInstance2D]) -> void:
+func check_trigger_condition(trigger_name: String, active_projectile_instances: Array[ProjectileInstance2D]) -> void:
 	if !is_active : return
-	for _bullet_instance in active_bullet_instances:
-		if !_bullet_instance.is_trigger: continue
-		if _bullet_instance.life_distance >= distance:
-			ProjectileEngine.bullet_trigger_activated.emit(trigger_name, _bullet_instance)
+	for _projectile_instance in active_projectile_instances:
+		if !_projectile_instance.is_trigger: continue
+		if _projectile_instance.life_distance >= distance:
+			ProjectileEngine.projectile_instance_triggered.emit(trigger_name, _projectile_instance)
 			if one_shot:
-				_bullet_instance.is_trigger = false
+				_projectile_instance.is_trigger = false

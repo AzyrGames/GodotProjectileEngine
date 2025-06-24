@@ -11,17 +11,17 @@ enum RotationType {
 
 var delta : float
 
-func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> void:
-	if active_bullet_instances.size() <= 0: return
-	if !ProjectileEngine.bullet_updater_2d_nodes.has(active_bullet_instances[0].area_rid) : return
-	var _node : = ProjectileEngine.bullet_updater_2d_nodes[active_bullet_instances[0].area_rid]
+func process_template(active_projectile_instances: Array[ProjectileInstance2D]) -> void:
+	if active_projectile_instances.size() <= 0: return
+	if !ProjectileEngine.projectile_updater_2d_nodes.has(active_projectile_instances[0].area_rid) : return
+	var _node : = ProjectileEngine.projectile_updater_2d_nodes[active_projectile_instances[0].area_rid]
 	delta = _node.get_physics_process_delta_time()
 	match update_type:
 		RotationType.PHYSICS:
-			for _bullet_instance in active_bullet_instances:
-				_bullet_instance.move_direction = _bullet_instance.move_direction.rotated(rotation_speed * delta)
+			for _projectile_instance in active_projectile_instances:
+				_projectile_instance.move_direction = _projectile_instance.move_direction.rotated(rotation_speed * delta)
 		RotationType.TICKS:
-			for _bullet_instance in active_bullet_instances:
-				_bullet_instance.move_direction = _bullet_instance.move_direction.rotated(rotation_speed)
+			for _projectile_instance in active_projectile_instances:
+				_projectile_instance.move_direction = _projectile_instance.move_direction.rotated(rotation_speed)
 
 	pass

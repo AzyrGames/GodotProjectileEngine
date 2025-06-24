@@ -27,27 +27,27 @@ var _speed_change_sample_value : float
 func _init() -> void:
 	pass
 
-func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> void:
+func process_template(active_projectile_instances: Array[ProjectileInstance2D]) -> void:
 	if !is_active: return 
-	if active_bullet_instances.size() <= 0:
+	if active_projectile_instances.size() <= 0:
 		return
 	
 	if !_is_cached:
 		caching_move_speed_curve_value()
 
-	for _bullet_instance in active_bullet_instances:
-		_speed_change_sample = _bullet_instance.life_time_tick
+	for _projectile_instance in active_projectile_instances:
+		_speed_change_sample = _projectile_instance.life_time_tick
 		match move_speed_change_loop:
 			0: #ProjectileTemplate2D.LoopType.ONCE_AND_KEEP:
-				if _bullet_instance.life_time_tick < move_speed_curve_max_tick:
-					_speed_change_sample = _bullet_instance.life_time_tick
+				if _projectile_instance.life_time_tick < move_speed_curve_max_tick:
+					_speed_change_sample = _projectile_instance.life_time_tick
 				else:
 					_speed_change_sample = move_speed_curve_max_tick - 1
 			1: #ProjectileTemplate2D.LoopType.LOOP_FROM_START:
-				_speed_change_sample =_bullet_instance.life_time_tick % move_speed_curve_max_tick
+				_speed_change_sample =_projectile_instance.life_time_tick % move_speed_curve_max_tick
 				pass
 			2: #ProjectileTemplate2D.LoopType.PING_PONG:
-				_speed_change_sample = _bullet_instance.life_time_tick % move_speed_curve_max_tick * sign(pow(-1, int(_bullet_instance.life_time_tick / move_speed_curve_max_tick + 1)))
+				_speed_change_sample = _projectile_instance.life_time_tick % move_speed_curve_max_tick * sign(pow(-1, int(_projectile_instance.life_time_tick / move_speed_curve_max_tick + 1)))
 
 				pass
 		
@@ -55,11 +55,11 @@ func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> v
 
 		match move_speed_change_type:
 			0:
-				_bullet_instance.move_speed_modifier = _speed_change_sample_value
+				_projectile_instance.move_speed_modifier = _speed_change_sample_value
 				pass
 			1:
-				_bullet_instance.move_speed_modifier = 0.0 
-				_bullet_instance.move_speed_static = _speed_change_sample_value
+				_projectile_instance.move_speed_modifier = 0.0 
+				_projectile_instance.move_speed_static = _speed_change_sample_value
 				pass
 	pass
 

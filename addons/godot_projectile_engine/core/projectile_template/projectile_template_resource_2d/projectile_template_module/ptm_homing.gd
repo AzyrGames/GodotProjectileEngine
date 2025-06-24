@@ -35,11 +35,11 @@ var delta : float
 func _init() -> void:
 	pass
 
-func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> void:
-	if active_bullet_instances.size() <= 0: return
+func process_template(active_projectile_instances: Array[ProjectileInstance2D]) -> void:
+	if active_projectile_instances.size() <= 0: return
 	if homing_group == null: return
-	if !ProjectileEngine.bullet_updater_2d_nodes.has(active_bullet_instances[0].area_rid) : return
-	var _node : = ProjectileEngine.bullet_updater_2d_nodes[active_bullet_instances[0].area_rid]
+	if !ProjectileEngine.projectile_updater_2d_nodes.has(active_projectile_instances[0].area_rid) : return
+	var _node : = ProjectileEngine.projectile_updater_2d_nodes[active_projectile_instances[0].area_rid]
 	delta = _node.get_physics_process_delta_time()
 
 	homing_target_nodes = _node.get_tree().get_nodes_in_group(homing_group)
@@ -50,7 +50,7 @@ func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> v
 	if !homing_target_node: return
 	homing_target_position = homing_target_node.global_position
 
-	for _bullet_instance in active_bullet_instances:
-		homing_target_direction = _bullet_instance.global_position.direction_to(homing_target_position)
-		_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(homing_target_direction, homing_steer_speed * delta)
+	for _projectile_instance in active_projectile_instances:
+		homing_target_direction = _projectile_instance.global_position.direction_to(homing_target_position)
+		_projectile_instance.move_direction = _projectile_instance.move_direction.move_toward(homing_target_direction, homing_steer_speed * delta)
 	pass

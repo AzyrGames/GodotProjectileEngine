@@ -52,27 +52,27 @@ var _direction_change_value : float
 func _init() -> void:
 	pass
 
-func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> void:
+func process_template(active_projectile_instances: Array[ProjectileInstance2D]) -> void:
 	if !is_active: return 
-	if active_bullet_instances.size() <= 0:
+	if active_projectile_instances.size() <= 0:
 		return
 	
 	if !_is_cached:
 		caching_move_direction_curve_value()
 
-	for _bullet_instance in active_bullet_instances:
-		_direction_change_index = _bullet_instance.life_time_tick
+	for _projectile_instance in active_projectile_instances:
+		_direction_change_index = _projectile_instance.life_time_tick
 		match move_direction_change_loop:
 			0: #ProjectileTemplate2D.LoopType.ONCE_AND_KEEP:
-				if _bullet_instance.life_time_tick < move_direction_curve_max_tick:
-					_direction_change_index = _bullet_instance.life_time_tick
+				if _projectile_instance.life_time_tick < move_direction_curve_max_tick:
+					_direction_change_index = _projectile_instance.life_time_tick
 				else:
 					_direction_change_index = move_direction_curve_max_tick - 1
 			1: #ProjectileTemplate2D.LoopType.LOOP_FROM_START:
-				_direction_change_index =_bullet_instance.life_time_tick % move_direction_curve_max_tick
+				_direction_change_index =_projectile_instance.life_time_tick % move_direction_curve_max_tick
 				pass
 			2: #ProjectileTemplate2D.LoopType.PING_PONG:
-				_direction_change_index = _bullet_instance.life_time_tick % move_direction_curve_max_tick * sign(pow(-1, int(_bullet_instance.life_time_tick / move_direction_curve_max_tick + 1)))
+				_direction_change_index = _projectile_instance.life_time_tick % move_direction_curve_max_tick * sign(pow(-1, int(_projectile_instance.life_time_tick / move_direction_curve_max_tick + 1)))
 
 				pass
 		
@@ -80,11 +80,11 @@ func process_template(active_bullet_instances: Array[ProjectileInstance2D]) -> v
 
 		match move_direction_change_type:
 			0:
-				_bullet_instance.move_direction_modifier = _direction_change_value
+				_projectile_instance.move_direction_modifier = _direction_change_value
 				pass
 			1:
-				_bullet_instance.move_direction_modifier = 0.0 
-				_bullet_instance.move_direction_static = _direction_change_value
+				_projectile_instance.move_direction_modifier = 0.0 
+				_projectile_instance.move_direction_static = _direction_change_value
 				pass
 	pass
 
@@ -269,7 +269,7 @@ func caching_move_direction_math_value() -> void:
 # var _move_direction_curve_cache : PackedFloat32Array 
 # var _move_direction_change_type : ProjectileTemplate2D.MoveSpeedChangeType 
 # var _is_move_direction_change : bool 
-# # var _is_caching_move_direction_change := bullet_template_2d.is_caching_move_direction_change
+# # var _is_caching_move_direction_change := projectile_template_2d.is_caching_move_direction_change
 # var _move_direction_change_loop : ProjectileTemplate2D.LoopType 
 
 
@@ -300,70 +300,70 @@ func caching_move_direction_math_value() -> void:
 # var _homing_distance_check : float 
 # var _homing_distance_check_value : float 
 
-	# _is_texture_scale_change = bullet_template_2d.is_texture_scale_change
+	# _is_texture_scale_change = projectile_template_2d.is_texture_scale_change
 	# if _is_texture_scale_change:
-	# 	_texture_scale_max_tick = bullet_template_2d.texture_scale_max_tick
-	# 	_texture_scale_cache = bullet_template_2d.texture_scale_cache
-	# 	_texture_scale_type = bullet_template_2d.texture_scale_type
-	# 	_texture_scale_loop = bullet_template_2d.texture_scale_loop
+	# 	_texture_scale_max_tick = projectile_template_2d.texture_scale_max_tick
+	# 	_texture_scale_cache = projectile_template_2d.texture_scale_cache
+	# 	_texture_scale_type = projectile_template_2d.texture_scale_type
+	# 	_texture_scale_loop = projectile_template_2d.texture_scale_loop
 
 
-	# _is_move_direction_change  = bullet_template_2d.is_move_direction_change
+	# _is_move_direction_change  = projectile_template_2d.is_move_direction_change
 	# if _is_move_direction_change:
-	# 	_move_direction_curve_max_tick  = bullet_template_2d.move_direction_curve_max_tick
-	# 	_move_direction_curve_cache  = bullet_template_2d.move_direction_curve_cache
-	# 	_move_direction_change_type  = bullet_template_2d.move_direction_change_type
-	# 	_move_direction_change_loop = bullet_template_2d.move_direction_change_loop
+	# 	_move_direction_curve_max_tick  = projectile_template_2d.move_direction_curve_max_tick
+	# 	_move_direction_curve_cache  = projectile_template_2d.move_direction_curve_cache
+	# 	_move_direction_change_type  = projectile_template_2d.move_direction_change_type
+	# 	_move_direction_change_loop = projectile_template_2d.move_direction_change_loop
 
-	# _is_move_direction_change_math  = bullet_template_2d.is_move_direction_change_math
+	# _is_move_direction_change_math  = projectile_template_2d.is_move_direction_change_math
 	# if _is_move_direction_change_math:
-	# 	_move_direction_math_max_tick  = bullet_template_2d.move_direction_math_max_tick
-	# 	_move_direction_math_cache  = bullet_template_2d.move_direction_math_cache
-	# 	_move_direction_math_type  = bullet_template_2d.move_direction_math_type
-	# 	_move_direction_math_loop  = bullet_template_2d.move_direction_math_loop
+	# 	_move_direction_math_max_tick  = projectile_template_2d.move_direction_math_max_tick
+	# 	_move_direction_math_cache  = projectile_template_2d.move_direction_math_cache
+	# 	_move_direction_math_type  = projectile_template_2d.move_direction_math_type
+	# 	_move_direction_math_loop  = projectile_template_2d.move_direction_math_loop
 
-	# _is_move_direction_change = bullet_template_2d.is_move_direction_change
+	# _is_move_direction_change = projectile_template_2d.is_move_direction_change
 	# if _is_move_direction_change:
-	# 	_move_direction_curve2d = bullet_template_2d.move_direction_curve2d
-	# 	_move_direction_change_loop = bullet_template_2d.move_direction_change_loop
-	# 	_move_direction_change_type = bullet_template_2d.move_direction_change_type
+	# 	_move_direction_curve2d = projectile_template_2d.move_direction_curve2d
+	# 	_move_direction_change_loop = projectile_template_2d.move_direction_change_loop
+	# 	_move_direction_change_type = projectile_template_2d.move_direction_change_type
 
 
-	# _is_homing = bullet_template_2d.is_homing
+	# _is_homing = projectile_template_2d.is_homing
 	# if _is_homing:
-	# 	_homing_target_type = bullet_template_2d.homing_target_type
+	# 	_homing_target_type = projectile_template_2d.homing_target_type
 	# 	_homing_target_position = Vector2.ZERO
 	# 	_homing_target_direction = Vector2.ZERO
-	# 	_homing_fixed_position = bullet_template_2d.homing_fixed_position
-	# 	_homing_steer_speed = bullet_template_2d.homing_steer_speed
+	# 	_homing_fixed_position = projectile_template_2d.homing_fixed_position
+	# 	_homing_steer_speed = projectile_template_2d.homing_steer_speed
 	# 	_homing_target_nodes = get_tree().get_nodes_in_group("HomingTarget")
-	# 	_homing_special_nodes = ProjectileEngine.bullet_homing_targets[bullet_template_2d.homing_special_node_id]
+	# 	_homing_special_nodes = ProjectileEngine.projectile_homing_targets[projectile_template_2d.homing_special_node_id]
 	# 	_homing_distance_check = 0.0
 	# 	_homing_distance_check_value = 0.0
 
 
 
-# 	_homing_target_direction = _bullet_instance.global_position.direction_to(_homing_target_position)
-# 	_bullet_instance.move_direction = _bullet_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
+# 	_homing_target_direction = _projectile_instance.global_position.direction_to(_homing_target_position)
+# 	_projectile_instance.move_direction = _projectile_instance.move_direction.move_toward(_homing_target_direction, _homing_steer_speed * delta)
 
 
 
 # Instance Transform
 
-# if _bullet_instance.texture_rotation_speed != 0:
-# 	_bullet_instance.texture_rotation += deg_to_rad(_bullet_instance.texture_rotation_speed)
+# if _projectile_instance.texture_rotation_speed != 0:
+# 	_projectile_instance.texture_rotation += deg_to_rad(_projectile_instance.texture_rotation_speed)
 
 
 
 # if _is_texture_scale_change:
 # 	match _texture_scale_loop:
 # 		0: #ProjectileTemplate2D.LoopType.ONCE_AND_KEEP:
-# 			if _bullet_instance.life_time_tick < _texture_scale_max_tick:
-# 				_texture_scale_sample = _bullet_instance.life_time_tick
+# 			if _projectile_instance.life_time_tick < _texture_scale_max_tick:
+# 				_texture_scale_sample = _projectile_instance.life_time_tick
 # 			else:
 # 				_texture_scale_sample = _texture_scale_max_tick - 1
 # 		1: #ProjectileTemplate2D.LoopType.LOOP_FROM_START:
-# 			_texture_scale_sample =_bullet_instance.life_time_tick % _texture_scale_max_tick
+# 			_texture_scale_sample =_projectile_instance.life_time_tick % _texture_scale_max_tick
 # 			pass
 # 		2: #ProjectileTemplate2D.LoopType.PING_PONG:
 # 			pass
@@ -372,13 +372,13 @@ func caching_move_direction_math_value() -> void:
 
 # 	match _move_direction_math_type:
 # 		0:
-# 			_bullet_instance.texture_scale = _bullet_instance.base_texture_scale * _texture_scale_sample_value
+# 			_projectile_instance.texture_scale = _projectile_instance.base_texture_scale * _texture_scale_sample_value
 # 			pass
 # 		1:
 # 			pass
 
-# if bullet_remove_index.size() > 0:
-# 	for index : int in bullet_remove_index:
-# 		bullet_active_index.erase(index)
-# 		PS.area_set_shape_disabled(bullet_area_rid, index, true)
-#bullet_remove_index.clear()
+# if projectile_remove_index.size() > 0:
+# 	for index : int in projectile_remove_index:
+# 		projectile_active_index.erase(index)
+# 		PS.area_set_shape_disabled(projectile_area_rid, index, true)
+#projectile_remove_index.clear()

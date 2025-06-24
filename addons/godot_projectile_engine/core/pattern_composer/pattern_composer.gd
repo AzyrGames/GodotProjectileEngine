@@ -22,10 +22,10 @@ func _exit_tree() -> void:
 
 func _register_pattern_composer(_composer_name: String) -> void:
 	if _composer_name == "": return
-	if ProjectileEngine.bullet_composer_nodes.has(_composer_name): 
-		print_debug("Composer name: ", _composer_name, " is existed: ", ProjectileEngine.bullet_composer_nodes.get(_composer_name))
+	if ProjectileEngine.projectile_composer_nodes.has(_composer_name): 
+		print_debug("Composer name: ", _composer_name, " is existed: ", ProjectileEngine.projectile_composer_nodes.get(_composer_name))
 		return
-	ProjectileEngine.bullet_composer_nodes.get_or_add(_composer_name, self)
+	ProjectileEngine.projectile_composer_nodes.get_or_add(_composer_name, self)
 
 	# print("registered: {0}".format([_composer_name]))
 	pass
@@ -33,7 +33,7 @@ func _register_pattern_composer(_composer_name: String) -> void:
 
 func _deregister_pattern_composer(_composer_name: String) -> void:
 	if _composer_name == "": return
-	ProjectileEngine.bullet_composer_nodes.erase(_composer_name)
+	ProjectileEngine.projectile_composer_nodes.erase(_composer_name)
 
 	# print("deregistered: {0}".format([_composer_name]))
 	pass
