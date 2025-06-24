@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Godot Projectile Engine CI
+name: GUT CI
 
 # Controls when the workflow will run
 on:
@@ -31,32 +31,23 @@ jobs:
           # the type of release of godot that the tests should be run with
           release_type: "stable"
           is-mono: "false"
-          # the folder with your project.godot file in it
-          path: ""
           # how long to spend importing assets before tests are run
           import-time: "5"
           # how long tests can run in seconds
-          test-timeout: "45"
+          test-timeout: "100"
           # the ratio of tests that must pass for this action to pass
           # e.g. 0.6 means 60% of your tests must pass
-          minimum-pass: "0.6"
+          minimum-pass: "0.9"
           # the directory containing Gut tests
           test-dir: "res://tests"
-          # instead of running GUT's command line tool, 
-          # you can run a test scene if you have one
-          # set up a scene like in this repo --> located at /tester_GUT_v9.0.1/test/alt_mode/tests.tscn
-          # set up a script like in this repo --> located at /tester_GUT_v9.0.1/test/alt_mode/cli_test.gd
-          # ensure that the script exits on test completion
           # default is false, set true to count asserts instead of tests
           assert-check: "true" 
           # not checked by default, set to a number to limit the 
           # maximum amount of failed tests for a passing test suite
-          max-fails: 3  
+          max-fails: 1
           # default is GUTs default: 'res://.gutconfig.json'; set this to load a different config file
           config-file: "res://.gutconfig.json" 
           # designate a custom url to download the godot binary from (e.g. https://download_url.com/godot/example_download.zip)
           custom-godot-dl-url: "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip"
           # designate a custom path to execute the godot binary (e.g. relative_filename.exe)
           custom-godot-binary-path: "Godot_v4.4.1-stable_linux.x86_64"
-          # relative path to the xml file to read / write GUT's results from, recommended
-          # for direct-scene users to check this file if you have issues
