@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dbkvy03ojapdo"]
+[gd_scene load_steps=12 format=3 uid="uid://dbkvy03ojapdo"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_a6xni"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_r0ng0"]
@@ -6,9 +6,7 @@
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_87q1v"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="7_jihcw"]
 [ext_resource type="Script" uid="uid://httdfxyybbie" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCPolygon2D.gd" id="8_hy8p2"]
-[ext_resource type="Script" uid="uid://b86jmxbx6fbr4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_bouncing_helper.gd" id="9_rhgna"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="10_2g1ii"]
-[ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="10_6mpfu"]
 [ext_resource type="Script" uid="uid://bhju4glf6a5nr" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PPCSingle2D.gd" id="11_jfbej"]
 
 [sub_resource type="Resource" id="Resource_a6xni"]
@@ -16,14 +14,11 @@ script = ExtResource("3_rhgna")
 projectile_2d_path = &"uid://elu5weic5047"
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mpfu"]
-size = Vector2(207.749, 14.1861)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hy8p2"]
 size = Vector2(638, 71.5737)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_a6xni"]
-radius = 219.037
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mpfu"]
+size = Vector2(207.749, 14.1861)
 
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
 
@@ -45,7 +40,7 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("7_jihcw")
 duration = 0.5
-repeat_count = 12
+repeat_count = 20
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="PatternComposer2D" type="Node" parent="."]
@@ -55,45 +50,18 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("11_jfbej")
-rotation = 1.8134
+rotation_speed = 0.191986
+rotation_process_type = 1
 metadata/_custom_type_script = "uid://bhju4glf6a5nr"
 
 [node name="PPCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_hy8p2")
 spread_out = true
-active = false
 metadata/_custom_type_script = "uid://httdfxyybbie"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
-
-[node name="Node2D" type="Node2D" parent="." groups=["TestHoming"]]
-position = Vector2(96, 46)
-
-[node name="Area2D2" type="CharacterBody2D" parent="."]
-position = Vector2(-7, 33)
-collision_layer = 256
-collision_mask = 32
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D2"]
-shape = SubResource("RectangleShape2D_6mpfu")
-
-[node name="Area2D3" type="CharacterBody2D" parent="."]
-position = Vector2(-8, 67)
-collision_layer = 256
-collision_mask = 32
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D3"]
-shape = SubResource("RectangleShape2D_6mpfu")
-
-[node name="Area2D4" type="CharacterBody2D" parent="."]
-position = Vector2(0, 106)
-collision_layer = 256
-collision_mask = 32
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D4"]
-shape = SubResource("RectangleShape2D_6mpfu")
 
 [node name="Area2D" type="CharacterBody2D" parent="."]
 position = Vector2(-52, 14)
@@ -120,26 +88,23 @@ position = Vector2(328, -109)
 rotation = 4.77137
 shape = SubResource("RectangleShape2D_hy8p2")
 
-[node name="ProjectileBouncingHelper" type="CharacterBody2D" parent="."]
-position = Vector2(61, 68)
-collision_layer = 55
-collision_mask = 383
-motion_mode = 1
-script = ExtResource("9_rhgna")
-metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
+[node name="Node2D" type="Node2D" parent="." groups=["TestHoming"]]
+position = Vector2(96, 46)
 
-[node name="ProjectileBouncingHelper2" type="CharacterBody2D" parent="."]
-position = Vector2(214, 54)
-collision_layer = 32
-collision_mask = 256
-motion_mode = 1
-script = ExtResource("9_rhgna")
-metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
+[node name="Area2D2" type="CharacterBody2D" parent="."]
+position = Vector2(-7, 33)
 
-[node name="ProjectileBoundary2D" type="Area2D" parent="."]
-script = ExtResource("10_6mpfu")
-metadata/_custom_type_script = "uid://byoirooyga8su"
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("RectangleShape2D_6mpfu")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBoundary2D"]
-position = Vector2(38, 3)
-shape = SubResource("CircleShape2D_a6xni")
+[node name="Area2D3" type="CharacterBody2D" parent="."]
+position = Vector2(-8, 67)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D3"]
+shape = SubResource("RectangleShape2D_6mpfu")
+
+[node name="Area2D4" type="CharacterBody2D" parent="."]
+position = Vector2(0, 106)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Area2D4"]
+shape = SubResource("RectangleShape2D_6mpfu")
