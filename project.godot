@@ -23,6 +23,15 @@ ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot_projectile_engine/plugin.cfg")
 
+[gdunit4]
+
+settings/test/test_lookup_folder="tests"
+
 [global_group]
 
 TestHoming=""
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
