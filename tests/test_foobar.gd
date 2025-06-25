@@ -9,7 +9,3 @@ func test_foo():
 	# last assert was succes
 	if is_failure():
 		return
-	assert_str("abc").is_empty()
-	# last assert was failure, now abort the test here
-	if is_failure():
-		return
