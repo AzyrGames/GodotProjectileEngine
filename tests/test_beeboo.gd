@@ -1,8 +1,9 @@
-extends "res://addons/gut/test.gd"
+extends GdUnitTestSuite
+
 
 func test_bee():
-	assert_false(false)
+	assert_bool(true)
 
 
 func test_boo():
-	assert_false(false)
+	assert_bool(true)
