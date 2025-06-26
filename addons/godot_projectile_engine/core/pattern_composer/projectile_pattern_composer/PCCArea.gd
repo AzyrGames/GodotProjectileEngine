@@ -1,16 +1,20 @@
-## Projectile Pattern Component Base
-extends ProjectilePatternComponent
-class_name PPCArea
+extends PatternComposerComponent
+class_name PCCArea
 
 @export var area_shape: Shape2D
 # @export var navigation_map : NavigationMesh
 
-func process_pattern(pattern_packs: Array, _composer_var : Dictionary) -> Array:
-	var _new_projectile_packs := []
-	for instance : Dictionary in pattern_packs:
-		var _new_instance := instance.duplicate(true)
-		_new_instance.position = get_random_point_in_shape(area_shape, _new_instance.position) + instance.position
-		_new_projectile_packs.append(_new_instance)
+func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
+	var _new_projectile_packs : Array[PatternComposerData] = []
+	for pattern_data : PatternComposerData in pattern_composer_pack:
+		var _new_pattern_data := PatternComposerData.new()
+		_new_pattern_data.position = pattern_data.position
+		_new_pattern_data.direction = pattern_data.direction
+		_new_pattern_data.rotation = pattern_data.rotation
+		_new_pattern_data.speed_mod = pattern_data.speed_mod
+		
+		_new_pattern_data.position = get_random_point_in_shape(area_shape, _new_pattern_data.position) + pattern_data.position
+		_new_projectile_packs.append(_new_pattern_data)
 
 	return _new_projectile_packs
 

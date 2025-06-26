@@ -21,7 +21,7 @@ var projectile_composer : PatternComposer2D
 
 @export var audio_stream: AudioStreamPlayer
 
-var pattern_packs: Array
+var pattern_composer_pack: Array
 
 var projectile_updater_2d : ProjectileUpdater2D
 
@@ -42,6 +42,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if active:
 		activate_projectile_spawner()
+
 	pass
 
 
@@ -76,6 +77,7 @@ func setup_projectile_spawner() -> void:
 
 
 func activate_projectile_spawner() -> void:
+	composer_context = PatternComposerContext.new()
 	setup_projectile_spawner()
 	connect_timing_scheduler()
 	connect_audio()
@@ -87,7 +89,7 @@ func deactive_projectile_spanwer() -> void:
 	pass
 
 
-var composer_var : Dictionary
+var composer_context : PatternComposerContext
 
 
 func spawn_pattern() -> void:
@@ -95,8 +97,8 @@ func spawn_pattern() -> void:
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
-
-	pattern_packs = projectile_composer.request_pattern(global_position, composer_var)
+	composer_context.position = global_position
+	pattern_composer_pack = projectile_composer.request_pattern(composer_context)
 	# match projectile_template_2d:
 	if projectile_template_2d is ProjectileTemplateResource2D:
 		_spawn_projectile_template_resource_2d()
@@ -108,20 +110,20 @@ func spawn_pattern() -> void:
 
 
 func _spawn_projectile_template_resource_2d() -> void:
-	projectile_updater_2d.spawn_projectile_pattern(pattern_packs)
+	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
 
 func _spawn_projectile_template_node_2d() -> void:
 	if _projectile_2d_instance == null: return
 	var _new_projectile_2d : Projectile2D
-	for _pattern_pack : Dictionary in pattern_packs:
+	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
 
 		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
 		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
-		_new_projectile_2d.apply_pattern_pack(_pattern_pack)
+		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
 		pass
 	pass
 

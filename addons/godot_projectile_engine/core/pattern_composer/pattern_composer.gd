@@ -1,13 +1,16 @@
 extends Node
 class_name PatternComposer2D
 
-signal pattern_composed(_pattern_packs: Dictionary)
+signal pattern_composed(_pattern_composer_pack: Dictionary)
 
 @export var composer_name : String = "":
 	set(value):
 		if value == composer_name: return
 		_reregister_pattern_composer(composer_name, value)
 		composer_name = value
+
+var pattern_composer_pack : Array[PatternComposerData]
+
 
 
 func _enter_tree() -> void:
@@ -47,20 +50,14 @@ func _reregister_pattern_composer(_old_composer_name: String, _new_composer_name
 	pass
 
 
-func request_pattern(_position: Vector2, _composer_var : Dictionary) -> Array:
-	var pattern_packs : Array = [
-		{
-			"direction" : Vector2.RIGHT,
-			"position" : _position,
-			"rotation" : 0.0,
-		}
-	]
+func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
+	pattern_composer_pack  = [PatternComposerData.new()]
 
 	for pattern_component in get_children():
-		if pattern_component is not ProjectilePatternComponent: continue
+		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue
-		pattern_packs = pattern_component.process_pattern(pattern_packs, _composer_var)
+		pattern_composer_pack = pattern_component.process_pattern(pattern_composer_pack, _pattern_composer_context)
 	
-	pattern_composed.emit(pattern_packs)
+	pattern_composed.emit(pattern_composer_pack)
 
-	return pattern_packs
+	return pattern_composer_pack

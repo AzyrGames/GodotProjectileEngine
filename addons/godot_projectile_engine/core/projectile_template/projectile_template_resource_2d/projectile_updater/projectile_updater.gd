@@ -144,8 +144,8 @@ func update_projectile_instances(delta: float) -> void:
 		pass
 
 
-func spawn_projectile_pattern(pattern_packs: Array) -> void:
-	for instance : Dictionary in pattern_packs:
+func spawn_projectile_pattern(pattern_composer_pack: Array) -> void:
+	for instance : Dictionary in pattern_composer_pack:
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
 		_projectile_instance.base_move_direction = instance.direction
 		_projectile_instance.move_direction =_projectile_instance.base_move_direction
