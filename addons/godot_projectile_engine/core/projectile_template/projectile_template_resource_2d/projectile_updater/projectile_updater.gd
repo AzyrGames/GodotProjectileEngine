@@ -144,20 +144,18 @@ func update_projectile_instances(delta: float) -> void:
 		pass
 
 
-func spawn_projectile_pattern(pattern_composer_pack: Array) -> void:
-	for instance : Dictionary in pattern_composer_pack:
+func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
+	for pattern_data : PatternComposerData in pattern_composer_pack:
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
-		_projectile_instance.base_move_direction = instance.direction
-		_projectile_instance.move_direction =_projectile_instance.base_move_direction
+		_projectile_instance.base_move_direction = pattern_data.direction
+		_projectile_instance.move_direction = _projectile_instance.base_move_direction
 
-		_projectile_instance.global_position = instance.position
+		_projectile_instance.global_position = pattern_data.position
 		_projectile_instance.move_speed = _projectile_instance.base_move_speed
-		if instance.has("speed_mod"):
-			_projectile_instance.move_speed_modifier  = instance.speed_mod
-
+		_projectile_instance.move_speed_modifier = pattern_data.speed_mod
 
 		if _projectile_instance.texture_rotate_direction:
-			_projectile_instance.texture_rotation = instance.direction.angle()
+			_projectile_instance.texture_rotation = pattern_data.direction.angle()
 
 		_projectile_instance.life_time = 0.0
 		_projectile_instance.life_time_tick = 0

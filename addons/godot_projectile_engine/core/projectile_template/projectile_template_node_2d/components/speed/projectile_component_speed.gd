@@ -21,6 +21,7 @@ var base_speed : float = 100.0
 # Temporary array for behavior processing
 var _component_behavior_convert : Array[ProjectileBehavior]
 
+var speed_mod : float
 
 func _ready() -> void:
 	# Cache initial speed value
