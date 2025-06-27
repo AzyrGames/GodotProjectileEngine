@@ -1,8 +1,6 @@
 extends Node2D
 class_name ProjectileUpdaterSimple2D
 
-
-
 var projectile_template_2d : ProjectileTemplateSimple2D
 
 var projectile_damage: float = 1.0
@@ -138,11 +136,8 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 	for pattern_data : PatternComposerData in pattern_composer_pack:
 
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
-
 		_projectile_instance.direction = pattern_data.direction
-
-		_projectile_instance.velocity = pattern_data.direction * projectile_speed * get_physics_process_delta_time()
-
+		_projectile_instance.velocity = pattern_data.direction * projectile_speed * (1.0 / Engine.physics_ticks_per_second)
 		_projectile_instance.global_position = pattern_data.position
 
 		if projectile_texture_rotate_direction:

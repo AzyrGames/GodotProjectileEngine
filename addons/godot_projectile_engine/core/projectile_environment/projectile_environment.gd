@@ -51,8 +51,8 @@ func request_bouncing_helper(asdfasdfas: CollisionShape2D) -> void:
 
 	# var 
 	# projectile_bouncing_helper.add_child(_collision_shape.duplicate())
-	add_child(projectile_bouncing_helper)
-	projectile_bouncing_helper.add_child(_collision_shape)
+	add_child(projectile_bouncing_helper, true)
+	projectile_bouncing_helper.add_child(_collision_shape, true)
 	pass
 
 # func setup_projectile_bouncing_helper() -> void:
