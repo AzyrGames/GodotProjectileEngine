@@ -19,6 +19,10 @@ run/max_fps=60
 
 ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot_projectile_engine/plugin.cfg")
