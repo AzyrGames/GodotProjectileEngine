@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7rypyujt6vmj"]
+[gd_scene load_steps=18 format=3 uid="uid://c7rypyujt6vmj"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_dnndo"]
 [ext_resource type="Script" uid="uid://ccbdeoqjc8e6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/transform_2d/projectile_component_transform_2d.gd" id="2_c06gt"]
@@ -8,7 +8,27 @@
 [ext_resource type="Script" uid="uid://bdk51xt0hiwtb" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/projectile_component_rotation.gd" id="5_u3u5u"]
 [ext_resource type="Script" uid="uid://d25cx5bje24ld" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/skew/projectile_component_skew.gd" id="6_yyuxl"]
 [ext_resource type="Script" uid="uid://egh01yr3fqho" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/projectile_component_scale.gd" id="8_kdkci"]
+[ext_resource type="Script" uid="uid://cgkooc2hci3xy" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_distance/projectile_component_life_distance.gd" id="9_ooy66"]
 [ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="9_u3u5u"]
+[ext_resource type="Script" uid="uid://b5mbns78winfj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/life_time/projectile_component_life_time.gd" id="10_is3c8"]
+[ext_resource type="Script" uid="uid://chg5nxeot0crs" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/projectile_component_destroy.gd" id="11_k83cq"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="12_yij6k"]
+[ext_resource type="Script" uid="uid://bt5psh63jjk12" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_distance.gd" id="13_0qgxh"]
+[ext_resource type="Script" uid="uid://c5xm8oap2qr4y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_time.gd" id="14_7o54s"]
+
+[sub_resource type="Resource" id="Resource_wn4xp"]
+script = ExtResource("13_0qgxh")
+destroy_distance = 2000.0
+emit_destroy_signal = true
+active = true
+metadata/_custom_type_script = "uid://bt5psh63jjk12"
+
+[sub_resource type="Resource" id="Resource_m0vmm"]
+script = ExtResource("14_7o54s")
+destroy_time = 5.0
+emit_destroy_signal = true
+active = true
+metadata/_custom_type_script = "uid://c5xm8oap2qr4y"
 
 [node name="Projectile2D" type="Area2D"]
 script = ExtResource("1_dnndo")
@@ -47,6 +67,19 @@ metadata/_custom_type_script = "uid://d25cx5bje24ld"
 [node name="ProjectileComponentScale" type="Node" parent="ProjectileComponentTransform2D"]
 script = ExtResource("8_kdkci")
 metadata/_custom_type_script = "uid://egh01yr3fqho"
+
+[node name="ProjectileComponentLifeDistance" type="Node" parent="ProjectileComponentTransform2D"]
+script = ExtResource("9_ooy66")
+metadata/_custom_type_script = "uid://cgkooc2hci3xy"
+
+[node name="ProjectileComponentLifeTime" type="Node" parent="ProjectileComponentTransform2D"]
+script = ExtResource("10_is3c8")
+metadata/_custom_type_script = "uid://b5mbns78winfj"
+
+[node name="ProjectileComponentDestroy" type="Node" parent="ProjectileComponentTransform2D"]
+script = ExtResource("11_k83cq")
+component_behaviors = Array[ExtResource("12_yij6k")]([SubResource("Resource_wn4xp"), SubResource("Resource_m0vmm")])
+metadata/_custom_type_script = "uid://chg5nxeot0crs"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("9_u3u5u")

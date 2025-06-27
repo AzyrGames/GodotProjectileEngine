@@ -31,6 +31,10 @@ settings/test/test_lookup_folder="tests"
 
 TestHoming=""
 
+[physics]
+
+2d/physics_engine="Rapier2D"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

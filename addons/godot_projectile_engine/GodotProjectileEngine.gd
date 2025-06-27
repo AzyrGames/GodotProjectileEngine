@@ -26,6 +26,8 @@ var active_projectile_count : int
 var projectile_environment : ProjectileEnvironment2D
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
+var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
+
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
