@@ -1,5 +1,7 @@
 extends ProjectileTemplate2D
 class_name ProjectileTemplateResource2D
+
+
 @export var move_speed : float = 100
 @export var projectile_pooling_amount : int = 500
 
@@ -11,6 +13,7 @@ class_name ProjectileTemplateResource2D
 @export var texture : Texture2D
 @export var texture_visible : bool = true
 @export var texture_z_index : int = 0
+
 #Rotate the texture based on the direction.
 @export var texture_modulate : Color = Color(1, 1, 1, 1)
 @export var texture_rotate_direction: bool = false
