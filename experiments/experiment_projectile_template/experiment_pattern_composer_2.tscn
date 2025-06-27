@@ -2,35 +2,51 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_gur78"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_aydl5"]
-[ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="3_aydl5"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="4_gur78"]
+[ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="3_bnrna"]
+[ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_arrowhead_1.png" id="4_5epyj"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="6_5epyj"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="7_5epyj"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_ir6nx"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="8_ta78m"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_trsjv"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bnrna"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_5epyj"]
 
-[sub_resource type="Resource" id="Resource_5epyj"]
-script = ExtResource("3_aydl5")
+[sub_resource type="Resource" id="Resource_bnrna"]
+script = ExtResource("3_bnrna")
 damage = 1.0
 speed = 100.0
-life_time_max = 10.0
-life_distance_max = 1000.0
-projectile_pooling_amount = 500
-texture = ExtResource("4_gur78")
-texture_rotation = 0.0
-texture_rotate_direction = false
-texture_scale = Vector2(1, 1)
-texture_skew = 0.0
+projectile_pooling_amount = 2000
+life_time_max = 30.0
+life_distance_max = 3000.0
+speed_acceleration = 10.0
+speed_max = 200.0
+is_use_homing = true
+target_group = "TestHoming"
+steer_speed = 1.0472
+homing_strength = 1.0
+max_homing_distance = 0.0
+texture = ExtResource("4_5epyj")
 texture_visible = true
 texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
-collision_shape = SubResource("CircleShape2D_bnrna")
-collision_layer = 1
-collision_mask = 2
-metadata/_custom_type_script = "uid://dqlixqba72p5f"
+texture_skew = 0.0
+texture_rotation = 0.0
+rotation_follow_direction = true
+direction_follow_rotation = false
+rotation_speed = 0.0
+texture_scale = Vector2(1, 1)
+scale_acceleration = 1.0
+scale_max = 2.0
+collision_shape = SubResource("CircleShape2D_5epyj")
+collision_layer = 0
+collision_mask = 0
+is_use_trigger = true
+trigger_name = &"Tesst"
+trigger_amount = 10
+trigger_life_time = 10.0
+trigger_life_distance = 1000.0
+metadata/_custom_type_script = "uid://c7uapl8lqnia4"
 
 [node name="ExperimentPatternComposer2" type="Node2D"]
 
@@ -41,7 +57,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 [node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_aydl5")
 projectile_composer_name = "pattern_1"
-projectile_template_2d = SubResource("Resource_5epyj")
+projectile_template_2d = SubResource("Resource_bnrna")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
@@ -58,6 +74,7 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_5epyj")
+polygon_sides = 30
 spread_out = true
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
@@ -67,7 +84,13 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("8_ta78m")
-duration = 0.1
+duration = 0.2
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HomingTarget" type="Node2D" parent="." groups=["TestHoming"]]
+position = Vector2(113, -98)
+
+[node name="HomingTarget2" type="Node2D" parent="." groups=["TestHoming"]]
+position = Vector2(-195, 107)

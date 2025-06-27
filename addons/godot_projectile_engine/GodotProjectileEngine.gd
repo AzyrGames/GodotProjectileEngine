@@ -2,7 +2,7 @@ extends Node
 
 
 
-signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
+signal projectile_instance_triggered(trigger_name: String, projectile_instance)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 
 enum BehaviorContext{
@@ -27,6 +27,8 @@ var projectile_environment : ProjectileEnvironment2D
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
+var projectile_updater_advanced_2d_nodes : Dictionary[RID, ProjectileUpdaterAdvanced2D]
+
 
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
@@ -60,7 +62,7 @@ func clear_projectile() -> void:
 		_projectile_udpater_node.clear_projectile()
 	pass
 
-func _test_projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D) -> void:
+func _test_projectile_instance_triggered(trigger_name: String, projectile_instance) -> void:
 	print("Projectile instance triggered: ", trigger_name , " - ", projectile_instance)
 	pass
 

@@ -25,6 +25,7 @@ var pattern_composer_pack: Array
 
 var projectile_updater_2d : ProjectileUpdater2D
 var projectile_updater_simple_2d : ProjectileUpdaterSimple2D
+var projectile_updater_advanced_2d : ProjectileUpdaterAdvanced2D
 
 
 var projectile_count: int = 0
@@ -72,6 +73,12 @@ func setup_projectile_spawner() -> void:
 			create_projectile_updater_simple_2d()
 		projectile_updater_simple_2d = ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)
 
+	elif projectile_template_2d is ProjectileTemplateAdvanced2D:
+		if !is_instance_valid(ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
+			create_projectile_updater_advanced_2d()
+		projectile_updater_advanced_2d = ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+
+
 	elif projectile_template_2d is ProjectileTemplateNode2D:
 		var _node := _instance_node(projectile_template_2d.projectile_2d_path)
 		if _node is Projectile2D:
@@ -113,6 +120,8 @@ func spawn_pattern() -> void:
 		_spawn_projectile_template_node_2d()
 	elif projectile_template_2d is ProjectileTemplateSimple2D:
 		_spawn_projectile_template_simple_2d()
+	elif projectile_template_2d is ProjectileTemplateAdvanced2D:
+		_spawn_projectile_template_advanced_2d()
 	else:
 		pass
 	pass
@@ -126,6 +135,9 @@ func _spawn_projectile_template_simple_2d() -> void:
 	projectile_updater_simple_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
+func _spawn_projectile_template_advanced_2d() -> void:
+	projectile_updater_advanced_2d.spawn_projectile_pattern(pattern_composer_pack)
+	pass
 
 func _spawn_projectile_template_node_2d() -> void:
 	if _projectile_2d_instance == null: return
@@ -166,6 +178,18 @@ func create_projectile_updater_simple_2d() -> void:
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
 	ProjectileEngine.projectile_updater_simple_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_simple_2d = _projectile_updater
+	pass
+
+func create_projectile_updater_advanced_2d() -> void:
+	var _projectile_updater := ProjectileUpdaterAdvanced2D.new()
+
+	_projectile_updater.projectile_template_2d = projectile_template_2d
+
+	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
+	projectile_area = _projectile_updater.projectile_area_rid 
+	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
+	ProjectileEngine.projectile_updater_advanced_2d_nodes.get_or_add(projectile_area, _projectile_updater)
+	projectile_updater_advanced_2d = _projectile_updater
 	pass
 
 
