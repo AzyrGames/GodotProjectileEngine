@@ -201,6 +201,8 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.life_time = 0.0
 		_projectile_instance.life_distance = 0.0
 
+		_projectile_instance.trigger_count = 0
+
 		_projectile_instance.transform = Transform2D(
 			_projectile_instance.texture_rotation, 
 			projectile_template_2d.texture_scale,
@@ -292,7 +294,7 @@ func update_projectile_instances(delta: float) -> void:
 	for _active_instance : ProjectileInstanceAdvanced2D in _active_instances:
 		
 		if projectile_is_use_trigger:
-			if _active_instance.trigger_count <= projectile_trigger_amount:
+			if _active_instance.trigger_count < projectile_trigger_amount:
 				if projectile_trigger_life_time > 0:
 					if _active_instance.life_time >= projectile_trigger_life_time * _active_instance.trigger_count:
 						ProjectileEngine.projectile_instance_triggered.emit(projectile_trigger_name, _active_instance)
