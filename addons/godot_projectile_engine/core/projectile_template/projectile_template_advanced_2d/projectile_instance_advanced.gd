@@ -24,4 +24,4 @@ var transform : Transform2D
 var life_time : float
 var life_distance : float 
 
-var trigger_count : int = 1
+var trigger_count : int = 0
