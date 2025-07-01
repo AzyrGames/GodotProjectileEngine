@@ -40,6 +40,8 @@ func _physics_process(delta: float) -> void:
 
 	if !_collision_body:
 		ProjectileEngine.projectile_environment.request_bouncing_helper(_projectile_2d.get_node("CollisionShape2D").duplicate())
+		ProjectileEngine.projectile_environment.projectile_bouncing_helper.transform = _projectile_2d.transform
+		# ProjectileEngine.projectile_environment.projectile_bouncing_helper.force_update_transform()
 		_collision_body = ProjectileEngine.projectile_environment.projectile_bouncing_helper
 	
 	if !component_behaviors:
@@ -76,7 +78,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if max_bounces >= 0 and bounce_count >= max_bounces:
 		max_bounces_reached.emit(bounce_count)
 		return
-
+	_collision_body.transform = _projectile_2d.transform
+	_collision_body.force_update_transform()
 	_collision_body.collision_layer = _projectile_2d.collision_layer
 	_collision_body.collision_mask = _projectile_2d.collision_mask
 	_collision_body.global_position = _projectile_2d.global_position

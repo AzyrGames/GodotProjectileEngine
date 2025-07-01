@@ -41,12 +41,11 @@ func get_projectile_damage(projectile_area_rid: RID) -> int:
 	return 0
 
 
-func request_bouncing_helper(asdfasdfas: CollisionShape2D) -> void:
+func request_bouncing_helper(_projectile_collision_shape: CollisionShape2D) -> void:
 	if projectile_bouncing_helper: return
 	projectile_bouncing_helper = ProjectileBouncingHelper.new()
 	var _collision_shape := CollisionShape2D.new()
-	var _shape : = CircleShape2D.new()
-	_shape.radius = 6.0
+	var _shape : = _projectile_collision_shape.shape
 	_collision_shape.shape = _shape
 
 	# var 
