@@ -7,6 +7,7 @@ signal projectile_node_triggered(trigger_name: String, projectile_node: Projecti
 
 enum BehaviorContext{
 	PHYSICS_DELTA,
+	GLOBAL_POSITION,
 	LIFE_TIME_TICK,
 	LIFE_TIME_SECOND,
 	LIFE_DISTANCE,
@@ -28,8 +29,7 @@ var projectile_environment : ProjectileEnvironment2D
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
 var projectile_updater_advanced_2d_nodes : Dictionary[RID, ProjectileUpdaterAdvanced2D]
-
-
+var projectile_updater_custom_2d_nodes : Dictionary[RID, ProjectileUpdaterCustom2D]
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 

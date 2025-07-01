@@ -1,0 +1,57 @@
+extends ProjectileTemplate2D
+class_name ProjectileTemplateCustom2D
+
+
+## Template for Simple Projectile 2D that will move at the direction and speed defined.
+
+## Base damage dealt by the projectile
+@export var damage: float = 1.0
+## Movement speed of the projectile in pixels per second
+@export var speed : float = 100
+@export var speed_projectile_behaviors : Array[ProjectileBehaviorSpeed]
+
+@export var direction : Vector2 = Vector2.RIGHT
+@export var direction_projectile_behaviors : Array[ProjectileBehaviorDirection]
+@export var homing_projectile_behaviors : Array[ProjectileBehaviorHoming] = []
+
+## Number of projectiles to preload in the object pool for better performance
+@export var projectile_pooling_amount : int = 500
+
+@export var destroy_projectile_behaviors : Array[ProjectileBehaviorDestroy]
+
+@export_group("Texture")
+## Texture to use for the projectile
+@export var texture : Texture2D
+## Toggles visibility of the projectile's texture
+@export var texture_visible : bool = true
+## Render layer for the texture (higher values render on top)
+@export var texture_z_index : int = 0
+## Color modulation applied to the texture (RGBA)
+@export var texture_modulate : Color = Color(1, 1, 1, 1)
+## Skew/shear effect applied to texture (-89.9 to 89.9 degrees)
+@export_range(-89.9, 89.9, 0.1) var texture_skew : float = 0.0
+## Initial rotation of the texture in degrees
+@export_range(-360.0, 360.0) var rotation : float
+## If true, texture rotation will rotate to match projectile's direction
+@export var rotation_projectile_behaviors : Array[ProjectileBehaviorRotation]
+
+@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale : Vector2 = Vector2.ONE
+
+@export var scale_projectile_behaviors : Array[ProjectileBehaviorScale]
+
+@export_group("Collision")
+## Collision shape used for physics detection
+@export var collision_shape : Shape2D
+## Physics layers this projectile can collide with (bitmask)
+@export_flags_2d_physics var collision_layer : int = 0
+## Physics layers that can detect collisions with this projectile (bitmask)
+@export_flags_2d_physics var collision_mask : int = 0
+
+@export_group("Special Behavior")
+@export var piercing_projectile_behaviors : Array[ProjectileBehaviorPiercing]
+@export var bouncing_projectile_behaviors : Array[ProjectileBehaviorBouncing]
+@export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]
+
+
+## Internal RID (Rendering ID) for the projectile's collision area
+var projectile_area_rid : RID

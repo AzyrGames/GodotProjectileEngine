@@ -21,8 +21,8 @@
 [ext_resource type="Script" uid="uid://dcx8xuu3wp0bl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_boundary.gd" id="19_0jmbi"]
 [ext_resource type="Script" uid="uid://brqtc7oaccbn8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/projectile_component_trigger.gd" id="19_nnnqt"]
 [ext_resource type="Script" uid="uid://2bbeucwj5h8n" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/piercing/projectile_component_piercing.gd" id="20_84ii0"]
-[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="22_qyalf"]
-[ext_resource type="Script" uid="uid://com1bcixecyvf" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/behaviors/projectile_behavior_trigger_distance.gd" id="23_qyalf"]
+[ext_resource type="Script" uid="uid://bt5psh63jjk12" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_distance.gd" id="23_4yv37"]
+[ext_resource type="Script" uid="uid://bq12kefbrqcu5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/homing/projectile_component_homing.gd" id="23_qyalf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_84ii0"]
 radius = 5.0
@@ -44,14 +44,12 @@ emit_destroy_signal = true
 active = true
 metadata/_custom_type_script = "uid://dcx8xuu3wp0bl"
 
-[sub_resource type="Resource" id="Resource_qyalf"]
-script = ExtResource("23_qyalf")
-trigger_distance = 100.0
-trigger_name = "gggg"
-one_shot = false
-destroy_on_trigger = true
+[sub_resource type="Resource" id="Resource_mubps"]
+script = ExtResource("23_4yv37")
+destroy_distance = 1000.0
+emit_destroy_signal = true
 active = true
-metadata/_custom_type_script = "uid://com1bcixecyvf"
+metadata/_custom_type_script = "uid://bt5psh63jjk12"
 
 [node name="Projectile2dTest1" type="Area2D"]
 collision_layer = 32
@@ -120,10 +118,13 @@ metadata/_custom_type_script = "uid://yhl0aii1go5n"
 
 [node name="ProjectileComponentDestroy" type="Node" parent="ProjectileComponent"]
 script = ExtResource("17_inat4")
-component_behaviors = Array[ExtResource("18_84ii0")]([SubResource("Resource_84ii0")])
+component_behaviors = Array[ExtResource("18_84ii0")]([SubResource("Resource_84ii0"), SubResource("Resource_mubps")])
 metadata/_custom_type_script = "uid://chg5nxeot0crs"
 
 [node name="ProjectileComponentTrigger" type="Node" parent="ProjectileComponent"]
 script = ExtResource("19_nnnqt")
-component_behaviors = Array[ExtResource("22_qyalf")]([SubResource("Resource_qyalf")])
 metadata/_custom_type_script = "uid://brqtc7oaccbn8"
+
+[node name="ProjectileComponentHoming" type="Node" parent="ProjectileComponent"]
+script = ExtResource("23_qyalf")
+metadata/_custom_type_script = "uid://bq12kefbrqcu5"

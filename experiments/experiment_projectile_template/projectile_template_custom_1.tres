@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateCustom2D" load_steps=19 format=3 uid="uid://ly3vsgsyh7lu"]
+
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="1_wvjao"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="2_atnge"]
+[ext_resource type="Script" uid="uid://b434oxe86dd25" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_follow_rotation.gd" id="4_5ie4f"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="4_ikm0u"]
+[ext_resource type="Script" uid="uid://idk3toy21bit" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_homing.gd" id="7_c414a"]
+[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="8_tw2rn"]
+[ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_accelerate.gd" id="9_5ie4f"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="9_7ci8m"]
+[ext_resource type="Script" uid="uid://btri3e8whkvjv" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_spin.gd" id="9_wvjao"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="10_0qug4"]
+[ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="11_5g8ii"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="11_fgkof"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="12_ncqh3"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="14_qdc3c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2jc63"]
+
+[sub_resource type="Resource" id="Resource_atnge"]
+script = ExtResource("4_5ie4f")
+active = false
+metadata/_custom_type_script = "uid://b434oxe86dd25"
+
+[sub_resource type="Resource" id="Resource_5ie4f"]
+script = ExtResource("9_wvjao")
+spin_speed = 1.0472
+process_mode = 0
+modify_method = 0
+active = true
+metadata/_custom_type_script = "uid://btri3e8whkvjv"
+
+[sub_resource type="Resource" id="Resource_wvjao"]
+script = ExtResource("9_5ie4f")
+acceleration_speed = 1.0
+max_scale = 3.0
+active = true
+metadata/_custom_type_script = "uid://d0yojlb4mvhsj"
+
+[resource]
+script = ExtResource("11_5g8ii")
+damage = 1.0
+speed = 100.0
+speed_projectile_behaviors = Array[ExtResource("12_ncqh3")]([])
+direction = Vector2(1, 0)
+direction_projectile_behaviors = Array[ExtResource("4_ikm0u")]([SubResource("Resource_atnge")])
+homing_projectile_behaviors = Array[ExtResource("7_c414a")]([])
+projectile_pooling_amount = 500
+destroy_projectile_behaviors = Array[ExtResource("2_atnge")]([])
+texture = ExtResource("11_fgkof")
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+texture_skew = 0.0
+rotation = 0.0
+rotation_projectile_behaviors = Array[ExtResource("9_7ci8m")]([SubResource("Resource_5ie4f")])
+scale = Vector2(1, 1)
+scale_projectile_behaviors = Array[ExtResource("10_0qug4")]([SubResource("Resource_wvjao")])
+collision_shape = SubResource("CircleShape2D_2jc63")
+collision_layer = 0
+collision_mask = 0
+piercing_projectile_behaviors = Array[ExtResource("8_tw2rn")]([])
+bouncing_projectile_behaviors = Array[ExtResource("1_wvjao")]([])
+trigger_projectile_behaviors = Array[ExtResource("14_qdc3c")]([])
+metadata/_custom_type_script = "uid://d3yyxyx6shhya"
