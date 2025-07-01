@@ -20,6 +20,7 @@ enum UpdateMode {
 
 var timing_timer: Timer
 
+var request_stop : bool = false
 
 func start_next_timing_value() -> void:
 	pass

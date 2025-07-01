@@ -31,9 +31,14 @@ func start_next_timing_value() -> void:
 ## Handles timer timeout events
 func on_timing_timer_timeout() -> void:
 	if repeat_count < 0:
-		# Infinite mode - always restart timer
-		tsc_timed.emit()
-		timing_timer.start(duration)
+		# For Soft Stop
+		if request_stop:
+			tsc_completed.emit()
+			request_stop = false
+		else:
+			# Infinite mode - always restart timer
+			tsc_timed.emit()
+			timing_timer.start(duration)
 	else:
 		# Finite mode - increment count and check if complete
 		current_count += 1
@@ -42,3 +47,4 @@ func on_timing_timer_timeout() -> void:
 			timing_timer.start(duration)
 		else:
 			tsc_completed.emit()
+		

@@ -102,6 +102,7 @@ func _start_timing_scheduler() -> void:
 
 
 func _hard_stop_timing_scheduler() -> void:
+	print(current_tsc)
 	if not current_tsc:
 		return
 		
@@ -118,6 +119,7 @@ func _soft_stop_timing_scheduler() -> void:
 		return
 		
 	_disconnect_tsc_signals(current_tsc)
+	current_tsc.request_stop = true
 	if !current_tsc.tsc_completed.is_connected(_on_soft_stop_tsc_completed):
 		current_tsc.tsc_completed.connect(_on_soft_stop_tsc_completed)
 
@@ -182,6 +184,7 @@ func _on_tsc_completed() -> void:
 
 ## Handles completion during soft stop
 func _on_soft_stop_tsc_completed() -> void:
+	current_tsc.stop_tsc()
 	paused = true
 	current_tsc.tsc_completed.disconnect(_on_soft_stop_tsc_completed)
 	current_tsc = null
