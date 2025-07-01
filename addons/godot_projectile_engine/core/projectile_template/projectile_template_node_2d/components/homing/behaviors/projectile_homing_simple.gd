@@ -20,6 +20,7 @@ class_name ProjectileHomingSimple
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA,
+		ProjectileEngine.BehaviorContext.GLOBAL_POSITION,
 	]
 
 
@@ -32,15 +33,12 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 		return [_value]
 	
 	var delta: float = _context[ProjectileEngine.BehaviorContext.PHYSICS_DELTA]
-	var projectile_owner = _context.get("projectile_owner")
 	
-	if not projectile_owner:
-		return [_value]
 	
-	var projectile_position: Vector2 = projectile_owner.global_position
+	var projectile_position: Vector2 =_context[ProjectileEngine.BehaviorContext.GLOBAL_POSITION]
 	
 	# Find nearest target in group
-	var target_position: Vector2 = _find_nearest_target(projectile_position, projectile_owner)
+	var target_position: Vector2 = _find_nearest_target(projectile_position)
 	if target_position == Vector2.ZERO:
 		return [_value]
 	
@@ -62,8 +60,8 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 
 
 ## Finds the nearest target in the specified group
-func _find_nearest_target(projectile_position: Vector2, projectile_owner: Node) -> Vector2:
-	var group_nodes: Array[Node] = projectile_owner.get_tree().get_nodes_in_group(target_group)
+func _find_nearest_target(projectile_position: Vector2) -> Vector2:
+	var group_nodes: Array[Node] = ProjectileEngine.get_tree().get_nodes_in_group(target_group)
 	if group_nodes.is_empty():
 		return Vector2.ZERO
 	

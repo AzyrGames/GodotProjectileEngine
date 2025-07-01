@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateNode2D" load_steps=2 format=3 uid="uid://dwpqrf585p5k2"]
+
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="1_8oc52"]
+
+[resource]
+script = ExtResource("1_8oc52")
+projectile_2d_path = &"uid://8uyn7n15umu0"
+metadata/_custom_type_script = "uid://drg85m51aqbj7"

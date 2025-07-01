@@ -42,7 +42,7 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 			return _value + _spin_value
 
 		RotationModifyMethod.OVERRIDE:
-			pass
+			return _spin_value
 	
 	return _value
 
