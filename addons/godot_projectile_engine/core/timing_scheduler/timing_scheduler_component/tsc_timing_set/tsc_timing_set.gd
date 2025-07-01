@@ -49,6 +49,10 @@ func start_next_timing_value() -> void:
 		tsc_completed.emit()
 		stop_tsc()
 		return
+	if timing_set.repeat_count < 0:
+		if request_stop:
+			tsc_completed.emit()
+			request_stop = false
 
 	_current_interval = get_next_timing_value()
 
