@@ -2,6 +2,9 @@
 extends Node2D
 class_name ProjectileSpawner2D
 
+signal spawn_timed
+signal scheduler_completed
+
 @export var active : bool = true:
 	set(value):
 		active = value
@@ -10,52 +13,26 @@ class_name ProjectileSpawner2D
 		else:
 			deactive_projectile_spanwer()
 
+@export var projectile_composer_name : String
+@export var projectile_template_2d : ProjectileTemplate2D
+@export var timing_scheduler : TimingScheduler
+@export var audio_stream: AudioStreamPlayer
 
 var projectile_area : RID
 
-@export var projectile_composer_name : String
 var projectile_composer : PatternComposer2D
-
-@export var projectile_template_2d : ProjectileTemplate2D
-@export var timing_scheduler : TimingScheduler
-
-@export var audio_stream: AudioStreamPlayer
-
 var pattern_composer_pack: Array
+var composer_context : PatternComposerContext
 
 var projectile_updater_2d : ProjectileUpdater2D
-# var projectile_updater_simple_2d : ProjectileUpdaterSimple2D
-# var projectile_updater_advanced_2d : ProjectileUpdaterAdvanced2D
-# var projectile_updater_custom_2d : ProjectileUpdaterCustom2D
-
 var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
 
-signal spawn_timed
-signal scheduler_completed
-
-func _exit_tree() -> void:
-	pass
-
-func _enter_tree() -> void:
-	pass
-
-
 func _ready() -> void:
 	if active:
 		activate_projectile_spawner()
-
 	pass
-
-
-func _process(delta: float) -> void:
-	pass
-
-
-func _physics_process(delta: float) -> void:
-	pass
-
 
 func setup_projectile_spawner() -> void:
 	projectile_composer = ProjectileEngine.projectile_composer_nodes.get(projectile_composer_name)
@@ -114,32 +91,6 @@ func setup_projectile_spawner() -> void:
 		null:
 			return
 
-
-	# if projectile_template_2d is ProjectileTemplateSimple2D:
-	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-	# 		create_projectile_updater_simple_2d()
-	# 	projectile_updater_simple_2d = ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)
-
-	# elif projectile_template_2d is ProjectileTemplateAdvanced2D:
-	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-	# 		create_projectile_updater_advanced_2d()
-	# 	projectile_updater_advanced_2d = ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)
-
-	# elif projectile_template_2d is ProjectileTemplateCustom2D:
-	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-	# 		create_projectile_updater_custom_2d()
-	# 	projectile_updater_custom_2d = ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)
-
-	# elif projectile_template_2d is ProjectileTemplateNode2D:
-	# 	var _node := _instance_node(projectile_template_2d.projectile_2d_path)
-	# 	if _node is Projectile2D:
-	# 		_projectile_2d_instance = _node
-	# 	else:
-	# 		_projectile_2d_instance = null
-	# 		push_warning("Not Projectile2D")
-	# else:
-	# 	pass
-
 func activate_projectile_spawner() -> void:
 	composer_context = PatternComposerContext.new()
 	setup_projectile_spawner()
@@ -152,10 +103,6 @@ func deactive_projectile_spanwer() -> void:
 	disconnect_audio()
 	pass
 
-
-var composer_context : PatternComposerContext
-
-
 func spawn_pattern() -> void:
 	if !active: return
 	if !ProjectileEngine.projectile_environment:
@@ -167,42 +114,13 @@ func spawn_pattern() -> void:
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
 	match projectile_template_2d.get_script():
-		# ProjectileTemplateSimple2D:
-		# 	_spawn_projectile_template_simple_2d()
-		# ProjectileTemplateAdvanced2D:
-		# 	_spawn_projectile_template_advanced_2d()
-		# ProjectileTemplateAdvanced2D:
-		# 	_spawn_projectile_template_advanced_2d()
 		ProjectileTemplateNode2D:
 			_spawn_projectile_template_node_2d()
 		_:
 			projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
-
 		#built-in classes don't have a script
 		null:
 			return
-	# if projectile_template_2d is ProjectileTemplateSimple2D:
-	# 	_spawn_projectile_template_simple_2d()
-	# elif projectile_template_2d is ProjectileTemplateAdvanced2D:
-	# 	_spawn_projectile_template_advanced_2d()
-	# elif projectile_template_2d is ProjectileTemplateCustom2D:
-	# 	_spawn_projectile_template_custom_2d()
-	# elif projectile_template_2d is ProjectileTemplateNode2D:
-	# 	_spawn_projectile_template_node_2d()
-	# else:
-	# 	pass
-	pass
-
-func _spawn_projectile_template_simple_2d() -> void:
-	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
-	pass
-
-func _spawn_projectile_template_advanced_2d() -> void:
-	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
-	pass
-
-func _spawn_projectile_template_custom_2d() -> void:
-	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
 func _spawn_projectile_template_node_2d() -> void:
@@ -217,9 +135,6 @@ func _spawn_projectile_template_node_2d() -> void:
 		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
 		pass
 	pass
-
-
-var remove_array : Array
 
 func create_projectile_updater() -> void:
 	var _projectile_updater := ProjectileUpdater2D.new()
@@ -268,7 +183,6 @@ func create_projectile_updater_custom_2d() -> void:
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
 	pass
-
 
 
 func connect_timing_scheduler() -> void:
