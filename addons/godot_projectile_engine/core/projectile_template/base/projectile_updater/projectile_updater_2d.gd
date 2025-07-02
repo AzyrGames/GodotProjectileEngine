@@ -172,6 +172,7 @@ func update_projectile_instances(delta: float) -> void:
 #region Draw Projectile
 
 func draw_projectile_texture() -> void:
+	if !projectile_template_2d.texture: return
 	if !projectile_template_2d.texture_visible: return
 	z_index = projectile_template_2d.texture_z_index
 	projectile_texture = projectile_template_2d.texture
