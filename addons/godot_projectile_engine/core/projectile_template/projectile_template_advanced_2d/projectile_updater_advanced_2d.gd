@@ -198,7 +198,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 		_projectile_instance.scale = projectile_template_2d.texture_scale
 
-		_projectile_instance.life_time = 0.0
+		_projectile_instance.life_time_second = 0.0
 		_projectile_instance.life_distance = 0.0
 
 		_projectile_instance.trigger_count = 0
@@ -267,8 +267,8 @@ func update_projectile_instances(delta: float) -> void:
 
 		# Life Time & Distance
 		if projectile_life_time_max >= 0:
-			_projectile_instance.life_time += delta
-			if _projectile_instance.life_time >= projectile_life_time_max:
+			_projectile_instance.life_time_second += delta
+			if _projectile_instance.life_time_second >= projectile_life_time_max:
 				projectile_remove_index.append(index)
 				continue
 
@@ -296,7 +296,7 @@ func update_projectile_instances(delta: float) -> void:
 		if projectile_is_use_trigger:
 			if _active_instance.trigger_count < projectile_trigger_amount:
 				if projectile_trigger_life_time > 0:
-					if _active_instance.life_time >= projectile_trigger_life_time * _active_instance.trigger_count:
+					if _active_instance.life_time_second >= projectile_trigger_life_time * _active_instance.trigger_count:
 						ProjectileEngine.projectile_instance_triggered.emit(projectile_trigger_name, _active_instance)
 						_active_instance.trigger_count += 1
 				if projectile_trigger_life_distance > 0:

@@ -184,7 +184,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 		_projectile_instance.scale = projectile_template_2d.scale
 
-		_projectile_instance.life_time = 0.0
+		_projectile_instance.life_time_second = 0.0
 		_projectile_instance.life_distance = 0.0
 
 		_projectile_instance.trigger_count = 0
@@ -253,7 +253,7 @@ func update_projectile_instances(delta: float) -> void:
 	for index : int in projectile_active_index:
 		_projectile_instance = projectile_instance_array[index]
 		
-		_projectile_instance.life_time += delta
+		_projectile_instance.life_time_second += delta
 		_projectile_instance.life_distance += _projectile_instance.velocity.length()
 		_projectile_instance.behavior_context.clear()
 		_projectile_instance.behavior_update_context.clear()
@@ -355,7 +355,7 @@ func process_behavior_context_request(_current_context: Dictionary, _projectile_
 				_current_context.get_or_add(_behavior_context, _projectile_instance.global_position)
 
 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.life_time)
+				_current_context.get_or_add(_behavior_context, _projectile_instance.life_time_second)
 
 			ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
 				_current_context.get_or_add(_behavior_context, _projectile_instance.life_distance)
