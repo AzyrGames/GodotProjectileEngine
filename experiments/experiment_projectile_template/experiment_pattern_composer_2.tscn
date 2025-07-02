@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpblpu3hsp6et"]
+[gd_scene load_steps=14 format=3 uid="uid://cpblpu3hsp6et"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_gur78"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_aydl5"]
-[ext_resource type="Resource" uid="uid://cina6wf32vbu7" path="res://experiments/experiment_projectile_template/projectile_template_simple_1.tres" id="3_h8t1e"]
+[ext_resource type="Script" uid="uid://bhf2xsmr57y7f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_resource_2d/projectile_template_resource_2d.gd" id="3_aydl5"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="6_5epyj"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="7_5epyj"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_ir6nx"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" uid="uid://brqy6ew0t2b35" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSpread2D.gd" id="9_gur78"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_trsjv"]
 [ext_resource type="Script" uid="uid://ssup2p0b2bqp" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/timing_set.gd" id="10_h8t1e"]
+
+[sub_resource type="Resource" id="Resource_h8t1e"]
+script = ExtResource("3_aydl5")
+metadata/_custom_type_script = "uid://bhf2xsmr57y7f"
 
 [sub_resource type="Resource" id="Resource_gur78"]
 script = ExtResource("10_h8t1e")
@@ -31,7 +35,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 position = Vector2(-3, 0)
 script = ExtResource("2_aydl5")
 projectile_composer_name = "pattern_1"
-projectile_template_2d = ExtResource("3_h8t1e")
+projectile_template_2d = SubResource("Resource_h8t1e")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
