@@ -351,7 +351,7 @@ func caching_move_direction_math_value() -> void:
 # Instance Transform
 
 # if _projectile_instance.texture_rotation_speed != 0:
-# 	_projectile_instance.texture_rotation += deg_to_rad(_projectile_instance.texture_rotation_speed)
+# 	_projectile_instance.rotation += deg_to_rad(_projectile_instance.texture_rotation_speed)
 
 
 
@@ -372,7 +372,7 @@ func caching_move_direction_math_value() -> void:
 
 # 	match _move_direction_math_type:
 # 		0:
-# 			_projectile_instance.texture_scale = _projectile_instance.base_texture_scale * _texture_scale_sample_value
+# 			_projectile_instance.scale = _projectile_instance.base_texture_scale * _texture_scale_sample_value
 # 			pass
 # 		1:
 # 			pass

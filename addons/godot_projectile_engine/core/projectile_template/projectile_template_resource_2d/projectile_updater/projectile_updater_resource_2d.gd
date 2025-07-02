@@ -1,5 +1,5 @@
 extends Node2D
-class_name ProjectileUpdater2D
+class_name ProjectileUpdaterResource2D
 
 
 var projectile_texture : Texture2D
@@ -128,12 +128,12 @@ func update_projectile_instances(delta: float) -> void:
 		_active_instance.global_position += _active_instance.velocity
 
 		if _texture_rotate_direction:
-			_active_instance.texture_rotation = _active_instance.move_direction.angle()
+			_active_instance.rotation = _active_instance.move_direction.angle()
 
 		_active_instance.transform = Transform2D(
-			_active_instance.texture_rotation, 
-			_active_instance.texture_scale, 
-			_active_instance.texture_skew, 
+			_active_instance.rotation, 
+			_active_instance.scale, 
+			_active_instance.skew, 
 			_active_instance.global_position
 			)
 
@@ -155,16 +155,16 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.move_speed_modifier = pattern_data.speed_mod
 
 		if _projectile_instance.texture_rotate_direction:
-			_projectile_instance.texture_rotation = pattern_data.direction.angle()
+			_projectile_instance.rotation = pattern_data.direction.angle()
 
 		_projectile_instance.life_time = 0.0
 		_projectile_instance.life_time_tick = 0
 		_projectile_instance.life_distance = 0.0
 
 		_projectile_instance.transform = Transform2D(
-			_projectile_instance.texture_rotation, 
-			_projectile_instance.texture_scale, 
-			_projectile_instance.texture_skew,
+			_projectile_instance.rotation, 
+			_projectile_instance.scale, 
+			_projectile_instance.skew,
 			_projectile_instance.global_position
 			)
 		
@@ -220,12 +220,12 @@ func create_projectile_pool() -> void:
 		_projectile_instance.area_rid = projectile_area_rid
 		_projectile_instance.area_index = i
 		
-		_projectile_instance.base_texture_rotation = projectile_template_2d.texture_rotation
+		_projectile_instance.base_texture_rotation = projectile_template_2d.rotation
 
-		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
+		_projectile_instance.rotation = projectile_template_2d.rotation
 		
-		_projectile_instance.base_texture_scale = projectile_template_2d.texture_scale
-		_projectile_instance.texture_scale = projectile_template_2d.texture_scale
+		_projectile_instance.base_texture_scale = projectile_template_2d.scale
+		_projectile_instance.scale = projectile_template_2d.scale
 
 		_projectile_instance.base_move_speed = projectile_template_2d.move_speed
 

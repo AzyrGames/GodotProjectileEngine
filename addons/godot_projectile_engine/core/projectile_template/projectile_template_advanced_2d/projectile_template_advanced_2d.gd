@@ -48,10 +48,10 @@ class_name ProjectileTemplateAdvanced2D
 ## Color modulation applied to the texture (RGBA)
 @export var texture_modulate : Color = Color(1, 1, 1, 1)
 ## Skew/shear effect applied to texture (-89.9 to 89.9 degrees)
-@export_range(-89.9, 89.9, 0.1) var texture_skew : float = 0.0
+@export_range(-89.9, 89.9, 0.1) var skew : float = 0.0
 @export_subgroup("Rotation")
 ## Initial rotation of the texture in degrees
-@export_range(-360.0, 360.0) var texture_rotation : float
+@export_range(-360.0, 360.0) var rotation : float
 ## If true, texture rotation will rotate to match projectile's direction
 @export var rotation_follow_direction: bool = false
 ## If true, direction will rotate to match projectile's texture rotation
@@ -62,7 +62,7 @@ class_name ProjectileTemplateAdvanced2D
 
 @export_subgroup("Scale")
 
-@export_custom(PROPERTY_HINT_LINK, "suffix:") var texture_scale : Vector2 = Vector2.ONE
+@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale : Vector2 = Vector2.ONE
 ## Acceleration rate in units per second squared (how quickly speed increases)
 @export var scale_acceleration: float = 0.0
 ## Maximum speed the projectile can reach (in units per second)

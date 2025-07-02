@@ -20,10 +20,10 @@ func process_template(active_projectile_instances: Array[ProjectileInstance2D]) 
 	match update_type:
 		RotationType.PHYSICS:
 			for _projectile_instance in active_projectile_instances:
-				_projectile_instance.texture_rotation += rotation_speed * delta
+				_projectile_instance.rotation += rotation_speed * delta
 		RotationType.TICKS:
 			for _projectile_instance in active_projectile_instances:
-				_projectile_instance.texture_rotation += rotation_speed
+				_projectile_instance.rotation += rotation_speed
 
 	
 	pass

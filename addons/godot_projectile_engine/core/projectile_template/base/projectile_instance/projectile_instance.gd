@@ -1,0 +1,20 @@
+extends Object
+class_name ProjectileInstance2D
+
+var area_rid : RID
+var area_index : int
+
+var speed : float
+var direction : Vector2 = Vector2.RIGHT
+var velocity : Vector2 = Vector2.ZERO
+
+var global_position : Vector2 = Vector2.ZERO
+var rotation : float = 0
+var scale : Vector2 = Vector2.ONE
+var skew : float = 0.0
+var transform : Transform2D
+
+
+var life_time_second : float = 0.0
+var life_time_tick : float = 0.0
+var life_distance : float = 0.0
