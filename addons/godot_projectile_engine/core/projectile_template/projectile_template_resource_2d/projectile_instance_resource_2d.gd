@@ -15,11 +15,11 @@ var speed_static : float = 0
 var base_direction : Vector2 = Vector2.ZERO
 
 var base_texture_rotation : float = 0
-var texture_rotation : float = 0
+var rotation : float = 0
 var base_texture_scale : Vector2 = Vector2.ONE
 
-var texture_scale : Vector2 = Vector2.ONE
-var texture_skew : float = 0.0
+var scale : Vector2 = Vector2.ONE
+var skew : float = 0.0
 
 
 var is_trigger : bool = false

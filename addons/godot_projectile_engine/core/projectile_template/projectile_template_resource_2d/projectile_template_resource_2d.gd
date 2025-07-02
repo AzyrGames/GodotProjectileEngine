@@ -18,8 +18,8 @@ class_name ProjectileTemplateResource2D
 @export var texture_modulate : Color = Color(1, 1, 1, 1)
 @export var texture_rotate_direction: bool = false
 
-@export_range(-360.0, 360.0) var texture_rotation : float
-@export var texture_scale : Vector2 = Vector2.ONE
+@export_range(-360.0, 360.0) var rotation : float
+@export var scale : Vector2 = Vector2.ONE
 
 @export_subgroup("Animation")
 @export var use_animation : bool = false

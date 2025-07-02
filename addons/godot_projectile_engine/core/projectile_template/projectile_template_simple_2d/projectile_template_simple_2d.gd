@@ -9,7 +9,7 @@ class_name ProjectileTemplateSimple2D
 @export var speed : float = 100
 ## Maximum lifetime of projectile in seconds before it's automatically destroyed
 ## [code] life_time_max < 0 [/code] for unlimited life time
-@export var life_time_max : float = 10.0
+@export var life_time_second_max : float = 10.0
 ## Maximum travel distance in pixels before projectile is automatically destroyed [br]
 ## [code] life_distance_max < 0 [/code] for unlimited distance
 @export var life_distance_max : float = 1000.0
@@ -19,13 +19,13 @@ class_name ProjectileTemplateSimple2D
 ## Texture to use for the projectile
 @export var texture : Texture2D
 ## Initial rotation of the texture in degrees
-@export_range(-360.0, 360.0) var texture_rotation : float
+@export_range(-360.0, 360.0) var rotation : float
 ## If true, texture will rotate to match projectile's direction
 @export var texture_rotate_direction: bool = false
 ## Scale multiplier for the projectile texture
-@export_custom(PROPERTY_HINT_LINK, "suffix:") var texture_scale : Vector2 = Vector2.ONE
+@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale : Vector2 = Vector2.ONE
 ## Skew/shear effect applied to texture (-89.9 to 89.9 degrees)
-@export_range(-89.9, 89.9, 0.1) var texture_skew : float = 0.0
+@export_range(-89.9, 89.9, 0.1) var skew : float = 0.0
 
 ## Toggles visibility of the projectile's texture
 @export var texture_visible : bool = true
