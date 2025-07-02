@@ -24,9 +24,9 @@ var projectile_composer : PatternComposer2D
 var pattern_composer_pack: Array
 
 var projectile_updater_2d : ProjectileUpdater2D
-var projectile_updater_simple_2d : ProjectileUpdaterSimple2D
-var projectile_updater_advanced_2d : ProjectileUpdaterAdvanced2D
-var projectile_updater_custom_2d : ProjectileUpdaterCustom2D
+# var projectile_updater_simple_2d : ProjectileUpdaterSimple2D
+# var projectile_updater_advanced_2d : ProjectileUpdaterAdvanced2D
+# var projectile_updater_custom_2d : ProjectileUpdaterCustom2D
 
 var projectile_count: int = 0
 
@@ -63,37 +63,82 @@ func setup_projectile_spawner() -> void:
 	if !projectile_composer:
 		print_debug(projectile_composer_name + " PatternComposer ID is not valid")
 		return
-	if projectile_template_2d is ProjectileTemplateResource2D:
-		if !is_instance_valid(ProjectileEngine.projectile_updater_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-			create_projectile_updater()
-		projectile_updater_2d = ProjectileEngine.projectile_updater_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+	
+	if typeof(projectile_template_2d) != TYPE_OBJECT:
+		return
 
-	elif projectile_template_2d is ProjectileTemplateSimple2D:
-		if !is_instance_valid(ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-			create_projectile_updater_simple_2d()
-		projectile_updater_simple_2d = ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+	match projectile_template_2d.get_script():
+		ProjectileTemplateSimple2D:
+			if !is_instance_valid(
+				ProjectileEngine.projectile_updater_2d_nodes.get(
+					projectile_template_2d.projectile_area_rid
+				)
+			):
+				create_projectile_updater_simple_2d()
+			projectile_updater_2d = ProjectileEngine.projectile_updater_2d_nodes.get(
+				projectile_template_2d.projectile_area_rid
+			)
 
-	elif projectile_template_2d is ProjectileTemplateAdvanced2D:
-		if !is_instance_valid(ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-			create_projectile_updater_advanced_2d()
-		projectile_updater_advanced_2d = ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+		ProjectileTemplateAdvanced2D:
+			if !is_instance_valid(
+				ProjectileEngine.projectile_updater_2d_nodes.get(
+					projectile_template_2d.projectile_area_rid
+				)
+			):
+				create_projectile_updater_advanced_2d()
+			projectile_updater_2d = ProjectileEngine.projectile_updater_2d_nodes.get(
+				projectile_template_2d.projectile_area_rid
+				)
 
-	elif projectile_template_2d is ProjectileTemplateCustom2D:
-		if !is_instance_valid(ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
-			create_projectile_updater_custom_2d()
-		projectile_updater_custom_2d = ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+		ProjectileTemplateCustom2D:
+			if !is_instance_valid(
+				ProjectileEngine.projectile_updater_2d_nodes.get(
+					projectile_template_2d.projectile_area_rid
+				)
+			):
+				create_projectile_updater_custom_2d()
+			projectile_updater_2d = ProjectileEngine.projectile_updater_2d_nodes.get(
+				projectile_template_2d.projectile_area_rid
+				)
+
+		ProjectileTemplateNode2D:
+			var _node := _instance_node(projectile_template_2d.projectile_2d_path)
+			if _node is Projectile2D:
+				_projectile_2d_instance = _node
+			else:
+				_projectile_2d_instance = null
+				push_warning("Not Projectile2D")
+		_:
+			return
+		#built-in classes don't have a script
+		null:
+			return
 
 
-	elif projectile_template_2d is ProjectileTemplateNode2D:
-		var _node := _instance_node(projectile_template_2d.projectile_2d_path)
-		if _node is Projectile2D:
-			_projectile_2d_instance = _node
-		else:
-			_projectile_2d_instance = null
-			push_warning("Not Projectile2D")
-	else:
-		pass
+	# if projectile_template_2d is ProjectileTemplateSimple2D:
+	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
+	# 		create_projectile_updater_simple_2d()
+	# 	projectile_updater_simple_2d = ProjectileEngine.projectile_updater_simple_2d_nodes.get(projectile_template_2d.projectile_area_rid)
 
+	# elif projectile_template_2d is ProjectileTemplateAdvanced2D:
+	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
+	# 		create_projectile_updater_advanced_2d()
+	# 	projectile_updater_advanced_2d = ProjectileEngine.projectile_updater_advanced_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+
+	# elif projectile_template_2d is ProjectileTemplateCustom2D:
+	# 	if !is_instance_valid(ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)):
+	# 		create_projectile_updater_custom_2d()
+	# 	projectile_updater_custom_2d = ProjectileEngine.projectile_updater_custom_2d_nodes.get(projectile_template_2d.projectile_area_rid)
+
+	# elif projectile_template_2d is ProjectileTemplateNode2D:
+	# 	var _node := _instance_node(projectile_template_2d.projectile_2d_path)
+	# 	if _node is Projectile2D:
+	# 		_projectile_2d_instance = _node
+	# 	else:
+	# 		_projectile_2d_instance = null
+	# 		push_warning("Not Projectile2D")
+	# else:
+	# 	pass
 
 func activate_projectile_spawner() -> void:
 	composer_context = PatternComposerContext.new()
@@ -118,36 +163,46 @@ func spawn_pattern() -> void:
 		return
 	composer_context.position = global_position
 	pattern_composer_pack = projectile_composer.request_pattern(composer_context)
-	# match projectile_template_2d:
-	if projectile_template_2d is ProjectileTemplateResource2D:
-		_spawn_projectile_template_resource_2d()
-	elif projectile_template_2d is ProjectileTemplateNode2D:
-		_spawn_projectile_template_node_2d()
-	elif projectile_template_2d is ProjectileTemplateSimple2D:
-		_spawn_projectile_template_simple_2d()
-	elif projectile_template_2d is ProjectileTemplateAdvanced2D:
-		_spawn_projectile_template_advanced_2d()
-	elif projectile_template_2d is ProjectileTemplateCustom2D:
-		_spawn_projectile_template_custom_2d()
-	else:
-		pass
-	pass
 
+	if typeof(projectile_template_2d) != TYPE_OBJECT:
+		return
+	match projectile_template_2d.get_script():
+		# ProjectileTemplateSimple2D:
+		# 	_spawn_projectile_template_simple_2d()
+		# ProjectileTemplateAdvanced2D:
+		# 	_spawn_projectile_template_advanced_2d()
+		# ProjectileTemplateAdvanced2D:
+		# 	_spawn_projectile_template_advanced_2d()
+		ProjectileTemplateNode2D:
+			_spawn_projectile_template_node_2d()
+		_:
+			projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 
-func _spawn_projectile_template_resource_2d() -> void:
-	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
+		#built-in classes don't have a script
+		null:
+			return
+	# if projectile_template_2d is ProjectileTemplateSimple2D:
+	# 	_spawn_projectile_template_simple_2d()
+	# elif projectile_template_2d is ProjectileTemplateAdvanced2D:
+	# 	_spawn_projectile_template_advanced_2d()
+	# elif projectile_template_2d is ProjectileTemplateCustom2D:
+	# 	_spawn_projectile_template_custom_2d()
+	# elif projectile_template_2d is ProjectileTemplateNode2D:
+	# 	_spawn_projectile_template_node_2d()
+	# else:
+	# 	pass
 	pass
 
 func _spawn_projectile_template_simple_2d() -> void:
-	projectile_updater_simple_2d.spawn_projectile_pattern(pattern_composer_pack)
+	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
 func _spawn_projectile_template_advanced_2d() -> void:
-	projectile_updater_advanced_2d.spawn_projectile_pattern(pattern_composer_pack)
+	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
 func _spawn_projectile_template_custom_2d() -> void:
-	projectile_updater_custom_2d.spawn_projectile_pattern(pattern_composer_pack)
+	projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
 	pass
 
 func _spawn_projectile_template_node_2d() -> void:
@@ -176,7 +231,6 @@ func create_projectile_updater() -> void:
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
-
 	pass
 
 func create_projectile_updater_simple_2d() -> void:
@@ -187,8 +241,8 @@ func create_projectile_updater_simple_2d() -> void:
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid 
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
-	ProjectileEngine.projectile_updater_simple_2d_nodes.get_or_add(projectile_area, _projectile_updater)
-	projectile_updater_simple_2d = _projectile_updater
+	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
+	projectile_updater_2d = _projectile_updater
 	pass
 
 func create_projectile_updater_advanced_2d() -> void:
@@ -199,8 +253,8 @@ func create_projectile_updater_advanced_2d() -> void:
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid 
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
-	ProjectileEngine.projectile_updater_advanced_2d_nodes.get_or_add(projectile_area, _projectile_updater)
-	projectile_updater_advanced_2d = _projectile_updater
+	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
+	projectile_updater_2d = _projectile_updater
 	pass
 
 func create_projectile_updater_custom_2d() -> void:
@@ -211,9 +265,10 @@ func create_projectile_updater_custom_2d() -> void:
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid 
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
-	ProjectileEngine.projectile_updater_custom_2d_nodes.get_or_add(projectile_area, _projectile_updater)
-	projectile_updater_custom_2d = _projectile_updater
+	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
+	projectile_updater_2d = _projectile_updater
 	pass
+
 
 
 func connect_timing_scheduler() -> void:

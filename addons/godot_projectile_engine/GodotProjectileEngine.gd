@@ -63,14 +63,13 @@ enum BehaviorContext{
 	
 }
 
-
 var active_projectile_count : int
 var projectile_environment : ProjectileEnvironment2D
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
-var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
-var projectile_updater_advanced_2d_nodes : Dictionary[RID, ProjectileUpdaterAdvanced2D]
-var projectile_updater_custom_2d_nodes : Dictionary[RID, ProjectileUpdaterCustom2D]
+# var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
+# var projectile_updater_advanced_2d_nodes : Dictionary[RID, ProjectileUpdaterAdvanced2D]
+# var projectile_updater_custom_2d_nodes : Dictionary[RID, ProjectileUpdaterCustom2D]
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
@@ -78,18 +77,19 @@ var projectile_boundary_2d : ProjectileBoundary2D
 
 
 func _ready() -> void:
-	projectile_instance_triggered.connect(_test_projectile_instance_triggered)
-	projectile_node_triggered.connect(_test_projectile_node_triggered)
+	# projectile_instance_triggered.connect(_test_projectile_instance_triggered)
+	# projectile_node_triggered.connect(_test_projectile_node_triggered)
 
 	# projectile_instance_body_shape_entered.connect(_test_projectile_instance_body_shape_entered)
 	# projectile_instance_body_shape_exited.connect(_test_projectile_instance_body_shape_exited)
 	# projectile_instance_body_entered.connect(_test_projectile_instance_body_entered)
 	# projectile_instance_body_exited.connect(_test_projectile_instance_body_exited)
 
-	projectile_instance_area_shape_entered.connect(_test_projectile_instance_area_shape_entered)
-	projectile_instance_area_shape_exited.connect(_test_projectile_instance_area_shape_exited)
-	projectile_instance_area_entered.connect(_test_projectile_instance_area_entered)
-	projectile_instance_area_exited.connect(_test_projectile_instance_area_exited)
+	# projectile_instance_area_shape_entered.connect(_test_projectile_instance_area_shape_entered)
+	# projectile_instance_area_shape_exited.connect(_test_projectile_instance_area_shape_exited)
+	# projectile_instance_area_entered.connect(_test_projectile_instance_area_entered)
+	# projectile_instance_area_exited.connect(_test_projectile_instance_area_exited)
+	pass
 
 func get_projectile_count() -> int:
 	active_projectile_count = 0
