@@ -80,14 +80,17 @@ func setup_projectile_area_rid() -> void:
 
 func create_projectile_pool() -> void:
 	var _transform := Transform2D()
-	var _collision_rid : RID = 	projectile_template_2d.collision_shape.get_rid()
+	var _collision_rid : RID 
+	if projectile_template_2d.collision_shape:
+		_collision_rid = projectile_template_2d.collision_shape.get_rid()
 
 	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
 
 	for _index in range(projectile_max_pooling):
-		PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
-
 		_projectile_instance = _new_projectile_instance.call()
+		if _collision_rid:
+			PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
+			
 		_projectile_instance.area_rid = projectile_area_rid
 		_projectile_instance.area_index = _index
 
