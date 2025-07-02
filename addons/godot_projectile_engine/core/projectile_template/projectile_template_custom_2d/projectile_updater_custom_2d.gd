@@ -76,6 +76,7 @@ func setup_projectile_area_rid() -> void:
 	PS.area_set_collision_mask(projectile_area_rid, projectile_template_2d.collision_mask)
 	PS.area_set_monitorable(projectile_area_rid, true)
 	PS.area_set_transform(projectile_area_rid, Transform2D())
+	setup_area_callback(projectile_area_rid)
 
 	projectile_template_2d.projectile_area_rid = projectile_area_rid
 
@@ -108,17 +109,52 @@ func setup_area_callback(_projectile_area: RID) -> void:
 	PS.area_set_area_monitor_callback(_projectile_area, _area_monitor_callback)
 	pass
 
-func _body_monitor_callback(status: int, area_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx:int) -> void:
+
+func _body_monitor_callback(status: int, body_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx:int) -> void:
 	if status == PS.AREA_BODY_ADDED:
-		pass
-	else:
+		ProjectileEngine.projectile_instance_body_shape_entered.emit(
+			projectile_instance_array[self_shape_idx],
+			body_rid, instance_from_id(instance_id), body_shape_idx,
+			projectile_area_rid, self_shape_idx
+		)
+
+		ProjectileEngine.projectile_instance_body_entered.emit(
+			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+		)
+	elif PS.AREA_BODY_REMOVED:
+		ProjectileEngine.projectile_instance_body_shape_exited.emit(
+			projectile_instance_array[self_shape_idx],
+			body_rid, instance_from_id(instance_id), body_shape_idx,
+			projectile_area_rid, self_shape_idx
+		)
+
+		ProjectileEngine.projectile_instance_body_exited.emit(
+			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+		)
 		pass
 
 
 func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_shape_idx: int, self_shape_idx:int) -> void:
 	if status == PS.AREA_BODY_ADDED:
-		pass
-	else:
+		ProjectileEngine.projectile_instance_area_shape_entered.emit(
+			projectile_instance_array[self_shape_idx],
+			area_rid, instance_from_id(instance_id), area_shape_idx,
+			projectile_area_rid, self_shape_idx
+		)
+
+		ProjectileEngine.projectile_instance_area_entered.emit(
+			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+		)
+	elif PS.AREA_BODY_REMOVED:
+		ProjectileEngine.projectile_instance_area_shape_exited.emit(
+			projectile_instance_array[self_shape_idx],
+			area_rid, instance_from_id(instance_id), area_shape_idx,
+			projectile_area_rid, self_shape_idx
+		)
+
+		ProjectileEngine.projectile_instance_area_exited.emit(
+			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+		)
 		pass
 
 

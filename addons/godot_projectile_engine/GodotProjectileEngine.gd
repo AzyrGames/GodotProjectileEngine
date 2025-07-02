@@ -5,6 +5,47 @@ extends Node
 signal projectile_instance_triggered(trigger_name: String, projectile_instance)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 
+signal projectile_instance_body_shape_entered(
+	projectile_instance, 
+	body_rid : RID, body: Node, body_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int
+	)
+
+signal projectile_instance_body_shape_exited(
+	projectile_instance, 
+	body_rid : RID, body: Node, body_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int
+	)
+
+signal projectile_instance_body_entered(
+	projectile_instance, body: Node,
+	)
+signal projectile_instance_body_exited(
+	projectile_instance, body: Node,
+	)
+
+
+signal projectile_instance_area_shape_entered(
+	projectile_instance, 
+	area_rid : RID, area: Node, area_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int
+	)
+
+signal projectile_instance_area_shape_exited(
+	projectile_instance, 
+	area_rid : RID, area: Node, area_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int
+	)
+
+signal projectile_instance_area_entered(
+	projectile_instance, area: Node,
+	)
+
+signal projectile_instance_area_exited(
+	projectile_instance, area: Node,
+	)
+
+
 enum BehaviorContext{
 	PHYSICS_DELTA,
 	GLOBAL_POSITION,
@@ -40,6 +81,16 @@ func _ready() -> void:
 	projectile_instance_triggered.connect(_test_projectile_instance_triggered)
 	projectile_node_triggered.connect(_test_projectile_node_triggered)
 
+	# projectile_instance_body_shape_entered.connect(_test_projectile_instance_body_shape_entered)
+	# projectile_instance_body_shape_exited.connect(_test_projectile_instance_body_shape_exited)
+	# projectile_instance_body_entered.connect(_test_projectile_instance_body_entered)
+	# projectile_instance_body_exited.connect(_test_projectile_instance_body_exited)
+
+	projectile_instance_area_shape_entered.connect(_test_projectile_instance_area_shape_entered)
+	projectile_instance_area_shape_exited.connect(_test_projectile_instance_area_shape_exited)
+	projectile_instance_area_entered.connect(_test_projectile_instance_area_entered)
+	projectile_instance_area_exited.connect(_test_projectile_instance_area_exited)
+
 func get_projectile_count() -> int:
 	active_projectile_count = 0
 
@@ -69,4 +120,77 @@ func _test_projectile_instance_triggered(trigger_name: String, projectile_instan
 func _test_projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D) -> void:
 	print("Projectile node2d triggered: ", trigger_name , " - ", projectile_node)
 
+	pass
+
+func _test_projectile_instance_body_shape_entered(
+	projectile_instance, 
+	body_rid : RID, body: Node, body_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int) -> void:
+	
+	print("{0} - {1} - {2} - {3} - {4} - {5}".format([
+		projectile_instance, 
+		body_rid, body, body_shape_idx,
+		projectile_rid, projectile_idx
+		]))
+	pass
+
+func _test_projectile_instance_body_shape_exited(
+	projectile_instance, 
+	body_rid : RID, body: Node, body_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int) -> void:
+	
+	print("{0} - {1} - {2} - {3} - {4} - {5}".format([
+		projectile_instance, 
+		body_rid, body, body_shape_idx,
+		projectile_rid, projectile_idx
+		]))
+	pass
+
+func _test_projectile_instance_body_entered(
+	projectile_instance, body) -> void:
+	
+	print("{0} - {1}".format([projectile_instance, body]))
+	pass
+
+func _test_projectile_instance_body_exited(
+	projectile_instance, body) -> void:
+	
+	print("{0} - {1}".format([projectile_instance, body]))
+	pass
+
+
+func _test_projectile_instance_area_shape_entered(
+	projectile_instance, 
+	area_rid : RID, area: Node, area_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int) -> void:
+	
+	print("{0} - {1} - {2} - {3} - {4} - {5}".format([
+		projectile_instance, 
+		area_rid, area, area_shape_idx,
+		projectile_rid, projectile_idx
+		]))
+	pass
+
+func _test_projectile_instance_area_shape_exited(
+	projectile_instance, 
+	area_rid : RID, area: Node, area_shape_idx: int, 
+	projectile_rid: RID, projectile_idx:int) -> void:
+	
+	print("{0} - {1} - {2} - {3} - {4} - {5}".format([
+		projectile_instance, 
+		area_rid, area, area_shape_idx,
+		projectile_rid, projectile_idx
+		]))
+	pass
+
+func _test_projectile_instance_area_entered(
+	projectile_instance, area) -> void:
+	
+	print("{0} - {1}".format([projectile_instance, area]))
+	pass
+
+func _test_projectile_instance_area_exited(
+	projectile_instance, area) -> void:
+	
+	print("{0} - {1}".format([projectile_instance, area]))
 	pass

@@ -30,6 +30,7 @@ enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot
 [gdunit4]
 
 settings/test/test_lookup_folder="tests"
+settings/common/update_notification_enabled=false
 
 [global_group]
 
