@@ -1,0 +1,4 @@
+extends BehaviorVariable
+class_name BehaviorVariableDirectionCurve2D
+
+var last_sample_position : Vector2

@@ -29,30 +29,36 @@ func _init() -> void:
 	pass
 
 ## Processes direction behavior by sampling the curve
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
+func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 	if curve_2d == null:
 		return [_value]
 		
-	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_DISTANCE):
+	if not _component_context.has(ProjectileEngine.BehaviorContext.LIFE_DISTANCE):
 		return [_value]
-	
 
-
-	var life_distance: float = _context[ProjectileEngine.BehaviorContext.LIFE_DISTANCE]
+	var life_distance: float = _component_context[ProjectileEngine.BehaviorContext.LIFE_DISTANCE]
 	# curve_2d
+	var _variable_array: Array = _component_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+	var _behavior_variable_direction_curve_2d : BehaviorVariableDirectionCurve2D
 
-	if _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE).size() == 0:
-		_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE).append(curve_2d.sample_baked(0.0))
-		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE].append(0.0)
+	for _variable in _variable_array:
+		if _variable is BehaviorVariableDirectionCurve2D:
+			if !_variable.is_processed:
+				_behavior_variable_direction_curve_2d = _variable
+	if _behavior_variable_direction_curve_2d == null:
+		_behavior_variable_direction_curve_2d = BehaviorVariableDirectionCurve2D.new()
+		_behavior_variable_direction_curve_2d.last_sample_position = curve_2d.sample_baked(0.0)
+		_variable_array.append(_behavior_variable_direction_curve_2d)
+	
+	_behavior_variable_direction_curve_2d.is_processed = true
 
 	var _next_curve_position: Vector2 = curve_2d.sample_baked(life_distance)
 	var _new_direction : Vector2
-	## last position is not the same so the direction == vector2.zero
-	if _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][0] != _next_curve_position:
-		_new_direction = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)[0].direction_to(_next_curve_position)
+	# ## last position is not the same so the direction == vector2.zero
+	if _behavior_variable_direction_curve_2d.last_sample_position != _next_curve_position:
+		_new_direction = _behavior_variable_direction_curve_2d.last_sample_position.direction_to(_next_curve_position)
 		_new_direction = _new_direction
-		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][0] = _next_curve_position
-
+		_behavior_variable_direction_curve_2d.last_sample_position = _next_curve_position
 
 	match direction_modify_method:
 		## Yes, also need to track track every behaviors that modify the direction but....

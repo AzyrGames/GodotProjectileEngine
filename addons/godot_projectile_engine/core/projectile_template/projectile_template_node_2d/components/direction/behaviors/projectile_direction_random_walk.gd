@@ -12,6 +12,7 @@ class_name ProjectileDirectionRandomWalk
 var _noise_direction: Vector2 = Vector2.ZERO
 var _noise_timer: float = 0.0
 
+
 func _ready() -> void:
 	pass
 
@@ -22,6 +23,7 @@ func setup_rng(_rng: RandomNumberGenerator) -> void:
 	else:
 		_rng.seed = noise_seed
 	pass
+
 
 
 ## Requests required context _values
@@ -44,9 +46,17 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 	var _rng_array := _component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _component_context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
 	var _variable_array: Array = _component_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+	var _behavior_variable_random_walk : BehaviorVariableRandomWalk
 
-	if _variable_array.size() == 0:
-		_variable_array.append(0)
+	for _variable in _variable_array:
+		if _variable is BehaviorVariableRandomWalk:
+			if !_variable.is_processed:
+				_behavior_variable_random_walk = _variable
+	if _behavior_variable_random_walk == null:
+		_behavior_variable_random_walk = BehaviorVariableRandomWalk.new()
+		_variable_array.append(_behavior_variable_random_walk)
+
+	_behavior_variable_random_walk.is_processed = true
 
 	if !_rng_array[1]:
 		if noise_seed == 0:
@@ -56,8 +66,8 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 		_rng_array[1] = true
 
 	# # Update noise direction if frequency interval passed
-	if int(_life_time_second / noise_frequency) >= _variable_array[0]:
-		_variable_array[0] += 1
+	if int(_life_time_second / noise_frequency) >= _behavior_variable_random_walk.frequency_count:
+		_behavior_variable_random_walk.frequency_count += 1
 		_noise_direction = _generate_new_noise(_component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)[0])
 		match direction_modify_method:
 			DirectionModifyMethod.ROTATION:

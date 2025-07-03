@@ -112,6 +112,12 @@ func update_projectile_instances(delta: float) -> void:
 				if _projectile_behvior.process_behavior(null, _projectile_instance.behavior_context):
 					projectile_remove_index.append(index)
 
+		for _behavior_key in _projectile_instance.behavior_context.keys():
+			if _behavior_key == ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+				for _behavior_variable in _projectile_instance.behavior_context.get(_behavior_key):
+					if _behavior_variable is not BehaviorVariable: continue
+					_behavior_variable.is_processed = false
+
 
 	# Destroy projectile
 	if projectile_remove_index.size() > 0:

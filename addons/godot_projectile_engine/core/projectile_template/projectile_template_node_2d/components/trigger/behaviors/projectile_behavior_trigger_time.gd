@@ -26,7 +26,19 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		return false
 
 	var _life_time_second : float = _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND, 0.0)
-	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE, [])
+
+	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+	var _behavior_variable_trigger : BehaviorVariableTrigger
+
+	for _variable in _variable_array:
+		if _variable is BehaviorVariableTrigger:
+			if !_variable.is_processed:
+				_behavior_variable_trigger = _variable
+	if _behavior_variable_trigger == null:
+		_behavior_variable_trigger = BehaviorVariableTrigger.new()
+		_variable_array.append(_behavior_variable_trigger)
+	
+	_behavior_variable_trigger.is_processed = true
 	
 	# Initialize trigger count if not present
 
@@ -35,7 +47,7 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		_variable_array.append(false)  # is_triggered
 
 	# if triggered return
-	if _variable_array[1]:
+	if _behavior_variable_trigger.is_triggered:
 		return false
 
 	if one_shot:
@@ -43,15 +55,15 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		_should_trigger = _life_time_second >= trigger_time
 	else:
 		# For repeating triggers, trigger every trigger_time seconds
-		if _life_time_second >= trigger_time * (_variable_array[0] + 1):
-			_variable_array[0] = _variable_array[0] + 1
+		if _life_time_second >= trigger_time * (_behavior_variable_trigger.trigger_count + 1):
+			_behavior_variable_trigger.trigger_count = _behavior_variable_trigger.trigger_count + 1
 			_should_trigger = true
 		else:
 			_should_trigger = false
 
 	if _should_trigger:
 		if one_shot:
-			_variable_array[1] = true
+			_behavior_variable_trigger.is_triggered = true
 		return true
 
 	return false
