@@ -29,13 +29,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !active : return
 
-	if !component_behaviors: return
+	# if !component_behaviors: return
 
-	# Convert behaviors to base type for processing
-	_component_behavior_convert.assign(component_behaviors)
+	# # Convert behaviors to base type for processing
+	# _component_behavior_convert.assign(component_behaviors)
 
-	update_behavior_context(_component_behavior_convert)
-	process_projectile_behavior(_component_behavior_convert, component_context)
+	# update_behavior_context(_component_behavior_convert)
+	# print(owner.behavior_context)
+	process_projectile_behavior(_component_behavior_convert, owner.behavior_context)
 	pass
 
 ## Processes all direction behaviors and applies their modifications
