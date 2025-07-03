@@ -65,18 +65,25 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	var _physics_delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
 	var _rng_array := _context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
-	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
 
-	if _variable_array.size() == 0:
-		_variable_array.append(Vector2.ZERO) # noise index
-		_variable_array.append(_base_scale) # new_scale
-		_variable_array.append(Vector2.ZERO) # noise scale
+	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+	var _behavior_variable_scale_random : BehaviorVariableScaleRandom
 
-	var _noise_index : Vector2 = _variable_array[NOISE_INDEX]
-	var new_scale = _variable_array[NEW_SCALE_INDEX]
-	var _noise_scale: Vector2 = _variable_array[NOISE_SCALE_INDEX]
+	for _variable in _variable_array:
+		if _variable is BehaviorVariableScaleRandom:
+			if !_variable.is_processed:
+				_behavior_variable_scale_random = _variable
+	if _behavior_variable_scale_random == null:
+		_behavior_variable_scale_random = BehaviorVariableScaleRandom.new()
+		_variable_array.append(_behavior_variable_scale_random)
+	
+	_behavior_variable_scale_random.is_processed = true
 
+
+	var _noise_index : Vector2 = _behavior_variable_scale_random.frequency_index
+	var new_scale = _behavior_variable_scale_random.noise_scale
+	var _noise_scale: Vector2 = _behavior_variable_scale_random.target_noise_scale
 
 	# Initialize RNGs if not already done
 	if enable_x_random && !_rng_array[1]:
@@ -102,19 +109,19 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	if enable_x_random && int(_life_time_second / noise_frequency_x) >= _noise_index.x:
 		_noise_index.x += 1
 		new_scale.x = _generate_new_scale_x(_rng_array[0])
-		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][2] = new_scale
+		_behavior_variable_scale_random.target_noise_scale = new_scale
 
 	if enable_y_random && int(_life_time_second / noise_frequency_y) >= _noise_index.y:
 		_noise_index.y += 1
 		new_scale.y = _generate_new_scale_y(_rng_array[2])
-		_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][2] = new_scale
+		_behavior_variable_scale_random.target_noise_scale = new_scale
 
 	_variable_array[NOISE_INDEX] = _noise_index
 
 	# Smoothly interpolate towards target scales
-	_noise_scale.x = lerp(_noise_scale.x, _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][2].x, smoothing_factor_x)
-	_noise_scale.y = lerp(_noise_scale.y, _context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][2].y, smoothing_factor_y)
-	_context[ProjectileEngine.BehaviorContext.ARRAY_VARIABLE][1] = _noise_scale
+	_noise_scale.x = lerp(_noise_scale.x, _behavior_variable_scale_random.target_noise_scale.x, smoothing_factor_x)
+	_noise_scale.y = lerp(_noise_scale.y, _behavior_variable_scale_random.target_noise_scale.y, smoothing_factor_y)
+	_behavior_variable_scale_random.noise_scale = _noise_scale
 
 	# Apply scale modifications independently
 	var result := _value
