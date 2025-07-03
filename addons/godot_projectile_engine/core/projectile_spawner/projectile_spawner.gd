@@ -109,6 +109,7 @@ func spawn_pattern() -> void:
 		print_debug("No Projectile Environment")
 		return
 	composer_context.position = global_position
+	pattern_composer_pack.clear()
 	pattern_composer_pack = projectile_composer.request_pattern(composer_context)
 
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
@@ -140,6 +141,7 @@ func create_projectile_updater() -> void:
 	var _projectile_updater := ProjectileUpdater2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
+
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid 

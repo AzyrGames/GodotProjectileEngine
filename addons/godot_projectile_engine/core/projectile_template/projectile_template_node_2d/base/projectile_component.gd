@@ -97,8 +97,6 @@ func update_behavior_context(_behaviors: Array[ProjectileBehavior]) -> void:
 	
 	component_context.merge(_normal_component_context, true)
 	component_context.merge(_persist_component_context, true)
-	# print(component_context)
-
 
 
 func process_behavior_context_request(_behavior_context: ProjectileEngine.BehaviorContext) -> Variant:
