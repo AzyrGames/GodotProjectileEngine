@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="1_k5k22"]
 [ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png" id="2_1hr1i"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gur78"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1hr1i"]
 
 [resource]
 script = ExtResource("1_k5k22")
@@ -20,7 +20,7 @@ skew = 0.0
 texture_visible = true
 texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
-collision_shape = SubResource("CircleShape2D_gur78")
+collision_shape = SubResource("CircleShape2D_1hr1i")
 collision_layer = 0
 collision_mask = 0
 metadata/_custom_type_script = "uid://dqlixqba72p5f"
