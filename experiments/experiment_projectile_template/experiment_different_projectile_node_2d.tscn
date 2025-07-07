@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3r4tbmgumjtk"]
+[gd_scene load_steps=10 format=3 uid="uid://3r4tbmgumjtk"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_5fjhh"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_53ghj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="4_pd4vx"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_r6nwn"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="7_3xtj2"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="8_pd4vx"]
 
 [sub_resource type="Resource" id="Resource_3xtj2"]
 script = ExtResource("3_53ghj")
@@ -41,7 +42,9 @@ script = ExtResource("5_r6nwn")
 composer_name = "pattern_2"
 metadata/_custom_type_script = "uid://bc73oiea731jc"
 
-[node name="PPCSingle2D" type="Node" parent="PatternComposer2D"]
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("8_pd4vx")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_3xtj2")
