@@ -12,5 +12,5 @@ class_name ProjectileSpeedClamp
 @export var min_value : float = -300.0
 
 ## Clamps the speed value between min_value and max_value
-func process_behavior(_value: float, _context: Dictionary) -> float:
-	return clampf(_value, min_value, max_value)
+func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
+	return {"speed_overwrite" : clampf(_value, min_value, max_value)}

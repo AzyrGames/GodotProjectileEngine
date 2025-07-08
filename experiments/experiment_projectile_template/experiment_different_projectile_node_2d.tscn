@@ -11,7 +11,7 @@
 
 [sub_resource type="Resource" id="Resource_3xtj2"]
 script = ExtResource("3_53ghj")
-projectile_2d_path = &"uid://dwye6c3n1syyl"
+projectile_2d_path = &"uid://c7rypyujt6vmj"
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
@@ -33,8 +33,8 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("4_pd4vx")
-duration = 0.1
-repeat_count = 20
+duration = 0.017
+repeat_count = 50
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="PatternComposer2D" type="Node" parent="."]

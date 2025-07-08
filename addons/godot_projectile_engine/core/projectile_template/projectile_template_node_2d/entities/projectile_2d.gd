@@ -3,6 +3,7 @@ class_name Projectile2D
 
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
+# @export var pooling_amount : int = 200
 @export_group("Projectile Behavior")
 @export_subgroup("Transform")
 
@@ -21,7 +22,16 @@ class_name Projectile2D
 var velocity : Vector2
 var life_time_second: float
 var life_distance : float
+
 var base_speed : float
+var speed_final : float
+var _speed_behavior_values : Dictionary
+var _speed_behavior_additions : Dictionary
+var _speed_behavior_multiplies : Dictionary
+var _speed_addition : float
+var _speed_multiply : float
+var _speed_addition_value : float
+var _speed_multiply_value : float
 
 var base_direction : Vector2
 var raw_direction : Vector2
@@ -31,28 +41,40 @@ var direction_final : Vector2
 
 
 var projectile_behavior_context : Dictionary
+var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
+var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
 var _normal_behavior_context : Dictionary
 var _persist_behavior_context : Dictionary
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
+
 
 # var component_behaviors : Array[ProjectileBehavior]
 # var _component_behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
 # var _persist_component_behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
 
 func _ready() -> void:
-	pass
-	# for _meta in get_meta_list():
-	# 	if get_meta(_meta) is ProjectileComponent:
-	# 		pass
-	# 		if "component_behaviors" in get_meta(_meta):
-	# 			component_behaviors.append_array(get_meta(_meta).component_behaviors)
+	base_speed = speed
+	base_direction = direction
 
-	# for _behavior in component_behaviors:
-	# 	if !_behavior: continue
-	# 	if !_behavior.active: continue
-	# 	_component_behavior_contexts.append_array(_behavior._request_behavior_context())
-	# 	_persist_component_behavior_contexts.append_array(_behavior._request_persist_behavior_context())
+	projectile_behaviors.clear()
+	projectile_behaviors.append_array(speed_projectile_behaviors)
+	projectile_behaviors.append_array(direction_projectile_behaviors)
+	projectile_behaviors.append_array(rotation_projectile_behaviors)
+	projectile_behaviors.append_array(scale_projectile_behaviors)
+	projectile_behaviors.append_array(destroy_projectile_behaviors)
+	projectile_behaviors.append_array(homing_projectile_behaviors)
+	projectile_behaviors.append_array(bouncing_projectile_behaviors)
+	projectile_behaviors.append_array(piercing_projectile_behaviors)
+	projectile_behaviors.append_array(trigger_projectile_behaviors)
+
+
+	for _projectile_behavior in projectile_behaviors:
+		if !_projectile_behavior: continue
+		if !_projectile_behavior.active: continue
+		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
+		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
+	pass
 
 func _physics_process(delta: float) -> void:
 	update_projectile_2d(delta)
@@ -66,29 +88,9 @@ func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) ->
 
 
 func update_projectile_2d(delta: float) -> void:
-	projectile_behaviors.clear()
-	projectile_behaviors.append_array(speed_projectile_behaviors)
-	projectile_behaviors.append_array(direction_projectile_behaviors)
-	projectile_behaviors.append_array(rotation_projectile_behaviors)
-	projectile_behaviors.append_array(scale_projectile_behaviors)
-	projectile_behaviors.append_array(destroy_projectile_behaviors)
-	projectile_behaviors.append_array(homing_projectile_behaviors)
-	projectile_behaviors.append_array(bouncing_projectile_behaviors)
-	projectile_behaviors.append_array(piercing_projectile_behaviors)
-	projectile_behaviors.append_array(trigger_projectile_behaviors)
-
-	var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
-	var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
-
-	for _projectile_behavior in projectile_behaviors:
-		if !_projectile_behavior: continue
-		if !_projectile_behavior.active: continue
-		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
-		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
-
 	projectile_behavior_context.clear()
-
 	_normal_behavior_context.clear()
+
 	process_behavior_context_request(_normal_behavior_context, _behavior_context_requests_normal)
 
 	for _persist_behavior_context_key in _persist_behavior_context.keys():
@@ -119,10 +121,26 @@ func update_projectile_2d(delta: float) -> void:
 			for _behavior_variable in projectile_behavior_context.get(_behavior_key):
 				if _behavior_variable is not BehaviorVariable: continue
 				_behavior_variable.is_processed = false
-
+	
+	# Projectile Transform behaviors
 	for _projectile_behavior in projectile_behaviors:
+		if not _projectile_behavior is ProjectileBehavior:
+			continue
+		if not _projectile_behavior.active:
+			continue
+
 		if _projectile_behavior is ProjectileBehaviorSpeed:
-			speed = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
+			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
+			if _speed_behavior_values.has("speed_overwrite"):
+				speed = _speed_behavior_values.get("speed_overwrite")
+				continue
+			if _speed_behavior_values.has("speed_addition"):
+				_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_addition"))
+				continue
+			if _speed_behavior_values.has("speed_multiply"):
+				_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
+				continue
+
 		elif _projectile_behavior is ProjectileBehaviorDirection:
 			var _new_direction_array: Array
 			_new_direction_array = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
@@ -148,9 +166,24 @@ func update_projectile_2d(delta: float) -> void:
 				# Apply the new direction from homing behavior
 				raw_direction = _homing_result[0]
 				direction = raw_direction.normalized()
-	
-		elif _projectile_behavior is ProjectileBehaviorSpeed:
-			speed = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
+
+
+	if _speed_behavior_multiplies.size() > 0:
+		_speed_multiply_value = 0
+		for _speed_behavior_multiply in _speed_behavior_multiplies.values():
+			_speed_multiply_value += _speed_behavior_multiply
+		_speed_multiply = base_speed * _speed_multiply_value
+
+	if _speed_behavior_additions.size() > 0:
+		_speed_addition_value = 0
+		for _speed_behavior_addition in _speed_behavior_additions.values():
+			_speed_addition_value += _speed_behavior_addition
+		_speed_addition = _speed_addition_value
+
+	speed_final = speed + _speed_addition + _speed_multiply
+
+	# print("Speed: ", speed)
+	# print("Final Speed ", speed_final)
 
 	direction_final = direction
 	if direction_addition != Vector2.ZERO:
@@ -160,7 +193,7 @@ func update_projectile_2d(delta: float) -> void:
 
 	direction = direction_final
 
-	velocity = speed * direction * delta
+	velocity = speed_final * direction * delta
 	global_position += velocity
 
 
