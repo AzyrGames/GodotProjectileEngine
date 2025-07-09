@@ -1,5 +1,5 @@
-extends ProjectileBehaviorHoming
-class_name ProjectileHomingAdvanced
+extends ProjectileBehaviorDirection
+class_name ProjectileDirectionHomingAdvanced
 
 ## Target-based homing behavior that steers projectiles toward specific targets
 
@@ -34,7 +34,7 @@ enum GroupSelection {
 @export var steer_speed: float = 5.0
 
 ## How the homing modifies the direction
-@export var homing_modify_method: HomingModifyMethod = HomingModifyMethod.OVERRIDE
+@export var direction_modify_method: DirectionModifyMethod = DirectionModifyMethod.OVERRIDE
 
 ## Maximum distance at which homing is active (0 = unlimited)
 @export var max_homing_distance: float = 0.0
@@ -53,6 +53,9 @@ var current_target_position: Vector2
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA,
+		ProjectileEngine.BehaviorContext.GLOBAL_POSITION,
+		ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER,
+
 	]
 
 func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -62,79 +65,80 @@ func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorConte
 
 
 ## Processes homing behavior by steering toward target
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	if not _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-		return [_value]
+		return {"direction_overwrite": _value}
 	
+
 	var delta: float = _context[ProjectileEngine.BehaviorContext.PHYSICS_DELTA]
-	var projectile_position: Vector2 = _get_projectile_position(_context)
+	if not _context.has(ProjectileEngine.BehaviorContext.GLOBAL_POSITION):
+		return {"direction_overwrite": _value}
+
+
+	var projectile_position: Vector2 = _context.get(ProjectileEngine.BehaviorContext.GLOBAL_POSITION)
 	
 	# Find target
-	var target_pos: Vector2 = _find_target(projectile_position, _context)
-	if target_pos == Vector2.ZERO:
-		return [_value]
+	var target_pos: Variant = _find_target(projectile_position, _context)
+	if target_pos == null:
+		return {"direction_overwrite": _value}
 	
 	# Calculate distance to target
 	var distance_to_target: float = projectile_position.distance_to(target_pos)
 	
 	# Check distance constraints
 	if max_homing_distance > 0.0 and distance_to_target > max_homing_distance:
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	if distance_to_target < min_homing_distance:
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	# Calculate desired direction toward target
 	var desired_direction: Vector2 = projectile_position.direction_to(target_pos)
 	
 	# Apply homing based on modify method
-	match homing_modify_method:
-		HomingModifyMethod.OVERRIDE:
+	match direction_modify_method:
+		DirectionModifyMethod.OVERRIDE:
 			# Gradually steer toward target
 			var new_direction: Vector2 = _value.move_toward(desired_direction, steer_speed * delta)
-			return [new_direction.normalized() * homing_strength + _value * (1.0 - homing_strength)]
-			
-		HomingModifyMethod.ADDITION:
+			return {"direction_overwrite": new_direction.normalized() * homing_strength + _value * (1.0 - homing_strength)}
+
+		DirectionModifyMethod.ADDITION:
 			# Add homing force as direction addition
 			var homing_force: Vector2 = desired_direction * homing_strength * steer_speed * delta
-			return [_value, 0.0, homing_force]
-			
-		HomingModifyMethod.MULTIPLICATION:
-			# Apply as rotation toward target
-			var angle_to_target: float = _value.angle_to(desired_direction)
-			var rotation_amount: float = sign(angle_to_target) * min(abs(angle_to_target), steer_speed * delta) * homing_strength
-			return [_value, rotation_amount]
-	
-	return [_value]
+			return {"direction_addition" : homing_force}
+		null:
+			return {"direction_overwrite": _value}
+		_:
+			return {"direction_overwrite": _value}
 
+	return {"direction_overwrite": _value}
 
 ## Finds the target position based on target type
-func _find_target(projectile_position: Vector2, _context: Dictionary) -> Vector2:
+func _find_target(projectile_position: Vector2, _context: Dictionary) -> Variant:
 	match target_type:
 		TargetType.POSITION:
 			return target_position
 			
 		TargetType.NODE:
-			if not target_node_path.is_empty():
-				var projectile_owner = _get_projectile_owner(_context)
-				if projectile_owner:
-					var target_node = projectile_owner.get_node_or_null(target_node_path)
-					if target_node and target_node is Node2D and is_instance_valid(target_node):
-						return target_node.global_position
-			return Vector2.ZERO
-			
+			if target_node_path.is_empty():
+				return null
+			if !_context.has(ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER):
+				return null
+			var behavior_owner : Node = _context.get(ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER)
+			if !behavior_owner:
+				return null
+			var target_node = behavior_owner.get_node_or_null(target_node_path)
+			if target_node and target_node is Node2D and is_instance_valid(target_node):
+				return target_node.global_position
+			return null
+
 		TargetType.GROUP:
 			if target_group.is_empty():
-				return Vector2.ZERO
+				return null
 			
-			# Get projectile owner to access scene tree
-			var projectile_owner = _get_projectile_owner(_context)
-			if not projectile_owner:
-				return Vector2.ZERO
-			
-			var group_nodes: Array[Node] = projectile_owner.get_tree().get_nodes_in_group(target_group)
+			var group_nodes: Array[Node] = ProjectileEngine.get_tree().get_nodes_in_group(target_group)
 			if group_nodes.is_empty():
-				return Vector2.ZERO
+				return null
 			
 			# Filter to Node2D objects
 			var valid_targets: Array[Node2D] = []
@@ -143,7 +147,7 @@ func _find_target(projectile_position: Vector2, _context: Dictionary) -> Vector2
 					valid_targets.append(node)
 			
 			if valid_targets.is_empty():
-				return Vector2.ZERO
+				return null
 			
 			# Select target based on group selection method
 			match group_selection:
@@ -165,22 +169,5 @@ func _find_target(projectile_position: Vector2, _context: Dictionary) -> Vector2
 				GroupSelection.RANDOM:
 					var random_target: Node2D = valid_targets[randi() % valid_targets.size()]
 					return random_target.global_position
-	
-	return Vector2.ZERO
-
-
-## Gets the projectile's current position from context or owner
-func _get_projectile_position(_context: Dictionary) -> Vector2:
-	var projectile_owner = _get_projectile_owner(_context)
-	if projectile_owner and projectile_owner is Node2D:
-		return projectile_owner.global_position
-	return Vector2.ZERO
-
-
-## Gets the projectile owner node
-func _get_projectile_owner(_context: Dictionary) -> Node:
-	# Try to get from context first, then fallback to resource owner
-	if _context.has("projectile_owner"):
-		return _context["projectile_owner"]
 	
 	return null

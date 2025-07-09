@@ -3,18 +3,22 @@
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_v11hl"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="2_ces3j"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="2_huthm"]
-[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="3_huthm"]
+[ext_resource type="Script" uid="uid://cx5wpxyqcksq0" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_homing_advanced.gd" id="3_huthm"]
 
 [sub_resource type="Resource" id="Resource_bxrxs"]
 script = ExtResource("3_huthm")
-direction_expression_sample_method = 0
-direction_modify_method = 0
-expression_streght = 0.5
-direction_expression_variable = "t"
-direction_x_expression = "sin(t)"
-direction_y_expression = "cos(t)"
+target_type = 1
+target_group = ""
+target_node_path = NodePath("../TestHoming3/TestHoming2/TestHoming")
+target_position = Vector2(0, 0)
+group_selection = 1
+steer_speed = 5.0
+direction_modify_method = 2
+max_homing_distance = 0.0
+min_homing_distance = 10.0
+homing_strength = 1.0
 active = true
-metadata/_custom_type_script = "uid://b6mye22ih14le"
+metadata/_custom_type_script = "uid://cx5wpxyqcksq0"
 
 [node name="TestSimpleProjectile" type="Node2D"]
 
@@ -27,3 +31,12 @@ metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="Projectile2D"]
 texture = ExtResource("2_ces3j")
+
+[node name="TestHoming3" type="Node2D" parent="." groups=["TestHoming"]]
+position = Vector2(271, -128)
+
+[node name="TestHoming2" type="Node2D" parent="TestHoming3" groups=["TestHoming"]]
+position = Vector2(-151, 293)
+
+[node name="TestHoming" type="Node2D" parent="TestHoming3/TestHoming2" groups=["TestHoming"]]
+position = Vector2(-270, -35)

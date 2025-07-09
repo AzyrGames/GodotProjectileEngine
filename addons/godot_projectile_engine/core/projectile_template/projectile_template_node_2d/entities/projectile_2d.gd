@@ -156,18 +156,6 @@ func update_projectile_2d(delta: float) -> void:
 			if _direction_behavior_values.has("direction_addition"):
 				_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
 				continue
-			# if _direction_behavior_values.has("direction_multiply"):
-			# 	_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_multiply"))
-			# 	continue
-			# if _new_direction_array[0] != direction:
-			# 	raw_direction = _new_direction_array[0]
-			# 	direction = raw_direction.normalized()
-
-			# if _new_direction_array.size() == 2:
-			# 	direction_rotation = _new_direction_array[1]
-
-			# if _new_direction_array.size() == 3:
-			# 	direction_addition = _new_direction_array[2]
 
 		elif _projectile_behavior is ProjectileBehaviorScale:
 			scale = _projectile_behavior.process_behavior(scale, projectile_behavior_context)
@@ -230,6 +218,12 @@ func process_behavior_context_request(_behavior_context: Dictionary, _behaviors_
 			ProjectileEngine.BehaviorContext.GLOBAL_POSITION:
 				_behavior_context.get_or_add(_behaviors_context_request, global_position)
 
+			ProjectileEngine.BehaviorContext.PROJECTILE_OWNER:
+				_behavior_context.get_or_add(_behaviors_context_request, owner)
+
+			ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER:
+				_behavior_context.get_or_add(_behaviors_context_request, self)
+	
 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
 				_behavior_context.get_or_add(_behaviors_context_request, life_time_second)
 

@@ -49,6 +49,8 @@ signal projectile_instance_area_exited(
 enum BehaviorContext{
 	PHYSICS_DELTA,
 	GLOBAL_POSITION,
+	PROJECTILE_OWNER,
+	BEHAVIOR_OWNER,
 	LIFE_TIME_TICK,
 	LIFE_TIME_SECOND,
 	LIFE_DISTANCE,
