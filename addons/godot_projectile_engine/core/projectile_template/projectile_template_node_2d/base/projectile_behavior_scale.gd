@@ -2,16 +2,25 @@ extends ProjectileBehavior
 class_name ProjectileBehaviorScale
 
 enum ScaleModifyMethod{
-	## Add value to the current speed
+	## Add value to the current scale
 	ADDITION,
-	# ADDITION_OVER_BASE,
-	## Multiple value to the current speed
+	## Add value to the base scale
+	ADDITION_OVER_BASE,
+	## Multiply value to the current scale
 	MULTIPLICATION,
-	# MULTIPLICATION_OVER_BASE,
-	## Override the current speed
+	## Multiply value to the base scale
+	MULTIPLICATION_OVER_BASE,
+	## Override the current scale
 	OVERRIDE,
 }
 
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
-	return _value
+enum ScaleProcessMode {
+	PHYSICS,
+	TICKS
+}
+
+var _scale_behavior_values : Dictionary = {}
+
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	return {}
 

@@ -29,7 +29,7 @@ func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorConte
 	]
 
 ## Processes scale behavior with random variations
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Get context values
 	var _rng_array := _context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
@@ -66,15 +66,25 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	_noise_scale = _noise_scale.lerp(_behavior_variable_scale_random.target_noise_scale, smoothing_factor)
 	_behavior_variable_scale_random.noise_scale = _noise_scale
 	# Apply scale modification
+
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return _base_scale + _noise_scale
+			return {"scale_overwrite" : _value + Vector2.ONE * _noise_scale}
+		ScaleModifyMethod.ADDITION_OVER_BASE:
+			return {"scale_addition" : Vector2.ONE * _noise_scale}
 		ScaleModifyMethod.MULTIPLICATION:
-			return _base_scale * _noise_scale
+			return {"scale_overwrite" : _value * _noise_scale}
+		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+			return {"scale_multiply" : Vector2.ONE * _noise_scale}
 		ScaleModifyMethod.OVERRIDE:
-			return _noise_scale
+			return {"scale_overwrite" : Vector2.ONE * _noise_scale}
+		null:
+			{}
 		_:
-			return _value
+			{}
+
+	return {}
+
 
 ## Generates a new random scale vector
 func _generate_new_scale(_rng: RandomNumberGenerator) -> Vector2:

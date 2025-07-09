@@ -40,6 +40,9 @@ var direction_final : Vector2
 var projectile_rotation : float
 var base_rotation : float
 
+var projectile_scale : Vector2
+var base_scale : Vector2
+
 var projectile_behavior_context : Dictionary
 var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
 var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
@@ -49,11 +52,17 @@ var _persist_behavior_context : Dictionary
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
 func _set(property: StringName, value: Variant) -> bool:
-	if property == "rotation":
-		rotation = value
-		projectile_rotation = value
-		base_rotation = value
-		return true
+	match property:
+		"rotation":
+			rotation = value
+			projectile_rotation = value
+			base_rotation = value
+			return true
+		"scale":
+			scale = value
+			projectile_scale = value
+			base_scale = value
+			return true
 	return true
 
 func _ready() -> void:
@@ -61,6 +70,9 @@ func _ready() -> void:
 	base_direction = direction
 	base_rotation = rotation
 	projectile_rotation = rotation
+
+	base_scale = scale
+	projectile_scale = scale
 
 	projectile_behaviors.clear()
 	projectile_behaviors.append_array(speed_projectile_behaviors)
@@ -88,13 +100,8 @@ func _physics_process(delta: float) -> void:
 func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
 	position = _pattern_composer_data.position
 	direction = _pattern_composer_data.direction
-	# if _pattern_composer_data.projectile_rotation != 0:
-	# 	projectile_rotation = _pattern_composer_data.projectile_rotation
-	# else:
-	# 	projectile_rotation = rotation
 	base_speed = speed
 	base_direction = direction
-	# base_rotation = projectile_rotation
 
 func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.clear()
@@ -133,12 +140,17 @@ func update_projectile_2d(delta: float) -> void:
 	_speed_behavior_additions.clear()
 	_speed_behavior_multiplies.clear()
 
+	var _direction_behavior_values : Dictionary
 	var _direction_behavior_additions : Dictionary
 	var _direction_behavior_rotations : Dictionary
 	
 	var _rotation_behavior_values : Dictionary
 	var _rotation_behavior_additions : Dictionary
 	var _rotation_behavior_multiplies : Dictionary
+
+	var _scale_behavior_values : Dictionary
+	var _scale_behavior_additions : Dictionary
+	var _scale_behavior_multiplies : Dictionary
 
 	for _projectile_behavior in projectile_behaviors:
 		if not _projectile_behavior is ProjectileBehavior:
@@ -159,7 +171,6 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 
 		elif _projectile_behavior is ProjectileBehaviorDirection:
-			var _direction_behavior_values : Dictionary
 			_direction_behavior_values = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
 			if _direction_behavior_values.has("direction_overwrite"):
 				direction = _direction_behavior_values.get("direction_overwrite")
@@ -173,7 +184,6 @@ func update_projectile_2d(delta: float) -> void:
 
 		elif _projectile_behavior is ProjectileBehaviorRotation:
 			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
-			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
 			if _rotation_behavior_values.has("rotation_overwrite"):
 				projectile_rotation = _rotation_behavior_values.get("rotation_overwrite")
 				continue
@@ -185,7 +195,17 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 
 		elif _projectile_behavior is ProjectileBehaviorScale:
-			scale = _projectile_behavior.process_behavior(scale, projectile_behavior_context)
+			_scale_behavior_values = _projectile_behavior.process_behavior(projectile_scale, projectile_behavior_context)
+			if _scale_behavior_values.size() <= 0:
+				continue
+			for _behavior_key in _scale_behavior_values:
+				match _behavior_key:
+					"scale_overwrite":
+						projectile_scale = _scale_behavior_values.get("scale_overwrite")
+					"scale_addition":
+						_scale_behavior_additions.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_addition"))
+					"scale_multiply":
+						_scale_behavior_multiplies.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_multiply"))
 
 		elif _projectile_behavior is ProjectileBehaviorHoming:
 			# speed = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
@@ -223,7 +243,6 @@ func update_projectile_2d(delta: float) -> void:
 			_direction_addition_value += _direction_behavior_addition
 		_direction_addition = base_direction + _direction_addition_value
 
-
 	var _rotation_multiply_value : float
 	var _rotation_multiply : float
 	var _rotation_addition : float
@@ -242,6 +261,26 @@ func update_projectile_2d(delta: float) -> void:
 	rotation_final = projectile_rotation + _rotation_addition + _rotation_multiply
 	rotation = rotation_final
 
+	var _scale_multiply_value : Vector2
+	var _scale_multiply : Vector2
+	var _scale_addition : Vector2
+	var scale_final : Vector2
+
+	if _scale_behavior_multiplies.size() > 0:
+		_scale_multiply_value = Vector2.ZERO
+		for _scale_behavior_multiply in _scale_behavior_multiplies.values():
+			_scale_multiply_value += _scale_behavior_multiply
+		_scale_multiply = base_scale * _scale_multiply_value
+
+	if _scale_behavior_additions.size() > 0:
+		_scale_addition = Vector2.ZERO
+		for _scale_behavior_addition in _scale_behavior_additions.values():
+			_scale_addition += _scale_behavior_addition
+
+	scale_final = projectile_scale + _scale_addition + _scale_multiply
+	scale = scale_final
+
+
 	if _direction_addition != Vector2.ZERO:
 		direction = _direction_addition.normalized()
 
@@ -254,7 +293,10 @@ func update_projectile_2d(delta: float) -> void:
 	global_position += velocity
 
 
-func process_behavior_context_request(_behavior_context: Dictionary, _behaviors_context_requests: Array[ProjectileEngine.BehaviorContext]) -> void:
+func process_behavior_context_request(
+	_behavior_context: Dictionary, 
+	_behaviors_context_requests: Array[ProjectileEngine.BehaviorContext]
+	) -> void:
 	for _behaviors_context_request in _behaviors_context_requests:
 		match _behaviors_context_request:
 			ProjectileEngine.BehaviorContext.PHYSICS_DELTA:

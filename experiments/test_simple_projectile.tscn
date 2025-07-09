@@ -1,18 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccrkdwe6sk4ro"]
+[gd_scene load_steps=6 format=3 uid="uid://ccrkdwe6sk4ro"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_v11hl"]
-[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="2_2coc0"]
-[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="2_ces3j"]
-[ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_modify.gd" id="3_huthm"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png" id="7_w4tnw"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="2_huthm"]
+[ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_set.gd" id="3_huthm"]
+[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="4_huthm"]
 
-[sub_resource type="Resource" id="Resource_u833p"]
+[sub_resource type="Resource" id="Resource_bxrxs"]
 script = ExtResource("3_huthm")
-rotation_modify_value = 1.0
-rotation_process_mode = 1
-rotation_modify_method = 0
+scale_value = Vector2(1, 1)
 active = true
-metadata/_custom_type_script = "uid://ucfv3eq8fafp"
+metadata/_custom_type_script = "uid://cr2ftvrtv8t16"
 
 [node name="TestSimpleProjectile" type="Node2D"]
 
@@ -20,21 +17,12 @@ metadata/_custom_type_script = "uid://ucfv3eq8fafp"
 
 [node name="Projectile2D" type="Area2D" parent="."]
 script = ExtResource("1_v11hl")
-speed = 20.0
-rotation_projectile_behaviors = Array[ExtResource("2_2coc0")]([SubResource("Resource_u833p")])
+speed = 10.0
+scale_projectile_behaviors = Array[ExtResource("2_huthm")]([SubResource("Resource_bxrxs")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="Projectile2D"]
-texture = ExtResource("2_ces3j")
-
-[node name="Projectile2D" type="Area2D" parent="Projectile2D"]
-position = Vector2(-135, -2)
-script = ExtResource("1_v11hl")
-speed = 0.0
-metadata/_custom_type_script = "uid://d1jrqiont4u2h"
-
-[node name="Sprite2D" type="Sprite2D" parent="Projectile2D/Projectile2D"]
-texture = ExtResource("7_w4tnw")
+texture = ExtResource("4_huthm")
 
 [node name="TestHoming3" type="Node2D" parent="." groups=["TestHoming"]]
 position = Vector2(271, -128)

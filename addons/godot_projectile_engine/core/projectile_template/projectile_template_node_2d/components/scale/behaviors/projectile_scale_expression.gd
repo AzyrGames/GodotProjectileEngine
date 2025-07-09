@@ -24,7 +24,6 @@ var _result_value : Vector2
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SCALE
 	]
 
 func _init() -> void:
@@ -32,13 +31,13 @@ func _init() -> void:
 	_expression = Expression.new()
 
 ## Processes scale behavior by evaluating the expression
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Parse the expression with our variable
 	_expression.parse(scale_expression, [scale_expression_variable])
 
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 
 	# Get current time/distance value for expression
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
@@ -48,18 +47,23 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 	
 	# Fallback to original value if expression fails
 	if _expression.has_execute_failed() or _scale_expression_result is not float:
-		return _value
+		return {}
 
-	# Get base scale from context
-	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
-	
 	# Apply expression result based on modification method
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return _base_scale + Vector2.ONE * _scale_expression_result
+			return {"scale_overwrite" : _value + Vector2.ONE * _scale_expression_result}
+		ScaleModifyMethod.ADDITION_OVER_BASE:
+			return {"scale_addition" : Vector2.ONE * _scale_expression_result}
 		ScaleModifyMethod.MULTIPLICATION:
-			return _base_scale * _scale_expression_result
+			return {"scale_overwrite" : _value * _scale_expression_result}
+		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+			return {"scale_multiply" : Vector2.ONE * _scale_expression_result}
 		ScaleModifyMethod.OVERRIDE:
-			return Vector2.ONE * _scale_expression_result
+			return {"scale_overwrite" : Vector2.ONE * _scale_expression_result}
+		null:
+			{}
+		_:
+			{}
 
-	return _value
+	return {}

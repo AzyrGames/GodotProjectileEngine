@@ -23,15 +23,12 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	]
 
 ## Processes speed behavior by applying acceleration
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
-	if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA): return _value
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA): 
+		return {}
 
-	if _value == scale_max:
-		return _value
+	var physics_delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA) as float
+	_new_scale.x = move_toward(_value.x, scale_max.x, scale_accel_speed.x * physics_delta)
+	_new_scale.y = move_toward(_value.y, scale_max.y, scale_accel_speed.y * physics_delta)
 
-	# Calculate new speed using frame-rate independent acceleration
-	var delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA) as float
-	_new_scale.x = move_toward(_value.x, scale_max.x, scale_accel_speed.x * delta)
-	_new_scale.y = move_toward(_value.y, scale_max.y, scale_accel_speed.y * delta)
-
-	return _new_scale
+	return {"scale_overwrite" : _new_scale}
