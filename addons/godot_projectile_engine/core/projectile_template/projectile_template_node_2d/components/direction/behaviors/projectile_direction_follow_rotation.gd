@@ -14,8 +14,9 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 var _rotation: float
 
 
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
-	if !_context.has(ProjectileEngine.BehaviorContext.ROTATION): return [_value]
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	if !_context.has(ProjectileEngine.BehaviorContext.ROTATION): 
+		return {"direction_overwrite": _value}
 	_rotation = _context.get(ProjectileEngine.BehaviorContext.ROTATION)
 
-	return [_value, _rotation - _value.angle()]
+	return {"direction_rotation": _rotation - _value.angle()}

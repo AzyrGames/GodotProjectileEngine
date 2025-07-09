@@ -9,29 +9,28 @@ class_name ProjectileSpeedModify
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return []
 
-var speed_behavior_values : Dictionary = {}
 
 ## Processes speed behavior by applying acceleration
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	match speed_modify_method:
 		SpeedModifyMethod.ADDITION:
-			speed_behavior_values["speed_overwrite"] = _value + speed_modify_value
+			_speed_behavior_values["speed_overwrite"] = _value + speed_modify_value
 
 		SpeedModifyMethod.ADDITION_OVER_BASE:
-			speed_behavior_values["speed_addition"] = speed_modify_value
+			_speed_behavior_values["speed_addition"] = speed_modify_value
 
 		SpeedModifyMethod.MULTIPLICATION:
-			speed_behavior_values["speed_overwrite"] = _value * speed_modify_value
+			_speed_behavior_values["speed_overwrite"] = _value * speed_modify_value
 
 		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
-			speed_behavior_values["speed_multiply"] =  speed_modify_value
+			_speed_behavior_values["speed_multiply"] =  speed_modify_value
 
 		SpeedModifyMethod.OVERRIDE:
-			speed_behavior_values["speed_overwrite"] = speed_modify_value
+			_speed_behavior_values["speed_overwrite"] = speed_modify_value
 
 		null:
-			speed_behavior_values["speed_overwrite"] = _value
+			_speed_behavior_values["speed_overwrite"] = _value
 		_:
-			speed_behavior_values["speed_overwrite"] = _value
+			_speed_behavior_values["speed_overwrite"] = _value
 			
-	return speed_behavior_values
+	return _speed_behavior_values

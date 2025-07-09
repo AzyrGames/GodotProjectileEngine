@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccrkdwe6sk4ro"]
+
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_v11hl"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="2_ces3j"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="2_huthm"]
+[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="3_huthm"]
+
+[sub_resource type="Resource" id="Resource_bxrxs"]
+script = ExtResource("3_huthm")
+direction_expression_sample_method = 0
+direction_modify_method = 0
+expression_streght = 0.5
+direction_expression_variable = "t"
+direction_x_expression = "sin(t)"
+direction_y_expression = "cos(t)"
+active = true
+metadata/_custom_type_script = "uid://b6mye22ih14le"
+
+[node name="TestSimpleProjectile" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Projectile2D" type="Area2D" parent="."]
+script = ExtResource("1_v11hl")
+direction_projectile_behaviors = Array[ExtResource("2_huthm")]([SubResource("Resource_bxrxs")])
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="Sprite2D" type="Sprite2D" parent="Projectile2D"]
+texture = ExtResource("2_ces3j")

@@ -18,8 +18,6 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA
 	]
 
-var speed_behavior_values : Dictionary = {
-}
 
 ## Processes speed behavior by applying acceleration
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
@@ -27,5 +25,5 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	if _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
 		_physics_delta = _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
 
-	speed_behavior_values["speed_overwrite"] = move_toward(_value, max_speed, acceleration_speed * _physics_delta)
-	return speed_behavior_values
+	_speed_behavior_values["speed_overwrite"] = move_toward(_value, max_speed, acceleration_speed * _physics_delta)
+	return _speed_behavior_values

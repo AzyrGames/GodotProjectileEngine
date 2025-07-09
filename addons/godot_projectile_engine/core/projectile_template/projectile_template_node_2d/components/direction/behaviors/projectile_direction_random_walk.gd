@@ -25,7 +25,6 @@ func setup_rng(_rng: RandomNumberGenerator) -> void:
 	pass
 
 
-
 ## Requests required context _values
 func _request_behavior_context() -> Array:
 	return [
@@ -41,7 +40,7 @@ func _request_persist_behavior_context() -> Array:
 
 
 ## Processes direction behavior with random walk
-func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
+func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictionary:
 	# Get delta time from _context
 	var _rng_array := _component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)
 	var _life_time_second: float = _component_context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
@@ -65,20 +64,23 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Array:
 			_rng_array[0].seed = noise_seed
 		_rng_array[1] = true
 
+	_direction_behavior_values.clear()
 	# # Update noise direction if frequency interval passed
 	if int(_life_time_second / noise_frequency) >= _behavior_variable_random_walk.frequency_count:
 		_behavior_variable_random_walk.frequency_count += 1
 		_noise_direction = _generate_new_noise(_component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)[0])
 		match direction_modify_method:
 			DirectionModifyMethod.ROTATION:
-				return [_value, _noise_direction.angle()]
+				_direction_behavior_values["direction_rotation"] = _noise_direction.angle()
 			DirectionModifyMethod.ADDITION:
-				return [_value, 0.0,  _noise_direction]
+				_direction_behavior_values["direction_addition"] = _noise_direction
 			DirectionModifyMethod.OVERRIDE:
-				return [_noise_direction]
+				_direction_behavior_values["direction_overwrite"] = _noise_direction
 			_:
-				return [_value]
-	return [_value]
+				_direction_behavior_values["direction_overwrite"] = _value
+	
+
+	return _direction_behavior_values
 
 ## Generates a new random direction vector
 func _generate_new_noise(_rng: RandomNumberGenerator) -> Vector2:

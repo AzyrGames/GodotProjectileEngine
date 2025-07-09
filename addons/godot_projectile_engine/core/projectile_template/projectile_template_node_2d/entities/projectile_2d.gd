@@ -25,12 +25,11 @@ var life_distance : float
 
 var base_speed : float
 var speed_final : float
+var _speed_addition : float
+var _speed_multiply : float
 var _speed_behavior_values : Dictionary
 var _speed_behavior_additions : Dictionary
 var _speed_behavior_multiplies : Dictionary
-var _speed_addition : float
-var _speed_multiply : float
-var _speed_addition_value : float
 var _speed_multiply_value : float
 
 var base_direction : Vector2
@@ -48,10 +47,6 @@ var _persist_behavior_context : Dictionary
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
-
-# var component_behaviors : Array[ProjectileBehavior]
-# var _component_behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
-# var _persist_component_behavior_contexts: Array[ProjectileEngine.BehaviorContext] = []
 
 func _ready() -> void:
 	base_speed = speed
@@ -85,6 +80,8 @@ func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) ->
 	position = _pattern_composer_data.position
 	direction = _pattern_composer_data.direction
 	rotation = _pattern_composer_data.rotation
+	base_speed = speed
+	base_direction = direction
 
 
 func update_projectile_2d(delta: float) -> void:
@@ -102,33 +99,38 @@ func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.merge(_normal_behavior_context, true)
 	projectile_behavior_context.merge(_persist_behavior_context, true)
 
-	for _behavior_key in projectile_behavior_context.keys():
-		if _behavior_key == ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-			for _behavior_variable in projectile_behavior_context.get(_behavior_key):
-				if _behavior_variable is not BehaviorVariable: continue
-				_behavior_variable.is_processed = false
-
 	life_time_second += delta
 	life_distance += velocity.length()
 
+	# Free Projectile Behaviors
 	for _projectile_behavior in projectile_behaviors:
-		if _projectile_behavior is ProjectileBehaviorDestroy:
-			if _projectile_behavior.process_behavior(null, projectile_behavior_context):
-				queue_free_projectile()
+		if _projectile_behavior is not ProjectileBehaviorDestroy:
+			continue
+		if _projectile_behavior.process_behavior(null, projectile_behavior_context):
+			queue_free_projectile()
 
+	# Refresh Projectile Behaviors process
 	for _behavior_key in projectile_behavior_context.keys():
-		if _behavior_key == ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-			for _behavior_variable in projectile_behavior_context.get(_behavior_key):
-				if _behavior_variable is not BehaviorVariable: continue
-				_behavior_variable.is_processed = false
-	
-	# Projectile Transform behaviors
+		if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+			continue
+		for _behavior_variable in projectile_behavior_context.get(_behavior_key):
+			if _behavior_variable is not BehaviorVariable: continue
+			_behavior_variable.is_processed = false
+
+	# Process Projectile Transform Behaviors
+	_speed_behavior_additions.clear()
+	_speed_behavior_multiplies.clear()
+
+	var _direction_behavior_additions : Dictionary
+	var _direction_behavior_rotations : Dictionary
+
+
 	for _projectile_behavior in projectile_behaviors:
 		if not _projectile_behavior is ProjectileBehavior:
 			continue
 		if not _projectile_behavior.active:
 			continue
-
+		
 		if _projectile_behavior is ProjectileBehaviorSpeed:
 			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
 			if _speed_behavior_values.has("speed_overwrite"):
@@ -142,17 +144,30 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 
 		elif _projectile_behavior is ProjectileBehaviorDirection:
-			var _new_direction_array: Array
-			_new_direction_array = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
-			if _new_direction_array[0] != direction:
-				raw_direction = _new_direction_array[0]
-				direction = raw_direction.normalized()
+			var _direction_behavior_values : Dictionary
+			_direction_behavior_values = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
+			if _direction_behavior_values.has("direction_overwrite"):
+				print("Direction overwrite: ", _direction_behavior_values.get("direction_overwrite"))
+				direction = _direction_behavior_values.get("direction_overwrite")
+				continue
+			if _direction_behavior_values.has("direction_rotation"):
+				_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_rotation"))
+				continue
+			if _direction_behavior_values.has("direction_addition"):
+				_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
+				continue
+			# if _direction_behavior_values.has("direction_multiply"):
+			# 	_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_multiply"))
+			# 	continue
+			# if _new_direction_array[0] != direction:
+			# 	raw_direction = _new_direction_array[0]
+			# 	direction = raw_direction.normalized()
 
-			if _new_direction_array.size() == 2:
-				direction_rotation = _new_direction_array[1]
+			# if _new_direction_array.size() == 2:
+			# 	direction_rotation = _new_direction_array[1]
 
-			if _new_direction_array.size() == 3:
-				direction_addition = _new_direction_array[2]
+			# if _new_direction_array.size() == 3:
+			# 	direction_addition = _new_direction_array[2]
 
 		elif _projectile_behavior is ProjectileBehaviorScale:
 			scale = _projectile_behavior.process_behavior(scale, projectile_behavior_context)
@@ -167,7 +182,7 @@ func update_projectile_2d(delta: float) -> void:
 				raw_direction = _homing_result[0]
 				direction = raw_direction.normalized()
 
-
+	# Apply Projectile behaviors
 	if _speed_behavior_multiplies.size() > 0:
 		_speed_multiply_value = 0
 		for _speed_behavior_multiply in _speed_behavior_multiplies.values():
@@ -175,23 +190,32 @@ func update_projectile_2d(delta: float) -> void:
 		_speed_multiply = base_speed * _speed_multiply_value
 
 	if _speed_behavior_additions.size() > 0:
-		_speed_addition_value = 0
+		_speed_addition = 0
 		for _speed_behavior_addition in _speed_behavior_additions.values():
-			_speed_addition_value += _speed_behavior_addition
-		_speed_addition = _speed_addition_value
+			_speed_addition += _speed_behavior_addition
 
 	speed_final = speed + _speed_addition + _speed_multiply
 
-	# print("Speed: ", speed)
-	# print("Final Speed ", speed_final)
 
-	direction_final = direction
-	if direction_addition != Vector2.ZERO:
-		direction_final = (direction_final + direction_addition).normalized()
-	if direction_rotation != 0.0:
-		direction_final = base_direction.normalized().rotated(direction_rotation)
+	var _direction_rotation_value : float = 0
+	if _direction_behavior_rotations.size() > 0:
+		for _direction_behavior_rotation in _direction_behavior_rotations.values():
+			_direction_rotation_value += _direction_behavior_rotation
 
-	direction = direction_final
+	var _direction_addition_value : Vector2
+	var _direction_addition : Vector2
+	if _direction_behavior_additions.size() > 0:
+		for _direction_behavior_addition in _direction_behavior_additions.values():
+			_direction_addition_value += _direction_behavior_addition
+		_direction_addition = base_direction + _direction_addition_value
+
+	if _direction_addition != Vector2.ZERO:
+		direction = _direction_addition.normalized()
+
+	if _direction_rotation_value != 0:
+		direction = base_direction.rotated(_direction_rotation_value)
+
+	direction = direction.normalized()
 
 	velocity = speed_final * direction * delta
 	global_position += velocity
@@ -245,77 +269,6 @@ func queue_free_projectile() -> void:
 
 	queue_free()
 	pass
-
-# func process_behavior_context_request(_behavior_context: ProjectileEngine.BehaviorContext) -> Variant:
-# 	match _behavior_context:
-# 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
-# 			return get_physics_process_delta_time()
-
-# 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
-# 			var _projectile_component := get_component("projectile_component_life_time")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.life_time_second
-
-# 		ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
-# 			var _projectile_component := get_component("projectile_component_life_distance")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.life_distance
-
-# 		ProjectileEngine.BehaviorContext.BASE_SPEED:
-# 			var _projectile_component := get_component("projectile_component_speed")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.base_speed
-
-# 		ProjectileEngine.BehaviorContext.DIRECTION_COMPONENT:
-# 			var _projectile_component := get_component("projectile_component_direction")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component
-
-# 		ProjectileEngine.BehaviorContext.DIRECTION:
-# 			var _projectile_component := get_component("projectile_component_direction")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.get_direction()
-
-# 		ProjectileEngine.BehaviorContext.BASE_DIRECTION:
-# 			var _projectile_component := get_component("projectile_component_direction")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.base_direction
-
-# 		ProjectileEngine.BehaviorContext.ROTATION:
-# 			var _projectile_component := get_component("projectile_component_rotation")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.get_rotation()
-
-# 		ProjectileEngine.BehaviorContext.BASE_SCALE:
-# 			var _projectile_component := get_component("projectile_component_scale")
-# 			if !_projectile_component: return null ## Todo: Maybe add a warning here
-# 			return _projectile_component.base_scale
-
-# 		ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
-# 			var _rng_array := []
-# 			_rng_array.append(RandomNumberGenerator.new())
-# 			_rng_array.append(false)
-# 			return _rng_array
-
-# 		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-# 			return []
-# 		_:
-			
-# 			return null
-
-# 	return null
-
-# func get_component(_component_name: StringName) -> Object:
-# 	if has_meta(_component_name):
-# 		return null
-
-# 	var _projectile_component = get_meta(_component_name)
-
-# 	if _projectile_component is ProjectileComponent:
-# 		return _projectile_component
-
-# 	return null
-
 
 ## Do not touch this
 ## Reset projectile components when reused

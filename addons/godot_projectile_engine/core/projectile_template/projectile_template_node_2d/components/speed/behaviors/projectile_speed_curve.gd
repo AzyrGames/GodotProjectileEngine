@@ -34,14 +34,12 @@ var speed_curve_max_tick : int
 var _speed_curve_sample : float
 var _speed_curve_sample_value : float
 var _result_value : float
-var _speed_behavior_values : Dictionary
 
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SPEED
 	]
 
 
@@ -76,17 +74,12 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 			_speed_behavior_values["speed_overwrite"] = _value + _speed_curve_sample_value
 
 		SpeedModifyMethod.ADDITION_OVER_BASE:
-			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): 
-				_speed_behavior_values["speed_overwrite"] = _value
 			_speed_behavior_values["speed_addition"] = _speed_curve_sample_value
 
 		SpeedModifyMethod.MULTIPLICATION:
-			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
 			_speed_behavior_values["speed_overwrite"] = _value * _speed_curve_sample_value
 
 		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
-			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): 
-				_speed_behavior_values["speed_overwrite"] = _value
 			_speed_behavior_values["speed_multiply"] =  _speed_curve_sample_value
 
 		SpeedModifyMethod.OVERRIDE:
