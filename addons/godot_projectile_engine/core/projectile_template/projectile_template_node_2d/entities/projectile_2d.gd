@@ -9,7 +9,6 @@ class_name Projectile2D
 
 @export var speed_projectile_behaviors : Array[ProjectileBehaviorSpeed]
 @export var direction_projectile_behaviors : Array[ProjectileBehaviorDirection]
-@export var homing_projectile_behaviors : Array[ProjectileBehaviorHoming] = []
 @export var rotation_projectile_behaviors : Array[ProjectileBehaviorRotation]
 @export var scale_projectile_behaviors : Array[ProjectileBehaviorScale]
 
@@ -38,6 +37,8 @@ var direction_rotation : float
 var direction_addition : Vector2
 var direction_final : Vector2
 
+var projectile_rotation : float
+var base_rotation : float
 
 var projectile_behavior_context : Dictionary
 var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
@@ -47,10 +48,19 @@ var _persist_behavior_context : Dictionary
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
+func _set(property: StringName, value: Variant) -> bool:
+	if property == "rotation":
+		rotation = value
+		projectile_rotation = value
+		base_rotation = value
+		return true
+	return true
 
 func _ready() -> void:
 	base_speed = speed
 	base_direction = direction
+	base_rotation = rotation
+	projectile_rotation = rotation
 
 	projectile_behaviors.clear()
 	projectile_behaviors.append_array(speed_projectile_behaviors)
@@ -58,7 +68,6 @@ func _ready() -> void:
 	projectile_behaviors.append_array(rotation_projectile_behaviors)
 	projectile_behaviors.append_array(scale_projectile_behaviors)
 	projectile_behaviors.append_array(destroy_projectile_behaviors)
-	projectile_behaviors.append_array(homing_projectile_behaviors)
 	projectile_behaviors.append_array(bouncing_projectile_behaviors)
 	projectile_behaviors.append_array(piercing_projectile_behaviors)
 	projectile_behaviors.append_array(trigger_projectile_behaviors)
@@ -79,10 +88,13 @@ func _physics_process(delta: float) -> void:
 func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
 	position = _pattern_composer_data.position
 	direction = _pattern_composer_data.direction
-	rotation = _pattern_composer_data.rotation
+	# if _pattern_composer_data.projectile_rotation != 0:
+	# 	projectile_rotation = _pattern_composer_data.projectile_rotation
+	# else:
+	# 	projectile_rotation = rotation
 	base_speed = speed
 	base_direction = direction
-
+	# base_rotation = projectile_rotation
 
 func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.clear()
@@ -123,7 +135,10 @@ func update_projectile_2d(delta: float) -> void:
 
 	var _direction_behavior_additions : Dictionary
 	var _direction_behavior_rotations : Dictionary
-
+	
+	var _rotation_behavior_values : Dictionary
+	var _rotation_behavior_additions : Dictionary
+	var _rotation_behavior_multiplies : Dictionary
 
 	for _projectile_behavior in projectile_behaviors:
 		if not _projectile_behavior is ProjectileBehavior:
@@ -147,9 +162,8 @@ func update_projectile_2d(delta: float) -> void:
 			var _direction_behavior_values : Dictionary
 			_direction_behavior_values = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
 			if _direction_behavior_values.has("direction_overwrite"):
-				print("Direction overwrite: ", _direction_behavior_values.get("direction_overwrite"))
 				direction = _direction_behavior_values.get("direction_overwrite")
-				continue
+				continue	
 			if _direction_behavior_values.has("direction_rotation"):
 				_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_rotation"))
 				continue
@@ -157,10 +171,22 @@ func update_projectile_2d(delta: float) -> void:
 				_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
 				continue
 
+		elif _projectile_behavior is ProjectileBehaviorRotation:
+			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
+			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
+			if _rotation_behavior_values.has("rotation_overwrite"):
+				projectile_rotation = _rotation_behavior_values.get("rotation_overwrite")
+				continue
+			if _rotation_behavior_values.has("rotation_addition"):
+				_rotation_behavior_additions.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_addition"))
+				continue
+			if _rotation_behavior_values.has("rotation_multiply"):
+				_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))
+				continue
+
 		elif _projectile_behavior is ProjectileBehaviorScale:
 			scale = _projectile_behavior.process_behavior(scale, projectile_behavior_context)
-		elif _projectile_behavior is ProjectileBehaviorRotation:
-			rotation = _projectile_behavior.process_behavior(rotation, projectile_behavior_context)
+
 		elif _projectile_behavior is ProjectileBehaviorHoming:
 			# speed = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
 			var _homing_result: Array = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
@@ -171,6 +197,7 @@ func update_projectile_2d(delta: float) -> void:
 				direction = raw_direction.normalized()
 
 	# Apply Projectile behaviors
+
 	if _speed_behavior_multiplies.size() > 0:
 		_speed_multiply_value = 0
 		for _speed_behavior_multiply in _speed_behavior_multiplies.values():
@@ -184,7 +211,6 @@ func update_projectile_2d(delta: float) -> void:
 
 	speed_final = speed + _speed_addition + _speed_multiply
 
-
 	var _direction_rotation_value : float = 0
 	if _direction_behavior_rotations.size() > 0:
 		for _direction_behavior_rotation in _direction_behavior_rotations.values():
@@ -196,6 +222,25 @@ func update_projectile_2d(delta: float) -> void:
 		for _direction_behavior_addition in _direction_behavior_additions.values():
 			_direction_addition_value += _direction_behavior_addition
 		_direction_addition = base_direction + _direction_addition_value
+
+
+	var _rotation_multiply_value : float
+	var _rotation_multiply : float
+	var _rotation_addition : float
+	var rotation_final : float
+	if _rotation_behavior_multiplies.size() > 0:
+		_rotation_multiply_value = 0
+		for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
+			_rotation_multiply_value += _rotation_behavior_multiply
+		_rotation_multiply = base_rotation * _rotation_multiply_value
+
+	if _rotation_behavior_additions.size() > 0:
+		_rotation_addition = 0
+		for _rotation_behavior_addition in _rotation_behavior_additions.values():
+			_rotation_addition += _rotation_behavior_addition
+
+	rotation_final = projectile_rotation + _rotation_addition + _rotation_multiply
+	rotation = rotation_final
 
 	if _direction_addition != Vector2.ZERO:
 		direction = _direction_addition.normalized()
@@ -243,7 +288,7 @@ func process_behavior_context_request(_behavior_context: Dictionary, _behaviors_
 				_behavior_context.get_or_add(_behaviors_context_request, base_direction)
 
 			ProjectileEngine.BehaviorContext.ROTATION:
-				_behavior_context.get_or_add(_behaviors_context_request, rotation)
+				_behavior_context.get_or_add(_behaviors_context_request, projectile_rotation)
 
 			ProjectileEngine.BehaviorContext.BASE_SCALE:
 				_behavior_context.get_or_add(_behaviors_context_request, scale)

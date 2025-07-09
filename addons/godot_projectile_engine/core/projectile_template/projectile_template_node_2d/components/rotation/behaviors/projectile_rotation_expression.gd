@@ -33,13 +33,13 @@ func _init() -> void:
 
 
 ## Processes rotation behavior by evaluating the expression
-func process_behavior(_value: float, _context: Dictionary) -> float:
+func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Parse the expression with our variable
 	_expression.parse(rotation_expression, [rotation_expression_variable])
 
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 
 	# Get current time/distance value for expression
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
@@ -49,13 +49,22 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 	
 	# Fallback to original value if expression fails
 	if _expression.has_execute_failed() or _rotation_expression_result is not float:
-		return _value
+		return {}
 
-	# Apply expression result based on modification method
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			_result_value = _value + _rotation_expression_result
+			return {"rotation_overwrite" : _value + _rotation_expression_result}
+		RotationModifyMethod.ADDITION_OVER_BASE:
+			return {"rotation_addition" : _rotation_expression_result}
+		RotationModifyMethod.MULTIPLICATION:
+			return {"rotation_overwrite" :_value * _rotation_expression_result}
+		RotationModifyMethod.MULTIPLICATION_OVER_BASE:
+			return {"rotation_multiply" :_rotation_expression_result}
 		RotationModifyMethod.OVERRIDE:
-			_result_value = _rotation_expression_result
+			return {"rotation_overwrite" :_rotation_expression_result}
+		null:
+			{}
+		_:
+			{}
 
-	return _result_value
+	return {}
