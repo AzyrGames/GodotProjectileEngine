@@ -33,15 +33,33 @@ var _speed_multiply_value : float
 
 var base_direction : Vector2
 var raw_direction : Vector2
-var direction_rotation : float
-var direction_addition : Vector2
 var direction_final : Vector2
+var _direction_behavior_values : Dictionary
+var _direction_behavior_additions : Dictionary
+var _direction_behavior_rotations : Dictionary
+var _direction_rotation_value : float
+var _direction_addition_value : Vector2
+var _direction_addition : Vector2
 
 var projectile_rotation : float
 var base_rotation : float
+var rotation_final : float
+var _rotation_behavior_values : Dictionary
+var _rotation_behavior_additions : Dictionary
+var _rotation_behavior_multiplies : Dictionary
+var _rotation_multiply_value : float
+var _rotation_multiply : float
+var _rotation_addition : float
 
 var projectile_scale : Vector2
 var base_scale : Vector2
+var scale_final : Vector2
+var _scale_behavior_values : Dictionary
+var _scale_behavior_additions : Dictionary
+var _scale_behavior_multiplies : Dictionary
+var _scale_multiply_value : Vector2
+var _scale_multiply : Vector2
+var _scale_addition : Vector2
 
 var projectile_behavior_context : Dictionary
 var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
@@ -70,7 +88,6 @@ func _ready() -> void:
 	base_direction = direction
 	base_rotation = rotation
 	projectile_rotation = rotation
-
 	base_scale = scale
 	projectile_scale = scale
 
@@ -140,65 +157,58 @@ func update_projectile_2d(delta: float) -> void:
 	_speed_behavior_additions.clear()
 	_speed_behavior_multiplies.clear()
 
-	var _direction_behavior_values : Dictionary
-	var _direction_behavior_additions : Dictionary
-	var _direction_behavior_rotations : Dictionary
-	
-	var _rotation_behavior_values : Dictionary
-	var _rotation_behavior_additions : Dictionary
-	var _rotation_behavior_multiplies : Dictionary
+	_rotation_behavior_additions.clear()
+	_rotation_behavior_multiplies.clear()
 
-	var _scale_behavior_values : Dictionary
-	var _scale_behavior_additions : Dictionary
-	var _scale_behavior_multiplies : Dictionary
+	_scale_behavior_additions.clear()
+	_scale_behavior_multiplies.clear()
+
+	_direction_behavior_rotations.clear()
+	_direction_behavior_additions.clear()
 
 	for _projectile_behavior in projectile_behaviors:
 		if not _projectile_behavior is ProjectileBehavior:
 			continue
 		if not _projectile_behavior.active:
 			continue
-		
 		if _projectile_behavior is ProjectileBehaviorSpeed:
 			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
-			if _speed_behavior_values.has("speed_overwrite"):
-				speed = _speed_behavior_values.get("speed_overwrite")
-				continue
-			if _speed_behavior_values.has("speed_addition"):
-				_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_addition"))
-				continue
-			if _speed_behavior_values.has("speed_multiply"):
-				_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
-				continue
+			for _behavior_key in _direction_behavior_values.keys():
+				match _behavior_key:
+					"speed_overwrite":
+						speed = _speed_behavior_values.get("speed_overwrite")
+					"speed_addition":
+						_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_addition"))
+					"speed_multiply":
+						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
 
 		elif _projectile_behavior is ProjectileBehaviorDirection:
 			_direction_behavior_values = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
-			if _direction_behavior_values.has("direction_overwrite"):
-				direction = _direction_behavior_values.get("direction_overwrite")
-				continue	
-			if _direction_behavior_values.has("direction_rotation"):
-				_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_rotation"))
-				continue
-			if _direction_behavior_values.has("direction_addition"):
-				_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
-				continue
+			for _behavior_key in _direction_behavior_values.keys():
+				match _behavior_key:
+					"direction_overwrite":
+						direction = _direction_behavior_values.get("direction_overwrite")
+					"direction_rotation":
+						_direction_behavior_rotations.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_rotation"))
+					"direction_addition":
+						_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
 
 		elif _projectile_behavior is ProjectileBehaviorRotation:
 			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
-			if _rotation_behavior_values.has("rotation_overwrite"):
-				projectile_rotation = _rotation_behavior_values.get("rotation_overwrite")
-				continue
-			if _rotation_behavior_values.has("rotation_addition"):
-				_rotation_behavior_additions.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_addition"))
-				continue
-			if _rotation_behavior_values.has("rotation_multiply"):
-				_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))
-				continue
+			for _behavior_key in _rotation_behavior_values.keys():
+				match _behavior_key:
+					"rotation_overwrite":
+						projectile_rotation = _rotation_behavior_values.get("rotation_overwrite")
+					"rotation_addition":
+						_rotation_behavior_additions.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_addition"))
+					"rotation_multiply":
+						_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))			
 
 		elif _projectile_behavior is ProjectileBehaviorScale:
 			_scale_behavior_values = _projectile_behavior.process_behavior(projectile_scale, projectile_behavior_context)
 			if _scale_behavior_values.size() <= 0:
 				continue
-			for _behavior_key in _scale_behavior_values:
+			for _behavior_key in _scale_behavior_values.keys():
 				match _behavior_key:
 					"scale_overwrite":
 						projectile_scale = _scale_behavior_values.get("scale_overwrite")
@@ -207,79 +217,47 @@ func update_projectile_2d(delta: float) -> void:
 					"scale_multiply":
 						_scale_behavior_multiplies.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_multiply"))
 
-		elif _projectile_behavior is ProjectileBehaviorHoming:
-			# speed = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
-			var _homing_result: Array = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
-	
-			if _homing_result.size() > 0 and _homing_result[0] != direction:
-				# Apply the new direction from homing behavior
-				raw_direction = _homing_result[0]
-				direction = raw_direction.normalized()
-
 	# Apply Projectile behaviors
-
-	if _speed_behavior_multiplies.size() > 0:
-		_speed_multiply_value = 0
-		for _speed_behavior_multiply in _speed_behavior_multiplies.values():
-			_speed_multiply_value += _speed_behavior_multiply
-		_speed_multiply = base_speed * _speed_multiply_value
-
-	if _speed_behavior_additions.size() > 0:
-		_speed_addition = 0
-		for _speed_behavior_addition in _speed_behavior_additions.values():
-			_speed_addition += _speed_behavior_addition
-
-	speed_final = speed + _speed_addition + _speed_multiply
-
-	var _direction_rotation_value : float = 0
-	if _direction_behavior_rotations.size() > 0:
-		for _direction_behavior_rotation in _direction_behavior_rotations.values():
-			_direction_rotation_value += _direction_behavior_rotation
-
-	var _direction_addition_value : Vector2
-	var _direction_addition : Vector2
-	if _direction_behavior_additions.size() > 0:
-		for _direction_behavior_addition in _direction_behavior_additions.values():
-			_direction_addition_value += _direction_behavior_addition
-		_direction_addition = base_direction + _direction_addition_value
-
-	var _rotation_multiply_value : float
-	var _rotation_multiply : float
-	var _rotation_addition : float
-	var rotation_final : float
+	rotation_final = projectile_rotation
 	if _rotation_behavior_multiplies.size() > 0:
 		_rotation_multiply_value = 0
 		for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
 			_rotation_multiply_value += _rotation_behavior_multiply
 		_rotation_multiply = base_rotation * _rotation_multiply_value
+		rotation_final += _rotation_multiply 
 
 	if _rotation_behavior_additions.size() > 0:
 		_rotation_addition = 0
 		for _rotation_behavior_addition in _rotation_behavior_additions.values():
 			_rotation_addition += _rotation_behavior_addition
+		rotation_final += _rotation_addition 
 
-	rotation_final = projectile_rotation + _rotation_addition + _rotation_multiply
 	rotation = rotation_final
 
-	var _scale_multiply_value : Vector2
-	var _scale_multiply : Vector2
-	var _scale_addition : Vector2
-	var scale_final : Vector2
-
+	scale_final = projectile_scale
 	if _scale_behavior_multiplies.size() > 0:
 		_scale_multiply_value = Vector2.ZERO
 		for _scale_behavior_multiply in _scale_behavior_multiplies.values():
 			_scale_multiply_value += _scale_behavior_multiply
 		_scale_multiply = base_scale * _scale_multiply_value
+		scale_final += _scale_multiply
 
 	if _scale_behavior_additions.size() > 0:
 		_scale_addition = Vector2.ZERO
 		for _scale_behavior_addition in _scale_behavior_additions.values():
 			_scale_addition += _scale_behavior_addition
+		scale_final += _scale_addition
 
-	scale_final = projectile_scale + _scale_addition + _scale_multiply
 	scale = scale_final
 
+	if _direction_behavior_rotations.size() > 0:
+		for _direction_behavior_rotation in _direction_behavior_rotations.values():
+			_direction_rotation_value += _direction_behavior_rotation
+
+	if _direction_behavior_additions.size() > 0:
+		for _direction_behavior_addition in _direction_behavior_additions.values():
+			_direction_addition_value += _direction_behavior_addition
+		_direction_addition = base_direction + _direction_addition_value
 
 	if _direction_addition != Vector2.ZERO:
 		direction = _direction_addition.normalized()
@@ -288,6 +266,20 @@ func update_projectile_2d(delta: float) -> void:
 		direction = base_direction.rotated(_direction_rotation_value)
 
 	direction = direction.normalized()
+
+	speed_final = speed
+	if _speed_behavior_multiplies.size() > 0:
+		_speed_multiply_value = 0
+		for _speed_behavior_multiply in _speed_behavior_multiplies.values():
+			_speed_multiply_value += _speed_behavior_multiply
+		_speed_multiply = base_speed * _speed_multiply_value
+		speed_final += _speed_multiply
+
+	if _speed_behavior_additions.size() > 0:
+		_speed_addition = 0
+		for _speed_behavior_addition in _speed_behavior_additions.values():
+			_speed_addition += _speed_behavior_addition
+		speed_final += _speed_addition
 
 	velocity = speed_final * direction * delta
 	global_position += velocity
@@ -340,21 +332,10 @@ func process_behavior_context_request(
 				_rng_array.append(RandomNumberGenerator.new())
 				_rng_array.append(false)
 				_behavior_context.get_or_add(_behaviors_context_request, _rng_array)
-
 			_:
 				pass
 	return 
 
 func queue_free_projectile() -> void:
-	#todo: Add projectile global destroyed signal
-
 	queue_free()
 	pass
-
-## Do not touch this
-## Reset projectile components when reused
-# func reset() -> void:
-# 	if has_meta("projectile_component_piercing"):
-# 		get_meta("projectile_component_piercing").reset()
-	
-# 	# Add reset calls for other components as needed

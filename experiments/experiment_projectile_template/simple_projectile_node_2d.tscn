@@ -1,24 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7rypyujt6vmj"]
+[gd_scene load_steps=3 format=3 uid="uid://c7rypyujt6vmj"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_dnndo"]
-[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="3_ca704"]
-[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="4_c06gt"]
-[ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_curve_2d.gd" id="4_lbmsn"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="9_u3u5u"]
-
-[sub_resource type="Resource" id="Resource_kdkci"]
-script = ExtResource("4_lbmsn")
-curve_2d = ExtResource("3_ca704")
-curve_strenght = 0.5
-direction_curve_sample_method = 1
-direction_modify_method = 0
-active = true
-metadata/_custom_type_script = "uid://cjtoo7n0xa5e2"
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="4_5k3qs"]
 
 [node name="Projectile2D" type="Area2D"]
 script = ExtResource("1_dnndo")
-direction_projectile_behaviors = Array[ExtResource("4_c06gt")]([SubResource("Resource_kdkci")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("9_u3u5u")
+texture = ExtResource("4_5k3qs")

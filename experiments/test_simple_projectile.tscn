@@ -1,15 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccrkdwe6sk4ro"]
+[gd_scene load_steps=3 format=3 uid="uid://ccrkdwe6sk4ro"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_v11hl"]
-[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="2_huthm"]
-[ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_set.gd" id="3_huthm"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="4_huthm"]
-
-[sub_resource type="Resource" id="Resource_bxrxs"]
-script = ExtResource("3_huthm")
-scale_value = Vector2(1, 1)
-active = true
-metadata/_custom_type_script = "uid://cr2ftvrtv8t16"
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="4_huthm"]
 
 [node name="TestSimpleProjectile" type="Node2D"]
 
@@ -17,8 +9,6 @@ metadata/_custom_type_script = "uid://cr2ftvrtv8t16"
 
 [node name="Projectile2D" type="Area2D" parent="."]
 script = ExtResource("1_v11hl")
-speed = 10.0
-scale_projectile_behaviors = Array[ExtResource("2_huthm")]([SubResource("Resource_bxrxs")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="Projectile2D"]
