@@ -107,6 +107,13 @@ func _ready() -> void:
 		if !_projectile_behavior.active: continue
 		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
 		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
+	
+	## Special process
+	for _projectile_behavior in projectile_behaviors:
+		if _projectile_behavior is ProjectileDestroyImmediate:
+			if _projectile_behavior.process_behavior(null, projectile_behavior_context):
+				queue_free_projectile()
+
 	pass
 
 func _physics_process(delta: float) -> void:
@@ -337,5 +344,6 @@ func process_behavior_context_request(
 	return 
 
 func queue_free_projectile() -> void:
+	#todo: emit destroy signal
 	queue_free()
 	pass

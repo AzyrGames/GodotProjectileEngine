@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://3r4tbmgumjtk"]
+[gd_scene load_steps=13 format=3 uid="uid://3r4tbmgumjtk"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_5fjhh"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_53ghj"]
@@ -8,11 +8,18 @@
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_r6nwn"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="7_3xtj2"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="8_pd4vx"]
+[ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="9_r6nwn"]
 
 [sub_resource type="Resource" id="Resource_3xtj2"]
 script = ExtResource("3_53ghj")
 projectile_2d_path = &"uid://c7rypyujt6vmj"
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pd4vx"]
+size = Vector2(20, 129.78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec0cc"]
+size = Vector2(529, 407)
 
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
 
@@ -50,8 +57,23 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_3xtj2")
-polygon_sides = 20
 spread_out = true
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 256
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(111, 32)
+rotation = 0.263645
+shape = SubResource("RectangleShape2D_pd4vx")
+
+[node name="ProjectileBoundary2D" type="Area2D" parent="."]
+collision_mask = 0
+script = ExtResource("9_r6nwn")
+metadata/_custom_type_script = "uid://byoirooyga8su"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBoundary2D"]
+shape = SubResource("RectangleShape2D_ec0cc")
