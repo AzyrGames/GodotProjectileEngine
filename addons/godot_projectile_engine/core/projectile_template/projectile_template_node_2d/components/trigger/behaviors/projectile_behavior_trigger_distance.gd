@@ -4,16 +4,21 @@ class_name ProjectileBehaviorTriggerDistance
 ## Behavior that triggers after traveling a specified distance.
 ##
 ## Activates when the projectile has traveled the specified distance from its spawn point.
-## If one_shot = false, triggers repeatedly every trigger_distance units.
 
 ## Distance in units before trigger activates
 @export var trigger_distance : float = 100.0
+
+var _variable_array : Array
+var _behavior_variable_trigger : BehaviorVariableTrigger
+var _life_distance : float
+
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_DISTANCE
 	]
+
 
 ## Returns persistent context values for shared data
 func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -22,49 +27,50 @@ func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorConte
 	]
 
 
-func process_behavior(_value, _context: Dictionary) -> bool:
-	if not active:
-		return false
+func process_behavior(_value, _context: Dictionary) -> Dictionary:
+	_variable_array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 
-	var _life_distance = _context.get(ProjectileEngine.BehaviorContext.LIFE_DISTANCE, 0.0)
-	
-	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
-	var _behavior_variable_trigger : BehaviorVariableTrigger
-
+	# Set new instance variable array, if not it's will process the past variable
 	for _variable in _variable_array:
 		if _variable is BehaviorVariableTrigger:
 			if !_variable.is_processed:
 				_behavior_variable_trigger = _variable
+
 	if _behavior_variable_trigger == null:
 		_behavior_variable_trigger = BehaviorVariableTrigger.new()
 		_variable_array.append(_behavior_variable_trigger)
-	
+
+	_should_trigger = false
 	_behavior_variable_trigger.is_processed = true
 
+	if _behavior_variable_trigger.is_trigger_done:
+		return {"is_trigger" : false}
 
-	# Initialize trigger count if not present
+	_life_distance = _context.get(ProjectileEngine.BehaviorContext.LIFE_DISTANCE, 0.0)
 
-	if _variable_array.size() == 0:
-		_variable_array.append(0)  # trigger_count
-		_variable_array.append(false)  # is_triggered
+	if trigger_repeat_count <= 0:
+		_trigger_behavior_values["is_trigger"] = false
+		if destroy_when_done:
+			_trigger_behavior_values["is_destroy"] = true
+		_behavior_variable_trigger.is_trigger_done = true
 
-	if _behavior_variable_trigger.is_triggered:
-		return false
-	
-	if one_shot:
-		# For one-shot triggers, trigger once when distance is reached
-		_should_trigger = _life_distance >= trigger_distance
+	elif trigger_repeat_count == 1:
+		_trigger_behavior_values["is_trigger"] = _life_distance >= trigger_distance
+		if destroy_when_done:
+			_trigger_behavior_values["is_destroy"] = true
+		_behavior_variable_trigger.is_trigger_done = true
+
+	elif _behavior_variable_trigger.trigger_count < trigger_repeat_count:
+		_should_trigger = _life_distance >= trigger_distance * (_behavior_variable_trigger.trigger_count + 1)
+		_trigger_behavior_values["is_trigger"] = _should_trigger
+		if _should_trigger:
+			_behavior_variable_trigger.trigger_count += 1
+
 	else:
-		# For repeating triggers, trigger every trigger_distance units
-		if _life_distance >= trigger_distance * (_behavior_variable_trigger.trigger_count + 1):
-			_behavior_variable_trigger.trigger_count = _behavior_variable_trigger.trigger_count + 1
-			_should_trigger = true
-		else:
-			_should_trigger = false
+		_behavior_variable_trigger.is_trigger_done = true
+		_trigger_behavior_values["is_trigger"] = false
 
-	if _should_trigger:
-		if one_shot:
-			_behavior_variable_trigger.is_triggered = true
-		return true
+		if destroy_when_done:
+			_trigger_behavior_values["is_destroy"] = true
 
-	return false
+	return _trigger_behavior_values

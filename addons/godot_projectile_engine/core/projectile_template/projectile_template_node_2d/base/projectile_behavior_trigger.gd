@@ -4,10 +4,12 @@ class_name ProjectileBehaviorTrigger
 ## Base class for trigger behaviors that can activate based on various conditions
 
 @export var trigger_name : String = ""
-@export var one_shot : bool = true
-@export var destroy_on_trigger : bool = false
+@export var trigger_repeat_count : int = 1
+@export var destroy_when_done : bool = false
 
-var _should_trigger : bool
+var _should_trigger : bool = false
 
-func process_behavior(_value, _context: Dictionary) -> bool:
-	return false
+var _trigger_behavior_values : Dictionary = {}
+
+func process_behavior(_value, _context: Dictionary) -> Dictionary:
+	return {}

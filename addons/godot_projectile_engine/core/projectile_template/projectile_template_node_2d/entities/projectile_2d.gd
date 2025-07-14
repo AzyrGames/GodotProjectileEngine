@@ -142,8 +142,26 @@ func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.merge(_normal_behavior_context, true)
 	projectile_behavior_context.merge(_persist_behavior_context, true)
 
+
 	life_time_second += delta
 	life_distance += velocity.length()
+
+	# Projectile Trigger Behaviors
+	for _trigger_behavior in trigger_projectile_behaviors:
+		if !_trigger_behavior:
+			continue
+		if !_trigger_behavior.active:
+			continue
+		# print(projectile_behavior_context)
+		var _trigger_behavior_values : Dictionary = _trigger_behavior.process_behavior(null, projectile_behavior_context)
+		# print(_trigger_behavior_values)
+		if _trigger_behavior_values.has("is_trigger"):
+			# print("hello")
+			if _trigger_behavior_values.is_trigger:
+				ProjectileEngine.projectile_node_triggered.emit(_trigger_behavior.trigger_name, self)
+		if _trigger_behavior_values.has("is_destroy"):
+			if _trigger_behavior_values.is_destroy:
+				queue_free_projectile()
 
 	# Free Projectile Behaviors
 	for _projectile_behavior in projectile_behaviors:
