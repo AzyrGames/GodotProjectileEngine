@@ -187,30 +187,38 @@ func update_projectile_2d(delta: float) -> void:
 		if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
 			projectile_pierced.emit(self, _piercing_behavior_values.get("pierced_node"))
 
+	# Projectile Bouncing Behaviors
+	for _projectile_behavior in bouncing_projectile_behaviors:
+		if !_projectile_behavior:
+			continue
+		if !_projectile_behavior.active:
+			continue
+		if ProjectileEngine.projectile_environment.projectile_bouncing_helper == null:
+			ProjectileEngine.projectile_environment.request_bouncing_helper(self.get_node("CollisionShape2D").duplicate())
+			ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.collision_layer
+			ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.collision_mask
+
+		var _bouncing_behavior_values : Dictionary = _projectile_behavior.process_behavior(null, projectile_behavior_context)
+		if _bouncing_behavior_values.size() <= 0:
+			continue
+		if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has("direction_overwrite"):
+			direction = _bouncing_behavior_values.get("direction_overwrite")
+			pass
+			# projectile_pierced.emit(self, _bouncing_behavior_values.get("pierced_node"))
+
 	# Projectile Destroy Behaviors
 	for _projectile_behavior in destroy_projectile_behaviors:
 		if !_projectile_behavior:
 			continue
 		if !_projectile_behavior.active:
 			continue
-
 		if _projectile_behavior.process_behavior(null, projectile_behavior_context):
 			queue_free_projectile()
 
 	# Process Projectile Transform Behaviors
-	_speed_behavior_additions.clear()
-	_speed_behavior_multiplies.clear()
-
-	_rotation_behavior_additions.clear()
-	_rotation_behavior_multiplies.clear()
-
-	_scale_behavior_additions.clear()
-	_scale_behavior_multiplies.clear()
-
-	_direction_behavior_rotations.clear()
-	_direction_behavior_additions.clear()
-
 	if speed_projectile_behaviors.size() > 0:
+		_speed_behavior_additions.clear()
+		_speed_behavior_multiplies.clear()
 		for _projectile_behavior in speed_projectile_behaviors:
 			if !_projectile_behavior:
 				continue
@@ -227,6 +235,8 @@ func update_projectile_2d(delta: float) -> void:
 						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
 
 	if direction_projectile_behaviors.size() > 0:
+		_direction_behavior_rotations.clear()
+		_direction_behavior_additions.clear()
 		for _projectile_behavior in direction_projectile_behaviors:
 			if !_projectile_behavior:
 				continue
@@ -243,6 +253,8 @@ func update_projectile_2d(delta: float) -> void:
 						_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
 
 	if rotation_projectile_behaviors.size() > 0:
+		_rotation_behavior_additions.clear()
+		_rotation_behavior_multiplies.clear()
 		for _projectile_behavior in rotation_projectile_behaviors:
 			if !_projectile_behavior:
 				continue
@@ -259,6 +271,8 @@ func update_projectile_2d(delta: float) -> void:
 						_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))			
 
 	if scale_projectile_behaviors.size() > 0:
+		_scale_behavior_additions.clear()
+		_scale_behavior_multiplies.clear()
 		for _projectile_behavior in scale_projectile_behaviors:
 			if !_projectile_behavior:
 				continue

@@ -48,7 +48,6 @@ func request_bouncing_helper(_projectile_collision_shape: CollisionShape2D) -> v
 	var _shape : = _projectile_collision_shape.shape
 	_collision_shape.shape = _shape
 
-	# var 
 	# projectile_bouncing_helper.add_child(_collision_shape.duplicate())
 	add_child(projectile_bouncing_helper, true)
 	projectile_bouncing_helper.add_child(_collision_shape, true)

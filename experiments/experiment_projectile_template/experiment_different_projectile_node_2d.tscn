@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://3r4tbmgumjtk"]
+[gd_scene load_steps=14 format=3 uid="uid://3r4tbmgumjtk"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_5fjhh"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_53ghj"]
@@ -21,6 +21,9 @@ size = Vector2(20, 129.78)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec0cc"]
 size = Vector2(529, 407)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6nwn"]
+size = Vector2(20, 258.094)
+
 [node name="ExperimentDifferentProjectileTemplate" type="Node2D"]
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
@@ -40,7 +43,8 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("4_pd4vx")
-repeat_count = 1
+duration = 0.1
+repeat_count = 20
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="PatternComposer2D" type="Node" parent="."]
@@ -56,6 +60,7 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_3xtj2")
+polygon_sides = 10
 spread_out = true
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
@@ -102,9 +107,34 @@ rotation = 0.263645
 shape = SubResource("RectangleShape2D_pd4vx")
 
 [node name="ProjectileBoundary2D" type="Area2D" parent="."]
-collision_mask = 0
+collision_layer = 257
+collision_mask = 257
 script = ExtResource("9_r6nwn")
 metadata/_custom_type_script = "uid://byoirooyga8su"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBoundary2D"]
 shape = SubResource("RectangleShape2D_ec0cc")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-114, 0)
+rotation = -0.785397
+shape = SubResource("RectangleShape2D_r6nwn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-95, -94)
+rotation = 1.0472
+shape = SubResource("RectangleShape2D_r6nwn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(45, 49)
+rotation = 1.0472
+shape = SubResource("RectangleShape2D_r6nwn")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(87.75, -64.2501)
+rotation = 2.35619
+shape = SubResource("RectangleShape2D_r6nwn")
