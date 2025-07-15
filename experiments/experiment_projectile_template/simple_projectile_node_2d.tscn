@@ -1,26 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7rypyujt6vmj"]
+[gd_scene load_steps=4 format=3 uid="uid://c7rypyujt6vmj"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_dnndo"]
-[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="2_c06gt"]
-[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="3_5k3qs"]
-[ext_resource type="Script" uid="uid://dp1dl77e17837" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/behaviors/projectile_bounce_reflect.gd" id="3_ca704"]
-[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="3_lbmsn"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="4_5k3qs"]
-
-[sub_resource type="Resource" id="Resource_kdkci"]
-script = ExtResource("3_lbmsn")
-destroy_on_area_collide = true
-destroy_on_body_collide = true
-wait_projectile_piercing = false
-wait_projectile_bouncing = true
-active = true
-metadata/_custom_type_script = "uid://bkjnay24vltjg"
-
-[sub_resource type="Resource" id="Resource_5k3qs"]
-script = ExtResource("3_ca704")
-bouncing_count = 3
-active = true
-metadata/_custom_type_script = "uid://dp1dl77e17837"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5k3qs"]
 radius = 8.0
@@ -28,8 +9,6 @@ radius = 8.0
 [node name="Projectile2D" type="Area2D"]
 collision_mask = 288
 script = ExtResource("1_dnndo")
-destroy_projectile_behaviors = Array[ExtResource("2_c06gt")]([SubResource("Resource_kdkci")])
-bouncing_projectile_behaviors = Array[ExtResource("3_5k3qs")]([SubResource("Resource_5k3qs")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
