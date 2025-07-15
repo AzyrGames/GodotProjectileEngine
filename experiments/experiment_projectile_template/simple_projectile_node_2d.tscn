@@ -1,18 +1,45 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7rypyujt6vmj"]
+[gd_scene load_steps=16 format=3 uid="uid://c7rypyujt6vmj"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_dnndo"]
-[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="2_5k3qs"]
-[ext_resource type="Script" uid="uid://ctkwawb5af10" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/behaviors/projectile_behavior_trigger_time.gd" id="3_5k3qs"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="2_5k3qs"]
+[ext_resource type="Script" uid="uid://d35n2jogawdcq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_acceleration.gd" id="3_ca704"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="4_5k3qs"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="4_yyuxl"]
+[ext_resource type="Script" uid="uid://ds4xe1drkirks" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_random_walk.gd" id="5_50o5b"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="6_pyjge"]
+[ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_modify.gd" id="7_qjlgy"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="8_lwpdc"]
+[ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_set.gd" id="9_ooy66"]
 
-[sub_resource type="Resource" id="Resource_ca704"]
-script = ExtResource("3_5k3qs")
-trigger_time_second = 2.0
-trigger_name = "TIme"
-trigger_repeat_count = 3
-destroy_when_done = true
+[sub_resource type="Resource" id="Resource_c06gt"]
+script = ExtResource("3_ca704")
+acceleration_speed = 20.0
+max_speed = 100.0
 active = true
-metadata/_custom_type_script = "uid://ctkwawb5af10"
+metadata/_custom_type_script = "uid://d35n2jogawdcq"
+
+[sub_resource type="Resource" id="Resource_is3c8"]
+script = ExtResource("5_50o5b")
+noise_strength = 0.1
+noise_frequency = 0.2
+noise_seed = 0
+direction_modify_method = 1
+active = true
+metadata/_custom_type_script = "uid://ds4xe1drkirks"
+
+[sub_resource type="Resource" id="Resource_k83cq"]
+script = ExtResource("7_qjlgy")
+rotation_modify_value = 1.0
+rotation_process_mode = 1
+rotation_modify_method = 0
+active = true
+metadata/_custom_type_script = "uid://ucfv3eq8fafp"
+
+[sub_resource type="Resource" id="Resource_yij6k"]
+script = ExtResource("9_ooy66")
+scale_value = Vector2(2, 2)
+active = true
+metadata/_custom_type_script = "uid://cr2ftvrtv8t16"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5k3qs"]
 radius = 8.0
@@ -20,7 +47,11 @@ radius = 8.0
 [node name="Projectile2D" type="Area2D"]
 collision_mask = 288
 script = ExtResource("1_dnndo")
-trigger_projectile_behaviors = Array[ExtResource("2_5k3qs")]([SubResource("Resource_ca704")])
+speed = 10.0
+speed_projectile_behaviors = Array[ExtResource("2_5k3qs")]([SubResource("Resource_c06gt")])
+direction_projectile_behaviors = Array[ExtResource("4_yyuxl")]([SubResource("Resource_is3c8")])
+rotation_projectile_behaviors = Array[ExtResource("6_pyjge")]([SubResource("Resource_k83cq")])
+scale_projectile_behaviors = Array[ExtResource("8_lwpdc")]([SubResource("Resource_yij6k")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

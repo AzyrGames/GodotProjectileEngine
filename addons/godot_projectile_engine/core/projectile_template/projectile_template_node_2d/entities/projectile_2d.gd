@@ -147,21 +147,19 @@ func update_projectile_2d(delta: float) -> void:
 	life_distance += velocity.length()
 
 	# Projectile Trigger Behaviors
-	for _trigger_behavior in trigger_projectile_behaviors:
-		if !_trigger_behavior:
-			continue
-		if !_trigger_behavior.active:
-			continue
-		# print(projectile_behavior_context)
-		var _trigger_behavior_values : Dictionary = _trigger_behavior.process_behavior(null, projectile_behavior_context)
-		# print(_trigger_behavior_values)
-		if _trigger_behavior_values.has("is_trigger"):
-			# print("hello")
-			if _trigger_behavior_values.is_trigger:
-				ProjectileEngine.projectile_node_triggered.emit(_trigger_behavior.trigger_name, self)
-		if _trigger_behavior_values.has("is_destroy"):
-			if _trigger_behavior_values.is_destroy:
-				queue_free_projectile()
+	if trigger_projectile_behaviors.size() > 0:
+		for _trigger_behavior in trigger_projectile_behaviors:
+			if !_trigger_behavior:
+				continue
+			if !_trigger_behavior.active:
+				continue
+			var _trigger_behavior_values : Dictionary = _trigger_behavior.process_behavior(null, projectile_behavior_context)
+			if _trigger_behavior_values.has("is_trigger"):
+				if _trigger_behavior_values.is_trigger:
+					ProjectileEngine.projectile_node_triggered.emit(_trigger_behavior.trigger_name, self)
+			if _trigger_behavior_values.has("is_destroy"):
+				if _trigger_behavior_values.is_destroy:
+					queue_free_projectile()
 
 	# Free Projectile Behaviors
 	for _projectile_behavior in projectile_behaviors:
@@ -170,7 +168,7 @@ func update_projectile_2d(delta: float) -> void:
 		if _projectile_behavior.process_behavior(null, projectile_behavior_context):
 			queue_free_projectile()
 
-	# Refresh Projectile Behaviors process
+	# Refresh Projectile Behavior Array Process
 	for _behavior_key in projectile_behavior_context.keys():
 		if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
 			continue
@@ -191,14 +189,14 @@ func update_projectile_2d(delta: float) -> void:
 	_direction_behavior_rotations.clear()
 	_direction_behavior_additions.clear()
 
-	for _projectile_behavior in projectile_behaviors:
-		if not _projectile_behavior is ProjectileBehavior:
-			continue
-		if not _projectile_behavior.active:
-			continue
-		if _projectile_behavior is ProjectileBehaviorSpeed:
+	if speed_projectile_behaviors.size() > 0:
+		for _projectile_behavior in speed_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+			if not _projectile_behavior.active:
+				continue
 			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
-			for _behavior_key in _direction_behavior_values.keys():
+			for _behavior_key in _speed_behavior_values.keys():
 				match _behavior_key:
 					"speed_overwrite":
 						speed = _speed_behavior_values.get("speed_overwrite")
@@ -207,7 +205,12 @@ func update_projectile_2d(delta: float) -> void:
 					"speed_multiply":
 						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
 
-		elif _projectile_behavior is ProjectileBehaviorDirection:
+	if direction_projectile_behaviors.size() > 0:
+		for _projectile_behavior in direction_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+			if not _projectile_behavior.active:
+				continue
 			_direction_behavior_values = _projectile_behavior.process_behavior(direction, projectile_behavior_context)
 			for _behavior_key in _direction_behavior_values.keys():
 				match _behavior_key:
@@ -218,7 +221,12 @@ func update_projectile_2d(delta: float) -> void:
 					"direction_addition":
 						_direction_behavior_additions.get_or_add(_projectile_behavior, _direction_behavior_values.get("direction_addition"))
 
-		elif _projectile_behavior is ProjectileBehaviorRotation:
+	if rotation_projectile_behaviors.size() > 0:
+		for _projectile_behavior in rotation_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+			if not _projectile_behavior.active:
+				continue
 			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
 			for _behavior_key in _rotation_behavior_values.keys():
 				match _behavior_key:
@@ -229,7 +237,12 @@ func update_projectile_2d(delta: float) -> void:
 					"rotation_multiply":
 						_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))			
 
-		elif _projectile_behavior is ProjectileBehaviorScale:
+	if scale_projectile_behaviors.size() > 0:
+		for _projectile_behavior in scale_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+			if not _projectile_behavior.active:
+				continue
 			_scale_behavior_values = _projectile_behavior.process_behavior(projectile_scale, projectile_behavior_context)
 			if _scale_behavior_values.size() <= 0:
 				continue
@@ -307,6 +320,7 @@ func update_projectile_2d(delta: float) -> void:
 		speed_final += _speed_addition
 
 	velocity = speed_final * direction * delta
+
 	global_position += velocity
 
 
