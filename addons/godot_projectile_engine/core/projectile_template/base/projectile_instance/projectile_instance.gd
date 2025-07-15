@@ -1,6 +1,8 @@
 extends Object
 class_name ProjectileInstance2D
 
+var projectile_updater : ProjectileUpdater2D
+
 var area_rid : RID
 var area_index : int
 

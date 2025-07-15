@@ -312,6 +312,7 @@ func update_projectile_2d(delta: float) -> void:
 
 	rotation = rotation_final
 
+
 	scale_final = projectile_scale
 	if _scale_behavior_multiplies.size() > 0:
 		_scale_multiply_value = Vector2.ZERO
@@ -327,6 +328,7 @@ func update_projectile_2d(delta: float) -> void:
 		scale_final += _scale_addition
 
 	scale = scale_final
+
 
 	if _direction_behavior_rotations.size() > 0:
 		for _direction_behavior_rotation in _direction_behavior_rotations.values():
