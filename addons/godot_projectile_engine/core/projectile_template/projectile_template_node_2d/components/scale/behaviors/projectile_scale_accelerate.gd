@@ -8,9 +8,9 @@ class_name ProjectileScaleAccelerate
 ## This behavior overrides (replaces) the current speed value.
 
 ## Acceleration rate in units per second squared (how quickly speed increases)
-@export var acceleration_speed: float = 1.0
+@export var scale_acceleration_value: float = 1.0
 ## Maximum speed the projectile can reach (in units per second)
-@export var max_scale : float = 3.0
+@export var scale_max : float = 2.0
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -19,12 +19,11 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	]
 
 ## Processes speed behavior by applying acceleration
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
-	if _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-		# Calculate new speed using frame-rate independent acceleration
-		var delta := _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA) as float
-
-		return _value.move_toward(Vector2.ONE * max_scale,  acceleration_speed * delta)
-		# return move_toward(_value, Vector2.ONE * max_speed, acceleration_speed * delta)
-
-	return _value
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	if not _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+		return {}
+	return {
+		"scale_overwrite": _value.move_toward(
+			Vector2.ONE * scale_max,  scale_acceleration_value * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+			)
+		}

@@ -26,10 +26,8 @@ enum LoopMethod {
 @export var rotation_curve : Curve
 
 var _is_cached : bool = false
-
 var rotation_curve_cache : Array[float]
 var rotation_curve_max_tick : int
-
 var _rotation_curve_sample : float
 var _rotation_curve_sample_value : float
 var _result_value : float
@@ -41,52 +39,46 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
 	]
 
-
-## Processes rotation behavior using curve sampling
-func process_behavior(_value: float, _context: Dictionary) -> float:
+func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Cache curve values if not already done
 	if !_is_cached:
 		caching_rotation_curve_value()
 	
-	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 		
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
 	match rotation_curve_loop_method:
 		LoopMethod.ONCE_AND_DONE:
 			_rotation_curve_sample = _context_life_time_second
-			pass
 		LoopMethod.LOOP_FROM_START:
 			_rotation_curve_sample = fmod(_context_life_time_second, rotation_curve.max_domain)
-			pass
 		LoopMethod.LOOP_FROM_END:
 			if sign(pow(-1, int(_context_life_time_second / rotation_curve.max_domain))) > 0:
 				_rotation_curve_sample = fmod(_context_life_time_second, rotation_curve.max_domain)
 			else:
 				_rotation_curve_sample = rotation_curve.max_domain - fmod(_context_life_time_second, rotation_curve.max_domain)
-			# print(sign(pow(-1, int(_context_life_time_second / rotation_curve.max_domain))))
 
-			pass
-	# print("_rotation_curve_sample: ", _rotation_curve_sample)
 	_rotation_curve_sample_value = rotation_curve.sample_baked(_rotation_curve_sample)
-	# print(_rotation_curve_sample_value)
 	
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			# if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
-			# _result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) + _rotation_curve_sample_value
-			_result_value = _value + _rotation_curve_sample_value
-			pass
-		# RotationModifyMethod.MULTIPLICATION:
-		# 	if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
-		# 	_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) * _rotation_curve_sample_value
-		# 	pass
+			return {"rotation_overwrite" : _value + _rotation_curve_sample_value}
+		RotationModifyMethod.ADDITION_OVER_BASE:
+			return {"rotation_addition" : _rotation_curve_sample_value}
+		RotationModifyMethod.MULTIPLICATION:
+			return {"rotation_overwrite" :_value * _rotation_curve_sample_value}
+		RotationModifyMethod.MULTIPLICATION_OVER_BASE:
+			return {"rotation_multiply" :_rotation_curve_sample_value}
 		RotationModifyMethod.OVERRIDE:
-			_result_value = _rotation_curve_sample_value
-			pass
-	return _result_value
+			return {"rotation_overwrite" :_rotation_curve_sample_value}
+		null:
+			{}
+		_:
+			{}
+
+	return {}
 
 
 ## Caches sampled curve values for performance optimization

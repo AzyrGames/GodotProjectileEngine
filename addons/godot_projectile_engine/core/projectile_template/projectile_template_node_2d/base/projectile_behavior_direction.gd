@@ -8,5 +8,7 @@ enum DirectionModifyMethod{
 	OVERRIDE,
 }
 
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
-	return [_value, 0.0]
+var _direction_behavior_values : Dictionary
+
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	return {}

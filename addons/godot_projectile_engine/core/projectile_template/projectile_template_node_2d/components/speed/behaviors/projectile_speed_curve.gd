@@ -40,19 +40,18 @@ var _result_value : float
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SPEED
 	]
 
 
 ## Processes speed behavior using curve sampling
-func process_behavior(_value: float, _context: Dictionary) -> float:
+func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Cache curve values if not already done
 	if !_is_cached:
 		caching_speed_curve_value()
 	
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {"speed_overwrite" : _value}
 		
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
@@ -70,20 +69,28 @@ func process_behavior(_value: float, _context: Dictionary) -> float:
 				_speed_curve_sample = speed_curve.max_domain - fmod(_context_life_time_second, speed_curve.max_domain)
 
 	_speed_curve_sample_value = speed_curve.sample_baked(_speed_curve_sample)
-	
 	match speed_modify_method:
 		SpeedModifyMethod.ADDITION:
-			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
-			_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) + _speed_curve_sample_value
-			pass
+			_speed_behavior_values["speed_overwrite"] = _value + _speed_curve_sample_value
+
+		SpeedModifyMethod.ADDITION_OVER_BASE:
+			_speed_behavior_values["speed_addition"] = _speed_curve_sample_value
+
 		SpeedModifyMethod.MULTIPLICATION:
-			if !_context.has(ProjectileEngine.BehaviorContext.BASE_SPEED): _result_value = _value
-			_result_value = _context.get(ProjectileEngine.BehaviorContext.BASE_SPEED) * _speed_curve_sample_value
-			pass
+			_speed_behavior_values["speed_overwrite"] = _value * _speed_curve_sample_value
+
+		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
+			_speed_behavior_values["speed_multiply"] =  _speed_curve_sample_value
+
 		SpeedModifyMethod.OVERRIDE:
-			_result_value = _speed_curve_sample_value
-			pass
-	return _result_value
+			_speed_behavior_values["speed_overwrite"] = _speed_curve_sample_value
+		null:
+			_speed_behavior_values["speed_overwrite"] = _value
+		_:
+			_speed_behavior_values["speed_overwrite"] = _value
+			
+	return _speed_behavior_values
+
 
 
 ## Caches sampled curve values for performance optimization

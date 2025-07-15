@@ -49,6 +49,8 @@ signal projectile_instance_area_exited(
 enum BehaviorContext{
 	PHYSICS_DELTA,
 	GLOBAL_POSITION,
+	PROJECTILE_OWNER,
+	BEHAVIOR_OWNER,
 	LIFE_TIME_TICK,
 	LIFE_TIME_SECOND,
 	LIFE_DISTANCE,
@@ -78,7 +80,7 @@ var projectile_boundary_2d : ProjectileBoundary2D
 
 func _ready() -> void:
 	# projectile_instance_triggered.connect(_test_projectile_instance_triggered)
-	# projectile_node_triggered.connect(_test_projectile_node_triggered)
+	projectile_node_triggered.connect(_test_projectile_node_triggered)
 
 	# projectile_instance_body_shape_entered.connect(_test_projectile_instance_body_shape_entered)
 	# projectile_instance_body_shape_exited.connect(_test_projectile_instance_body_shape_exited)

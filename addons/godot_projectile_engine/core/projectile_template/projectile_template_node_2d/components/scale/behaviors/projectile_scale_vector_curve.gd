@@ -45,23 +45,20 @@ var _scale_curve_sample_value_y : float
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SCALE,
 	]
 
 ## Processes scale behavior using curve sampling for both x and y components
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 		
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
 	# Initialize result with original value
 	var result := _value
 	
-	# Get base scale from context
-	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
-	
+	_scale_behavior_values.clear()
 	# Handle x scale if curve exists
 	if scale_curve_x:
 		# Calculate sample position based on loop method
@@ -78,14 +75,40 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		
 		# Sample curve and apply modification
 		_scale_curve_sample_value_x = scale_curve_x.sample_baked(_scale_curve_sample_x)
+
 		match scale_modify_method_x:
 			ScaleModifyMethod.ADDITION:
-				result.x = _base_scale.x + _scale_curve_sample_value_x
-			ScaleModifyMethod.MULTIPLICATION:
-				result.x = _base_scale.x * _scale_curve_sample_value_x
-			ScaleModifyMethod.OVERRIDE:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].x = _value.x + _scale_curve_sample_value_x
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_value.x + _scale_curve_sample_value_x, _value.y) 
+			ScaleModifyMethod.ADDITION_OVER_BASE:
+				if _scale_behavior_values.has("scale_addition"):
+					_scale_behavior_values["scale_addition"].x = _scale_curve_sample_value_x
+				else:
+					_scale_behavior_values["scale_addition"] = Vector2(_scale_curve_sample_value_x, 0) 
 				result.x = _scale_curve_sample_value_x
-	
+			ScaleModifyMethod.MULTIPLICATION:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].x = _value.x * _scale_curve_sample_value_x
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_value.x * _scale_curve_sample_value_x, _value.y) 
+				# result.x = _value.x + _scale_curve_sample_value_x
+			ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+				if _scale_behavior_values.has("scale_multiply"):
+					_scale_behavior_values["scale_multiply"].x = _scale_curve_sample_value_x
+				else:
+					_scale_behavior_values["scale_multiply"] = Vector2(_scale_curve_sample_value_x, 0) 
+			ScaleModifyMethod.OVERRIDE:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].x = _scale_curve_sample_value_x
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_scale_curve_sample_value_x, _value.y) 
+			null:
+				pass
+			_:
+				pass
+
 	# Handle y scale if curve exists
 	if scale_curve_y:
 		# Calculate sample position based on loop method
@@ -104,10 +127,35 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		_scale_curve_sample_value_y = scale_curve_y.sample_baked(_scale_curve_sample_y)
 		match scale_modify_method_y:
 			ScaleModifyMethod.ADDITION:
-				result.y = _base_scale.y + _scale_curve_sample_value_y
-			ScaleModifyMethod.MULTIPLICATION:
-				result.y = _base_scale.y * _scale_curve_sample_value_y
-			ScaleModifyMethod.OVERRIDE:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].y = _value.y + _scale_curve_sample_value_y
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_value.x, _value.y + _scale_curve_sample_value_y) 
+			ScaleModifyMethod.ADDITION_OVER_BASE:
+				if _scale_behavior_values.has("scale_addition"):
+					_scale_behavior_values["scale_addition"].y = _scale_curve_sample_value_y
+				else:
+					_scale_behavior_values["scale_addition"] = Vector2(_scale_curve_sample_value_y, 0) 
 				result.y = _scale_curve_sample_value_y
+			ScaleModifyMethod.MULTIPLICATION:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].y = _value.y * _scale_curve_sample_value_y
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_value.x, _value.y * _scale_curve_sample_value_y) 
+				# result.y = _value.y + _scale_curve_sample_value_y
+			ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+				if _scale_behavior_values.has("scale_multiply"):
+					_scale_behavior_values["scale_multiply"].y = _scale_curve_sample_value_y
+				else:
+					_scale_behavior_values["scale_multiply"] = Vector2(0, _scale_curve_sample_value_y) 
+			ScaleModifyMethod.OVERRIDE:
+				if _scale_behavior_values.has("scale_overwrite"):
+					_scale_behavior_values["scale_overwrite"].y = _scale_curve_sample_value_y
+				else:
+					_scale_behavior_values["scale_overwrite"] = Vector2(_value.x, _scale_curve_sample_value_y) 
+			null:
+				pass
+			_:
+				pass
 	
-	return result
+	return _scale_behavior_values

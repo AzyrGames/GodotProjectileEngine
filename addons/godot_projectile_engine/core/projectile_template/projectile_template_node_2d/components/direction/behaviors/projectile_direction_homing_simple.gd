@@ -1,5 +1,5 @@
-extends ProjectileBehaviorHoming
-class_name ProjectileHomingSimple
+extends ProjectileBehaviorDirection
+class_name ProjectileDirectionHomingSimple
 
 ## Simple homing behavior that steers projectiles toward a target group
 
@@ -25,12 +25,12 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 
 
 ## Processes homing behavior by steering toward nearest target in group
-func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	if not _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	if target_group.is_empty():
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	var delta: float = _context[ProjectileEngine.BehaviorContext.PHYSICS_DELTA]
 	
@@ -40,14 +40,14 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 	# Find nearest target in group
 	var target_position: Vector2 = _find_nearest_target(projectile_position)
 	if target_position == Vector2.ZERO:
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	# Calculate distance to target
 	var distance_to_target: float = projectile_position.distance_to(target_position)
 	
 	# Check distance constraint
 	if max_homing_distance > 0.0 and distance_to_target > max_homing_distance:
-		return [_value]
+		return {"direction_overwrite": _value}
 	
 	# Calculate desired direction toward target
 	var desired_direction: Vector2 = projectile_position.direction_to(target_position)
@@ -56,7 +56,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Array:
 	var new_direction: Vector2 = _value.move_toward(desired_direction, steer_speed * delta)
 	var final_direction: Vector2 = new_direction.normalized() * homing_strength + _value * (1.0 - homing_strength)
 	
-	return [final_direction.normalized()]
+	return {"direction_overwrite": final_direction.normalized()}
 
 
 ## Finds the nearest target in the specified group

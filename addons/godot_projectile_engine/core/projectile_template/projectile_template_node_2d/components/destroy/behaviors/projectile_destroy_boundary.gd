@@ -7,11 +7,18 @@ class_name ProjectileDestroyBoundary
 ## Whether to destroy when entering boundary (true) or leaving boundary (false)
 @export var destroy_on_enter: bool = false
 
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
+	return [
+		ProjectileEngine.BehaviorContext.GLOBAL_POSITION
+	]
+
 var _init_boundary_2d : bool = false
 
 var _space_state : PhysicsDirectSpaceState2D
 var _point_query : PhysicsPointQueryParameters2D
 var _projectile_boundary_2d : ProjectileBoundary2D
+
+
 
 func _init() -> void:
 	_point_query = PhysicsPointQueryParameters2D.new()
@@ -26,16 +33,12 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		_space_state = _projectile_boundary_2d.get_world_2d().direct_space_state
 		_point_query.collide_with_areas = true
 		_point_query.collide_with_bodies = false
-		_point_query.collision_mask = _projectile_boundary_2d.collision_mask
-
 		_init_boundary_2d = true
 
-	var projectile_owner = _context.get("projectile_owner")
-
-	if not projectile_owner:
+	if not _context.has(ProjectileEngine.BehaviorContext.GLOBAL_POSITION):
 		return false
 
-	return _check_projectile_boundary_2d(projectile_owner.global_position)
+	return _check_projectile_boundary_2d(_context.get(ProjectileEngine.BehaviorContext.GLOBAL_POSITION))
 
 ## Checks boundary using Area2D
 func _check_projectile_boundary_2d(position: Vector2) -> bool:
@@ -48,13 +51,7 @@ func _check_projectile_boundary_2d(position: Vector2) -> bool:
 		if collision.collider == _projectile_boundary_2d:
 			is_inside = true
 			break
-	
 	if destroy_on_enter:
 		return is_inside
 	else:
 		return not is_inside
-
-## Called when the projectile is destroyed
-func on_destroy(_projectile: Node, _context: Dictionary) -> void:
-	# Add any boundary-based destruction effects here
-	pass

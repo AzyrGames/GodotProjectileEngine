@@ -32,7 +32,6 @@ var _result_value : Vector2
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SCALE
 	]
 
 func _init() -> void:
@@ -41,19 +40,16 @@ func _init() -> void:
 	_expression_y = Expression.new()
 
 ## Processes scale behavior by evaluating the expressions
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 
 	# Get current time/distance value for expression
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
 	# Initialize result with original value
 	var result := _value
-	
-	# Get base scale from context
-	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
 	
 	# Handle x scale if expression exists
 	if scale_expression_x:
@@ -64,11 +60,34 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		if not _expression_x.has_execute_failed() and _result_x is float:
 			match scale_modify_method_x:
 				ScaleModifyMethod.ADDITION:
-					result.x = _base_scale.x + _result_x
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].x = _value.x + _result_x
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2(_value.x + _result_x, _value.y) 
+				ScaleModifyMethod.ADDITION_OVER_BASE:
+					if _scale_behavior_values.has("scale_addition"):
+						_scale_behavior_values["scale_addition"].x = _result_x
+					else:
+						_scale_behavior_values["scale_addition"] = Vector2(_result_x, 0) 
 				ScaleModifyMethod.MULTIPLICATION:
-					result.x = _base_scale.x * _result_x
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].x = _value.x * _result_x
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2(_value.x * _result_x, _value.y) 
+				ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+					if _scale_behavior_values.has("scale_multiply"):
+						_scale_behavior_values["scale_multiply"].x = _result_x
+					else:
+						_scale_behavior_values["scale_multiply"] = Vector2(_result_x, 0) 
 				ScaleModifyMethod.OVERRIDE:
-					result.x = _result_x
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].x = _result_x
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2(_result_x, _value.y) 
+				null:
+					pass
+				_:
+					pass
 	
 	# Handle y scale if expression exists
 	if scale_expression_y:
@@ -79,10 +98,33 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 		if not _expression_y.has_execute_failed() and _result_y is float:
 			match scale_modify_method_y:
 				ScaleModifyMethod.ADDITION:
-					result.y = _base_scale.y + _result_y
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].y = _value.y + _result_y
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2(_value.x, _value.y + _result_y) 
+				ScaleModifyMethod.ADDITION_OVER_BASE:
+					if _scale_behavior_values.has("scale_addition"):
+						_scale_behavior_values["scale_addition"].y = _result_y
+					else:
+						_scale_behavior_values["scale_addition"] = Vector2(_result_y, 0) 
 				ScaleModifyMethod.MULTIPLICATION:
-					result.y = _base_scale.y * _result_y
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].y = _value.y * _result_y
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2( _value.x, _value.y * _result_y,) 
+				ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+					if _scale_behavior_values.has("scale_multiply"):
+						_scale_behavior_values["scale_multiply"].y = _result_y
+					else:
+						_scale_behavior_values["scale_multiply"] = Vector2(0, _result_y) 
 				ScaleModifyMethod.OVERRIDE:
-					result.y = _result_y
+					if _scale_behavior_values.has("scale_overwrite"):
+						_scale_behavior_values["scale_overwrite"].y = _result_y
+					else:
+						_scale_behavior_values["scale_overwrite"] = Vector2(_value.x, _result_y) 
+				null:
+					pass
+				_:
+					pass
 	
-	return result
+	return _scale_behavior_values

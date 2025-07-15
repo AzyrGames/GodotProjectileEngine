@@ -39,24 +39,21 @@ func _init() -> void:
 
 
 ## Processes direction behavior by evaluating the expression
-func process_behavior(value: Vector2, context: Dictionary) -> Array:
+func process_behavior(_value: Vector2, context: Dictionary) -> Dictionary:
 	# Parse the expression with our variable
-	# print(_expression_x)
-	# print(direction_x_expression)
-	# print(direction_expression_variable)
 	_expression_x.parse(direction_x_expression, [direction_expression_variable])
 	if _expression_x.parse(direction_x_expression, [direction_expression_variable]) != OK:
 		push_error("Failed to parse direction expression: " + _expression_x.get_error_text())
-		return [value]
+		return {"direction_overwrite": _value}
 
 	if _expression_y.parse(direction_y_expression, [direction_expression_variable]) != OK:
 		push_error("Failed to parse direction expression: " + _expression_y.get_error_text())
-		return [value]
+		return {"direction_overwrite": _value}
 
 
 	# Return original value if required context is missing
 	if not context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return [value]
+		return {"direction_overwrite": _value}
 
 	# Get current time/distance value for expression
 	var current_value: float = context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
@@ -65,29 +62,26 @@ func process_behavior(value: Vector2, context: Dictionary) -> Array:
 	var _result_x = _expression_x.execute([current_value])
 	# Fallback to original value if expression fails or returns wrong type
 	if _expression_x.has_execute_failed():
-		return [value]
+		return {"direction_overwrite": _value}
 	_parse_value.x = _result_x
 
 	var _result_y = _expression_y.execute([current_value])
 	# Fallback to original value if expression fails or returns wrong type
 	if _expression_y.has_execute_failed():
-		return [value]
+		return {"direction_overwrite": _value}
 
 	_parse_value.y = _result_y
 
 	match direction_modify_method:
-		## Yes, also need to track track every behaviors that modify the direction but....
 		DirectionModifyMethod.ROTATION:
-			return [value, _parse_value.angle()]
-			pass
-		# Later ha, to complicated, need to track every behaviors that modify the addition.
+			return {"direction_rotation": _parse_value.angle()}
 		DirectionModifyMethod.ADDITION:
 			if _parse_value == Vector2.ZERO: 
-				return [value]
-			return [value, 0.0, _parse_value * expression_streght]
+				return {"direction_overwrite": _value}
+			return {"direction_addition": _parse_value * expression_streght}
 		DirectionModifyMethod.OVERRIDE:
-			return [_parse_value]
+			return {"direction_overwrite": _parse_value}
 		_:
-			[value]
+			return {"direction_overwrite": _value}
 
-	return [_result_value]
+	return {"direction_overwrite": _value}

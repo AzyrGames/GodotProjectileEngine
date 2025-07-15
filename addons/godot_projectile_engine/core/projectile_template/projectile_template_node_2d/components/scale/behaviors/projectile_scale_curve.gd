@@ -34,15 +34,14 @@ var _scale_curve_sample_value : float
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
-		ProjectileEngine.BehaviorContext.BASE_SCALE,
 	]
 
 
 ## Processes scale behavior using curve sampling
-func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
+func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return _value
+		return {}
 		
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
@@ -59,15 +58,20 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Vector2:
 
 	_scale_curve_sample_value = scale_curve.sample_baked(_scale_curve_sample)
 	
-	# Get base scale from context
-	var _base_scale: Vector2 = _context.get(ProjectileEngine.BehaviorContext.BASE_SCALE, Vector2.ONE)
-	# print(_base_scale)
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return _base_scale + Vector2.ONE * _scale_curve_sample_value
+			return {"scale_overwrite" : _value + Vector2.ONE * _scale_curve_sample_value}
+		ScaleModifyMethod.ADDITION_OVER_BASE:
+			return {"scale_addition" : Vector2.ONE * _scale_curve_sample_value}
 		ScaleModifyMethod.MULTIPLICATION:
-			return _base_scale * _scale_curve_sample_value
+			return {"scale_overwrite" : _value * _scale_curve_sample_value}
+		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
+			return {"scale_multiply" : Vector2.ONE * _scale_curve_sample_value}
 		ScaleModifyMethod.OVERRIDE:
-			return Vector2.ONE * _scale_curve_sample_value
+			return {"scale_overwrite" : Vector2.ONE * _scale_curve_sample_value}
+		null:
+			{}
 		_:
-			return _value
+			{}
+
+	return {}
