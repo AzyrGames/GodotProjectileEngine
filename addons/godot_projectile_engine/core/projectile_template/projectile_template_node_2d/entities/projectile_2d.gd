@@ -2,7 +2,9 @@ extends Area2D
 class_name Projectile2D
 
 signal projectile_pierced(projectile_node: Projectile2D, pierced_node: Node2D)
+signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 
+ 
 
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
@@ -364,51 +366,51 @@ func update_projectile_2d(delta: float) -> void:
 
 func process_behavior_context_request(
 	_behavior_context: Dictionary, 
-	_behaviors_context_requests: Array[ProjectileEngine.BehaviorContext]
+	_behavior_context_requests: Array[ProjectileEngine.BehaviorContext]
 	) -> void:
-	for _behaviors_context_request in _behaviors_context_requests:
-		match _behaviors_context_request:
+	for _behavior_context_request in _behavior_context_requests:
+		match _behavior_context_request:
 			ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
-				_behavior_context.get_or_add(_behaviors_context_request, get_physics_process_delta_time())
+				_behavior_context.get_or_add(_behavior_context_request, get_physics_process_delta_time())
 
 			ProjectileEngine.BehaviorContext.GLOBAL_POSITION:
-				_behavior_context.get_or_add(_behaviors_context_request, global_position)
+				_behavior_context.get_or_add(_behavior_context_request, global_position)
 
 			ProjectileEngine.BehaviorContext.PROJECTILE_OWNER:
-				_behavior_context.get_or_add(_behaviors_context_request, owner)
+				_behavior_context.get_or_add(_behavior_context_request, owner)
 
 			ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER:
-				_behavior_context.get_or_add(_behaviors_context_request, self)
+				_behavior_context.get_or_add(_behavior_context_request, self)
 	
 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
-				_behavior_context.get_or_add(_behaviors_context_request, life_time_second)
+				_behavior_context.get_or_add(_behavior_context_request, life_time_second)
 
 			ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
-				_behavior_context.get_or_add(_behaviors_context_request, life_distance)
+				_behavior_context.get_or_add(_behavior_context_request, life_distance)
 
 			ProjectileEngine.BehaviorContext.BASE_SPEED:
-				_behavior_context.get_or_add(_behaviors_context_request, base_speed)
+				_behavior_context.get_or_add(_behavior_context_request, base_speed)
 
 			ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-				_behavior_context.get_or_add(_behaviors_context_request, [])
+				_behavior_context.get_or_add(_behavior_context_request, [])
 
 			ProjectileEngine.BehaviorContext.DIRECTION:
-				_behavior_context.get_or_add(_behaviors_context_request, direction)
+				_behavior_context.get_or_add(_behavior_context_request, direction)
 
 			ProjectileEngine.BehaviorContext.BASE_DIRECTION:
-				_behavior_context.get_or_add(_behaviors_context_request, base_direction)
+				_behavior_context.get_or_add(_behavior_context_request, base_direction)
 
 			ProjectileEngine.BehaviorContext.ROTATION:
-				_behavior_context.get_or_add(_behaviors_context_request, projectile_rotation)
+				_behavior_context.get_or_add(_behavior_context_request, projectile_rotation)
 
 			ProjectileEngine.BehaviorContext.BASE_SCALE:
-				_behavior_context.get_or_add(_behaviors_context_request, scale)
+				_behavior_context.get_or_add(_behavior_context_request, scale)
 
 			ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
 				var _rng_array := []
 				_rng_array.append(RandomNumberGenerator.new())
 				_rng_array.append(false)
-				_behavior_context.get_or_add(_behaviors_context_request, _rng_array)
+				_behavior_context.get_or_add(_behavior_context_request, _rng_array)
 			_:
 				pass
 	return 

@@ -5,6 +5,9 @@ extends Node
 signal projectile_instance_triggered(trigger_name: String, projectile_instance)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 
+signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
+
+
 signal projectile_instance_body_shape_entered(
 	projectile_instance, 
 	body_rid : RID, body: Node, body_shape_idx: int, 

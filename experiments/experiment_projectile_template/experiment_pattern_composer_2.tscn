@@ -49,7 +49,6 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 position = Vector2(-3, 0)
 script = ExtResource("2_aydl5")
-active = false
 projectile_composer_name = "pattern_1"
 projectile_template_2d = ExtResource("5_2t5vr")
 timing_scheduler = NodePath("../TimingScheduler")

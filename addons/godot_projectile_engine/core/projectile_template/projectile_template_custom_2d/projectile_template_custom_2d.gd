@@ -8,16 +8,11 @@ class_name ProjectileTemplateCustom2D
 @export var damage: float = 1.0
 ## Movement speed of the projectile in pixels per second
 @export var speed : float = 100
-@export var speed_projectile_behaviors : Array[ProjectileBehaviorSpeed]
-
+## The normalized Direction of the projectile moving toward
 @export var direction : Vector2 = Vector2.RIGHT
-@export var direction_projectile_behaviors : Array[ProjectileBehaviorDirection]
-@export var homing_projectile_behaviors : Array[ProjectileBehaviorHoming] = []
 
 ## Number of projectiles to preload in the object pool for better performance
 @export var projectile_pooling_amount : int = 500
-
-@export var destroy_projectile_behaviors : Array[ProjectileBehaviorDestroy]
 
 @export_group("Texture")
 ## Texture to use for the projectile
@@ -33,11 +28,8 @@ class_name ProjectileTemplateCustom2D
 ## Initial rotation of the texture in degrees
 @export_range(-360.0, 360.0) var rotation : float
 ## If true, texture rotation will rotate to match projectile's direction
-@export var rotation_projectile_behaviors : Array[ProjectileBehaviorRotation]
 
 @export_custom(PROPERTY_HINT_LINK, "suffix:") var scale : Vector2 = Vector2.ONE
-
-@export var scale_projectile_behaviors : Array[ProjectileBehaviorScale]
 
 @export_group("Collision")
 ## Collision shape used for physics detection
@@ -46,8 +38,14 @@ class_name ProjectileTemplateCustom2D
 @export_flags_2d_physics var collision_layer : int = 0
 ## Physics layers that can detect collisions with this projectile (bitmask)
 @export_flags_2d_physics var collision_mask : int = 0
+@export_group("Transform")
+@export var speed_projectile_behaviors : Array[ProjectileBehaviorSpeed]
+@export var direction_projectile_behaviors : Array[ProjectileBehaviorDirection]
+@export var rotation_projectile_behaviors : Array[ProjectileBehaviorRotation]
+@export var scale_projectile_behaviors : Array[ProjectileBehaviorScale]
 
-@export_group("Special Behavior")
+@export_group("Special")
+@export var destroy_projectile_behaviors : Array[ProjectileBehaviorDestroy]
 @export var piercing_projectile_behaviors : Array[ProjectileBehaviorPiercing]
 @export var bouncing_projectile_behaviors : Array[ProjectileBehaviorBouncing]
 @export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]

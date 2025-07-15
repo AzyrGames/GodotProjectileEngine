@@ -1,23 +1,101 @@
 extends ProjectileUpdater2D
 class_name ProjectileUpdaterCustom2D
 
-var projectile_damage: float = 1.0
+# var projectile_damage: float = 1.0
 
-var projectile_rotation_speed : float
+# var projectile_rotation_speed : float
 
-var behavior_static_context : Dictionary
-var behavior_dynamic_context : Dictionary
-var behavior_persist_context : Dictionary
+# var behavior_static_context : Dictionary
+# var behavior_dynamic_context : Dictionary
+# var behavior_persist_context : Dictionary
 
-var projectile_behavior_context : Dictionary
+# var behavior_context : Dictionary
+# var projectile_behaviors : Array[ProjectileBehavior] = []
+
+
+var velocity : Vector2
+var life_time_second: float
+var life_distance : float
+
+var base_speed : float
+var speed_final : float
+var _speed_addition : float
+var _speed_multiply : float
+var _speed_behavior_values : Dictionary
+var _speed_behavior_additions : Dictionary
+var _speed_behavior_multiplies : Dictionary
+var _speed_multiply_value : float
+
+var base_direction : Vector2
+var raw_direction : Vector2
+var direction_final : Vector2
+var _direction_behavior_values : Dictionary
+var _direction_behavior_additions : Dictionary
+var _direction_behavior_rotations : Dictionary
+var _direction_rotation_value : float
+var _direction_addition_value : Vector2
+var _direction_addition : Vector2
+
+var projectile_rotation : float
+var base_rotation : float
+var rotation_final : float
+var _rotation_behavior_values : Dictionary
+var _rotation_behavior_additions : Dictionary
+var _rotation_behavior_multiplies : Dictionary
+var _rotation_multiply_value : float
+var _rotation_multiply : float
+var _rotation_addition : float
+
+var projectile_scale : Vector2
+var base_scale : Vector2
+var scale_final : Vector2
+var _scale_behavior_values : Dictionary
+var _scale_behavior_additions : Dictionary
+var _scale_behavior_multiplies : Dictionary
+var _scale_multiply_value : Vector2
+var _scale_multiply : Vector2
+var _scale_addition : Vector2
+
+var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
+var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
+
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
+
+
 func init_updater_variable() -> void:
-	projectile_damage = projectile_template_2d.damage
-	projectile_speed = projectile_template_2d.speed
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
 	_new_projectile_instance = Callable(ProjectileInstanceCustom2D, "new")
-	pass
+
+	base_speed = projectile_template_2d.speed
+	base_direction = projectile_template_2d.direction
+	base_rotation = projectile_template_2d.rotation
+	projectile_rotation = projectile_template_2d.rotation
+	base_scale = projectile_template_2d.scale
+	projectile_scale = projectile_template_2d.scale
+
+	projectile_behaviors.clear()
+	projectile_behaviors.append_array(projectile_template_2d.speed_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.direction_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.rotation_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.scale_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.destroy_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.bouncing_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.piercing_projectile_behaviors)
+	projectile_behaviors.append_array(projectile_template_2d.trigger_projectile_behaviors)
+
+
+	for _projectile_behavior in projectile_behaviors:
+		if !_projectile_behavior: continue
+		if !_projectile_behavior.active: continue
+		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
+		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
+	
+# 	projectile_damage = projectile_template_2d.damage
+# 	projectile_speed = projectile_template_2d.speed
+# 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
+# 	_new_projectile_instance = Callable(ProjectileInstanceCustom2D, "new")
+# 	pass
 
 
 #region Spawn Projectile 
@@ -68,55 +146,117 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 #region Update Projectile
 
 func update_projectile_instances(delta: float) -> void:
-	projectile_damage = projectile_template_2d.damage
-	projectile_speed = projectile_template_2d.speed
-
-	projectile_behaviors.clear()
-	projectile_behaviors.append_array(projectile_template_2d.speed_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.direction_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.rotation_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.scale_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.destroy_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.homing_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.bouncing_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.piercing_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.trigger_projectile_behaviors)
-
-	var _behavior_requests_contexts : Array[ProjectileEngine.BehaviorContext]
-	var _behavior_requests_persist_contexts : Array[ProjectileEngine.BehaviorContext]
-
-	for _projectile_behvior in projectile_behaviors:
-		if !_projectile_behvior: continue
-		if !_projectile_behvior.active: continue
-		_behavior_requests_contexts.append_array(_projectile_behvior._request_behavior_context())
-		_behavior_requests_persist_contexts.append_array(_projectile_behvior._request_persist_behavior_context())
-
-	projectile_behavior_context.clear()
-
-	
 	# Check for projectile destroy condition
 	for index : int in projectile_active_index:
 		_projectile_instance = projectile_instance_array[index]
 		
-		_projectile_instance.life_time_second += delta
-		_projectile_instance.life_distance += _projectile_instance.velocity.length()
 		_projectile_instance.behavior_context.clear()
 		_projectile_instance.behavior_update_context.clear()
-		process_behavior_context_request(_projectile_instance.behavior_update_context, _projectile_instance, _behavior_requests_contexts)
-		process_behavior_context_request(_projectile_instance.behavior_persist_context, _projectile_instance, _behavior_requests_persist_contexts)
-		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_update_context)
-		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_persist_context)
 
-		for _projectile_behvior in projectile_behaviors:
-			if _projectile_behvior is ProjectileBehaviorDestroy:
-				if _projectile_behvior.process_behavior(null, _projectile_instance.behavior_context):
-					projectile_remove_index.append(index)
+		process_behavior_context_request(
+			_projectile_instance.behavior_update_context,
+			_projectile_instance, 
+			_behavior_context_requests_normal
+			)
 
+		for behavior_persist_context_key in _projectile_instance.behavior_persist_context.keys():
+			if !_projectile_instance.behavior_persist_context.has(behavior_persist_context_key):
+				_projectile_instance.behavior_persist_context.erase(behavior_persist_context_key)
+			
+		process_behavior_context_request(
+			_projectile_instance.behavior_persist_context,
+			_projectile_instance, 
+			_behavior_contest_requests_persist
+			)
+		
+		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_update_context, true)
+		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_persist_context, true)
+
+		_projectile_instance.life_time_second += delta
+		_projectile_instance.life_distance += _projectile_instance.velocity.length()
+
+		# Refresh Projectile Behavior Array Process
 		for _behavior_key in _projectile_instance.behavior_context.keys():
-			if _behavior_key == ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-				for _behavior_variable in _projectile_instance.behavior_context.get(_behavior_key):
-					if _behavior_variable is not BehaviorVariable: continue
-					_behavior_variable.is_processed = false
+			if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+				continue
+			for _behavior_variable in _projectile_instance.behavior_context.get(_behavior_key):
+				if _behavior_variable is not BehaviorVariable: continue
+				_behavior_variable.is_processed = false
+
+		# Projectile Trigger Behaviors
+		if projectile_template_2d.trigger_projectile_behaviors.size() > 0:
+			for _trigger_behavior in projectile_template_2d.trigger_projectile_behaviors:
+				if !_trigger_behavior:
+					continue
+				if !_trigger_behavior.active:
+					continue
+				var _trigger_behavior_values : Dictionary = _trigger_behavior.process_behavior(
+					null, _projectile_instance.behavior_context
+					)
+				if _trigger_behavior_values.has("is_trigger"):
+					if _trigger_behavior_values.is_trigger:
+						ProjectileEngine.projectile_instance_triggered.emit(
+							_trigger_behavior.trigger_name, _projectile_instance
+							)
+				if _trigger_behavior_values.has("is_destroy"):
+					if _trigger_behavior_values.is_destroy:
+						projectile_remove_index.append(index)
+						continue
+
+		# Projectile Piercing Behaviors
+		for _projectile_behavior in projectile_template_2d.piercing_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+
+			if !_projectile_behavior.active:
+				continue
+
+			var _piercing_behavior_values : Dictionary = _projectile_behavior.process_behavior(
+				null, _projectile_instance.behavior_context
+				)
+
+			if _piercing_behavior_values.size() <= 0:
+				continue
+			if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
+				ProjectileEngine.projectile_instance_pierced.emit(
+					_projectile_instance,
+					_piercing_behavior_values.get("pierced_node")
+					)
+
+		# Projectile Bouncing Behaviors
+		for _projectile_behavior in projectile_template_2d.bouncing_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+
+			if !_projectile_behavior.active:
+				continue
+
+			var projectile_bouncing_helper = ProjectileEngine.projectile_environment.projectile_bouncing_helper
+
+			if projectile_bouncing_helper == null:
+				ProjectileEngine.projectile_environment.request_bouncing_helper(
+					self.get_node("CollisionShape2D").duplicate()
+					)
+				projectile_bouncing_helper.collision_layer = self.collision_layer
+				projectile_bouncing_helper.collision_mask = self.collision_mask
+
+			var _bouncing_behavior_values : Dictionary = _projectile_behavior.process_behavior(
+				null, _projectile_instance.behavior_context
+				)
+			if _bouncing_behavior_values.size() <= 0:
+				continue
+			if _bouncing_behavior_values.has("is_bouncing") and _bouncing_behavior_values.has("direction_overwrite"):
+				_projectile_instance.direction = _bouncing_behavior_values.get("direction_overwrite")
+				pass
+
+		# Projectile Destroy Behaviors
+		for _projectile_behavior in projectile_template_2d.destroy_projectile_behaviors:
+			if !_projectile_behavior:
+				continue
+			if !_projectile_behavior.active:
+				continue
+			if _projectile_behavior.process_behavior(null, _projectile_instance.behavior_context):
+				projectile_remove_index.append(index)
 
 
 	# Destroy projectile
@@ -133,104 +273,246 @@ func update_projectile_instances(delta: float) -> void:
 	if _active_instances.size() <= 0: return
 	# Update active projectile
 	
-	for _active_instance : ProjectileInstanceCustom2D in _active_instances:
+	for _active_projectile_instance : ProjectileInstanceCustom2D in _active_instances:
+		# Process Projectile Transform Behaviors
+		if projectile_template_2d.speed_projectile_behaviors.size() > 0:
+			_speed_behavior_additions.clear()
+			_speed_behavior_multiplies.clear()
+			for _projectile_behavior in projectile_template_2d.speed_projectile_behaviors:
+				if !_projectile_behavior:
+					continue
+				if not _projectile_behavior.active:
+					continue
+				_speed_behavior_values = _projectile_behavior.process_behavior(
+					_active_projectile_instance.speed, 
+					_active_projectile_instance.behavior_context)
+				for _behavior_key in _speed_behavior_values.keys():
+					match _behavior_key:
+						"speed_overwrite":
+							_active_projectile_instance.speed = _speed_behavior_values.get("speed_overwrite")
+						"speed_addition":
+							_speed_behavior_additions.get_or_add(
+								_projectile_behavior, _speed_behavior_values.get("speed_addition")
+								)
+						"speed_multiply":
+							_speed_behavior_multiplies.get_or_add(
+								_projectile_behavior, _speed_behavior_values.get("speed_multiply")
+								)
 
-		for _projectile_behvior in projectile_behaviors:
-			if _projectile_behvior is ProjectileBehaviorSpeed:
-				_active_instance.speed = _projectile_behvior.process_behavior(_active_instance.speed, _active_instance.behavior_context)
-			elif _projectile_behvior is ProjectileBehaviorDirection:
-				var _new_direction_array: Array
-				_new_direction_array = _projectile_behvior.process_behavior(_active_instance.direction, _active_instance.behavior_context)
-				if _new_direction_array[0] != _active_instance.direction:
-					_active_instance.raw_direction = _new_direction_array[0]
-					_active_instance.direction = _active_instance.raw_direction.normalized()
+		if projectile_template_2d.direction_projectile_behaviors.size() > 0:
+			_direction_behavior_rotations.clear()
+			_direction_behavior_additions.clear()
+			for _projectile_behavior in projectile_template_2d.direction_projectile_behaviors:
+				if !_projectile_behavior:
+					continue
+				if not _projectile_behavior.active:
+					continue
+				_direction_behavior_values = _projectile_behavior.process_behavior(
+					_active_projectile_instance.direction, 
+					_active_projectile_instance.behavior_context
+					)
+				for _behavior_key in _direction_behavior_values.keys():
+					match _behavior_key:
+						"direction_overwrite":
+							_active_projectile_instance.direction = _direction_behavior_values.get(
+								"direction_overwrite"
+								)
+						"direction_rotation":
+							_direction_behavior_rotations.get_or_add(
+								_projectile_behavior, 
+								_direction_behavior_values.get("direction_rotation")
+								)
+						"direction_addition":
+							_direction_behavior_additions.get_or_add(
+								_projectile_behavior, 
+								_direction_behavior_values.get("direction_addition")
+								)
 
-				if _new_direction_array.size() == 2:
-					_active_instance.direction_rotation = _new_direction_array[1]
+		if projectile_template_2d.rotation_projectile_behaviors.size() > 0:
+			_rotation_behavior_additions.clear()
+			_rotation_behavior_multiplies.clear()
+			for _projectile_behavior in projectile_template_2d.rotation_projectile_behaviors:
+				if !_projectile_behavior:
+					continue
+				if not _projectile_behavior.active:
+					continue
+				_rotation_behavior_values = _projectile_behavior.process_behavior(
+					_active_projectile_instance.rotation, 
+					_active_projectile_instance.behavior_context
+					)
+				for _behavior_key in _rotation_behavior_values.keys():
+					match _behavior_key:
+						"rotation_overwrite":
+							_active_projectile_instance.rotation = _rotation_behavior_values.get("rotation_overwrite")
+						"rotation_addition":
+							_rotation_behavior_additions.get_or_add(
+								_projectile_behavior, 
+								_rotation_behavior_values.get("rotation_addition")
+								)
+						"rotation_multiply":
+							_rotation_behavior_multiplies.get_or_add(
+								_projectile_behavior, 
+								_rotation_behavior_values.get("rotation_multiply")
+								)			
 
-				if _new_direction_array.size() == 3:
-					_active_instance.direction_addition = _new_direction_array[2]
+		if projectile_template_2d.scale_projectile_behaviors.size() > 0:
+			_scale_behavior_additions.clear()
+			_scale_behavior_multiplies.clear()
+			for _projectile_behavior in projectile_template_2d.scale_projectile_behaviors:
+				if !_projectile_behavior:
+					continue
+				if not _projectile_behavior.active:
+					continue
+				_scale_behavior_values = _projectile_behavior.process_behavior(
+					_active_projectile_instance.scale, 
+					_active_projectile_instance.behavior_context
+					)
+				if _scale_behavior_values.size() <= 0:
+					continue
+				for _behavior_key in _scale_behavior_values.keys():
+					match _behavior_key:
+						"scale_overwrite":
+							_active_projectile_instance.scale = _scale_behavior_values.get("scale_overwrite")
+						"scale_addition":
+							_scale_behavior_additions.get_or_add(
+								_projectile_behavior, _scale_behavior_values.get("scale_addition")
+								)
+						"scale_multiply":
+							_scale_behavior_multiplies.get_or_add(
+								_projectile_behavior, 
+								_scale_behavior_values.get("scale_multiply")
+								)
 
-			elif _projectile_behvior is ProjectileBehaviorScale:
-				_active_instance.scale = _projectile_behvior.process_behavior(_active_instance.scale, _active_instance.behavior_context)
-			elif _projectile_behvior is ProjectileBehaviorRotation:
-				_active_instance.rotation = _projectile_behvior.process_behavior(_active_instance.rotation, _active_instance.behavior_context)
-			elif _projectile_behvior is ProjectileBehaviorHoming:
-				# _active_instance.speed = _projectile_behvior.process_behavior(_active_instance.speed, _active_instance.behavior_context)
-				var _homing_result: Array = _projectile_behvior.process_behavior(_active_instance.direction, _active_instance.behavior_context)
-		
-				if _homing_result.size() > 0 and _homing_result[0] != _active_instance.direction:
-					# Apply the new direction from homing behavior
-					_active_instance.raw_direction = _homing_result[0]
-					_active_instance.direction = _active_instance.raw_direction.normalized()
-		
-			elif _projectile_behvior is ProjectileBehaviorSpeed:
-				_active_instance.speed = _projectile_behvior.process_behavior(_active_instance.speed, _active_instance.behavior_context)
+		# Apply Projectile behaviors
+		rotation_final = _active_projectile_instance.rotation
+		if _rotation_behavior_multiplies.size() > 0:
+			_rotation_multiply_value = 0
+			for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
+				_rotation_multiply_value += _rotation_behavior_multiply
+			_rotation_multiply = base_rotation * _rotation_multiply_value
+			rotation_final += _rotation_multiply 
 
-		_active_instance.direction_final = _active_instance.direction
-		if _active_instance.direction_addition != Vector2.ZERO:
-			_active_instance.direction_final = (_active_instance.direction_final + _active_instance.direction_addition).normalized()
-		if _active_instance.direction_rotation != 0.0:
-			_active_instance.direction_final = _active_instance.base_direction.normalized().rotated(_active_instance.direction_rotation)
+		if _rotation_behavior_additions.size() > 0:
+			_rotation_addition = 0
+			for _rotation_behavior_addition in _rotation_behavior_additions.values():
+				_rotation_addition += _rotation_behavior_addition
+			rotation_final += _rotation_addition 
 
-		_active_instance.direction = _active_instance.direction_final
+		_active_projectile_instance.rotation = rotation_final
 
-		_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
-		_active_instance.global_position += _active_instance.velocity
+		scale_final = _active_projectile_instance.scale
+		if _scale_behavior_multiplies.size() > 0:
+			_scale_multiply_value = Vector2.ZERO
+			for _scale_behavior_multiply in _scale_behavior_multiplies.values():
+				_scale_multiply_value += _scale_behavior_multiply
+			_scale_multiply = base_scale * _scale_multiply_value
+			scale_final += _scale_multiply
 
-		_active_instance.transform = Transform2D(
-			_active_instance.rotation,
-			_active_instance.scale,
+		if _scale_behavior_additions.size() > 0:
+			_scale_addition = Vector2.ZERO
+			for _scale_behavior_addition in _scale_behavior_additions.values():
+				_scale_addition += _scale_behavior_addition
+			scale_final += _scale_addition
+
+		_active_projectile_instance.scale = scale_final
+
+		if _direction_behavior_rotations.size() > 0:
+			for _direction_behavior_rotation in _direction_behavior_rotations.values():
+				_direction_rotation_value += _direction_behavior_rotation
+
+		if _direction_behavior_additions.size() > 0:
+			for _direction_behavior_addition in _direction_behavior_additions.values():
+				_direction_addition_value += _direction_behavior_addition
+			_direction_addition = base_direction + _direction_addition_value
+
+		if _direction_addition != Vector2.ZERO:
+			_active_projectile_instance.direction = _direction_addition.normalized()
+
+		if _direction_rotation_value != 0:
+			_active_projectile_instance.direction = base_direction.rotated(_direction_rotation_value)
+
+		_active_projectile_instance.direction = _active_projectile_instance.direction.normalized()
+
+		speed_final = _active_projectile_instance.speed
+		if _speed_behavior_multiplies.size() > 0:
+			_speed_multiply_value = 0
+			for _speed_behavior_multiply in _speed_behavior_multiplies.values():
+				_speed_multiply_value += _speed_behavior_multiply
+			_speed_multiply = base_speed * _speed_multiply_value
+			speed_final += _speed_multiply
+
+		if _speed_behavior_additions.size() > 0:
+			_speed_addition = 0
+			for _speed_behavior_addition in _speed_behavior_additions.values():
+				_speed_addition += _speed_behavior_addition
+			speed_final += _speed_addition
+
+		_active_projectile_instance.velocity = speed_final * _active_projectile_instance.direction * delta
+
+		_active_projectile_instance.global_position += _active_projectile_instance.velocity
+
+		_active_projectile_instance.transform = Transform2D(
+			_active_projectile_instance.rotation,
+			_active_projectile_instance.scale,
 			0.0,
-			_active_instance.global_position
+			_active_projectile_instance.global_position
 			)
 
-		PS.area_set_shape_transform(projectile_area_rid, _active_instance.area_index, _active_instance.transform)
-
+		PS.area_set_shape_transform(
+			projectile_area_rid, 
+			_active_projectile_instance.area_index, 
+			_active_projectile_instance.transform
+			)
 
 func update_projectile_behavior_context() -> void:
 	pass
 
 
-func process_behavior_context_request(_current_context: Dictionary, _projectile_instance: ProjectileInstanceCustom2D, _behavior_contexts: Array[ProjectileEngine.BehaviorContext]) -> void:
-	for _behavior_context in _behavior_contexts:
-		match _behavior_context:
+func process_behavior_context_request(
+	_behavior_context: Dictionary, 
+	projectile_instance: ProjectileInstanceCustom2D, 
+	_behavior_context_requests: Array[ProjectileEngine.BehaviorContext]
+	) -> void:
+	for _behavior_context_request in _behavior_context_requests:
+		match _behavior_context_request:
 			ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
-				_current_context.get_or_add(_behavior_context, get_physics_process_delta_time())
+				_behavior_context.get_or_add(_behavior_context_request, get_physics_process_delta_time())
 
 			ProjectileEngine.BehaviorContext.GLOBAL_POSITION:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.global_position)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.global_position)
+
+			ProjectileEngine.BehaviorContext.PROJECTILE_OWNER:
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance)
 
 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.life_time_second)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_time_second)
 
 			ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.life_distance)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_distance)
 
 			ProjectileEngine.BehaviorContext.BASE_SPEED:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.base_speed)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_speed)
 
 			ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-				_current_context.get_or_add(_behavior_context, [])
+				_behavior_context.get_or_add(_behavior_context_request, [])
 
 			ProjectileEngine.BehaviorContext.DIRECTION:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.direction)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction)
 
 			ProjectileEngine.BehaviorContext.BASE_DIRECTION:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.base_direction)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_direction)
 
 			ProjectileEngine.BehaviorContext.ROTATION:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.rotation)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.rotation)
 
 			ProjectileEngine.BehaviorContext.BASE_SCALE:
-				_current_context.get_or_add(_behavior_context, _projectile_instance.scale)
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.scale)
 
 			ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
 				var _rng_array := []
 				_rng_array.append(RandomNumberGenerator.new())
 				_rng_array.append(false)
-				_current_context.get_or_add(_behavior_context, _rng_array)
-
+				_behavior_context.get_or_add(_behavior_context_request, _rng_array)
 			_:
 				pass
 	return 

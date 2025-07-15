@@ -38,7 +38,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	update_projectile_instances(delta)
-
 	# Free Projectile Updater when spawner destroyed and there are no active projectile instances
 	if spawner_destroyed and projectile_active_index.size() <= 0:
 		clear_projectile_updater()
