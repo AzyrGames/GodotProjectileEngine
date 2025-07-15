@@ -32,7 +32,7 @@ metadata/_custom_type_script = "uid://ucfv3eq8fafp"
 
 [sub_resource type="Resource" id="Resource_8udcj"]
 script = ExtResource("10_vedyp")
-scale_modify_value = 1.0
+scale_modify_value = 10.0
 scale_process_mode = 1
 scale_modify_method = 1
 active = true
