@@ -107,8 +107,8 @@ rotation = 0.263645
 shape = SubResource("RectangleShape2D_pd4vx")
 
 [node name="ProjectileBoundary2D" type="Area2D" parent="."]
-collision_layer = 257
-collision_mask = 257
+collision_layer = 65536
+collision_mask = 65536
 script = ExtResource("9_r6nwn")
 metadata/_custom_type_script = "uid://byoirooyga8su"
 
@@ -122,19 +122,4 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-114, 0)
 rotation = -0.785397
-shape = SubResource("RectangleShape2D_r6nwn")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-95, -94)
-rotation = 1.0472
-shape = SubResource("RectangleShape2D_r6nwn")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(45, 49)
-rotation = 1.0472
-shape = SubResource("RectangleShape2D_r6nwn")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(87.75, -64.2501)
-rotation = 2.35619
 shape = SubResource("RectangleShape2D_r6nwn")

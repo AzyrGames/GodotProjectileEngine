@@ -1,7 +1,7 @@
 extends ProjectileBehaviorBouncing
 class_name ProjectileBouncingReflect
 
-## Boucing only work with body, NOT AREA
+## bouncing only work with body, NOT AREA
 
 @export var bouncing_count : int = 3
 
@@ -50,16 +50,41 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 	_should_bouncing = false
 	_bouncing_behavior_values = {}
 	_behavior_variable_bouncing_reflect.is_processed = true
+
+	if _behavior_variable_bouncing_reflect.is_bouncing == false and _behavior_variable_bouncing_reflect.is_bouncing_done:
+		return {}
+
+	if _behavior_variable_bouncing_reflect.is_bouncing_just_done:
+		_behavior_variable_bouncing_reflect.is_bouncing_done = true
+
 	var _new_direction : Vector2
+	_behavior_variable_bouncing_reflect.is_bouncing = false
 	if _behavior_owner.has_overlapping_bodies():
-		var _collision_body = ProjectileEngine.projectile_environment.projectile_bouncing_helper
-		_collision_body.transform = _behavior_owner.transform
-		_collision_body.force_update_transform()
-		var _collider = _collision_body.move_and_collide(Vector2.ZERO)
-		if !_collider:
-			return {}
-		_new_direction = _behavior_owner.direction.reflect(_collider.get_normal()) * -1.0
-		_bouncing_behavior_values["is_bouncing"] = _should_bouncing
-		_bouncing_behavior_values["direction_overwrite"] = _new_direction
+		for _overlap_body  in _behavior_owner.get_overlapping_bodies():
+			if not _overlap_body.collision_layer & _behavior_owner.collision_mask:
+				continue
+
+			var _collision_body = ProjectileEngine.projectile_environment.projectile_bouncing_helper
+			_collision_body.transform = _behavior_owner.transform
+			_collision_body.force_update_transform()
+			var _collider = _collision_body.move_and_collide(Vector2.ZERO)
+			if !_collider:
+				return {}
+			_new_direction = _behavior_owner.direction.reflect(_collider.get_normal()) * -1.0
+			_bouncing_behavior_values["is_bouncing"] = _should_bouncing
+			_bouncing_behavior_values["direction_overwrite"] = _new_direction
+			
+			_behavior_variable_bouncing_reflect.is_bouncing = true
+			_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
+
+			if bouncing_count == 1:
+				_bouncing_behavior_values["bounced_node"] = _overlap_body
+				_behavior_variable_bouncing_reflect.is_bouncing_just_done = true
+
+			elif _behavior_variable_bouncing_reflect.current_bouncing_count < bouncing_count - 1:
+				_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
+				_behavior_variable_bouncing_reflect.current_bouncing_count += 1
+			else:
+				_behavior_variable_bouncing_reflect.is_bouncing_just_done = true
 
 	return _bouncing_behavior_values

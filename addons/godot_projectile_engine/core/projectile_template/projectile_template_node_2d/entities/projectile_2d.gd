@@ -178,12 +178,14 @@ func update_projectile_2d(delta: float) -> void:
 	for _projectile_behavior in piercing_projectile_behaviors:
 		if !_projectile_behavior:
 			continue
+
 		if !_projectile_behavior.active:
 			continue
-		# print("piercing")
+
 		var _piercing_behavior_values : Dictionary = _projectile_behavior.process_behavior(null, projectile_behavior_context)
 		if _piercing_behavior_values.size() <= 0:
 			continue
+
 		if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
 			projectile_pierced.emit(self, _piercing_behavior_values.get("pierced_node"))
 
@@ -191,8 +193,10 @@ func update_projectile_2d(delta: float) -> void:
 	for _projectile_behavior in bouncing_projectile_behaviors:
 		if !_projectile_behavior:
 			continue
+
 		if !_projectile_behavior.active:
 			continue
+
 		if ProjectileEngine.projectile_environment.projectile_bouncing_helper == null:
 			ProjectileEngine.projectile_environment.request_bouncing_helper(self.get_node("CollisionShape2D").duplicate())
 			ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.collision_layer
@@ -204,7 +208,6 @@ func update_projectile_2d(delta: float) -> void:
 		if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has("direction_overwrite"):
 			direction = _bouncing_behavior_values.get("direction_overwrite")
 			pass
-			# projectile_pierced.emit(self, _bouncing_behavior_values.get("pierced_node"))
 
 	# Projectile Destroy Behaviors
 	for _projectile_behavior in destroy_projectile_behaviors:

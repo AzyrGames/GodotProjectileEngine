@@ -90,16 +90,14 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 					_should_piercing = true
 					_piercing_behavior_values["is_piercing"] = true
 					_piercing_behavior_values["pierced_node"] = _overlap_area
+					_behavior_variable_piercing.pierced_targets.append(_overlap_area)
 
 					if piercing_count == 1:
-						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
 						_behavior_variable_piercing.is_piercing_just_done = true
 
 					elif _behavior_variable_piercing.current_piercing_count < piercing_count - 1:
-						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
 						_behavior_variable_piercing.current_piercing_count += 1
 					else:
-						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
 						_behavior_variable_piercing.is_piercing_just_done = true
 
 			else:
