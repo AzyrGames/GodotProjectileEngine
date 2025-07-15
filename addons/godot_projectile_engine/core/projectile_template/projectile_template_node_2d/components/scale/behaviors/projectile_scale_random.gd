@@ -37,10 +37,17 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	var _variable_array: Array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 	var _behavior_variable_scale_random : BehaviorVariableScaleRandom
 
+	if _variable_array.size() <= 0:
+		_behavior_variable_scale_random = null
+
 	for _variable in _variable_array:
 		if _variable is BehaviorVariableScaleRandom:
 			if !_variable.is_processed:
 				_behavior_variable_scale_random = _variable
+			break
+		else:
+			_behavior_variable_scale_random = null
+
 	if _behavior_variable_scale_random == null:
 		_behavior_variable_scale_random = BehaviorVariableScaleRandom.new()
 		_variable_array.append(_behavior_variable_scale_random)

@@ -3,30 +3,133 @@ class_name ProjectileBehaviorPiercing
 
 ## Base class for all projectile piercing behaviors in the projectile engine.
 ##
-## Provides core functionality and interface that all piercing behavior implementations
-## must follow. Piercing behaviors determine how projectiles interact with targets
+## Piercing behaviors determine how projectiles interact with targets
 ## they can pierce through.
 
-## Whether to emit a signal when piercing occurs
-@export var emit_piercing_signal: bool = true
+func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
+	return [
+		ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER
+	]
 
-## Signal emitted when projectile pierces a target
-signal target_pierced(projectile: Node, target: Node, piercing_count: int)
+func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
+	return [
+		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE
+	]
 
-## Signal emitted when max piercing count is reached
-signal max_piercing_reached(projectile: Node, total_pierced: int)
+@export var piercing_count : int = 3
+@export var pierce_area : bool = false
+@export_flags_2d_physics var pierce_area_layer : int = 0
+@export var pierce_body : bool = false
+@export_flags_2d_physics var pierce_body_layer : int = 0
+
+
+var _variable_array : Array
+var _behavior_variable_piercing : BehaviorVariablePiercing
+var _should_piercing : bool = false
+
+var _piercing_behavior_values : Dictionary
 
 ## Processes the piercing behavior and returns whether piercing should occur
 ## Returns bool: true if projectile should pierce, false if it should be stopped/destroyed
-func process_behavior(_value, _context: Dictionary) -> bool:
-	return true
+func process_behavior(_value, _context: Dictionary) -> Dictionary:
+	if piercing_count <= 0:
+		return {}
 
-## Called when the projectile pierces a target
-## Override this to add custom piercing effects
-func on_pierce(_projectile: Node, _target: Node, _context: Dictionary) -> void:
-	pass
+	if !pierce_area and !pierce_body:
+		return {}
 
-## Called when max piercing count is reached
-## Override this to add custom behavior when piercing limit is hit
-func on_max_piercing_reached(_projectile: Node, _context: Dictionary) -> void:
-	pass
+	if !_context.has(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE):
+		return {}
+
+	_variable_array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+
+	if _variable_array.size() <= 0:
+		_behavior_variable_piercing = null
+
+	for _variable in _variable_array:
+		if _variable is BehaviorVariablePiercing:
+			if !_variable.is_processed:
+				_behavior_variable_piercing = _variable
+				break
+		else:
+			_behavior_variable_piercing = null
+
+	if _behavior_variable_piercing == null:
+		_behavior_variable_piercing = BehaviorVariablePiercing.new()
+		_variable_array.append(_behavior_variable_piercing)
+
+	_should_piercing = false
+	_piercing_behavior_values = {}
+	_behavior_variable_piercing.is_processed = true
+
+	if _behavior_variable_piercing.is_overlap_piercing == false and _behavior_variable_piercing.is_piercing_done:
+		return {}
+
+	if _behavior_variable_piercing.is_piercing_just_done:
+		_behavior_variable_piercing.is_piercing_done = true
+
+	if not _context.has(ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER):
+		return {}
+
+	var _behavior_owner = _context.get(ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER)
+	if not _behavior_owner:
+		return {}
+
+	if _behavior_owner is Projectile2D:
+		if pierce_area:
+			if _behavior_owner.has_overlapping_areas():
+				var _overlap_areas : Array[Area2D] = _behavior_owner.get_overlapping_areas()
+				for _overlap_area in _overlap_areas:
+					if _behavior_variable_piercing.pierced_targets.has(_overlap_area):
+						continue
+					if not _overlap_area.collision_layer & pierce_area_layer:
+						continue
+
+					_behavior_variable_piercing.is_overlap_piercing = true
+
+					_should_piercing = true
+					_piercing_behavior_values["is_piercing"] = true
+					_piercing_behavior_values["pierced_node"] = _overlap_area
+
+					if piercing_count == 1:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
+						_behavior_variable_piercing.is_piercing_just_done = true
+
+					elif _behavior_variable_piercing.current_piercing_count < piercing_count - 1:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
+						_behavior_variable_piercing.current_piercing_count += 1
+					else:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_area)
+						_behavior_variable_piercing.is_piercing_just_done = true
+
+			else:
+				_behavior_variable_piercing.is_overlap_piercing = false
+		if pierce_body:
+			if _behavior_owner.has_overlapping_bodies():
+				var _overlap_bobies : Array[Area2D] = _behavior_owner.get_overlapping_bodies()
+				for _overlap_body in _overlap_bobies:
+					if _behavior_variable_piercing.pierced_targets.has(_overlap_body):
+						continue
+					if not _overlap_body.collision_layer & pierce_area_layer:
+						continue
+
+					_behavior_variable_piercing.is_overlap_piercing = true
+
+					_should_piercing = true
+					_piercing_behavior_values["is_piercing"] = true
+					_piercing_behavior_values["pierced_node"] = _overlap_body
+
+					if piercing_count == 1:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_body)
+						_behavior_variable_piercing.is_piercing_just_done = true
+
+					elif _behavior_variable_piercing.current_piercing_count < piercing_count - 1:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_body)
+						_behavior_variable_piercing.current_piercing_count += 1
+					else:
+						_behavior_variable_piercing.pierced_targets.append(_overlap_body)
+						_behavior_variable_piercing.is_piercing_just_done = true
+			else:
+				_behavior_variable_piercing.is_overlap_piercing = false
+
+	return _piercing_behavior_values

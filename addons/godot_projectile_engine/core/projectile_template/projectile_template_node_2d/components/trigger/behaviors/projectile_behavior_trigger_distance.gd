@@ -31,10 +31,16 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 	_variable_array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 
 	# Set new instance variable array, if not it's will process the past variable
+
+	if _variable_array.size() <= 0:
+		_behavior_variable_trigger = null
 	for _variable in _variable_array:
 		if _variable is BehaviorVariableTrigger:
 			if !_variable.is_processed:
 				_behavior_variable_trigger = _variable
+			break
+		else:
+			_behavior_variable_trigger = null
 
 	if _behavior_variable_trigger == null:
 		_behavior_variable_trigger = BehaviorVariableTrigger.new()

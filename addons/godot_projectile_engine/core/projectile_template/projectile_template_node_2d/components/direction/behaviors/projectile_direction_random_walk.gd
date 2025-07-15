@@ -47,10 +47,17 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictio
 	var _variable_array: Array = _component_context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 	var _behavior_variable_random_walk : BehaviorVariableRandomWalk
 
+	if _variable_array.size() <= 0:
+		_behavior_variable_random_walk = null
+
 	for _variable in _variable_array:
 		if _variable is BehaviorVariableRandomWalk:
 			if !_variable.is_processed:
 				_behavior_variable_random_walk = _variable
+			break
+		else:
+			_behavior_variable_random_walk = null
+
 	if _behavior_variable_random_walk == null:
 		_behavior_variable_random_walk = BehaviorVariableRandomWalk.new()
 		_variable_array.append(_behavior_variable_random_walk)

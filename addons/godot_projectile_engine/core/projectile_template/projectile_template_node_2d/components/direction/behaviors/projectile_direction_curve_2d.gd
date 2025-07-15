@@ -42,11 +42,17 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictio
 	var _behavior_variable_direction_curve_2d : BehaviorVariableDirectionCurve2D
 	_direction_behavior_values.clear()
 
+	if _variable_array.size() <= 0:
+		_behavior_variable_direction_curve_2d = null
 
 	for _variable in _variable_array:
 		if _variable is BehaviorVariableDirectionCurve2D:
 			if !_variable.is_processed:
 				_behavior_variable_direction_curve_2d = _variable
+			break
+		else:
+			_behavior_variable_direction_curve_2d = null
+
 	if _behavior_variable_direction_curve_2d == null:
 		_behavior_variable_direction_curve_2d = BehaviorVariableDirectionCurve2D.new()
 		_behavior_variable_direction_curve_2d.last_sample_position = curve_2d.sample_baked(0.0)

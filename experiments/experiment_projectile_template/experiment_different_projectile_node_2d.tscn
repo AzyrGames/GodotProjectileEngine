@@ -40,8 +40,7 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("4_pd4vx")
-duration = 0.2
-repeat_count = 25
+repeat_count = 1
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="PatternComposer2D" type="Node" parent="."]
@@ -63,9 +62,41 @@ metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-10, -16)
+rotation = -0.260999
 collision_layer = 256
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(111, 32)
+rotation = 0.263645
+shape = SubResource("RectangleShape2D_pd4vx")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(32, -3)
+rotation = -0.260999
+collision_layer = 256
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(111, 32)
+rotation = 0.263645
+shape = SubResource("RectangleShape2D_pd4vx")
+
+[node name="Area2D3" type="Area2D" parent="."]
+position = Vector2(74, 9)
+rotation = -0.260999
+collision_layer = 256
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(111, 32)
+rotation = 0.263645
+shape = SubResource("RectangleShape2D_pd4vx")
+
+[node name="Area2D4" type="Area2D" parent="."]
+position = Vector2(122, 21)
+rotation = -0.260999
+collision_layer = 256
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D4"]
 position = Vector2(111, 32)
 rotation = 0.263645
 shape = SubResource("RectangleShape2D_pd4vx")

@@ -1,6 +1,9 @@
 extends Area2D
 class_name Projectile2D
 
+signal projectile_pierced(projectile_node: Projectile2D, pierced_node: Node2D)
+
+
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
 # @export var pooling_amount : int = 200
@@ -146,6 +149,16 @@ func update_projectile_2d(delta: float) -> void:
 	life_time_second += delta
 	life_distance += velocity.length()
 
+	# print(projectile_behavior_context)
+
+	# Refresh Projectile Behavior Array Process
+	for _behavior_key in projectile_behavior_context.keys():
+		if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+			continue
+		for _behavior_variable in projectile_behavior_context.get(_behavior_key):
+			if _behavior_variable is not BehaviorVariable: continue
+			_behavior_variable.is_processed = false
+
 	# Projectile Trigger Behaviors
 	if trigger_projectile_behaviors.size() > 0:
 		for _trigger_behavior in trigger_projectile_behaviors:
@@ -161,20 +174,28 @@ func update_projectile_2d(delta: float) -> void:
 				if _trigger_behavior_values.is_destroy:
 					queue_free_projectile()
 
-	# Free Projectile Behaviors
-	for _projectile_behavior in projectile_behaviors:
-		if _projectile_behavior is not ProjectileBehaviorDestroy:
+	# Projectile Piercing Behaviors
+	for _projectile_behavior in piercing_projectile_behaviors:
+		if !_projectile_behavior:
 			continue
+		if !_projectile_behavior.active:
+			continue
+		# print("piercing")
+		var _piercing_behavior_values : Dictionary = _projectile_behavior.process_behavior(null, projectile_behavior_context)
+		if _piercing_behavior_values.size() <= 0:
+			continue
+		if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
+			projectile_pierced.emit(self, _piercing_behavior_values.get("pierced_node"))
+
+	# Projectile Destroy Behaviors
+	for _projectile_behavior in destroy_projectile_behaviors:
+		if !_projectile_behavior:
+			continue
+		if !_projectile_behavior.active:
+			continue
+
 		if _projectile_behavior.process_behavior(null, projectile_behavior_context):
 			queue_free_projectile()
-
-	# Refresh Projectile Behavior Array Process
-	for _behavior_key in projectile_behavior_context.keys():
-		if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-			continue
-		for _behavior_variable in projectile_behavior_context.get(_behavior_key):
-			if _behavior_variable is not BehaviorVariable: continue
-			_behavior_variable.is_processed = false
 
 	# Process Projectile Transform Behaviors
 	_speed_behavior_additions.clear()
