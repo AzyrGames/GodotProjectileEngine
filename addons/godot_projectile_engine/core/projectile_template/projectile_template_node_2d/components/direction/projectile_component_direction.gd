@@ -60,12 +60,7 @@ func process_projectile_behavior(_behaviors: Array[ProjectileBehavior], _context
 
 func get_direction() -> Vector2:
 	var _final_direction := direction
-	# if direction_addition != Vector2.ZERO:
-	# 	_final_direction = (_final_direction + direction_addition).normalized()
-	# # print("pre: ", _final_direction)
 	if direction_rotation != 0.0:
-		# print("direction_rotation: ", rad_to_deg(direction_rotation))
-		# print(_final_direction, _final_direction.rotated(deg_to_rad(180)))
 		_final_direction = _final_direction.rotated(direction_rotation)
 	return _final_direction
 	pass

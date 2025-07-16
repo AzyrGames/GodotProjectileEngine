@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cj68gunmdf1d2"]
+[gd_scene load_steps=38 format=3 uid="uid://cj68gunmdf1d2"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_rcfos"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_gtb2u"]
@@ -7,10 +7,7 @@
 [ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="5_f4puq"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="6_7pkc1"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="6_kcu6t"]
-[ext_resource type="Script" uid="uid://bt5psh63jjk12" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_distance.gd" id="6_q6qyn"]
-[ext_resource type="Script" uid="uid://c5xm8oap2qr4y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_time.gd" id="7_0k070"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="7_1blyh"]
-[ext_resource type="Script" uid="uid://idk3toy21bit" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_homing.gd" id="7_08bj1"]
 [ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="8_a48cx"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="8_lqp6s"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="9_ecoa7"]
@@ -23,30 +20,14 @@
 [ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="12_ijeta"]
 [ext_resource type="Script" uid="uid://ds4xe1drkirks" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_random_walk.gd" id="12_vjyk3"]
 [ext_resource type="Script" uid="uid://d35n2jogawdcq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_acceleration.gd" id="13_fiy2d"]
-[ext_resource type="Script" uid="uid://bh7h7cpsbcrlg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/homing/behaviors/projectile_homing_simple.gd" id="14_2lb1m"]
 [ext_resource type="Script" uid="uid://bnautbd467qq2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_curve.gd" id="14_q6qyn"]
 [ext_resource type="Script" uid="uid://dkm0o1v05i58y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_expression.gd" id="15_0k070"]
 [ext_resource type="Script" uid="uid://chmjku6lmvmaq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_clamp.gd" id="16_pxrv5"]
 [ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_arrowhead_1.png" id="17_f4puq"]
-[ext_resource type="Script" uid="uid://btri3e8whkvjv" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_spin.gd" id="17_n04yf"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="17_yumop"]
 [ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_accelerate.gd" id="19_s78sl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7pkc1"]
-
-[sub_resource type="Resource" id="Resource_41qqr"]
-script = ExtResource("6_q6qyn")
-destroy_distance = 1000.0
-emit_destroy_signal = true
-active = true
-metadata/_custom_type_script = "uid://bt5psh63jjk12"
-
-[sub_resource type="Resource" id="Resource_08sl7"]
-script = ExtResource("7_0k070")
-destroy_time = 5.0
-emit_destroy_signal = true
-active = true
-metadata/_custom_type_script = "uid://c5xm8oap2qr4y"
 
 [sub_resource type="Resource" id="Resource_mb3tj"]
 script = ExtResource("10_yumop")
@@ -77,27 +58,10 @@ direction_modify_method = 0
 active = true
 metadata/_custom_type_script = "uid://ds4xe1drkirks"
 
-[sub_resource type="Resource" id="Resource_cphva"]
-script = ExtResource("14_2lb1m")
-target_group = "TestHoming"
-steer_speed = 5.0
-homing_strength = 1.0
-max_homing_distance = 0.0
-active = true
-metadata/_custom_type_script = "uid://bh7h7cpsbcrlg"
-
-[sub_resource type="Resource" id="Resource_lci2t"]
-script = ExtResource("17_n04yf")
-spin_speed = 0.541052
-process_mode = 1
-modify_method = 0
-active = true
-metadata/_custom_type_script = "uid://btri3e8whkvjv"
-
 [sub_resource type="Resource" id="Resource_pityp"]
 script = ExtResource("19_s78sl")
-acceleration_speed = 1.0
-max_scale = 3.0
+scale_acceleration_value = 1.0
+scale_max = 2.0
 active = true
 metadata/_custom_type_script = "uid://d0yojlb4mvhsj"
 
@@ -141,24 +105,23 @@ metadata/_custom_type_script = "uid://chmjku6lmvmaq"
 script = ExtResource("11_qc61q")
 damage = 1.0
 speed = 100.0
-speed_projectile_behaviors = Array[ExtResource("12_ijeta")]([SubResource("Resource_vq1eq"), SubResource("Resource_vjyk3"), SubResource("Resource_2lb1m"), SubResource("Resource_n04yf")])
 direction = Vector2(1, 0)
-direction_projectile_behaviors = Array[ExtResource("6_7pkc1")]([SubResource("Resource_mb3tj"), SubResource("Resource_h6whu"), SubResource("Resource_523xv")])
-homing_projectile_behaviors = Array[ExtResource("7_08bj1")]([SubResource("Resource_cphva")])
 projectile_pooling_amount = 500
-destroy_projectile_behaviors = Array[ExtResource("5_f4puq")]([SubResource("Resource_41qqr"), SubResource("Resource_08sl7")])
 texture = ExtResource("17_f4puq")
 texture_visible = true
 texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
 skew = 0.0
 rotation = 0.0
-rotation_projectile_behaviors = Array[ExtResource("9_ecoa7")]([SubResource("Resource_lci2t")])
 scale = Vector2(1, 1)
-scale_projectile_behaviors = Array[ExtResource("10_yy5xx")]([SubResource("Resource_pityp")])
 collision_shape = SubResource("CircleShape2D_7pkc1")
 collision_layer = 512
 collision_mask = 64
+speed_projectile_behaviors = Array[ExtResource("12_ijeta")]([SubResource("Resource_vq1eq"), SubResource("Resource_vjyk3"), SubResource("Resource_2lb1m"), SubResource("Resource_n04yf")])
+direction_projectile_behaviors = Array[ExtResource("6_7pkc1")]([SubResource("Resource_mb3tj"), SubResource("Resource_h6whu"), SubResource("Resource_523xv")])
+rotation_projectile_behaviors = Array[ExtResource("9_ecoa7")]([])
+scale_projectile_behaviors = Array[ExtResource("10_yy5xx")]([SubResource("Resource_pityp")])
+destroy_projectile_behaviors = Array[ExtResource("5_f4puq")]([])
 piercing_projectile_behaviors = Array[ExtResource("8_a48cx")]([])
 bouncing_projectile_behaviors = Array[ExtResource("4_k8pw7")]([])
 trigger_projectile_behaviors = Array[ExtResource("17_yumop")]([])

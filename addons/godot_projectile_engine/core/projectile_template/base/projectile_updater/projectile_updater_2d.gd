@@ -32,13 +32,18 @@ var _active_instances : Array[ProjectileInstance2D]
 var _projectile_instance : ProjectileInstance2D
 var _new_projectile_instance : Callable
 
+
+var _overlapping_areas : Dictionary
+var _overlapping_bodies : Dictionary
+
+
+
 func _ready() -> void:
 	setup_projectile_updater()
 
 
 func _physics_process(delta: float) -> void:
 	update_projectile_instances(delta)
-
 	# Free Projectile Updater when spawner destroyed and there are no active projectile instances
 	if spawner_destroyed and projectile_active_index.size() <= 0:
 		clear_projectile_updater()
@@ -57,6 +62,9 @@ func _draw() -> void:
 #region Setup Projectile
 
 func setup_projectile_updater() -> void:
+	projectile_collision_layer = projectile_template_2d.collision_layer
+	projectile_collision_mask = projectile_template_2d.collision_mask
+	projectile_collision_shape = projectile_template_2d.collision_shape
 	init_updater_variable()
 	setup_projectile_area_rid()
 	create_projectile_pool()
@@ -76,6 +84,7 @@ func setup_projectile_area_rid() -> void:
 	PS.area_set_transform(projectile_area_rid, Transform2D())
 	setup_area_callback(projectile_area_rid)
 
+
 	projectile_template_2d.projectile_area_rid = projectile_area_rid
 
 func create_projectile_pool() -> void:
@@ -90,64 +99,97 @@ func create_projectile_pool() -> void:
 		_projectile_instance = _new_projectile_instance.call()
 		if _collision_rid:
 			PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
-			
+
+		_projectile_instance.projectile_updater = self	
 		_projectile_instance.area_rid = projectile_area_rid
 		_projectile_instance.area_index = _index
 
 		projectile_instance_array.append(_projectile_instance)
 
 func setup_area_callback(_projectile_area: RID) -> void:
-	PS.area_set_monitor_callback(_projectile_area, _body_monitor_callback)
 	PS.area_set_area_monitor_callback(_projectile_area, _area_monitor_callback)
+	PS.area_set_monitor_callback(_projectile_area, _body_monitor_callback)
+	pass
+
+func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	var _instance_node : Area2D = instance_from_id(instance_id)
+	if !is_instance_valid(_instance_node):
+		return
+	match status:
+		PS.AREA_BODY_ADDED:
+			
+			ProjectileEngine.projectile_instance_area_shape_entered.emit(
+				projectile_instance_array[self_shape_idx],
+				area_rid, _instance_node, area_shape_idx,
+				projectile_area_rid, self_shape_idx
+			)
+
+			ProjectileEngine.projectile_instance_area_entered.emit(
+				projectile_instance_array[self_shape_idx], _instance_node
+			)
+
+			if _overlapping_areas.has(self_shape_idx):
+				_overlapping_areas[self_shape_idx].append(_instance_node)
+			else:
+				_overlapping_areas.get_or_add(self_shape_idx, [_instance_node])
+
+		PS.AREA_BODY_REMOVED:
+			ProjectileEngine.projectile_instance_area_shape_exited.emit(
+				projectile_instance_array[self_shape_idx],
+				area_rid, _instance_node, area_shape_idx,
+				projectile_area_rid, self_shape_idx
+			)
+
+			ProjectileEngine.projectile_instance_area_exited.emit(
+				projectile_instance_array[self_shape_idx], _instance_node
+			)
+
+			if _overlapping_areas.has(self_shape_idx):
+				_overlapping_areas[self_shape_idx].erase(_instance_node)
+			
+			if _overlapping_areas[self_shape_idx].size() <= 0:
+				_overlapping_areas.erase(self_shape_idx)
+	pass
+
+func _body_monitor_callback(status: int, body_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx: int) -> void:
+	var _instance_node : PhysicsBody2D = instance_from_id(instance_id)
+	if !is_instance_valid(_instance_node):
+		return
+	match status:
+		PS.AREA_BODY_ADDED:
+			ProjectileEngine.projectile_instance_body_shape_entered.emit(
+				projectile_instance_array[self_shape_idx],
+				body_rid, instance_from_id(instance_id), body_shape_idx,
+				projectile_area_rid, self_shape_idx
+			)
+
+			ProjectileEngine.projectile_instance_body_entered.emit(
+				projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+			)
+			if _overlapping_bodies.has(self_shape_idx):
+				_overlapping_bodies[self_shape_idx].append(_instance_node)
+			else:
+				_overlapping_bodies.get_or_add(self_shape_idx, [_instance_node])
+
+		PS.AREA_BODY_REMOVED:
+			ProjectileEngine.projectile_instance_body_shape_exited.emit(
+				projectile_instance_array[self_shape_idx],
+				body_rid, instance_from_id(instance_id), body_shape_idx,
+				projectile_area_rid, self_shape_idx
+			)
+
+			ProjectileEngine.projectile_instance_body_exited.emit(
+				projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
+			)
+
+			if _overlapping_bodies.has(self_shape_idx):
+				_overlapping_bodies[self_shape_idx].erase(_instance_node)
+			
+			if _overlapping_bodies[self_shape_idx].size() <= 0:
+				_overlapping_bodies.erase(self_shape_idx)
 	pass
 
 
-func _body_monitor_callback(status: int, body_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx:int) -> void:
-	if status == PS.AREA_BODY_ADDED:
-		ProjectileEngine.projectile_instance_body_shape_entered.emit(
-			projectile_instance_array[self_shape_idx],
-			body_rid, instance_from_id(instance_id), body_shape_idx,
-			projectile_area_rid, self_shape_idx
-		)
-
-		ProjectileEngine.projectile_instance_body_entered.emit(
-			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
-		)
-	elif PS.AREA_BODY_REMOVED:
-		ProjectileEngine.projectile_instance_body_shape_exited.emit(
-			projectile_instance_array[self_shape_idx],
-			body_rid, instance_from_id(instance_id), body_shape_idx,
-			projectile_area_rid, self_shape_idx
-		)
-
-		ProjectileEngine.projectile_instance_body_exited.emit(
-			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
-		)
-		pass
-
-
-func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_shape_idx: int, self_shape_idx:int) -> void:
-	if status == PS.AREA_BODY_ADDED:
-		ProjectileEngine.projectile_instance_area_shape_entered.emit(
-			projectile_instance_array[self_shape_idx],
-			area_rid, instance_from_id(instance_id), area_shape_idx,
-			projectile_area_rid, self_shape_idx
-		)
-
-		ProjectileEngine.projectile_instance_area_entered.emit(
-			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
-		)
-	elif PS.AREA_BODY_REMOVED:
-		ProjectileEngine.projectile_instance_area_shape_exited.emit(
-			projectile_instance_array[self_shape_idx],
-			area_rid, instance_from_id(instance_id), area_shape_idx,
-			projectile_area_rid, self_shape_idx
-		)
-
-		ProjectileEngine.projectile_instance_area_exited.emit(
-			projectile_instance_array[self_shape_idx], instance_from_id(instance_id)
-		)
-		pass
 
 
 func process_projectile_collided(instance_index: int) -> void:
@@ -205,3 +247,16 @@ func clear_projectile() -> void:
 		PS.area_set_shape_disabled(projectile_area_rid, _index, true)
 	projectile_active_index.clear()
 	pass
+
+
+func has_overlapping_areas(area_idx: int = -1) -> bool:
+	return _overlapping_areas.has(area_idx)
+
+func get_overlapping_areas(area_idx: int = -1) -> Array:
+	return _overlapping_areas.get(area_idx)
+
+func has_overlapping_bodies(area_idx: int = -1) -> bool:
+	return _overlapping_bodies.has(area_idx)
+
+func get_overlapping_bodies(area_idx: int = -1) -> Array:
+	return _overlapping_bodies.get(area_idx) as Array
