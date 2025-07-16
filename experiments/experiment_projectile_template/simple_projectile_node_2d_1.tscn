@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_8i12s"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="2_2sjbs"]
 [ext_resource type="Script" uid="uid://com1bcixecyvf" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/trigger/behaviors/projectile_behavior_trigger_distance.gd" id="3_8rm86"]
-[ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_big_cirle_1.png" id="23_8i12s"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png" id="4_2sjbs"]
 
 [sub_resource type="Resource" id="Resource_nb8w6"]
 script = ExtResource("3_8rm86")
@@ -19,11 +19,12 @@ metadata/_custom_type_script = "uid://com1bcixecyvf"
 [node name="Projectile2D" type="Area2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_8i12s")
+speed = 50.0
 trigger_projectile_behaviors = Array[ExtResource("2_2sjbs")]([SubResource("Resource_nb8w6")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("23_8i12s")
+texture = ExtResource("4_2sjbs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5kx35")

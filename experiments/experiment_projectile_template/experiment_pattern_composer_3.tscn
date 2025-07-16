@@ -43,7 +43,6 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("9_ypjug")
 polygon_sides = 10
-spread_out = true
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D"]

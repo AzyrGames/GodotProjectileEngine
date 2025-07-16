@@ -16,6 +16,7 @@ signal scheduler_completed
 @export var projectile_composer_name : String
 @export var projectile_template_2d : ProjectileTemplate2D
 @export var timing_scheduler : TimingScheduler
+@export var use_spawn_makers : bool = true
 @export var audio_stream: AudioStreamPlayer
 
 var projectile_area : RID
@@ -29,9 +30,21 @@ var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
 
+var projectile_spawn_makers : Array[ProjectileSpawnMaker2D]
+
 func _ready() -> void:
 	if active:
 		activate_projectile_spawner()
+	pass
+
+func activate_projectile_spawner() -> void:
+	if use_spawn_makers:
+		setup_spawn_maker()
+
+	setup_projectile_spawner()
+	connect_timing_scheduler()
+
+	connect_audio()
 	pass
 
 func setup_projectile_spawner() -> void:
@@ -91,12 +104,10 @@ func setup_projectile_spawner() -> void:
 		null:
 			return
 
-func activate_projectile_spawner() -> void:
-	composer_context = PatternComposerContext.new()
-	setup_projectile_spawner()
-	connect_timing_scheduler()
-	connect_audio()
-	pass
+func setup_spawn_maker() -> void:
+	for child : Node in get_children():
+		if child is ProjectileSpawnMaker2D:
+			projectile_spawn_makers.append(child)
 
 func deactive_projectile_spanwer() -> void:
 	disconnect_timing_scheduler()
@@ -108,6 +119,9 @@ func spawn_pattern() -> void:
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
+	composer_context = PatternComposerContext.new()
+	composer_context.use_spawn_makers = use_spawn_makers
+	composer_context.projectile_spawn_makers = projectile_spawn_makers
 	composer_context.position = global_position
 	pattern_composer_pack.clear()
 	pattern_composer_pack = projectile_composer.request_pattern(composer_context)
@@ -130,7 +144,6 @@ func _spawn_projectile_template_node_2d() -> void:
 	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
-
 		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
 		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
 		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
