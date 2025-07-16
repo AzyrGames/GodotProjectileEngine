@@ -31,6 +31,7 @@ enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot
 
 settings/test/test_lookup_folder="tests"
 settings/common/update_notification_enabled=false
+ui/inspector/tree_view_mode=1
 
 [global_group]
 
