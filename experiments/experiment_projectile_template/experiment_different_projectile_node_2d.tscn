@@ -1,15 +1,16 @@
-[gd_scene load_steps=29 format=3 uid="uid://3r4tbmgumjtk"]
+[gd_scene load_steps=30 format=3 uid="uid://3r4tbmgumjtk"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_5fjhh"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_53ghj"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="3_3xtj2"]
 [ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="3_53ghj"]
 [ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="3_x4pya"]
+[ext_resource type="Script" uid="uid://5uv8vjegm0j5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/behaviors/projectile_bouncing_reflect.gd" id="4_1djfb"]
 [ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="4_7jhyx"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="4_pd4vx"]
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="5_1djfb"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_r6nwn"]
-[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="5_vedyp"]
+[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="6_vedyp"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="7_3xtj2"]
 [ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="7_8udcj"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="8_3tkf5"]
@@ -21,31 +22,27 @@
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="11_x4pya"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="12_7o0dc"]
 
+[sub_resource type="Resource" id="Resource_8udcj"]
+script = ExtResource("4_1djfb")
+bouncing_count = 2
+active = true
+metadata/_custom_type_script = "uid://5uv8vjegm0j5"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_7jhyx"]
 
 [sub_resource type="Resource" id="Resource_3tkf5"]
-script = ExtResource("5_vedyp")
+script = ExtResource("6_vedyp")
 destroy_on_area_collide = true
 destroy_on_body_collide = true
-wait_projectile_piercing = true
-wait_projectile_bouncing = false
+wait_projectile_piercing = false
+wait_projectile_bouncing = true
 active = true
 metadata/_custom_type_script = "uid://bkjnay24vltjg"
-
-[sub_resource type="Resource" id="Resource_1djfb"]
-script = ExtResource("7_8udcj")
-piercing_count = 3
-pierce_area = true
-pierce_area_layer = 256
-pierce_body = false
-pierce_body_layer = 0
-active = true
-metadata/_custom_type_script = "uid://f77iu3txs7r5"
 
 [sub_resource type="Resource" id="Resource_7tlue"]
 script = ExtResource("10_8pk5a")
 damage = 1.0
-speed = 50.0
+speed = 100.0
 direction = Vector2(1, 0)
 projectile_pooling_amount = 300
 texture = ExtResource("11_x4pya")
@@ -63,8 +60,8 @@ direction_projectile_behaviors = Array[ExtResource("5_1djfb")]([])
 rotation_projectile_behaviors = Array[ExtResource("8_3tkf5")]([])
 scale_projectile_behaviors = Array[ExtResource("9_27662")]([])
 destroy_projectile_behaviors = Array[ExtResource("4_7jhyx")]([SubResource("Resource_3tkf5")])
-piercing_projectile_behaviors = Array[ExtResource("7_8udcj")]([SubResource("Resource_1djfb")])
-bouncing_projectile_behaviors = Array[ExtResource("3_x4pya")]([null])
+piercing_projectile_behaviors = Array[ExtResource("7_8udcj")]([])
+bouncing_projectile_behaviors = Array[ExtResource("3_x4pya")]([SubResource("Resource_8udcj")])
 trigger_projectile_behaviors = Array[ExtResource("12_7o0dc")]([])
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
@@ -123,9 +120,8 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_3xtj2")
-polygon_sides = 10
+polygon_sides = 2
 spread_out = true
-active = false
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -180,10 +176,28 @@ metadata/_custom_type_script = "uid://byoirooyga8su"
 shape = SubResource("RectangleShape2D_ec0cc")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-111, 37)
+rotation = -0.785397
 collision_layer = 256
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-114, 0)
-rotation = -0.785397
+shape = SubResource("RectangleShape2D_r6nwn")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(-121, -141)
+rotation = -2.35619
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("RectangleShape2D_r6nwn")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(76, -169)
+rotation = -3.14159
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 shape = SubResource("RectangleShape2D_r6nwn")

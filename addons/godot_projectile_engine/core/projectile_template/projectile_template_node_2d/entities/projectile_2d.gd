@@ -200,7 +200,7 @@ func update_projectile_2d(delta: float) -> void:
 			continue
 
 		if ProjectileEngine.projectile_environment.projectile_bouncing_helper == null:
-			ProjectileEngine.projectile_environment.request_bouncing_helper(self.get_node("CollisionShape2D").duplicate())
+			ProjectileEngine.projectile_environment.request_bouncing_helper(self.get_node("CollisionShape2D").duplicate().shape)
 			ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.collision_layer
 			ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.collision_mask
 

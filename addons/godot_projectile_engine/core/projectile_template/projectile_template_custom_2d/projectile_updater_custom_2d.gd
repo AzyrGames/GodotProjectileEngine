@@ -233,17 +233,21 @@ func update_projectile_instances(delta: float) -> void:
 
 			if projectile_bouncing_helper == null:
 				ProjectileEngine.projectile_environment.request_bouncing_helper(
-					self.get_node("CollisionShape2D").duplicate()
+					projectile_collision_shape
 					)
-				projectile_bouncing_helper.collision_layer = self.collision_layer
-				projectile_bouncing_helper.collision_mask = self.collision_mask
+				print(projectile_collision_shape)
+				# print(self.projectile_collision_layer)
+				# print(self.projectile_collision_mask)
+				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.projectile_collision_layer
+				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.projectile_collision_mask
 
 			var _bouncing_behavior_values : Dictionary = _projectile_behavior.process_behavior(
 				null, _projectile_instance.behavior_context
 				)
 			if _bouncing_behavior_values.size() <= 0:
 				continue
-			if _bouncing_behavior_values.has("is_bouncing") and _bouncing_behavior_values.has("direction_overwrite"):
+			if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has("direction_overwrite"):
+				print("eyu")
 				_projectile_instance.direction = _bouncing_behavior_values.get("direction_overwrite")
 				pass
 

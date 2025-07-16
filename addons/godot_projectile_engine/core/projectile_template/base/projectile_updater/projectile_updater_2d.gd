@@ -64,7 +64,7 @@ func _draw() -> void:
 func setup_projectile_updater() -> void:
 	projectile_collision_layer = projectile_template_2d.collision_layer
 	projectile_collision_mask = projectile_template_2d.collision_mask
-
+	projectile_collision_shape = projectile_template_2d.collision_shape
 	init_updater_variable()
 	setup_projectile_area_rid()
 	create_projectile_pool()

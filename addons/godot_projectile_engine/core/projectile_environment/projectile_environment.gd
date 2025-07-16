@@ -41,14 +41,12 @@ func get_projectile_damage(projectile_area_rid: RID) -> int:
 	return 0
 
 
-func request_bouncing_helper(_projectile_collision_shape: CollisionShape2D) -> void:
+func request_bouncing_helper(_projectile_collision_shape: Shape2D) -> void:
 	if projectile_bouncing_helper: return
 	projectile_bouncing_helper = ProjectileBouncingHelper.new()
 	var _collision_shape := CollisionShape2D.new()
-	var _shape : = _projectile_collision_shape.shape
-	_collision_shape.shape = _shape
+	_collision_shape.shape = _projectile_collision_shape
 
-	# projectile_bouncing_helper.add_child(_collision_shape.duplicate())
 	add_child(projectile_bouncing_helper, true)
 	projectile_bouncing_helper.add_child(_collision_shape, true)
 	pass
