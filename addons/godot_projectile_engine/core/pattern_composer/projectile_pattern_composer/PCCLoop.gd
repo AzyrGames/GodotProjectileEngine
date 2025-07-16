@@ -1,8 +1,13 @@
-## Loop through all Projectile Pattern Components a number of times
+
 extends PatternComposerComponent
 class_name PCCLoop
 
-@export var loop_count : int = 1
+## Loop through all child Pattern Components a number of times
+## Make Input Array[PatternComposerData] Loop through child 
+## Pattern Components numbers of times. Basically duplicate 
+## the child Pattern Components reuslts N time
+
+@export var loop_count : int = 3
 
 func _physics_process(delta: float) -> void:
 	pass

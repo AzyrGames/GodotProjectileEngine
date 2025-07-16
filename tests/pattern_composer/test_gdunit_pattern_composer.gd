@@ -18,28 +18,33 @@ func test_pattern_composer_spread() -> void:
 	await runner.simulate_frames(5)
 	assert_object(runner).is_not_null()
 	pass
-	
+
 func test_pattern_composer_stack() -> void:
 	var runner := scene_runner("uid://yypoytt7an8h")
 	await runner.simulate_frames(5)
 	assert_object(runner).is_not_null()
 	pass
 
-# func test_projectile_template_advanced() -> void:
-# 	var runner := scene_runner("uid://bgo83y47tcri0")
-# 	await runner.simulate_frames(5)
-# 	assert_object(runner).is_not_null()
-# 	pass
+func test_pattern_composer_shape_2d() -> void:
+	var runner := scene_runner("uid://vnh02vjautdp")
+	await runner.simulate_frames(5)
+	assert_object(runner).is_not_null()
+	pass
 
-# func test_projectile_template_custom() -> void:
-# 	var runner := scene_runner("uid://cj68gunmdf1d2")
-# 	await runner.simulate_frames(5)
+func test_pattern_composer_custom_shape_2d() -> void:
+	var runner := scene_runner("uid://s3visbj8dq43")
+	await runner.simulate_frames(5)
+	assert_object(runner).is_not_null()
+	pass
 
-# 	assert_object(runner).is_not_null()
-# 	pass
+func test_pattern_composer_loop() -> void:
+	var runner := scene_runner("uid://vuaj15gpwguh")
+	await runner.simulate_frames(5)
+	assert_object(runner).is_not_null()
+	pass
 
-# func test_projectile_template_node_2d() -> void:
-# 	var runner := scene_runner("uid://cm72pafj44d6b")
-# 	await runner.simulate_frames(5)
-# 	assert_object(runner).is_not_null()
-# 	pass
+func test_pattern_composer_group() -> void:
+	var runner := scene_runner("uid://crdq3kd2tjy82")
+	await runner.simulate_frames(5)
+	assert_object(runner).is_not_null()
+	pass

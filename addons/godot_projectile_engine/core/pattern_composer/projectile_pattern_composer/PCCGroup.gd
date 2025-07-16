@@ -4,7 +4,6 @@ extends PatternComposerComponent
 class_name PCCGroup
 
 
-
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
 	var _new_pattern_composer_pack : Array[PatternComposerData] = []
 	for pattern_data : PatternComposerData in pattern_composer_pack:

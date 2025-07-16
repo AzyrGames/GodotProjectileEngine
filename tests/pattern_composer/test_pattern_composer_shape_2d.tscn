@@ -1,0 +1,191 @@
+[gd_scene load_steps=20 format=3 uid="uid://vnh02vjautdp"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_smeh5"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_oi4dw"]
+[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_oo77f"]
+[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_dbn8e"]
+[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_xqeg0"]
+[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/asset/projectile_template/projectile_template_advanced_1.tres" id="6_t75eb"]
+[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_wj2ob"]
+[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_qe436"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_dvc0v"]
+[ext_resource type="Script" uid="uid://cwpsu1ih5c60x" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCShape2D.gd" id="10_smeh5"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="11_rspnp"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="12_u018m"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_smeh5"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_oi4dw"]
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_oo77f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dbn8e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xqeg0"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_t75eb"]
+points = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_smeh5"]
+segments = PackedVector2Array(0, 0, 1, 0, 1, 0.5, 0, 1)
+
+[node name="TestPatternComposerShape2D" type="Node2D"]
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_smeh5")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_1"
+projectile_template_2d = ExtResource("3_oo77f")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_2"
+projectile_template_2d = ExtResource("3_oo77f")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_3"
+projectile_template_2d = ExtResource("3_oo77f")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_4"
+projectile_template_2d = ExtResource("3_oo77f")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D5" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_5"
+projectile_template_2d = ExtResource("3_oo77f")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D7" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_6"
+projectile_template_2d = ExtResource("4_dbn8e")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D8" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_7"
+projectile_template_2d = ExtResource("5_xqeg0")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D9" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_7"
+projectile_template_2d = ExtResource("6_t75eb")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D10" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_7"
+projectile_template_2d = ExtResource("7_wj2ob")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D11" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_oi4dw")
+projectile_composer_name = "shape_7"
+projectile_template_2d = ExtResource("8_qe436")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("WorldBoundaryShape2D_smeh5")
+
+[node name="PatternComposer2D2" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_2"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D2"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("SegmentShape2D_oi4dw")
+
+[node name="PatternComposer2D8" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_3"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D8"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("SeparationRayShape2D_oo77f")
+
+[node name="PatternComposer2D4" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_4"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D4"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("CircleShape2D_dbn8e")
+
+[node name="PatternComposer2D9" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_5"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D9"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("CapsuleShape2D_xqeg0")
+
+[node name="PatternComposer2D7" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_6"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D7"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("ConvexPolygonShape2D_t75eb")
+
+[node name="PatternComposer2D10" type="Node" parent="."]
+script = ExtResource("9_dvc0v")
+composer_name = "shape_7"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D10"]
+script = ExtResource("10_smeh5")
+shape_2d = SubResource("ConcavePolygonShape2D_smeh5")
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("11_rspnp")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("12_u018m")
+duration = 0.017
+repeat_count = 4
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="Camera2D" type="Camera2D" parent="."]

@@ -1,7 +1,7 @@
 ## Projectile Pattern Component
 
 extends PatternComposerComponent
-class_name PCCCustomShape
+class_name PCCCustomShape2D
 
 
 @export var shape_path : Curve2D
@@ -23,6 +23,8 @@ var _curve_point_idx : int = 0
 
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
 	var _new_projectile_packs : Array[PatternComposerData] = []
+	if !shape_path:
+		return pattern_composer_pack
 	for pattern_data : PatternComposerData in pattern_composer_pack:
 		_new_projectile_packs.append_array(get_custom_shape_points(pattern_data))
 		pass

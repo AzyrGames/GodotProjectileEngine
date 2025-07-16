@@ -1,7 +1,7 @@
 extends PatternComposerComponent
-class_name PCCArea
+class_name PCCShape2D
 
-@export var area_shape: Shape2D
+@export var shape_2d: Shape2D
 # @export var navigation_map : NavigationMesh
 
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
@@ -13,7 +13,7 @@ func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern
 		_new_pattern_data.rotation = pattern_data.rotation
 		_new_pattern_data.speed_mod = pattern_data.speed_mod
 		
-		_new_pattern_data.position = get_random_point_in_shape(area_shape, _new_pattern_data.position) + pattern_data.position
+		_new_pattern_data.position = get_random_point_in_shape(shape_2d, _new_pattern_data.position) + pattern_data.position
 		_new_projectile_packs.append(_new_pattern_data)
 
 	return _new_projectile_packs
@@ -66,7 +66,7 @@ func get_random_point_in_shape(shape: Shape2D, origin_pos: Vector2) -> Vector2:
 			_while_false_safe += 1
 		return origin_pos
 	else:
-		print_debug(shape, " is not supported Shape2D! Return Original projectile instance Position")
+		print_debug(shape, " is not a supported Shape2D! Return original projectile instance position")
 		return origin_pos
 
 	return origin_pos
