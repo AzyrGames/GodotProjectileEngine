@@ -111,7 +111,7 @@ static func release_timers() -> void:
 			if is_instance_valid(node):
 				scene_tree.root.remove_child.call_deferred(node)
 				(node as Timer).stop()
-				node.call_deferred("queue_free") 
+				node.queue_free()
 
 
 # the finally cleaup unfreed resources and singletons
