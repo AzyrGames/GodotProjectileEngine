@@ -77,20 +77,20 @@ var _persist_behavior_context : Dictionary
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
-# func _set(property: StringName, value: Variant) -> bool:
-# 	match property:
-# 		"rotation":
-# 			rotation = value
-# 			projectile_rotation = value
-# 			base_rotation = value
-# 			return true
-# 		"scale":
-# 			scale = value
-# 			projectile_scale = value
-# 			base_scale = value
-# 			return true
+func _set(property: StringName, value: Variant) -> bool:
+	match property:
+		"rotation":
+			rotation = value
+			projectile_rotation = value
+			base_rotation = value
+			return true
+		"scale":
+			scale = value
+			projectile_scale = value
+			base_scale = value
+			return true
 		
-# 	return true
+	return false
 
 func _ready() -> void:
 	visible = false
