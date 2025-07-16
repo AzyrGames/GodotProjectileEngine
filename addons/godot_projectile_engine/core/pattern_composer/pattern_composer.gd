@@ -26,22 +26,34 @@ func _register_pattern_composer(_composer_name: String) -> void:
 		print_debug("Composer name: ", _composer_name, " is existed: ", ProjectileEngine.projectile_composer_nodes.get(_composer_name))
 		return
 	ProjectileEngine.projectile_composer_nodes.get_or_add(_composer_name, self)
-
-	# print("registered: {0}".format([_composer_name]))
 	pass
 
 
 func _deregister_pattern_composer(_composer_name: String) -> void:
 	if _composer_name == "": return
 	ProjectileEngine.projectile_composer_nodes.erase(_composer_name)
-
-	# print("deregistered: {0}".format([_composer_name]))
 	pass
 
 
 func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
-	pattern_composer_pack  = [PatternComposerData.new()]
+	## Init pattern composer pack
+	var _init_comopser_data := PatternComposerData.new()
+	if _pattern_composer_context.use_spawn_makers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
+		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
+			if !_projectile_spawn_maker.active:
+				continue
+			var _new_composer_data : PatternComposerData = _init_comopser_data.duplicate()
+			if _projectile_spawn_maker.use_global_position:
+				_new_composer_data.position = _projectile_spawn_maker.global_position
+			else:
+				_new_composer_data.position = _projectile_spawn_maker.position
+			_new_composer_data.direction = _projectile_spawn_maker.init_direction
+			pattern_composer_pack.append(_new_composer_data)
+	else:
+		_init_comopser_data.position = _pattern_composer_context.position
+		pattern_composer_pack  = [_init_comopser_data]
 
+	## Process through all Pattern Composer
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue

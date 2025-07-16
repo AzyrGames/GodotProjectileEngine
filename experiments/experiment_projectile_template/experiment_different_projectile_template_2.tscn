@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ckgry5ckdc7mt"]
+[gd_scene load_steps=31 format=3 uid="uid://ckgry5ckdc7mt"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_hxtxu"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_rj2k3"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="5_aeb47"]
 [ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="6_aeb47"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="6_cl2e6"]
-[ext_resource type="Script" uid="uid://idk3toy21bit" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_homing.gd" id="6_lhoau"]
 [ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="7_4ppyh"]
 [ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_curve_2d.gd" id="7_lhoau"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="8_ebme5"]
@@ -90,24 +89,23 @@ metadata/_custom_type_script = "uid://chcvl00lgnkc8"
 script = ExtResource("10_4ijj7")
 damage = 1.0
 speed = 100.0
-speed_projectile_behaviors = Array[ExtResource("11_plo56")]([])
 direction = Vector2(1, 0)
-direction_projectile_behaviors = Array[ExtResource("5_aeb47")]([SubResource("Resource_4ppyh"), SubResource("Resource_4ijj7"), SubResource("Resource_plo56"), SubResource("Resource_7hc71")])
-homing_projectile_behaviors = Array[ExtResource("6_lhoau")]([])
 projectile_pooling_amount = 500
-destroy_projectile_behaviors = Array[ExtResource("4_8j0kn")]([])
 texture = ExtResource("12_7hc71")
 texture_visible = true
 texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
 skew = 0.0
 rotation = 0.0
-rotation_projectile_behaviors = Array[ExtResource("8_ebme5")]([SubResource("Resource_jhert")])
 scale = Vector2(1, 1)
-scale_projectile_behaviors = Array[ExtResource("9_so60o")]([SubResource("Resource_qnc2d")])
 collision_shape = SubResource("CircleShape2D_qnc2d")
 collision_layer = 0
 collision_mask = 0
+speed_projectile_behaviors = Array[ExtResource("11_plo56")]([])
+direction_projectile_behaviors = Array[ExtResource("5_aeb47")]([SubResource("Resource_4ppyh"), SubResource("Resource_4ijj7"), SubResource("Resource_plo56"), SubResource("Resource_7hc71")])
+rotation_projectile_behaviors = Array[ExtResource("8_ebme5")]([SubResource("Resource_jhert")])
+scale_projectile_behaviors = Array[ExtResource("9_so60o")]([SubResource("Resource_qnc2d")])
+destroy_projectile_behaviors = Array[ExtResource("4_8j0kn")]([])
 piercing_projectile_behaviors = Array[ExtResource("7_4ppyh")]([])
 bouncing_projectile_behaviors = Array[ExtResource("3_8tp3g")]([])
 trigger_projectile_behaviors = Array[ExtResource("13_jhert")]([])

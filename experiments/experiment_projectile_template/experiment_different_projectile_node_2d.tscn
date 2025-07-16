@@ -121,7 +121,6 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_3xtj2")
 polygon_sides = 2
-spread_out = true
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="Camera2D" type="Camera2D" parent="."]
