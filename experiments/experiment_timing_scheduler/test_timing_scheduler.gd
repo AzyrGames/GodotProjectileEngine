@@ -8,5 +8,4 @@ func _enter_tree() -> void:
 
 
 func _on_scheduler_timed() -> void:
-	# print("hello")
 	pass

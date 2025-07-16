@@ -235,9 +235,6 @@ func update_projectile_instances(delta: float) -> void:
 				ProjectileEngine.projectile_environment.request_bouncing_helper(
 					projectile_collision_shape
 					)
-				print(projectile_collision_shape)
-				# print(self.projectile_collision_layer)
-				# print(self.projectile_collision_mask)
 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.projectile_collision_layer
 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.projectile_collision_mask
 
@@ -247,7 +244,6 @@ func update_projectile_instances(delta: float) -> void:
 			if _bouncing_behavior_values.size() <= 0:
 				continue
 			if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has("direction_overwrite"):
-				print("eyu")
 				_projectile_instance.direction = _bouncing_behavior_values.get("direction_overwrite")
 				pass
 
