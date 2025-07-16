@@ -26,6 +26,8 @@ var pattern_composer_pack: Array
 var composer_context : PatternComposerContext
 
 var projectile_updater_2d : ProjectileUpdater2D
+var projectile_node_manager_2d : ProjectileNodeManager2D
+var something_else : ProjectileNodeManager2D
 var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
@@ -40,8 +42,8 @@ func _ready() -> void:
 func activate_projectile_spawner() -> void:
 	if use_spawn_makers:
 		setup_spawn_maker()
-
 	setup_projectile_spawner()
+
 	connect_timing_scheduler()
 
 	connect_audio()
@@ -84,7 +86,7 @@ func setup_projectile_spawner() -> void:
 			if !is_instance_valid(
 				ProjectileEngine.projectile_updater_2d_nodes.get(
 					projectile_template_2d.projectile_area_rid
-				)
+					)
 			):
 				create_projectile_updater_custom_2d()
 			projectile_updater_2d = ProjectileEngine.projectile_updater_2d_nodes.get(
@@ -92,27 +94,24 @@ func setup_projectile_spawner() -> void:
 				)
 
 		ProjectileTemplateNode2D:
-			var _node := _instance_node(projectile_template_2d.projectile_2d_path)
-			if _node is Projectile2D:
-				_projectile_2d_instance = _node
-			else:
-				_projectile_2d_instance = null
-				push_warning("Not Projectile2D")
+			if !is_instance_valid(
+				ProjectileEngine.projectile_node_manager_2d_nodes.get(
+					projectile_template_2d.projectile_2d_path
+					)
+			):
+				create_projectile_node_manager_2d()
+			var something_else = ProjectileEngine.projectile_node_manager_2d_nodes.get(
+				projectile_template_2d.projectile_2d_path
+				)
+			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
+				projectile_template_2d.projectile_2d_path
+				)
+			projectile_node_manager_2d.setup_projectile_manager()
 		_:
 			return
 		#built-in classes don't have a script
 		null:
 			return
-
-func setup_spawn_maker() -> void:
-	for child : Node in get_children():
-		if child is ProjectileSpawnMaker2D:
-			projectile_spawn_makers.append(child)
-
-func deactive_projectile_spanwer() -> void:
-	disconnect_timing_scheduler()
-	disconnect_audio()
-	pass
 
 func spawn_pattern() -> void:
 	if !active: return
@@ -130,33 +129,22 @@ func spawn_pattern() -> void:
 		return
 	match projectile_template_2d.get_script():
 		ProjectileTemplateNode2D:
-			_spawn_projectile_template_node_2d()
+			projectile_node_manager_2d.spawn_projectile_pattern(pattern_composer_pack)
 		_:
 			projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
-		#built-in classes don't have a script
+
+		## built-in classes don't have a script
 		null:
 			return
 	pass
 
-func _spawn_projectile_template_node_2d() -> void:
-	if _projectile_2d_instance == null: return
-	var _new_projectile_2d : Projectile2D
-	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
-		##TODO Instance Node is expensive, need object pooling or better way to instance
-		_new_projectile_2d = _projectile_2d_instance.duplicate()
-		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
-		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
-		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
-		pass
-	pass
 
 func create_projectile_updater() -> void:
 	var _projectile_updater := ProjectileUpdater2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
-
-
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
+	
 	projectile_area = _projectile_updater.projectile_area_rid 
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
@@ -200,6 +188,38 @@ func create_projectile_updater_custom_2d() -> void:
 	pass
 
 
+func create_projectile_node_manager_2d() -> void:
+	var _projectile_node_manager := ProjectileNodeManager2D.new()
+	_projectile_node_manager.projectile_template_2d = projectile_template_2d
+
+	ProjectileEngine.projectile_environment.add_child(_projectile_node_manager, true)
+	_projectile_node_manager.owner = ProjectileEngine.projectile_environment
+	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
+		projectile_template_2d.projectile_2d_path, _projectile_node_manager
+		)	
+	pass
+
+func setup_spawn_maker() -> void:
+	for child : Node in get_children():
+		if child is ProjectileSpawnMaker2D:
+			projectile_spawn_makers.append(child)
+
+func deactive_projectile_spanwer() -> void:
+	disconnect_timing_scheduler()
+	disconnect_audio()
+	pass
+
+func _spawn_projectile_template_node_2d() -> void:
+	if _projectile_2d_instance == null: return
+	var _new_projectile_2d : Projectile2D
+	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
+		##TODO Instance Node is expensive, need object pooling or better way to instance
+		_new_projectile_2d = _projectile_2d_instance.duplicate()
+		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
+		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
+		pass
+	pass
+
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
 	timing_scheduler.scheduler_timed.connect(spawn_pattern)
@@ -241,3 +261,12 @@ func _instance_node(_file_path: String) -> Node:
 		print_stack()
 		return null
 	return _node_instance
+
+func _load_projectile_node(_file_path: String) -> PackedScene:
+	var _packed_projectile_node : PackedScene = load(_file_path)
+	if !_packed_projectile_node:
+		print_debug("Scene not valid: " + _file_path)
+		print_stack()
+		return null
+	return _packed_projectile_node
+	pass

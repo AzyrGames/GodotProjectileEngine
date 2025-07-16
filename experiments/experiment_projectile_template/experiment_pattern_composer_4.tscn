@@ -12,6 +12,7 @@
 [sub_resource type="Resource" id="Resource_irfq3"]
 script = ExtResource("3_ca8sa")
 projectile_2d_path = &"uid://dwye6c3n1syyl"
+projectile_pooling_amount = 100
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca8sa"]
@@ -33,12 +34,12 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawnMaker2D" type="Marker2D" parent="ProjectileSpawner2D"]
 position = Vector2(82, -11)
 script = ExtResource("5_m87c1")
-init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
 [node name="ProjectileSpawnMaker2D2" type="Marker2D" parent="ProjectileSpawner2D"]
-position = Vector2(-60, -36)
+position = Vector2(-69, -11)
 script = ExtResource("5_m87c1")
+init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
 [node name="PatternComposer2D" type="Node" parent="."]

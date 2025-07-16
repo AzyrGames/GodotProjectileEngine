@@ -7,7 +7,6 @@ signal projectile_node_triggered(trigger_name: String, projectile_node: Projecti
 
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 
-
 signal projectile_instance_body_shape_entered(
 	projectile_instance, 
 	body_rid : RID, body: Node, body_shape_idx: int, 
@@ -72,9 +71,8 @@ var active_projectile_count : int
 var projectile_environment : ProjectileEnvironment2D
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
-# var projectile_updater_simple_2d_nodes : Dictionary[RID, ProjectileUpdaterSimple2D]
-# var projectile_updater_advanced_2d_nodes : Dictionary[RID, ProjectileUpdaterAdvanced2D]
-# var projectile_updater_custom_2d_nodes : Dictionary[RID, ProjectileUpdaterCustom2D]
+var projectile_node_manager_2d_nodes : Dictionary[StringName, ProjectileNodeManager2D]
+
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
