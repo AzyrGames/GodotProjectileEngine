@@ -4,7 +4,6 @@ class_name Projectile2D
 signal projectile_pierced(projectile_node: Projectile2D, pierced_node: Node2D)
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 
- 
 
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
@@ -22,6 +21,10 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 @export var piercing_projectile_behaviors : Array[ProjectileBehaviorPiercing]
 @export var bouncing_projectile_behaviors : Array[ProjectileBehaviorBouncing]
 @export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]
+
+var projectile_node_manager : ProjectileNodeManager2D
+var projectile_node_index : int 
+var active : bool = false
 
 var velocity : Vector2
 var life_time_second: float
@@ -74,21 +77,23 @@ var _persist_behavior_context : Dictionary
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
-func _set(property: StringName, value: Variant) -> bool:
-	match property:
-		"rotation":
-			rotation = value
-			projectile_rotation = value
-			base_rotation = value
-			return true
-		"scale":
-			scale = value
-			projectile_scale = value
-			base_scale = value
-			return true
-	return true
+# func _set(property: StringName, value: Variant) -> bool:
+# 	match property:
+# 		"rotation":
+# 			rotation = value
+# 			projectile_rotation = value
+# 			base_rotation = value
+# 			return true
+# 		"scale":
+# 			scale = value
+# 			projectile_scale = value
+# 			base_scale = value
+# 			return true
+		
+# 	return true
 
 func _ready() -> void:
+	visible = false
 	base_speed = speed
 	base_direction = direction
 	base_rotation = rotation
@@ -119,9 +124,9 @@ func _ready() -> void:
 			if _projectile_behavior.process_behavior(null, projectile_behavior_context):
 				queue_free_projectile()
 
-	pass
-
 func _physics_process(delta: float) -> void:
+	if !active:
+		return
 	update_projectile_2d(delta)
 	pass
 
@@ -151,7 +156,6 @@ func update_projectile_2d(delta: float) -> void:
 	life_time_second += delta
 	life_distance += velocity.length()
 
-	# print(projectile_behavior_context)
 
 	# Refresh Projectile Behavior Array Process
 	for _behavior_key in projectile_behavior_context.keys():
@@ -419,5 +423,7 @@ func process_behavior_context_request(
 
 func queue_free_projectile() -> void:
 	#todo: emit destroy signal
-	queue_free()
+	active = false
+	visible = false
+	# queue_free()
 	pass
