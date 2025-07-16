@@ -68,6 +68,7 @@ metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 [sub_resource type="Resource" id="Resource_vedyp"]
 script = ExtResource("3_53ghj")
 projectile_2d_path = &"uid://c7rypyujt6vmj"
+projectile_pooling_amount = 100
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pd4vx"]
@@ -87,6 +88,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_53ghj")
+active = false
 projectile_composer_name = "pattern_2"
 projectile_template_2d = SubResource("Resource_7tlue")
 timing_scheduler = NodePath("../TimingScheduler")

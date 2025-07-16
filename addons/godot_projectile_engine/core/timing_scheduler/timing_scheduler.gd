@@ -102,7 +102,6 @@ func _start_timing_scheduler() -> void:
 
 
 func _hard_stop_timing_scheduler() -> void:
-	print(current_tsc)
 	if not current_tsc:
 		return
 		

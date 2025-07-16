@@ -83,8 +83,6 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 				_behavior_variable_bouncing_reflect.is_bouncing = true
 				_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
 
-				print(_new_direction)
-
 				if bouncing_count == 1:
 					_behavior_variable_bouncing_reflect.is_bouncing_just_done = true
 				elif _behavior_variable_bouncing_reflect.current_bouncing_count < bouncing_count - 1:
@@ -114,7 +112,6 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 				_bouncing_behavior_values["direction_overwrite"] = _new_direction
 				_behavior_variable_bouncing_reflect.is_bouncing = true
 				_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
-				print(_new_direction)
 				if bouncing_count == 1:
 					_behavior_variable_bouncing_reflect.is_bouncing_just_done = true
 				elif _behavior_variable_bouncing_reflect.current_bouncing_count < bouncing_count - 1:
