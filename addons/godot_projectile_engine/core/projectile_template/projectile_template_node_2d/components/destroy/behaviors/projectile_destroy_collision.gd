@@ -170,15 +170,17 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 						continue
 
 					if wait_projectile_piercing:
-						if wait_projectile_piercing:
-							var _variable_array := _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
-							if _variable_array.size() <= 0:
-								_behavior_variable_piercing = null
-							for _variable in _variable_array:
-								if _variable is BehaviorVariablePiercing:
-									_behavior_variable_piercing = _variable
-									break
-								_behavior_variable_piercing = null
+						var _variable_array := _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
+						if _variable_array.size() <= 0:
+							_behavior_variable_piercing = null
+							return false
+						for _variable in _variable_array:
+							if _variable is BehaviorVariablePiercing:
+								_behavior_variable_piercing = _variable
+								break
+							_behavior_variable_piercing = null
+						if !_behavior_variable_piercing:
+							return false
 						if _behavior_variable_piercing.is_overlap_piercing == false and _behavior_variable_piercing.is_piercing_done:
 							return true
 						return false
