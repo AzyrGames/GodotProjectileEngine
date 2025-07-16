@@ -10,7 +10,7 @@ enum SpreadType {
 }
 
 @export var spread_amount : int = 3
-@export var spread_type : SpreadType = SpreadType.STRAIGHT
+@export var spread_type : SpreadType = SpreadType.ANGLE
 @export var spread_value : float = 5
 
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:

@@ -5,7 +5,7 @@ class_name PCCPolygon2D
 
 @export var radius : float = 5.0
 @export var polygon_sides : int = 5
-@export var spread_out : bool = false
+@export var spread_out : bool = true
 
 
 #@export_group("Polygon Randomizer")
