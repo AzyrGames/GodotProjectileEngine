@@ -100,11 +100,11 @@ func setup_projectile_spawner() -> void:
 					)
 			):
 				create_projectile_node_manager_2d()
+			
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d.projectile_2d_path
 				)
 			projectile_node_manager_2d.setup_projectile_manager()
-			# print("Hello:", projectile_node_manager_2d)
 		_:
 			return
 		#built-in classes don't have a script
@@ -190,18 +190,11 @@ func create_projectile_node_manager_2d() -> void:
 	var _projectile_node_manager := ProjectileNodeManager2D.new()
 	_projectile_node_manager.projectile_template_2d = projectile_template_2d
 
-	# print("asdfL:", _projectile_node_manager.owner)
-
 	ProjectileEngine.projectile_environment.add_child(_projectile_node_manager, true)
-
 	_projectile_node_manager.owner = ProjectileEngine.projectile_environment
-
 	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
 		projectile_template_2d.projectile_2d_path, _projectile_node_manager
-		)
-	print("asdfL:", _projectile_node_manager.owner)
-	# _projectile_node_manager.setup_projectile_manager()
-	
+		)	
 	pass
 
 func setup_spawn_maker() -> void:
