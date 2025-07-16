@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateSimple2D" load_steps=4 format=3 uid="uid://bu61i3a58gt04"]
+
+[ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="1_oaa8f"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="2_sdsjo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oaa8f"]
+
+[resource]
+script = ExtResource("1_oaa8f")
+damage = 1.115
+speed = 99.77
+life_time_second_max = 10.72
+life_distance_max = 999.165
+projectile_pooling_amount = 2065
+texture = ExtResource("2_sdsjo")
+rotation = 0.0
+texture_rotate_direction = true
+scale = Vector2(1.195, 1.195)
+skew = 9.0
+texture_visible = true
+texture_z_index = 5
+texture_modulate = Color(1, 1, 0.286275, 1)
+collision_shape = SubResource("CapsuleShape2D_oaa8f")
+collision_layer = 2080
+collision_mask = 288
+metadata/_custom_type_script = "uid://dqlixqba72p5f"
