@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_h2cfw")
 projectile_2d_path = &"uid://tdx2lyop7qpo"
+projectile_pooling_amount = -1
 metadata/_custom_type_script = "uid://drg85m51aqbj7"

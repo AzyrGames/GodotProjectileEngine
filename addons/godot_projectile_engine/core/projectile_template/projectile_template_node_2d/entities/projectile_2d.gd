@@ -422,8 +422,9 @@ func process_behavior_context_request(
 	return 
 
 func queue_free_projectile() -> void:
-	#todo: emit destroy signal
-	active = false
-	visible = false
-	# queue_free()
+	if projectile_node_index > 0:
+		active = false
+		visible = false
+	else:
+		queue_free()
 	pass

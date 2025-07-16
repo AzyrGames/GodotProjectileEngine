@@ -27,7 +27,7 @@ var composer_context : PatternComposerContext
 
 var projectile_updater_2d : ProjectileUpdater2D
 var projectile_node_manager_2d : ProjectileNodeManager2D
-
+var something_else : ProjectileNodeManager2D
 var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
@@ -100,7 +100,9 @@ func setup_projectile_spawner() -> void:
 					)
 			):
 				create_projectile_node_manager_2d()
-			
+			var something_else = ProjectileEngine.projectile_node_manager_2d_nodes.get(
+				projectile_template_2d.projectile_2d_path
+				)
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d.projectile_2d_path
 				)
@@ -213,13 +215,10 @@ func _spawn_projectile_template_node_2d() -> void:
 	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
-		# _new_projectile_2d.owner = ProjectileEngine.projectile_environment
 		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
 		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
 		pass
 	pass
-
-
 
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
