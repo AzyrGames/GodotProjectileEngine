@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=3 uid="uid://c100r43aw5b57"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_boube"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_pipqy"]
+[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_kru0b"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="4_euvmo"]
+[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_ii2n4"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="5_06vbg"]
+[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_boube"]
+[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/asset/projectile_template/projectile_template_advanced_1.tres" id="6_pipqy"]
+[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_euvmo"]
+[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_06vbg"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="8_wpdu6"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="9_8kem5"]
+
+[node name="TestPatternComposerSingle" type="Node2D"]
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_boube")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_default"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_rotate"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_rotate_physics"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_rotate_ticks"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D5" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_random"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D6" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("3_kru0b")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D7" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("4_ii2n4")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D8" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("5_boube")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D9" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("6_pipqy")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D10" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("7_euvmo")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D11" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-3, 0)
+script = ExtResource("2_pipqy")
+projectile_composer_name = "simple_mix"
+projectile_template_2d = ExtResource("8_06vbg")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_default"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("5_06vbg")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D2" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_rotate"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D2"]
+script = ExtResource("5_06vbg")
+rotation = 1.5708
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D3" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D3"]
+script = ExtResource("5_06vbg")
+rotation_speed = 0.174533
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D4" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_rotate_physics"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D4"]
+script = ExtResource("5_06vbg")
+rotation_speed = 0.349066
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D5" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_rotate_ticks"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D5"]
+script = ExtResource("5_06vbg")
+rotation_speed = -0.122173
+rotation_process_type = 1
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D6" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_random"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D6"]
+script = ExtResource("5_06vbg")
+random_angle = 20.0
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PatternComposer2D7" type="Node" parent="."]
+script = ExtResource("4_euvmo")
+composer_name = "simple_mix"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D7"]
+script = ExtResource("5_06vbg")
+rotation = -3.13287
+rotation_speed = -0.331613
+rotation_process_type = 1
+random_angle = 120.118
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("8_wpdu6")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("9_8kem5")
+duration = 0.017
+repeat_count = 9
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="Camera2D" type="Camera2D" parent="."]
