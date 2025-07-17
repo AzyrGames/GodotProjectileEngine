@@ -89,10 +89,18 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			projectile_template_2d.skew,
 			_projectile_instance.global_position
 			)
-
-		PS.area_set_shape_transform(projectile_area_rid, projectile_pooling_index, _projectile_instance.transform)
-		PS.area_set_shape_disabled(projectile_area_rid, projectile_pooling_index, false)
-	
+		if projectile_template_2d.collision_shape:
+			PS.area_set_shape_transform(
+				projectile_area_rid, 
+				projectile_pooling_index, 
+				_projectile_instance.transform
+				)
+			PS.area_set_shape_disabled(
+				projectile_area_rid, 
+				projectile_pooling_index, 
+				false
+				)
+		
 		_projectile_instance.life_time_second = 0.0
 		_projectile_instance.life_distance = 0.0
 
@@ -251,8 +259,12 @@ func update_projectile_instances(delta: float) -> void:
 			_active_instance.global_position
 			)
 
-
-		PS.area_set_shape_transform(projectile_area_rid, _active_instance.area_index, _active_instance.transform)
+		if projectile_template_2d.collision_shape:
+			PS.area_set_shape_transform(
+				projectile_area_rid, 
+				_active_instance.area_index, 
+				_active_instance.transform
+				)
 
 
 #endregion

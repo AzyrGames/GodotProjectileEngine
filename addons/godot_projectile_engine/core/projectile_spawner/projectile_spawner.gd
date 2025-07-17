@@ -27,7 +27,6 @@ var composer_context : PatternComposerContext
 
 var projectile_updater_2d : ProjectileUpdater2D
 var projectile_node_manager_2d : ProjectileNodeManager2D
-var something_else : ProjectileNodeManager2D
 var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
@@ -98,9 +97,6 @@ func setup_projectile_spawner() -> void:
 					)
 			):
 				create_projectile_node_manager_2d()
-			var something_else = ProjectileEngine.projectile_node_manager_2d_nodes.get(
-				projectile_template_2d.projectile_2d_path
-				)
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d.projectile_2d_path
 				)
