@@ -68,7 +68,7 @@ func init_updater_variable() -> void:
 	_new_projectile_instance = Callable(ProjectileInstanceCustom2D, "new")
 
 	base_speed = projectile_template_2d.speed
-	base_direction = projectile_template_2d.direction
+	# base_direction = projectile_template_2d.direction
 	base_rotation = projectile_template_2d.rotation
 	# projectile_rotation = projectile_template_2d.rotation
 	base_scale = projectile_template_2d.scale
@@ -104,7 +104,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.speed = base_speed
 		_projectile_instance.projectile_speed = base_speed
 		_projectile_instance.direction = pattern_data.direction
-
+		_projectile_instance.base_direction = pattern_data.direction
 		_projectile_instance.rotation = base_rotation
 		_projectile_instance.projectile_rotation = base_rotation
 		_projectile_instance.scale = base_scale
@@ -432,13 +432,13 @@ func update_projectile_instances(delta: float) -> void:
 		if _direction_behavior_additions.size() > 0:
 			for _direction_behavior_addition in _direction_behavior_additions.values():
 				_direction_addition_value += _direction_behavior_addition
-			_direction_addition = base_direction + _direction_addition_value
+			_direction_addition = _projectile_instance.base_direction + _direction_addition_value
 
 		if _direction_addition != Vector2.ZERO:
 			_active_projectile_instance.direction = _direction_addition.normalized()
 
 		if _direction_rotation_value != 0:
-			_active_projectile_instance.direction = base_direction.rotated(_direction_rotation_value)
+			_active_projectile_instance.direction = _projectile_instance.base_direction.rotated(_direction_rotation_value)
 
 		_active_projectile_instance.direction = _active_projectile_instance.direction.normalized()
 

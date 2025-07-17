@@ -6,7 +6,7 @@ var projectile_damage: float = 1.0
 
 var projectile_velocity : Vector2 = Vector2.ZERO
 
-var projectile_life_time_max : float = 10.0
+var projectile_life_time_second_max : float = 10.0
 var projectile_life_distance_max : float = 300.0
 
 var projectile_speed_acceleration : float = 0.0
@@ -46,8 +46,11 @@ func init_updater_variable() -> void:
 	projectile_speed = projectile_template_2d.speed
 	projectile_speed_acceleration = projectile_template_2d.speed_acceleration
 	projectile_speed_max = projectile_template_2d.speed_max
+	
+	# projectile_direction = projectile_template_2d.direction
 
-	projectile_life_time_max  = projectile_template_2d.life_time_max
+
+	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
 	projectile_direction_follow_rotation = projectile_template_2d.rotation_follow_direction
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
@@ -132,7 +135,7 @@ func update_projectile_instances(delta: float) -> void:
 	projectile_scale_max = Vector2.ONE * projectile_template_2d.scale_max
 
 
-	projectile_life_time_max  = projectile_template_2d.life_time_max
+	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
 	
 	projectile_is_use_trigger = projectile_template_2d.is_use_trigger
@@ -147,9 +150,9 @@ func update_projectile_instances(delta: float) -> void:
 		_projectile_instance = projectile_instance_array[index]
 
 		# Life Time & Distance
-		if projectile_life_time_max >= 0:
+		if projectile_life_time_second_max >= 0:
 			_projectile_instance.life_time_second += delta
-			if _projectile_instance.life_time_second >= projectile_life_time_max:
+			if _projectile_instance.life_time_second >= projectile_life_time_second_max:
 				projectile_remove_index.append(index)
 				continue
 
@@ -222,8 +225,7 @@ func update_projectile_instances(delta: float) -> void:
 			_active_instance.rotation = _active_instance.direction.angle()
 		
 		if projectile_rotation_speed != 0:
-			_active_instance.rotation += projectile_rotation_speed * delta
-
+			_active_instance.rotation += deg_to_rad(projectile_rotation_speed) * delta
 		if projectile_direction_follow_rotation:
 			_active_instance.direction = Vector2.RIGHT.rotated(_active_instance.rotation)
 			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
@@ -245,7 +247,7 @@ func update_projectile_instances(delta: float) -> void:
 		_active_instance.transform = Transform2D(
 			_active_instance.rotation,
 			_active_instance.scale,
-			0.0,
+			_active_instance.skew,
 			_active_instance.global_position
 			)
 
