@@ -128,6 +128,9 @@ func _soft_stop_timing_scheduler() -> void:
 ## Builds the sequence of TimingSchedulerComponent nodes from children
 func _build_tsc_sequence() -> void:
 	tsc_sequence.clear()
+	if get_child_count() <= 0:
+		push_warning(self, " is empty")
+		return
 	for node in get_children():
 		if node is TimingSchedulerComponent:
 			tsc_sequence.append(node)
