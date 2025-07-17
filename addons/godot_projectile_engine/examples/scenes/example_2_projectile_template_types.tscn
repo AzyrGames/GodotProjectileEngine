@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://b34nudu7t8gwd"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_xtu64"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_hqtxl"]
+[ext_resource type="Resource" uid="uid://bunh6mb4hrveg" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_simple_basic.tres" id="3_6ng22"]
+[ext_resource type="Resource" uid="uid://jmc0v4yi8qix" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_basic.tres" id="4_xtu64"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_govtv"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="5_hqtxl"]
+[ext_resource type="Resource" uid="uid://r6d1e5o5hcli" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_custom_basic.tres" id="5_s46se"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="6_t0rdp"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_okh0j"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="8_5nhfv"]
+[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/godot_projectile_engine/examples/assets/audio/laserShoot.wav" id="9_8s7sa"]
+
+[sub_resource type="Resource" id="Resource_rogq1"]
+script = ExtResource("5_hqtxl")
+projectile_2d_path = &"res://addons/godot_projectile_engine/examples/assets/projectile_node/example_projectile_node_2d_basic.tscn"
+projectile_pooling_amount = 100
+metadata/_custom_type_script = "uid://drg85m51aqbj7"
+
+[node name="Example1FirstProjectile" type="Node2D"]
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_xtu64")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-192, -96)
+script = ExtResource("2_hqtxl")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("3_6ng22")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-192, -32)
+script = ExtResource("2_hqtxl")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("4_xtu64")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-192, 32)
+script = ExtResource("2_hqtxl")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("5_s46se")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-192, 96)
+script = ExtResource("2_hqtxl")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = SubResource("Resource_rogq1")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("5_govtv")
+composer_name = "pattern_single_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("6_t0rdp")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("7_okh0j")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("8_5nhfv")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_8s7sa")

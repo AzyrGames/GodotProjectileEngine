@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateAdvanced2D" load_steps=3 format=3 uid="uid://oe4pjmc2emgs"]
+
+[ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="1_sve8e"]
+[ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_arrowhead_1.png" id="2_25icj"]
+
+[resource]
+script = ExtResource("1_sve8e")
+damage = 1.0
+speed = 100.0
+projectile_pooling_amount = 500
+life_time_max = 10.0
+life_distance_max = 1000.0
+speed_acceleration = 0.0
+speed_max = 200.0
+is_use_homing = true
+target_group = "HomingTarget"
+steer_speed = 0.349066
+homing_strength = 1.0
+max_homing_distance = 500.0
+texture = ExtResource("2_25icj")
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+skew = 0.0
+rotation = 0.0
+rotation_follow_direction = true
+direction_follow_rotation = false
+rotation_speed = 0.0
+scale = Vector2(1, 1)
+scale_acceleration = 0.0
+scale_max = 2.0
+collision_layer = 0
+collision_mask = 0
+is_use_trigger = false
+trigger_name = &""
+trigger_amount = 0
+trigger_life_time = 10.0
+trigger_life_distance = 1000.0
+metadata/_custom_type_script = "uid://c7uapl8lqnia4"

@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="GodotProjectileEngine"
-run/main_scene="uid://cpblpu3hsp6et"
 config/features=PackedStringArray("4.4")
 run/max_fps=60
 

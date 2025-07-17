@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cunci1fcu504c"]
+
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_wir77"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="2_vnod4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnt7s"]
+
+[node name="ExampleProjectileNode2DBasic" type="Area2D"]
+collision_mask = 256
+script = ExtResource("1_wir77")
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_vnod4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gnt7s")

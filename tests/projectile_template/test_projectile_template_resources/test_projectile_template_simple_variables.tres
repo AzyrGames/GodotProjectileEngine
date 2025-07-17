@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ProjectileTemplateSimple2D" load_steps=4 format=3 uid="uid://bu61i3a58gt04"]
 
 [ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="1_oaa8f"]
-[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="2_sdsjo"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="2_sdsjo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oaa8f"]
 

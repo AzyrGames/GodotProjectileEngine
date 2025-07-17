@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://dactafr7x6iw3"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_axg4x"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_uiu8g"]
+[ext_resource type="Resource" uid="uid://oe4pjmc2emgs" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_homing.tres" id="3_axg4x"]
+[ext_resource type="Resource" uid="uid://dtgkmrnspdxtn" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_custom_homing.tres" id="4_uiu8g"]
+[ext_resource type="Resource" uid="uid://bdbrclrd88363" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_node_homing.tres" id="5_1jgt8"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="6_8ehq3"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="7_sprda"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="8_eo1i3"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="9_jt6wp"]
+[ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/godot_projectile_engine/examples/assets/audio/laserShoot.wav" id="10_jvu5j"]
+
+[node name="Example1FirstProjectile" type="Node2D"]
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_axg4x")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-320, -256)
+script = ExtResource("2_uiu8g")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("3_axg4x")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-320, -192)
+script = ExtResource("2_uiu8g")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("4_uiu8g")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
+position = Vector2(-320, -128)
+script = ExtResource("2_uiu8g")
+projectile_composer_name = "pattern_single_1"
+projectile_template_2d = ExtResource("5_1jgt8")
+timing_scheduler = NodePath("../TimingScheduler")
+audio_stream = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("6_8ehq3")
+composer_name = "pattern_single_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("7_sprda")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("8_eo1i3")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("9_jt6wp")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_jvu5j")
+
+[node name="HomingTarget" type="Node2D" parent="." groups=["HomingTarget"]]
+position = Vector2(192, 0)

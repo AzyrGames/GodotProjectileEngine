@@ -31,7 +31,7 @@
 [ext_resource type="Script" uid="uid://cjan1hd6214vl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_modify.gd" id="29_tngv5"]
 [ext_resource type="Script" uid="uid://dkm0o1v05i58y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_expression.gd" id="30_gnmqu"]
 [ext_resource type="Script" uid="uid://chmjku6lmvmaq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_clamp.gd" id="31_y3s5n"]
-[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="32_l3jnm"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="32_l3jnm"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="33_nj4cj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ijeta"]

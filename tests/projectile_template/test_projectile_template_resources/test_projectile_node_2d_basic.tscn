@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b3wq8r8h587yg"]
 
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_080e3"]
-[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_circle_1.png" id="2_trjq1"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="2_trjq1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ju0sc"]
 
