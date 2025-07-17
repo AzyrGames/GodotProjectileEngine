@@ -47,7 +47,7 @@ trigger_life_time = 10.0
 trigger_life_distance = 1000.0
 metadata/_custom_type_script = "uid://c7uapl8lqnia4"
 
-[node name="ExperimentPatternComposer2" type="Node2D"]
+[node name="ExperimentPatternComposer3" type="Node2D"]
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_n44xv")
