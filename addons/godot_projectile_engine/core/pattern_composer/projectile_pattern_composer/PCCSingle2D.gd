@@ -34,8 +34,6 @@ var _target_node : Node2D
 
 
 func _ready() -> void:
-	_rng = RandomNumberGenerator.new()
-
 	pass
 
 
@@ -59,6 +57,7 @@ func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern
 				
 		var _rng_angle : float
 		if random_angle != 0:
+			_rng = RandomNumberGenerator.new()
 			_rng_angle = _rng.randf_range(-random_angle / 2.0, random_angle / 2.0)
 		var _final_rotation : float = _pattern_composer_context.rotation + deg_to_rad(_rng_angle)
 		_pattern_composer_data.rotation = _final_rotation

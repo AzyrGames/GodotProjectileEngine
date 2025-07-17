@@ -123,7 +123,7 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D2"]
 script = ExtResource("10_h84bo")
-spread_amount = 6
+spread_amount = 4
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="PatternComposer2D8" type="Node" parent="."]
@@ -133,7 +133,7 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D8"]
 script = ExtResource("10_h84bo")
-spread_amount = -5
+spread_amount = -2
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="PatternComposer2D3" type="Node" parent="."]
@@ -173,7 +173,7 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D7"]
 script = ExtResource("10_h84bo")
-spread_amount = 10
+spread_amount = 4
 spread_type = 0
 spread_value = 12.0
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
