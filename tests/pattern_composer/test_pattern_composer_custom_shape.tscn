@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_dpmww"]
 [ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_uu3uj"]
 [ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_e4w75"]
-[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/asset/projectile_template/projectile_template_advanced_1.tres" id="6_m2jvt"]
+[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_1.tres" id="6_m2jvt"]
 [ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_paut7"]
 [ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_nebvw"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_iaaan"]

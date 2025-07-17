@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="9_r6nwn"]
 [ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="10_8pk5a"]
 [ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="11_c0s4f"]
-[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="11_x4pya"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="11_x4pya"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="12_7o0dc"]
 
 [sub_resource type="Resource" id="Resource_8udcj"]

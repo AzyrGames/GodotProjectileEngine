@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateNode2D" load_steps=2 format=3 uid="uid://b7g7afg6kf4pg"]
+
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="1_sekal"]
+
+[resource]
+script = ExtResource("1_sekal")
+projectile_2d_path = &"res://addons/godot_projectile_engine/examples/assets/projectile_node/example_projectile_node_2d_customize.tscn"
+projectile_pooling_amount = 100
+metadata/_custom_type_script = "uid://drg85m51aqbj7"

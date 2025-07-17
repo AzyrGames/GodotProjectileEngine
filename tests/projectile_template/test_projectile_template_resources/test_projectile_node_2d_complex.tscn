@@ -21,7 +21,7 @@
 [ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="19_qig53"]
 [ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_curve.gd" id="20_hfudb"]
 [ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="21_bkbfx"]
-[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/asset/projectile/projectile_star_1.png" id="21_rd0p4"]
+[ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="21_rd0p4"]
 [ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_set.gd" id="22_fcw45"]
 [ext_resource type="Script" uid="uid://4e5y6t2mxh08" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_modify.gd" id="23_p2wc0"]
 [ext_resource type="Script" uid="uid://dkhljenoddn8k" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_random.gd" id="24_4gbr7"]

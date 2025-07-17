@@ -1,0 +1,49 @@
+[gd_scene load_steps=13 format=3 uid="uid://otwojd1ycnsk"]
+
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_a433t"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="2_4b8g2"]
+[ext_resource type="Script" uid="uid://d35n2jogawdcq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_acceleration.gd" id="3_ewxlw"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="4_skl5t"]
+[ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_modify.gd" id="5_a0sjj"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="6_0jn7j"]
+[ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_accelerate.gd" id="7_gxmuk"]
+[ext_resource type="Texture2D" uid="uid://daxkxvl7s1nr3" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_rice_1.png" id="8_4b8g2"]
+
+[sub_resource type="Resource" id="Resource_65pbh"]
+script = ExtResource("3_ewxlw")
+acceleration_speed = 20.0
+max_speed = 200.0
+active = true
+metadata/_custom_type_script = "uid://d35n2jogawdcq"
+
+[sub_resource type="Resource" id="Resource_ynhhg"]
+script = ExtResource("5_a0sjj")
+rotation_modify_value = 360.0
+rotation_process_mode = 0
+rotation_modify_method = 0
+active = true
+metadata/_custom_type_script = "uid://ucfv3eq8fafp"
+
+[sub_resource type="Resource" id="Resource_y2wyb"]
+script = ExtResource("7_gxmuk")
+scale_acceleration_value = 1.0
+scale_max = 1.5
+active = true
+metadata/_custom_type_script = "uid://d0yojlb4mvhsj"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnt7s"]
+
+[node name="ExampleProjectileNode2DCustomize" type="Area2D"]
+modulate = Color(0, 1, 0, 1)
+collision_mask = 256
+script = ExtResource("1_a433t")
+speed_projectile_behaviors = Array[ExtResource("2_4b8g2")]([SubResource("Resource_65pbh")])
+rotation_projectile_behaviors = Array[ExtResource("4_skl5t")]([SubResource("Resource_ynhhg")])
+scale_projectile_behaviors = Array[ExtResource("6_0jn7j")]([SubResource("Resource_y2wyb")])
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("8_4b8g2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gnt7s")

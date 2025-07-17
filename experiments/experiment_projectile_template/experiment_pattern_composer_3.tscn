@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_n44xv"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_k4ru7"]
-[ext_resource type="Resource" uid="uid://cina6wf32vbu7" path="res://addons/godot_projectile_engine/examples/asset/projectile_template/projectile_template_simple_1.tres" id="3_ix63s"]
+[ext_resource type="Resource" uid="uid://cina6wf32vbu7" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_simple_1.tres" id="3_ix63s"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="7_cc4tb"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="8_jdeff"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="9_niv01"]

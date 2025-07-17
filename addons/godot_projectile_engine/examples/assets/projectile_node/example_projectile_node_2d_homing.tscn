@@ -1,0 +1,37 @@
+[gd_scene load_steps=10 format=3 uid="uid://xjk0glncp0d2"]
+
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_5avxw"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="2_yhw4w"]
+[ext_resource type="Script" uid="uid://bbmmn1md4lx3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_homing_simple.gd" id="3_pycnf"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="4_jsm5i"]
+[ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_arrowhead_1.png" id="4_mycah"]
+[ext_resource type="Script" uid="uid://bpntc8lt06yr8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_follow_direction.gd" id="5_mycah"]
+
+[sub_resource type="Resource" id="Resource_6sti4"]
+script = ExtResource("3_pycnf")
+target_group = "HomingTarget"
+steer_speed = 0.5
+homing_strength = 1.0
+max_homing_distance = 500.0
+active = true
+metadata/_custom_type_script = "uid://bbmmn1md4lx3"
+
+[sub_resource type="Resource" id="Resource_5avxw"]
+script = ExtResource("5_mycah")
+active = true
+metadata/_custom_type_script = "uid://bpntc8lt06yr8"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnt7s"]
+
+[node name="ExampleProjectileNode2DHoming" type="Area2D"]
+collision_mask = 256
+script = ExtResource("1_5avxw")
+direction_projectile_behaviors = Array[ExtResource("2_yhw4w")]([SubResource("Resource_6sti4")])
+rotation_projectile_behaviors = Array[ExtResource("4_jsm5i")]([SubResource("Resource_5avxw")])
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_mycah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gnt7s")
