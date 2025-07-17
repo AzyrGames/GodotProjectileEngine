@@ -43,10 +43,8 @@ func activate_projectile_spawner() -> void:
 	if use_spawn_makers:
 		setup_spawn_maker()
 	setup_projectile_spawner()
-
-	connect_timing_scheduler()
-
 	connect_audio()
+	connect_timing_scheduler()
 	pass
 
 func setup_projectile_spawner() -> void:

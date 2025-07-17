@@ -72,7 +72,8 @@ func _ready() -> void:
 
 ## Starts the timing scheduler
 func start_scheduler() -> void:
-	if !paused: 
+	if !paused:
+		scheduler_timed.emit()
 		return
 	_build_tsc_sequence()
 	_start_timing_scheduler()
