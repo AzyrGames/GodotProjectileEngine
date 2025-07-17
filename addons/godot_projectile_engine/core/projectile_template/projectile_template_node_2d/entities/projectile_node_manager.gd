@@ -21,24 +21,28 @@ func setup_projectile_manager() -> void:
 		return
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateNode2D
 	projectile_node_2d_packedscene = _load_projectile_node(projectile_template_2d.projectile_2d_path)
+
 	if !is_instance_valid(projectile_node_2d_packedscene):
 		print_debug(projectile_node_2d_packedscene, " is not valid!")
 		_is_valid_projectile_node_2d = false
 		return
+	
 	var _instantiate_node = projectile_node_2d_packedscene.instantiate() 
 	if !_instantiate_node is Projectile2D:
 		print_debug(_instantiate_node, " is not Projectile2D")
 		_is_valid_projectile_node_2d = false
 		return
+	
 	_is_valid_projectile_node_2d = true
 	create_projectile_pool()
 	pass
 
 func create_projectile_pool() -> void:
 	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
-	if projectile_template_2d.projectile_pooling_amount <= 0:
-		return
 	projectile_node_array.clear()
+	if projectile_template_2d.projectile_pooling_amount <= 0:
+		projectile_max_pooling = -1
+		return
 	for _index in projectile_max_pooling:
 		_projectile_node_2d = projectile_node_2d_packedscene.instantiate()
 		_projectile_node_2d.projectile_node_manager = self
@@ -48,7 +52,6 @@ func create_projectile_pool() -> void:
 		add_child(_projectile_node_2d, true)
 		_projectile_node_2d.set_owner(self)
 		projectile_node_array.append(_projectile_node_2d)
-	
 	pass
 
 
@@ -70,11 +73,11 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 			_projectile_node_2d = projectile_node_2d_packedscene.instantiate()
 			_projectile_node_2d.projectile_node_index = -1
-			_projectile_node_2d.active = true
-			_projectile_node_2d.visible = true
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
 			add_child(_projectile_node_2d, true)
-			_projectile_node_2d.owner = self
+			_projectile_node_2d.set_owner(self)
+			_projectile_node_2d.active = true
+			_projectile_node_2d.visible = true
 
 func _load_projectile_node(_file_path: String) -> PackedScene:
 	if _file_path == "":
