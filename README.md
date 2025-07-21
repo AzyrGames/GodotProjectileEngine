@@ -1,6 +1,8 @@
 # Godot Projectile Engine
 [![Godot 4.x](https://img.shields.io/badge/Godot-4.x-%23478cbf)](https://godotengine.org)
-[![Status: Alpha](https://img.shields.io/badge/Status-Alpha-orange)](https://github.com/AzyrGames/GodotProjectileEngine)
+![GitHub Release](https://img.shields.io/github/v/release/AzyrGames/GodotProjectileEngine)
+[![Godot Projetile Engine CI](https://github.com/AzyrGames/GodotProjectileEngine/actions/workflows/godot_projectile_engine-ci.yml/badge.svg)](https://github.com/AzyrGames/GodotProjectileEngine/actions/workflows/godot_projectile_engine-ci.yml)
+
 
 **High-performance projectile system for Godot Engine** - Create and manage massive amounts of projectiles with optimal efficiency.
 
