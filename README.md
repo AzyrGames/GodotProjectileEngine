@@ -8,7 +8,7 @@
 
 > [!WARNING]  
 > **Alpha Notice (v0.5.1)**  
-> This version contains frequent breaking changes and is not recommended for production use.
+> This version contains many bugs and frequent breaking changes and is not recommended for production use.
 
 ## Features
 ### 🧩 Modular Architecture
