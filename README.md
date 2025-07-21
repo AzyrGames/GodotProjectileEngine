@@ -4,7 +4,7 @@
 [![Godot Projetile Engine CI](https://github.com/AzyrGames/GodotProjectileEngine/actions/workflows/godot_projectile_engine-ci.yml/badge.svg)](https://github.com/AzyrGames/GodotProjectileEngine/actions/workflows/godot_projectile_engine-ci.yml)
 
 
-**High-performance projectile system for Godot Engine** - Create and manage massive amounts of projectiles with optimal efficiency.
+**Streamlined feature-packed Projectile Engine for Godot 4** - A modular system for creating and managing thousands of customizable projectiles with optimal performance.
 
 > [!WARNING]  
 > **Alpha Notice (v0.5.1)**  
@@ -78,9 +78,15 @@ Create a basic projectile system in 5 steps:
 **Test**: Run the scene to see projectiles in action!
 **Explore**: See advanced examples in `addons/godot_projectile_engine/examples/`
 
-
 ## Documentation
 *Work in Progress*  
+
+## Media
+Project that used Godot Projectile Engine
+### [UTOZ](https://azyrgames.itch.io/utoz)
+A 10-day Twin-stick shooter Bullet Hell game submission for Bullet Hell Jam 6, made by one person.
+<img width="480" height="270" alt="UTOZ Preview 1" src="https://img.itch.zone/aW1hZ2UvMzU0NzQyNS8yMTE1NDE1OC5wbmc=/original/JsVEFO.png" /> <img width="480" height="270" alt="UTOZ Preview 2" src="https://img.itch.zone/aW1hZ2UvMzU0NzQyNS8yMTE1NDIzNi5wbmc=/original/UQ9ZpH.png" />
+
 
 ## Credits
 *Contributors will be listed here*
