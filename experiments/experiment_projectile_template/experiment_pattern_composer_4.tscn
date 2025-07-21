@@ -13,6 +13,7 @@
 script = ExtResource("3_ca8sa")
 projectile_2d_path = &"uid://dwye6c3n1syyl"
 projectile_pooling_amount = 100
+custom_data = {}
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca8sa"]

@@ -112,20 +112,22 @@ func spawn_pattern() -> void:
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
-	composer_context = PatternComposerContext.new()
-	composer_context.use_spawn_makers = use_spawn_makers
-	composer_context.projectile_spawn_makers = projectile_spawn_makers
-	composer_context.position = global_position
-	pattern_composer_pack.clear()
-	pattern_composer_pack = projectile_composer.request_pattern(composer_context)
+	if !composer_context:
+		composer_context = PatternComposerContext.new()
+		composer_context.projectile_spawner = self
+		composer_context.use_spawn_makers = use_spawn_makers
+		composer_context.projectile_spawn_makers = projectile_spawn_makers
+		composer_context.position = global_position
+	var _pattern_composer_pack := projectile_composer.request_pattern(composer_context)
+	# projectile_composer
 
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
 	match projectile_template_2d.get_script():
 		ProjectileTemplateNode2D:
-			projectile_node_manager_2d.spawn_projectile_pattern(pattern_composer_pack)
+			projectile_node_manager_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		_:
-			projectile_updater_2d.spawn_projectile_pattern(pattern_composer_pack)
+			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 
 		## built-in classes don't have a script
 		null:
@@ -217,7 +219,8 @@ func _spawn_projectile_template_node_2d() -> void:
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
 	timing_scheduler.scheduler_timed.connect(spawn_pattern)
-	timing_scheduler.start_scheduler()
+	if !timing_scheduler.active:
+		timing_scheduler.start_scheduler()
 	pass
 
 func disconnect_timing_scheduler() -> void:

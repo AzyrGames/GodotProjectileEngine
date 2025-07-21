@@ -150,7 +150,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 script = ExtResource("10_2stws")
 rotation = -3.13287
 rotation_speed = -0.331613
-rotation_process_type = 1
 random_angle = 120.118
 metadata/_custom_type_script = "uid://co24jiat0y46s"
 

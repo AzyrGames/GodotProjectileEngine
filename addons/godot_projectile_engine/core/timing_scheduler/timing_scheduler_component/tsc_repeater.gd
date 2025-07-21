@@ -25,7 +25,6 @@ func start_next_timing_value() -> void:
 		
 	# Reset counter and start first repetition
 	current_count = 0
-	tsc_timed.emit()
 	timing_timer.start(duration)
 
 ## Handles timer timeout events
