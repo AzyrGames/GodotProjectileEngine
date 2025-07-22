@@ -49,10 +49,15 @@ var tsc_sequence_index : int = _DEFAULT_SEQUENCE_INDEX
 var current_tsc : TimingSchedulerComponent
 
 ## Pause state of the scheduler
-var paused: bool = true
+var paused : bool = true
+
+## If is acitvated
+var active : bool = false
 
 # Internal flag for soft stop queuing
 var _is_queue_soft_stop : bool = false
+
+var _is_just_started : bool = false
 
 func _enter_tree() -> void:
 	# Empty implementation - remove redundant pass
@@ -68,15 +73,20 @@ func _ready() -> void:
 	if autostart:
 		call_deferred("start")
 
-
+func _physics_process(delta: float) -> void:
+	if _is_just_started:
+		scheduler_timed.emit()
+		_is_just_started = false
+	pass
 
 ## Starts the timing scheduler
 func start_scheduler() -> void:
 	if !paused:
-		scheduler_timed.emit()
 		return
 	_build_tsc_sequence()
 	_start_timing_scheduler()
+	active = true
+	_is_just_started = true
 
 
 

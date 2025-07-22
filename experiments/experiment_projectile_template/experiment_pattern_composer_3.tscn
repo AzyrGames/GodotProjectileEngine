@@ -45,6 +45,7 @@ trigger_name = &""
 trigger_amount = 0
 trigger_life_time = 10.0
 trigger_life_distance = 1000.0
+custom_data = {}
 metadata/_custom_type_script = "uid://c7uapl8lqnia4"
 
 [node name="ExperimentPatternComposer3" type="Node2D"]
@@ -69,7 +70,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 [node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_jdeff")
 rotation_speed = 0.191986
-rotation_process_type = 1
 metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]

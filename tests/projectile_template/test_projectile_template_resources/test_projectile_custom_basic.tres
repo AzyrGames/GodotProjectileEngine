@@ -36,4 +36,5 @@ destroy_projectile_behaviors = Array[ExtResource("2_sgxwa")]([])
 piercing_projectile_behaviors = Array[ExtResource("4_bukcq")]([])
 bouncing_projectile_behaviors = Array[ExtResource("1_bakae")]([])
 trigger_projectile_behaviors = Array[ExtResource("10_iqdsk")]([])
+custom_data = {}
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"

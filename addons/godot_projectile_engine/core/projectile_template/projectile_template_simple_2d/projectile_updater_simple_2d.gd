@@ -32,7 +32,6 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 		_projectile_instance.velocity = pattern_data.direction * projectile_speed * (1.0 / Engine.physics_ticks_per_second)
 
-
 		_projectile_instance.transform = Transform2D(
 			_projectile_instance.rotation, 
 			projectile_template_2d.scale,
@@ -107,8 +106,11 @@ func update_projectile_instances(delta: float) -> void:
 
 		_active_instance.transform = Transform2D(
 			_active_instance.rotation, 
+			projectile_template_2d.scale,
+			projectile_template_2d.skew,
 			_active_instance.global_position
 			)
+	
 		# if _active_instance.area_rid:
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(

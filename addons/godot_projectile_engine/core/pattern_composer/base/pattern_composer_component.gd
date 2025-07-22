@@ -8,3 +8,6 @@ class_name PatternComposerComponent
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
 	return pattern_composer_pack
 
+
+func update(pattern_composer_pack : Array[PatternComposerData]) -> void:
+	pass
