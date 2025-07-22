@@ -8,4 +8,4 @@ class_name PatternComposerContext
 
 var projectile_spawner : ProjectileSpawner2D
 var use_spawn_makers : bool
-var projectile_spawn_makers : Array[ProjectileSpawnMaker2D]
+var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]

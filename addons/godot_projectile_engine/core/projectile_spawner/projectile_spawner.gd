@@ -31,7 +31,7 @@ var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
 
-var projectile_spawn_makers : Array[ProjectileSpawnMaker2D]
+var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
 
 func _ready() -> void:
 	if active:
@@ -197,7 +197,7 @@ func create_projectile_node_manager_2d() -> void:
 
 func setup_spawn_maker() -> void:
 	for child : Node in get_children():
-		if child is ProjectileSpawnMaker2D:
+		if child is ProjectileSpawnMarker2D:
 			projectile_spawn_makers.append(child)
 
 func deactive_projectile_spanwer() -> void:
