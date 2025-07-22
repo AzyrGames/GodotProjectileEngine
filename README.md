@@ -10,7 +10,15 @@
 > **Alpha Notice (0.5.x-alpha)**  
 > This version contains many bugs and frequent breaking changes and is not recommended for production use.
 
+## Showcases
+<img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-093611_hyprshot.png?raw=true" /> <img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-094046_hyprshot.png?raw=true" />
+
+
+
 ## Features
+
+
+
 ### 🧩 Modular Architecture
 - **Separated components** for specialized functionality:
   - `ProjectileTemplate` - Define projectile properties
