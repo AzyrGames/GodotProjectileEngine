@@ -65,11 +65,11 @@ projectile_template_2d = SubResource("Resource_gqyag")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="ProjectileSpawnMaker2D3" type="Marker2D" parent="ProjectileSpawner2D4"]
+[node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileSpawner2D4"]
 script = ExtResource("5_gqyag")
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
-[node name="ProjectileSpawnMaker2D2" type="Marker2D" parent="ProjectileSpawner2D4"]
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D4"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
@@ -81,12 +81,12 @@ projectile_template_2d = SubResource("Resource_gqyag")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="ProjectileSpawnMaker2D3" type="Marker2D" parent="ProjectileSpawner2D2"]
+[node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileSpawner2D2"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(0, 1)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
-[node name="ProjectileSpawnMaker2D2" type="Marker2D" parent="ProjectileSpawner2D2"]
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D2"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(0, -1)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
@@ -98,11 +98,11 @@ projectile_template_2d = SubResource("Resource_buf18")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="ProjectileSpawnMaker2D" type="Marker2D" parent="ProjectileSpawner2D3"]
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D3"]
 script = ExtResource("5_gqyag")
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
-[node name="ProjectileSpawnMaker2D3" type="Marker2D" parent="ProjectileSpawner2D3"]
+[node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileSpawner2D3"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
@@ -114,12 +114,12 @@ projectile_template_2d = SubResource("Resource_buf18")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="ProjectileSpawnMaker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(0, 1)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
-[node name="ProjectileSpawnMaker2D3" type="Marker2D" parent="ProjectileSpawner2D5"]
+[node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileSpawner2D5"]
 script = ExtResource("5_gqyag")
 init_direction = Vector2(0, -1)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"

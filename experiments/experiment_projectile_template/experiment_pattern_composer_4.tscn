@@ -32,12 +32,12 @@ projectile_template_2d = SubResource("Resource_irfq3")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
-[node name="ProjectileSpawnMaker2D" type="Marker2D" parent="ProjectileSpawner2D"]
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D"]
 position = Vector2(82, -11)
 script = ExtResource("5_m87c1")
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
-[node name="ProjectileSpawnMaker2D2" type="Marker2D" parent="ProjectileSpawner2D"]
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D"]
 position = Vector2(-69, -11)
 script = ExtResource("5_m87c1")
 init_direction = Vector2(-1, 0)
