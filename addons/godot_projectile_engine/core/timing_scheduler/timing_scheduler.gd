@@ -51,9 +51,6 @@ var current_tsc : TimingSchedulerComponent
 ## Pause state of the scheduler
 var paused : bool = true
 
-## If is acitvated
-var active : bool = false
-
 var _is_queue_soft_stop : bool = false
 
 var _is_just_started : bool = false
@@ -74,9 +71,9 @@ func _physics_process(delta: float) -> void:
 ## Starts the timing scheduler
 func start_scheduler() -> void:
 	if !paused:
+		print("Paused")
 		return
 	_build_tsc_sequence()
-	active = true
 	_is_just_started = true
 
 
@@ -90,6 +87,7 @@ func stop_scheduler() -> void:
 
 
 func _start_timing_scheduler() -> void:
+	print("Heyy")
 	if tsc_sequence.is_empty(): 
 		return
 		
