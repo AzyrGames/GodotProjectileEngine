@@ -6,8 +6,10 @@ class_name TSCRepeater
 ## - repeat_count < 0: Infinite repetitions
 ## - repeat_count > 0: Finite repetitions
 
-@export var duration: float = 1.0  ## Duration to repeat in seconds
-@export var repeat_count: int = -1  ## Repetition count (0=immediate, <0=infinite, >0=finite)
+## Duration to repeat in seconds
+@export var duration: float = 1.0  
+## Repetition count (0=immediate, <0 infinite, >0 finite)
+@export var repeat_count: int = -1  
 
 var current_count: int = 0  ## Current repetition count
 
@@ -18,11 +20,18 @@ func stop_tsc() -> void:
 
 ## Starts the next timing value (first repetition)
 func start_next_timing_value() -> void:
+	tsc_timed.emit()
+	
+	# If repeat_count is 0 complete immediately
 	if repeat_count == 0:
-		# Immediate completion
 		tsc_completed.emit()
 		return
-		
+	
+	# If duration is 0 or negative, complete immediately
+	if duration <= 0.0:
+		tsc_completed.emit()
+		return
+	
 	# Reset counter and start first repetition
 	current_count = 0
 	timing_timer.start(duration)

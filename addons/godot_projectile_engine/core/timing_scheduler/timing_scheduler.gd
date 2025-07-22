@@ -54,40 +54,30 @@ var paused : bool = true
 ## If is acitvated
 var active : bool = false
 
-# Internal flag for soft stop queuing
 var _is_queue_soft_stop : bool = false
 
 var _is_just_started : bool = false
 
-func _enter_tree() -> void:
-	# Empty implementation - remove redundant pass
-	pass
-
-
-func _exit_tree() -> void:
-	# Empty implementation - remove redundant pass
-	pass
-
 
 func _ready() -> void:
 	if autostart:
-		call_deferred("start")
+		call_deferred("start_scheduler")
+
 
 func _physics_process(delta: float) -> void:
 	if _is_just_started:
-		scheduler_timed.emit()
+		_start_timing_scheduler()
 		_is_just_started = false
 	pass
+
 
 ## Starts the timing scheduler
 func start_scheduler() -> void:
 	if !paused:
 		return
 	_build_tsc_sequence()
-	_start_timing_scheduler()
 	active = true
 	_is_just_started = true
-
 
 
 ## Stops the timing scheduler using configured stop method
@@ -97,7 +87,6 @@ func stop_scheduler() -> void:
 			_hard_stop_timing_scheduler()
 		StopMethod.SOFT_STOP:
 			_soft_stop_timing_scheduler()
-
 
 
 func _start_timing_scheduler() -> void:
@@ -111,7 +100,6 @@ func _start_timing_scheduler() -> void:
 		scheduler_completed.emit()
 
 
-
 func _hard_stop_timing_scheduler() -> void:
 	if not current_tsc:
 		return
@@ -121,7 +109,6 @@ func _hard_stop_timing_scheduler() -> void:
 	current_tsc = null
 	paused = true
 	tsc_sequence_index = _DEFAULT_SEQUENCE_INDEX
-
 
 
 func _soft_stop_timing_scheduler() -> void:
@@ -134,7 +121,6 @@ func _soft_stop_timing_scheduler() -> void:
 		current_tsc.tsc_completed.connect(_on_soft_stop_tsc_completed)
 
 
-
 ## Builds the sequence of TimingSchedulerComponent nodes from children
 func _build_tsc_sequence() -> void:
 	tsc_sequence.clear()
@@ -144,7 +130,6 @@ func _build_tsc_sequence() -> void:
 	for node in get_children():
 		if node is TimingSchedulerComponent:
 			tsc_sequence.append(node)
-
 
 
 ## Starts the next timing scheduler component in sequence
@@ -183,7 +168,6 @@ func _get_next_tsc() -> TimingSchedulerComponent:
 ## Handles timing events from current component
 func _on_tsc_timed() -> void:
 	scheduler_timed.emit()
-
 
 
 ## Handles completion events from current component
