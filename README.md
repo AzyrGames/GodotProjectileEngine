@@ -7,7 +7,7 @@
 **Streamlined feature-packed Projectile Engine for Godot 4** - A modular system for creating and managing thousands of customizable projectiles with optimal performance.
 
 > [!WARNING]  
-> **Alpha Notice (v0.5.1)**  
+> **Alpha Notice (0.5.x-alpha)**  
 > This version contains many bugs and frequent breaking changes and is not recommended for production use.
 
 ## Features
