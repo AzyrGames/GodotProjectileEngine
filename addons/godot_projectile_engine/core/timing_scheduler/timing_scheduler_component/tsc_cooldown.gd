@@ -8,11 +8,10 @@ class_name TSCCooldown
 
 ## Starts the cooldown timer with the next timing value
 func start_next_timing_value() -> void:
-	# Emit timed signal immediately since cooldown starts right away
 	tsc_timed.emit()
-	
+
+	# If duration is 0 or negative, complete immediately
 	if cooldown_duration <= 0.0:
-		# If duration is 0 or negative, complete immediately
 		tsc_completed.emit()
 		return
 	

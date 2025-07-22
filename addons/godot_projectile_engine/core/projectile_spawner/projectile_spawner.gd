@@ -219,8 +219,7 @@ func _spawn_projectile_template_node_2d() -> void:
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
 	timing_scheduler.scheduler_timed.connect(spawn_pattern)
-	if !timing_scheduler.active:
-		timing_scheduler.start_scheduler()
+	timing_scheduler.start_scheduler()
 	pass
 
 func disconnect_timing_scheduler() -> void:

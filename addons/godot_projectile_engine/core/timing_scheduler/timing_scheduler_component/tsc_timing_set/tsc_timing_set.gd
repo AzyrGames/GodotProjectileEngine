@@ -44,15 +44,20 @@ func start_next_timing_value() -> void:
 		tsc_completed.emit()
 		stop_tsc()
 		return
-	# Check repeat condition or repeat indefinitely by doing nothing
+
+	# Check repeat condition 
 	if timing_set.repeat_count > 0 and _current_repeat_count >= timing_set.repeat_count:
 		tsc_completed.emit()
 		stop_tsc()
 		return
+
+	## Complete when having stop request
 	if timing_set.repeat_count < 0:
 		if request_stop:
 			tsc_completed.emit()
 			request_stop = false
+			stop_tsc()
+			return
 
 	_current_interval = get_next_timing_value()
 
@@ -86,12 +91,12 @@ func get_next_timing_value() -> float:
 			if _timing_set_index >= timing_set.entries.size() - 1:
 				_current_repeat_count += 1
 				_timing_set_index = -1  # Reset index for next cycle
+
 		TimingSet.PlaybackMode.RANDOM:
 			# Initialize shuffled list at start of cycle
 			if _shuffled_entries.is_empty():
 				_shuffled_entries = timing_set.entries.duplicate()
 				_shuffled_entries.shuffle()
-			
 			_interval_value = _shuffled_entries.pop_front()
 			
 			# Increment repeat count when shuffled list is exhausted
