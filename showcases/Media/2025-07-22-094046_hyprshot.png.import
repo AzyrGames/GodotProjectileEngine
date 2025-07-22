@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7mtfa15yyfcx"
-valid=false
+uid="uid://pxrlsbx1bekx"
+path="res://.godot/imported/2025-07-22-094046_hyprshot.png-89610160df54a0551310e21d3b1c8bd7.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/icon.png"
+source_file="res://showcases/Media/2025-07-22-094046_hyprshot.png"
+dest_files=["res://.godot/imported/2025-07-22-094046_hyprshot.png-89610160df54a0551310e21d3b1c8bd7.ctex"]
 
 [params]
 
