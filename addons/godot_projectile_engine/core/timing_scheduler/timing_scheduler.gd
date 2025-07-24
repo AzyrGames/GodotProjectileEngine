@@ -71,7 +71,6 @@ func _physics_process(delta: float) -> void:
 ## Starts the timing scheduler
 func start_scheduler() -> void:
 	if !paused:
-		print("Paused")
 		return
 	_build_tsc_sequence()
 	_is_just_started = true
@@ -87,7 +86,6 @@ func stop_scheduler() -> void:
 
 
 func _start_timing_scheduler() -> void:
-	print("Heyy")
 	if tsc_sequence.is_empty(): 
 		return
 		
