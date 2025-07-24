@@ -65,6 +65,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.active = true
 			_projectile_node_2d.visible = true
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
+			_projectile_node_2d.setup_projectile_2d()
 			projectile_pooling_index += 1
 			if projectile_pooling_index >= projectile_max_pooling:
 				projectile_pooling_index = 0

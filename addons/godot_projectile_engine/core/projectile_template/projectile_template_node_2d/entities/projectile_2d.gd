@@ -93,7 +93,28 @@ func _set(property: StringName, value: Variant) -> bool:
 	return false
 
 func _ready() -> void:
-	visible = false
+	pass
+
+func _physics_process(delta: float) -> void:
+	if !active:
+		return
+	update_projectile_2d(delta)
+	pass
+
+
+func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
+	position = _pattern_composer_data.position
+	direction = _pattern_composer_data.direction
+	rotation = _pattern_composer_data.rotation
+	scale = _pattern_composer_data.scale
+
+func setup_projectile_2d() -> void:
+	init_base_properties()
+	setup_projectile_behavior()
+	update_projectile_2d(get_physics_process_delta_time())
+	pass
+
+func init_base_properties() -> void:
 	base_speed = speed
 	base_direction = direction
 	base_rotation = rotation
@@ -101,6 +122,7 @@ func _ready() -> void:
 	base_scale = scale
 	projectile_scale = scale
 
+func setup_projectile_behavior() -> void:
 	projectile_behaviors.clear()
 	projectile_behaviors.append_array(speed_projectile_behaviors)
 	projectile_behaviors.append_array(direction_projectile_behaviors)
@@ -124,18 +146,6 @@ func _ready() -> void:
 			if _projectile_behavior.process_behavior(null, projectile_behavior_context):
 				queue_free_projectile()
 
-func _physics_process(delta: float) -> void:
-	if !active:
-		return
-	update_projectile_2d(delta)
-	pass
-
-
-func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
-	position = _pattern_composer_data.position
-	direction = _pattern_composer_data.direction
-	base_speed = speed
-	base_direction = direction
 
 func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.clear()
