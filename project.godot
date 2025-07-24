@@ -22,10 +22,6 @@ ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd
 
 gdscript/warnings/untyped_declaration=2
 
-[display]
-
-window/size/mode=4
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot_projectile_engine/plugin.cfg", "res://addons/remove_orphan_uid/plugin.cfg")
