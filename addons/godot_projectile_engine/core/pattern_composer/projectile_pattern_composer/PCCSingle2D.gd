@@ -6,8 +6,8 @@ class_name PCCSingle2D
 enum DirectionType {
 	INHERIT, ## Use the current ProjectileSpawner direction
 	FIXED, ## Overwrite the direction with `fixed_direction`
-	# TARGET, ## Direction from ProjectileSpawner to the target Position
-	# MOUSE, ## Direction from ProjectileSpawner to the mouse position
+	TARGET, ## Direction from ProjectileSpawner to the target Position
+	MOUSE, ## Direction from ProjectileSpawner to the mouse position
 }
 
 enum RotationProcessMode {
@@ -18,10 +18,10 @@ enum RotationProcessMode {
 ## Type of direction 
 @export var direction_type : DirectionType
 
-## Normalized direction 
+## Normalized fixed direction for Fixed DirectionType
 @export var fixed_direction : Vector2 = Vector2.RIGHT
-## Rotate direction by rotation degree
-# @export var group_name : String
+## Normalized target group name for TARGET DirectionType
+@export var group_name : String
 
 ## Direction Rotation as degrees
 @export_range(-360, 360, 0.1, "radians_as_degrees") var rotation : float = 0
@@ -33,14 +33,13 @@ enum RotationProcessMode {
 @export_range(0, 360) var random_angle : float = 0.0
 
 var _request_tick : bool = false
-
-# var pattern_composer_context : PatternComposerContext
 var _rng : RandomNumberGenerator
 var _target_node : Node2D
 
 
 func _ready() -> void:
 	pass
+
 
 func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
 	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
@@ -57,9 +56,18 @@ func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern
 			DirectionType.FIXED:
 				_pattern_composer_data.direction = fixed_direction.rotated(_final_rotation).normalized()
 				pass
+			DirectionType.TARGET:
+				var _target_node := get_first_node2d_group(group_name)
+				if _target_node:
+					_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(_target_node.position)
+				pass
+			DirectionType.MOUSE:
+				var _mouse_position := get_mouse_position()
+				if _mouse_position:
+					_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(_mouse_position)
+				pass
 	if rotation_process_mode == RotationProcessMode.TICKS:
 		_request_tick = true
-
 	return pattern_composer_pack
 
 
@@ -77,11 +85,20 @@ func update(pattern_composer_pack : Array[PatternComposerData]) -> void:
 	pass
 
 
-## Search and return the first Node2D in a Group, return null if not founded
-# func get_first_node2d_group(_group_name : String) -> Node2D:
-# 	if group_name == null:
-# 		return
-# 	for _node: Node in get_tree().get_nodes_in_group(group_name):
-# 		if _node is Node2D:
-# 			return _node
-# 	return
+# Search and return the first Node2D in a Group, return null if not founded
+func get_first_node2d_group(_group_name : String) -> Node2D:
+	if _group_name == null:
+		return
+	for _node: Node in get_tree().get_nodes_in_group(_group_name):
+		if _node is Node2D:
+			return _node
+	return
+
+
+## Get global mouse position using projectile_environment
+func get_mouse_position() -> Vector2:
+	if ProjectileEngine.projectile_environment:
+		return ProjectileEngine.projectile_environment.get_global_mouse_position()
+	else:
+		return Vector2.ZERO
+	pass
