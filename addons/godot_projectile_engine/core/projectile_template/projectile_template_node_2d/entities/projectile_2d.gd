@@ -93,6 +93,7 @@ func _set(property: StringName, value: Variant) -> bool:
 	return false
 
 func _ready() -> void:
+	setup_projectile_2d()
 	pass
 
 func _physics_process(delta: float) -> void:
