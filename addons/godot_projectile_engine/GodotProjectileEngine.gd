@@ -4,7 +4,6 @@ extends Node
 
 signal projectile_instance_triggered(trigger_name: String, projectile_instance)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
-
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 
 signal projectile_instance_body_shape_entered(
@@ -22,10 +21,10 @@ signal projectile_instance_body_shape_exited(
 signal projectile_instance_body_entered(
 	projectile_instance, body: Node,
 	)
+
 signal projectile_instance_body_exited(
 	projectile_instance, body: Node,
 	)
-
 
 signal projectile_instance_area_shape_entered(
 	projectile_instance, 
@@ -64,24 +63,21 @@ enum BehaviorContext{
 	ROTATION,
 	RANDOM_NUMBER_GENERATOR,
 	ARRAY_VARIABLE,
-	
 }
 
 var active_projectile_count : int
 var projectile_environment : ProjectileEnvironment2D
+var projectile_boundary_2d : ProjectileBoundary2D
+
+var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_node_manager_2d_nodes : Dictionary[StringName, ProjectileNodeManager2D]
 
 
-var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
-
-var projectile_boundary_2d : ProjectileBoundary2D
-
-
 func _ready() -> void:
 	# projectile_instance_triggered.connect(_test_projectile_instance_triggered)
-	projectile_node_triggered.connect(_test_projectile_node_triggered)
+	# projectile_node_triggered.connect(_test_projectile_node_triggered)
 
 	# projectile_instance_body_shape_entered.connect(_test_projectile_instance_body_shape_entered)
 	# projectile_instance_body_shape_exited.connect(_test_projectile_instance_body_shape_exited)
@@ -105,25 +101,49 @@ func get_projectile_count() -> int:
 	return active_projectile_count
 	pass
 
-
-func clear() -> void:
+## Cleanup Projectile Engine to default stage.
+## Good for switching scene.
+func refresh_projectile_engine() -> void:
+	clear_all_projectiles()
+	active_projectile_count = 0
+	projectile_environment = null
+	projectile_boundary_2d = null
 	projectile_updater_2d_nodes.clear()
+	projectile_node_manager_2d_nodes.clear()
 	projectile_composer_nodes.clear()
 	pass
 
-func clear_projectile() -> void:
-	for _projectile_udpater_node in projectile_updater_2d_nodes.values():
-		_projectile_udpater_node.clear_projectile()
+
+## Clear all projectiles
+func clear_all_projectiles() -> void:
+	clear_projectile_instances()
+	clear_projectile_nodes()
 	pass
+
+
+## Clear all ProjectileInstances
+func clear_projectile_instances() -> void:
+	for _projectile_udpater_node : ProjectileUpdater2D in projectile_updater_2d_nodes.values():
+		_projectile_udpater_node.clear_projectiles()
+	pass
+
+
+## Clear all ProjectileNode2Ds
+func clear_projectile_nodes() -> void:
+	for _projectile_node_manager : ProjectileNodeManager2D in projectile_node_manager_2d_nodes.values():
+		_projectile_node_manager.clear_projectiles()
+	pass
+
 
 func _test_projectile_instance_triggered(trigger_name: String, projectile_instance) -> void:
 	print("Projectile instance triggered: ", trigger_name , " - ", projectile_instance)
 	pass
 
+
 func _test_projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D) -> void:
 	print("Projectile node2d triggered: ", trigger_name , " - ", projectile_node)
-
 	pass
+
 
 func _test_projectile_instance_body_shape_entered(
 	projectile_instance, 
@@ -137,6 +157,7 @@ func _test_projectile_instance_body_shape_entered(
 		]))
 	pass
 
+
 func _test_projectile_instance_body_shape_exited(
 	projectile_instance, 
 	body_rid : RID, body: Node, body_shape_idx: int, 
@@ -148,6 +169,7 @@ func _test_projectile_instance_body_shape_exited(
 		projectile_rid, projectile_idx
 		]))
 	pass
+
 
 func _test_projectile_instance_body_entered(
 	projectile_instance, body) -> void:
@@ -174,6 +196,7 @@ func _test_projectile_instance_area_shape_entered(
 		]))
 	pass
 
+
 func _test_projectile_instance_area_shape_exited(
 	projectile_instance, 
 	area_rid : RID, area: Node, area_shape_idx: int, 
@@ -186,11 +209,13 @@ func _test_projectile_instance_area_shape_exited(
 		]))
 	pass
 
+
 func _test_projectile_instance_area_entered(
 	projectile_instance, area) -> void:
 	
 	print("{0} - {1}".format([projectile_instance, area]))
 	pass
+
 
 func _test_projectile_instance_area_exited(
 	projectile_instance, area) -> void:

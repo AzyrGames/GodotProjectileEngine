@@ -241,7 +241,9 @@ func get_active_projectile_count() -> int:
 	return _active_instances.size()
 	pass
 
-func clear_projectile() -> void:
+
+## Clear all ProjectileInstances in this ProjectileUpdater
+func clear_projectiles() -> void:
 	for _index in range(projectile_max_pooling):
 		projectile_active_index.erase(_index)
 		PS.area_set_shape_disabled(projectile_area_rid, _index, true)
@@ -252,11 +254,14 @@ func clear_projectile() -> void:
 func has_overlapping_areas(area_idx: int = -1) -> bool:
 	return _overlapping_areas.has(area_idx)
 
+
 func get_overlapping_areas(area_idx: int = -1) -> Array:
 	return _overlapping_areas.get(area_idx)
 
+
 func has_overlapping_bodies(area_idx: int = -1) -> bool:
 	return _overlapping_bodies.has(area_idx)
+
 
 func get_overlapping_bodies(area_idx: int = -1) -> Array:
 	return _overlapping_bodies.get(area_idx) as Array

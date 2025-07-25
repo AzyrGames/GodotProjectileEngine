@@ -18,6 +18,7 @@
 script = ExtResource("6_fw53g")
 projectile_2d_path = &"uid://c7rypyujt6vmj"
 projectile_pooling_amount = 100
+custom_data = {}
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="Resource" id="Resource_gur78"]
@@ -76,7 +77,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 [node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("6_5epyj")
 rotation_speed = 0.191986
-rotation_process_type = 1
 metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]

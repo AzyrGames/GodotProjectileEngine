@@ -50,7 +50,7 @@ trigger_projectile_behaviors = Array[ExtResource("11_d4pub")]([])
 custom_data = {}
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
-[node name="ExperimentPatternComposer3" type="Node2D"]
+[node name="ExperimentPatternComposer6" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(56.0002, 12.0002)

@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://drg85m51aqbj7"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca8sa"]
 size = Vector2(192, 20)
 
-[node name="ExperimentPatternComposer2" type="Node2D"]
+[node name="ExperimentPatternComposer4" type="Node2D"]
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_ol0nl")
