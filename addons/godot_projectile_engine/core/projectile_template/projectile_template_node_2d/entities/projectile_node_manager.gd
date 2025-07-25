@@ -83,6 +83,16 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			pass
 
 
+## Clear all ProjectileNode2D in this ProjetileNodeManager
+func clear_projectiles() -> void:
+	for child in get_children():
+		if child is not Projectile2D:
+			continue
+		child.queue_free_projectile()
+		pass
+	pass
+
+
 func _load_projectile_node(_file_path: String) -> PackedScene:
 	if _file_path == "":
 		print_debug("ProjectileTemplateNode file path is null")
