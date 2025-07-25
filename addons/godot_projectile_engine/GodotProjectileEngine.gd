@@ -65,7 +65,17 @@ enum BehaviorContext{
 	ARRAY_VARIABLE,
 }
 
-var active_projectile_count : int
+var active_projectile_count : int:
+	get():
+		return get_active_projectile_count()
+
+var active_projectile_instance_count : int:
+	get():
+		return get_active_projectile_instance_count()
+var active_projectile_node_count : int :
+	get():
+		return get_active_projectile_node_count()
+
 var projectile_environment : ProjectileEnvironment2D
 var projectile_boundary_2d : ProjectileBoundary2D
 
@@ -74,6 +84,7 @@ var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_node_manager_2d_nodes : Dictionary[StringName, ProjectileNodeManager2D]
 
+var _projectile_count_temp : int
 
 func _ready() -> void:
 	# projectile_instance_triggered.connect(_test_projectile_instance_triggered)
@@ -90,16 +101,31 @@ func _ready() -> void:
 	# projectile_instance_area_exited.connect(_test_projectile_instance_area_exited)
 	pass
 
-func get_projectile_count() -> int:
-	active_projectile_count = 0
 
+## Count all active Projectiles
+func get_active_projectile_count() -> int:
+	return get_active_projectile_instance_count() + get_active_projectile_node_count()
+
+
+## Count the active ProjectileInstances
+func get_active_projectile_instance_count() -> int:
+	_projectile_count_temp = 0
 	for projectile_updater in projectile_updater_2d_nodes.values():
-		if projectile_updater:
-			active_projectile_count += projectile_updater.get_active_projectile_count()
-		pass
-	
-	return active_projectile_count
+		if !projectile_updater: continue
+		_projectile_count_temp += projectile_updater.get_active_projectile_count()
+		# print(projectile_updater.get_active_projectile_count())
+	return _projectile_count_temp
+
+
+## Count the active ProjectileNode2D
+func get_active_projectile_node_count() -> int:
+	_projectile_count_temp = 0
+	for _projectile_node_manager in projectile_node_manager_2d_nodes.values():
+		if !_projectile_node_manager: continue
+		_projectile_count_temp += _projectile_node_manager.get_active_projectile_count()
+	return _projectile_count_temp
 	pass
+
 
 ## Cleanup Projectile Engine to default stage.
 ## Good for switching scene.
