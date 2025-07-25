@@ -50,7 +50,7 @@ life_distance_max = 1000.0
 custom_data = {}
 metadata/_custom_type_script = "uid://dqlixqba72p5f"
 
-[node name="ExperimentPatternComposer2" type="Node2D"]
+[node name="ExperimentPatternComposer5" type="Node2D"]
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_buf18")
