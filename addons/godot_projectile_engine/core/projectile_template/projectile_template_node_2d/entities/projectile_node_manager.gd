@@ -37,6 +37,7 @@ func setup_projectile_manager() -> void:
 	create_projectile_pool()
 	pass
 
+
 func create_projectile_pool() -> void:
 	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
 	projectile_node_array.clear()
@@ -65,6 +66,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.active = true
 			_projectile_node_2d.visible = true
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
+			_projectile_node_2d.setup_projectile_2d()
 			projectile_pooling_index += 1
 			if projectile_pooling_index >= projectile_max_pooling:
 				projectile_pooling_index = 0
@@ -78,6 +80,8 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.set_owner(self)
 			_projectile_node_2d.active = true
 			_projectile_node_2d.visible = true
+			pass
+
 
 func _load_projectile_node(_file_path: String) -> PackedScene:
 	if _file_path == "":
