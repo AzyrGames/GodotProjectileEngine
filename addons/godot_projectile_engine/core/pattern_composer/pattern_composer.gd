@@ -52,8 +52,12 @@ func _physics_process(delta: float) -> void:
 func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
 	## Init pattern composer pack
 	_init_comopser_data = PatternComposerData.new()
-	## Check for new spawner
+	## Check and update spawn locations
 	if _pattern_composer_context.use_spawn_makers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
+		for _key in pattern_composer_dict.keys():
+			if _key is ProjectileSpawner2D:
+				pattern_composer_pack.erase(pattern_composer_dict.get(_key))
+				pattern_composer_dict.erase(_key)
 		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
 			if !_projectile_spawn_maker.active:
 				continue
@@ -63,14 +67,19 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 			_new_composer_data = _init_comopser_data.duplicate()
 			_new_composer_data.base_direction = _projectile_spawn_maker.init_direction
 			_new_composer_data.direction = _projectile_spawn_maker.init_direction
+
 			pattern_composer_dict.get_or_add(_projectile_spawn_maker, _new_composer_data)
 			pattern_composer_pack.append(_new_composer_data)
 	else:
+		for _key in pattern_composer_dict.keys():
+			if _key is ProjectileSpawnMarker2D:
+				pattern_composer_pack.erase(pattern_composer_dict.get(_key))
+				pattern_composer_dict.erase(_key)
 		if !pattern_composer_dict.has(_pattern_composer_context.projectile_spawner):
 			pattern_composer_dict.get_or_add(_pattern_composer_context.projectile_spawner, _init_comopser_data)
 			pattern_composer_pack.append(_init_comopser_data)
 
-	## Update Position
+	## Update spawn position
 	if _pattern_composer_context.use_spawn_makers and pattern_composer_pack.size() > 0:
 		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
 			if _projectile_spawn_maker.use_global_position:
@@ -81,11 +90,13 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 		for pattern_composer_data : PatternComposerData in pattern_composer_pack:
 			pattern_composer_data.position = _pattern_composer_context.position
 
-	## Process through all Pattern Composer
+	## Process through all Pattern Composer Component
+	_new_pattern_composer_pack = pattern_composer_pack
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue
-		_new_pattern_composer_pack = pattern_component.process_pattern(pattern_composer_pack, _pattern_composer_context)
+
+		_new_pattern_composer_pack = pattern_component.process_pattern(_new_pattern_composer_pack, _pattern_composer_context)
 
 	return _new_pattern_composer_pack
 

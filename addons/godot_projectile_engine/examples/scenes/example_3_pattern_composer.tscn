@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="10_semoo"]
 [ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/godot_projectile_engine/examples/assets/audio/laserShoot.wav" id="11_nbruj"]
 
-[node name="Example1FirstProjectile" type="Node2D"]
+[node name="Example1FirstProjectile2" type="Node2D"]
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_p1enm")

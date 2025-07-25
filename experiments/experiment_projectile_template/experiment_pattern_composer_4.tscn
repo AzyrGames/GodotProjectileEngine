@@ -33,12 +33,12 @@ timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D"]
-position = Vector2(82, -11)
+position = Vector2(128, 0)
 script = ExtResource("5_m87c1")
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
 [node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D"]
-position = Vector2(-69, -11)
+position = Vector2(-128, 0)
 script = ExtResource("5_m87c1")
 init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
