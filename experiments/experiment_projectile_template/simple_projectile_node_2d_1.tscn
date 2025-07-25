@@ -17,6 +17,7 @@ metadata/_custom_type_script = "uid://com1bcixecyvf"
 [sub_resource type="CircleShape2D" id="CircleShape2D_5kx35"]
 
 [node name="Projectile2D" type="Area2D"]
+collision_mask = 256
 script = ExtResource("1_8i12s")
 trigger_projectile_behaviors = Array[ExtResource("2_2sjbs")]([SubResource("Resource_nb8w6")])
 metadata/_custom_type_script = "uid://d1jrqiont4u2h"

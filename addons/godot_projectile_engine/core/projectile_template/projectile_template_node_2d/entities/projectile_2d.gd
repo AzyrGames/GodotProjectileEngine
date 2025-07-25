@@ -23,7 +23,7 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 @export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]
 
 var projectile_node_manager : ProjectileNodeManager2D
-var projectile_node_index : int 
+var projectile_node_index : int
 var active : bool = false
 
 var velocity : Vector2
@@ -89,7 +89,7 @@ func _set(property: StringName, value: Variant) -> bool:
 			projectile_scale = value
 			base_scale = value
 			return true
-		
+
 	return false
 
 func _ready() -> void:
@@ -109,11 +109,13 @@ func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) ->
 	rotation = _pattern_composer_data.rotation
 	scale = _pattern_composer_data.scale
 
+
 func setup_projectile_2d() -> void:
 	init_base_properties()
 	setup_projectile_behavior()
 	update_projectile_2d(get_physics_process_delta_time())
 	pass
+
 
 func init_base_properties() -> void:
 	base_speed = speed
@@ -122,6 +124,7 @@ func init_base_properties() -> void:
 	projectile_rotation = rotation
 	base_scale = scale
 	projectile_scale = scale
+
 
 func setup_projectile_behavior() -> void:
 	projectile_behaviors.clear()
@@ -140,7 +143,7 @@ func setup_projectile_behavior() -> void:
 		if !_projectile_behavior.active: continue
 		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
 		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
-	
+
 	## Special process
 	for _projectile_behavior in projectile_behaviors:
 		if _projectile_behavior is ProjectileDestroyImmediate:
@@ -157,9 +160,9 @@ func update_projectile_2d(delta: float) -> void:
 	for _persist_behavior_context_key in _persist_behavior_context.keys():
 		if !_persist_behavior_context.has(_persist_behavior_context_key):
 			_persist_behavior_context.erase(_persist_behavior_context_key)
-		
+
 	process_behavior_context_request(_persist_behavior_context, _behavior_contest_requests_persist)
-	
+
 	projectile_behavior_context.merge(_normal_behavior_context, true)
 	projectile_behavior_context.merge(_persist_behavior_context, true)
 
@@ -285,7 +288,7 @@ func update_projectile_2d(delta: float) -> void:
 					"rotation_addition":
 						_rotation_behavior_additions.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_addition"))
 					"rotation_multiply":
-						_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))			
+						_rotation_behavior_multiplies.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_multiply"))
 
 	if scale_projectile_behaviors.size() > 0:
 		_scale_behavior_additions.clear()
@@ -314,7 +317,7 @@ func update_projectile_2d(delta: float) -> void:
 		for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
 			_rotation_multiply_value += _rotation_behavior_multiply
 		_rotation_multiply = base_rotation * _rotation_multiply_value
-		rotation_final += _rotation_multiply 
+		rotation_final += _rotation_multiply
 	if _rotation_behavior_additions.size() > 0:
 		_rotation_addition = 0
 		for _rotation_behavior_addition in _rotation_behavior_additions.values():
@@ -367,7 +370,7 @@ func update_projectile_2d(delta: float) -> void:
 
 
 func process_behavior_context_request(
-	_behavior_context: Dictionary, 
+	_behavior_context: Dictionary,
 	_behavior_context_requests: Array[ProjectileEngine.BehaviorContext]
 	) -> void:
 	for _behavior_context_request in _behavior_context_requests:
@@ -383,7 +386,7 @@ func process_behavior_context_request(
 
 			ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER:
 				_behavior_context.get_or_add(_behavior_context_request, self)
-	
+
 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
 				_behavior_context.get_or_add(_behavior_context_request, life_time_second)
 
@@ -415,13 +418,15 @@ func process_behavior_context_request(
 				_behavior_context.get_or_add(_behavior_context_request, _rng_array)
 			_:
 				pass
-	return 
+	return
 
 func queue_free_projectile() -> void:
 	projectile_node_manager.active_nodes.erase(self)
-	if projectile_node_index > 0:
+	if projectile_node_index >= 0:
 		active = false
 		visible = false
+		monitoring = false
+		monitorable = false
 	else:
 		queue_free()
 	pass

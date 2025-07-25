@@ -45,6 +45,8 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		return false
 
 	if _behavior_owner is Projectile2D:
+		if !_behavior_owner.monitorable or !_behavior_owner.monitoring:
+			return false
 		if destroy_on_area_collide:
 			if _behavior_owner.has_overlapping_areas():
 				for _overlap_area in _behavior_owner.get_overlapping_areas():
