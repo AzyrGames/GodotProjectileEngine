@@ -21,30 +21,32 @@ signal scheduler_completed
 
 var projectile_area : RID
 
+var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
+
 var projectile_composer : PatternComposer2D
-var pattern_composer_pack: Array
 var composer_context : PatternComposerContext
+var pattern_composer_pack: Array
 
 var projectile_updater_2d : ProjectileUpdater2D
 var projectile_node_manager_2d : ProjectileNodeManager2D
 var projectile_count: int = 0
 
 var _projectile_2d_instance : Projectile2D
+var _pattern_composer_pack : Array
 
-var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
 
 func _ready() -> void:
 	if active:
 		activate_projectile_spawner()
 	pass
 
+
 func activate_projectile_spawner() -> void:
-	if use_spawn_makers:
-		setup_spawn_maker()
 	setup_projectile_spawner()
 	connect_audio()
 	connect_timing_scheduler()
 	pass
+
 
 func setup_projectile_spawner() -> void:
 	projectile_composer = ProjectileEngine.projectile_composer_nodes.get(projectile_composer_name)
@@ -52,7 +54,6 @@ func setup_projectile_spawner() -> void:
 	if !projectile_composer:
 		print_debug(projectile_composer_name + " PatternComposer ID is not valid")
 		return
-	
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
 
@@ -112,14 +113,20 @@ func spawn_pattern() -> void:
 	if !ProjectileEngine.projectile_environment:
 		print_debug("No Projectile Environment")
 		return
+
 	if !composer_context:
 		composer_context = PatternComposerContext.new()
 		composer_context.projectile_spawner = self
-		composer_context.use_spawn_makers = use_spawn_makers
+
+	composer_context.use_spawn_makers = use_spawn_makers
+	if use_spawn_makers:
+		setup_spawn_maker()
 		composer_context.projectile_spawn_makers = projectile_spawn_makers
-		composer_context.position = global_position
-	var _pattern_composer_pack := projectile_composer.request_pattern(composer_context)
-	# projectile_composer
+	else:
+		composer_context.projectile_spawn_makers.clear()
+
+	composer_context.position = global_position
+	_pattern_composer_pack = projectile_composer.request_pattern(composer_context)
 
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
@@ -128,7 +135,6 @@ func spawn_pattern() -> void:
 			projectile_node_manager_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		_:
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
-
 		## built-in classes don't have a script
 		null:
 			return
@@ -140,12 +146,13 @@ func create_projectile_updater() -> void:
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
-	
-	projectile_area = _projectile_updater.projectile_area_rid 
-	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
+
+	projectile_area = _projectile_updater.projectile_area_rid
+	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
 	pass
+
 
 func create_projectile_updater_simple_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterSimple2D.new()
@@ -153,11 +160,12 @@ func create_projectile_updater_simple_2d() -> void:
 	_projectile_updater.projectile_template_2d = projectile_template_2d
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
-	projectile_area = _projectile_updater.projectile_area_rid 
-	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
+	projectile_area = _projectile_updater.projectile_area_rid
+	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
 	pass
+
 
 func create_projectile_updater_advanced_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterAdvanced2D.new()
@@ -165,11 +173,12 @@ func create_projectile_updater_advanced_2d() -> void:
 	_projectile_updater.projectile_template_2d = projectile_template_2d
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
-	projectile_area = _projectile_updater.projectile_area_rid 
-	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
+	projectile_area = _projectile_updater.projectile_area_rid
+	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
 	pass
+
 
 func create_projectile_updater_custom_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterCustom2D.new()
@@ -177,8 +186,8 @@ func create_projectile_updater_custom_2d() -> void:
 	_projectile_updater.projectile_template_2d = projectile_template_2d
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
-	projectile_area = _projectile_updater.projectile_area_rid 
-	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid 
+	projectile_area = _projectile_updater.projectile_area_rid
+	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
 	projectile_updater_2d = _projectile_updater
 	pass
@@ -192,18 +201,22 @@ func create_projectile_node_manager_2d() -> void:
 	_projectile_node_manager.owner = ProjectileEngine.projectile_environment
 	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
 		projectile_template_2d.projectile_2d_path, _projectile_node_manager
-		)	
+		)
 	pass
 
+
 func setup_spawn_maker() -> void:
+	projectile_spawn_makers.clear()
 	for child : Node in get_children():
 		if child is ProjectileSpawnMarker2D:
 			projectile_spawn_makers.append(child)
+
 
 func deactive_projectile_spanwer() -> void:
 	disconnect_timing_scheduler()
 	disconnect_audio()
 	pass
+
 
 func _spawn_projectile_template_node_2d() -> void:
 	if _projectile_2d_instance == null: return
@@ -216,11 +229,13 @@ func _spawn_projectile_template_node_2d() -> void:
 		pass
 	pass
 
+
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
 	timing_scheduler.scheduler_timed.connect(spawn_pattern)
 	timing_scheduler.start_scheduler()
 	pass
+
 
 func disconnect_timing_scheduler() -> void:
 	if !timing_scheduler: return
@@ -233,6 +248,7 @@ func play_audio() -> void:
 	if !audio_stream: return
 	audio_stream.playing = true
 	pass
+
 
 func connect_audio() -> void:
 	if !audio_stream: return
@@ -257,6 +273,7 @@ func _instance_node(_file_path: String) -> Node:
 		print_stack()
 		return null
 	return _node_instance
+
 
 func _load_projectile_node(_file_path: String) -> PackedScene:
 	var _packed_projectile_node : PackedScene = load(_file_path)
