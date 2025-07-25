@@ -418,6 +418,7 @@ func process_behavior_context_request(
 	return 
 
 func queue_free_projectile() -> void:
+	projectile_node_manager.active_nodes.erase(self)
 	if projectile_node_index > 0:
 		active = false
 		visible = false
