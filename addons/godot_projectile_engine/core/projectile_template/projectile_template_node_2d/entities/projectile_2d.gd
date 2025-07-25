@@ -163,10 +163,8 @@ func update_projectile_2d(delta: float) -> void:
 	projectile_behavior_context.merge(_normal_behavior_context, true)
 	projectile_behavior_context.merge(_persist_behavior_context, true)
 
-
 	life_time_second += delta
 	life_distance += velocity.length()
-
 
 	# Refresh Projectile Behavior Array Process
 	for _behavior_key in projectile_behavior_context.keys():
@@ -195,7 +193,6 @@ func update_projectile_2d(delta: float) -> void:
 	for _projectile_behavior in piercing_projectile_behaviors:
 		if !_projectile_behavior:
 			continue
-
 		if !_projectile_behavior.active:
 			continue
 
@@ -318,15 +315,12 @@ func update_projectile_2d(delta: float) -> void:
 			_rotation_multiply_value += _rotation_behavior_multiply
 		_rotation_multiply = base_rotation * _rotation_multiply_value
 		rotation_final += _rotation_multiply 
-
 	if _rotation_behavior_additions.size() > 0:
 		_rotation_addition = 0
 		for _rotation_behavior_addition in _rotation_behavior_additions.values():
 			_rotation_addition += _rotation_behavior_addition
-		rotation_final += _rotation_addition 
-
+		rotation_final += _rotation_addition
 	rotation = rotation_final
-
 
 	scale_final = projectile_scale
 	if _scale_behavior_multiplies.size() > 0:
@@ -335,31 +329,24 @@ func update_projectile_2d(delta: float) -> void:
 			_scale_multiply_value += _scale_behavior_multiply
 		_scale_multiply = base_scale * _scale_multiply_value
 		scale_final += _scale_multiply
-
 	if _scale_behavior_additions.size() > 0:
 		_scale_addition = Vector2.ZERO
 		for _scale_behavior_addition in _scale_behavior_additions.values():
 			_scale_addition += _scale_behavior_addition
 		scale_final += _scale_addition
-
 	scale = scale_final
-
 
 	if _direction_behavior_rotations.size() > 0:
 		for _direction_behavior_rotation in _direction_behavior_rotations.values():
 			_direction_rotation_value += _direction_behavior_rotation
-
 	if _direction_behavior_additions.size() > 0:
 		for _direction_behavior_addition in _direction_behavior_additions.values():
 			_direction_addition_value += _direction_behavior_addition
 		_direction_addition = base_direction + _direction_addition_value
-
 	if _direction_addition != Vector2.ZERO:
 		direction = _direction_addition.normalized()
-
 	if _direction_rotation_value != 0:
 		direction = base_direction.rotated(_direction_rotation_value)
-
 	direction = direction.normalized()
 
 	speed_final = speed
@@ -369,7 +356,6 @@ func update_projectile_2d(delta: float) -> void:
 			_speed_multiply_value += _speed_behavior_multiply
 		_speed_multiply = base_speed * _speed_multiply_value
 		speed_final += _speed_multiply
-
 	if _speed_behavior_additions.size() > 0:
 		_speed_addition = 0
 		for _speed_behavior_addition in _speed_behavior_additions.values():
@@ -377,7 +363,6 @@ func update_projectile_2d(delta: float) -> void:
 		speed_final += _speed_addition
 
 	velocity = speed_final * direction * delta
-
 	global_position += velocity
 
 
