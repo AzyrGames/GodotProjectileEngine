@@ -2,7 +2,7 @@ extends Node
 
 
 
-signal projectile_instance_triggered(trigger_name: String, projectile_instance)
+signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 

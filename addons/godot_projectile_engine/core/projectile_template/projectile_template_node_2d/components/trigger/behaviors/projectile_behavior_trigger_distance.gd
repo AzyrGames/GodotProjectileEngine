@@ -31,7 +31,6 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 	_variable_array = _context.get(ProjectileEngine.BehaviorContext.ARRAY_VARIABLE)
 
 	# Set new instance variable array, if not it's will process the past variable
-
 	if _variable_array.size() <= 0:
 		_behavior_variable_trigger = null
 	for _variable in _variable_array:
@@ -52,13 +51,20 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 	if _behavior_variable_trigger.is_trigger_done:
 		return {"is_trigger" : false}
 
-	_life_distance = _context.get(ProjectileEngine.BehaviorContext.LIFE_DISTANCE, 0.0)
+	if _context.has(ProjectileEngine.BehaviorContext.LIFE_DISTANCE):
+		_life_distance = _context.get(ProjectileEngine.BehaviorContext.LIFE_DISTANCE, 0.0)
 
-	if trigger_repeat_count <= 0:
+	if trigger_repeat_count == 0:
 		_trigger_behavior_values["is_trigger"] = false
 		if destroy_when_done:
 			_trigger_behavior_values["is_destroy"] = true
 		_behavior_variable_trigger.is_trigger_done = true
+
+	elif trigger_repeat_count < 0:
+		_should_trigger = _life_distance >= trigger_distance * (_behavior_variable_trigger.trigger_count + 1)
+		_trigger_behavior_values["is_trigger"] = _should_trigger
+		if _should_trigger:
+			_behavior_variable_trigger.trigger_count += 1
 
 	elif trigger_repeat_count == 1:
 		_trigger_behavior_values["is_trigger"] = _life_distance >= trigger_distance
@@ -71,11 +77,9 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 		_trigger_behavior_values["is_trigger"] = _should_trigger
 		if _should_trigger:
 			_behavior_variable_trigger.trigger_count += 1
-
 	else:
 		_behavior_variable_trigger.is_trigger_done = true
 		_trigger_behavior_values["is_trigger"] = false
-
 		if destroy_when_done:
 			_trigger_behavior_values["is_destroy"] = true
 
