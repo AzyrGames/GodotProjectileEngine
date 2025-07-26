@@ -3,8 +3,6 @@ class_name ProjectileTemplateAdvanced2D
 
 ## Template for Advanced Projectile 2D for more Projectile Behavior options
 
-## Base damage dealt by the projectile
-@export var damage: float = 1.0
 ## Movement speed of the projectile in pixels per second
 @export var speed : float = 100
 

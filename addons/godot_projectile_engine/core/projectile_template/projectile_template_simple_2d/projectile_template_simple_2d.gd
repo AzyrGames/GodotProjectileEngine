@@ -3,8 +3,6 @@ class_name ProjectileTemplateSimple2D
 
 ## Template for Simple Projectile 2D that will move at the direction and speed defined.
 
-## Base damage dealt by the projectile
-@export var damage: float = 1.0
 ## Movement speed of the projectile in pixels per second
 @export var speed : float = 100
 
