@@ -16,7 +16,7 @@ signal scheduler_completed
 @export var projectile_composer_name : String
 @export var projectile_template_2d : ProjectileTemplate2D
 @export var timing_scheduler : TimingScheduler
-@export var use_spawn_makers : bool = true
+@export var use_spawn_markers : bool = false
 @export var audio_stream: AudioStreamPlayer
 
 var projectile_area : RID
@@ -118,8 +118,8 @@ func spawn_pattern() -> void:
 		composer_context = PatternComposerContext.new()
 		composer_context.projectile_spawner = self
 
-	composer_context.use_spawn_makers = use_spawn_makers
-	if use_spawn_makers:
+	composer_context.use_spawn_markers = use_spawn_markers
+	if use_spawn_markers:
 		setup_spawn_maker()
 		composer_context.projectile_spawn_makers = projectile_spawn_makers
 	else:

@@ -55,7 +55,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 	pattern_composer_pack.clear()
 
 	## Check and update spawn locations
-	if _pattern_composer_context.use_spawn_makers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
+	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
 		for _key in pattern_composer_dict.keys():
 			if _key is ProjectileSpawner2D:
 				pattern_composer_dict.erase(_key)
@@ -82,7 +82,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 			pattern_composer_pack.append(_init_comopser_data)
 
 	## Update spawn position
-	if _pattern_composer_context.use_spawn_makers and pattern_composer_dict.values().size() > 0:
+	if _pattern_composer_context.use_spawn_markers and pattern_composer_dict.values().size() > 0:
 		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
 			if _projectile_spawn_maker.use_global_position:
 				pattern_composer_dict.get(_projectile_spawn_maker).set("position", _projectile_spawn_maker.global_position)
