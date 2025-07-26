@@ -38,7 +38,7 @@ class_name ProjectileTemplateAdvanced2D
 
 @export_group("Transform")
 @export_subgroup("Speed")
-@export var speed_acceleration : float 
+@export var speed_acceleration : float
 ## Maximum speed the projectile can reach (in units per second)
 @export var speed_max : float = 200.0
 @export_subgroup("Scale")
@@ -67,9 +67,12 @@ class_name ProjectileTemplateAdvanced2D
 ## Maximum distance at which homing is active (0 = unlimited)
 @export var max_homing_distance: float = 0.0
 
-
 @export_group("Special")
 @export_subgroup("Destroy")
+## Destroy when collided with a body
+@export var destroy_on_body_collide : bool = true
+## Destroy when collided with a area
+@export var destroy_on_area_collide : bool = true
 ## Maximum travel time in second before projectile is automatically destroyed [br]
 ## [code] life_time_second_max < 0 [/code] for unlimited distance
 @export var life_time_second_max : float = 10.0
@@ -84,8 +87,6 @@ class_name ProjectileTemplateAdvanced2D
 @export var trigger_life_distance : float = 1000.0
 # @export var trigger_when_destroy : bool
 # @export var trigger_when_collide : bool
-
-
 
 
 ## Internal RID (Rendering ID) for the projectile's collision area

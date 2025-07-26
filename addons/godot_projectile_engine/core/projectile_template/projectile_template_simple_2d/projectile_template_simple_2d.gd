@@ -33,6 +33,11 @@ class_name ProjectileTemplateSimple2D
 @export_flags_2d_physics var collision_mask : int = 0
 
 @export var texture_rotate_direction: bool = false
+
+## Destroy when collided with a body
+@export var destroy_on_body_collide : bool = true
+## Destroy when collided with a area
+@export var destroy_on_area_collide : bool = true
 ## Maximum lifetime of projectile in seconds before it's automatically destroyed
 ## [code] life_time_max < 0 [/code] for unlimited life time
 @export var life_time_second_max : float = 10.0
