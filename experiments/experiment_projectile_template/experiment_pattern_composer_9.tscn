@@ -1,0 +1,128 @@
+[gd_scene load_steps=27 format=3 uid="uid://hsq7jmcxhhaw"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_03f2f"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_0pwon"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="3_yxsq7"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="4_03f2f"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="4_eurcn"]
+[ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawn_maker_2d.gd" id="4_pv26p"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_o05jv"]
+[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="5_vonl0"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="6_aswlq"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="6_eoaio"]
+[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="7_fk004"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_hehyb"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="8_7fo6p"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="8_t2un4"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="9_a5qnn"]
+[ext_resource type="Script" uid="uid://ub1inehdx3gs" path="res://experiments/experiment_projectile_template/area_2d.gd" id="9_cjtha"]
+[ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="10_dief0"]
+[ext_resource type="Texture2D" uid="uid://br7k1haa6x0kp" path="res://addons/godot_projectile_engine/icon_color.png" id="10_g6fy7"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="11_jh4bn"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="13_16atm"]
+
+[sub_resource type="Gradient" id="Gradient_td4cq"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ylpdm"]
+gradient = SubResource("Gradient_td4cq")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofm4c"]
+
+[sub_resource type="Resource" id="Resource_q8akg"]
+script = ExtResource("5_vonl0")
+destroy_on_area_collide = true
+destroy_on_body_collide = true
+wait_projectile_piercing = false
+wait_projectile_bouncing = false
+active = true
+metadata/_custom_type_script = "uid://bkjnay24vltjg"
+
+[sub_resource type="Resource" id="Resource_vt8ne"]
+script = ExtResource("10_dief0")
+damage = 1.0
+speed = 100.0
+projectile_pooling_amount = 500
+texture = ExtResource("4_03f2f")
+scale = Vector2(1, 1)
+rotation = 0.0
+skew = 0.0
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+collision_shape = SubResource("CircleShape2D_ofm4c")
+collision_layer = 1
+collision_mask = 256
+speed_projectile_behaviors = Array[ExtResource("11_jh4bn")]([])
+direction_projectile_behaviors = Array[ExtResource("6_aswlq")]([])
+rotation_projectile_behaviors = Array[ExtResource("8_t2un4")]([])
+scale_projectile_behaviors = Array[ExtResource("9_a5qnn")]([])
+destroy_projectile_behaviors = Array[ExtResource("4_eurcn")]([SubResource("Resource_q8akg")])
+piercing_projectile_behaviors = Array[ExtResource("7_fk004")]([])
+bouncing_projectile_behaviors = Array[ExtResource("3_yxsq7")]([])
+trigger_projectile_behaviors = Array[ExtResource("13_16atm")]([])
+custom_data = [{
+"damage": 2
+}]
+metadata/_custom_type_script = "uid://d3yyxyx6shhya"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0pwon"]
+size = Vector2(20, 196)
+
+[node name="ExperimentPatternComposer9" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1.90735e-06)
+scale = Vector2(59.75, 39.625)
+texture = SubResource("GradientTexture2D_ylpdm")
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_03f2f")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("2_0pwon")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_vt8ne")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("5_o05jv")
+composer_name = "pattern_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("6_eoaio")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("7_hehyb")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("8_7fo6p")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 257
+collision_mask = 257
+script = ExtResource("9_cjtha")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(331.5, 16.5)
+shape = SubResource("RectangleShape2D_0pwon")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+position = Vector2(331.75, 16.5)
+scale = Vector2(0.0209961, 0.196289)
+texture = ExtResource("10_g6fy7")
+
+[connection signal="area_shape_entered" from="Area2D" to="Area2D" method="_on_area_shape_entered"]

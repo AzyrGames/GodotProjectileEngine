@@ -27,11 +27,12 @@ var projectile_remove_index : Array[int]
 
 var spawner_destroyed : bool = false
 
+var custom_data : Array[Variant]
+
 var _active_instances : Array[ProjectileInstance2D]
 
 var _projectile_instance : ProjectileInstance2D
 var _new_projectile_instance : Callable
-
 
 var _overlapping_areas : Dictionary
 var _overlapping_bodies : Dictionary
@@ -100,7 +101,8 @@ func create_projectile_pool() -> void:
 		if _collision_rid:
 			PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
 
-		_projectile_instance.projectile_updater = self	
+		_projectile_instance.projectile_updater = self
+		_projectile_instance.custom_data = custom_data
 		_projectile_instance.area_rid = projectile_area_rid
 		_projectile_instance.area_index = _index
 

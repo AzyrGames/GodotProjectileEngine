@@ -49,7 +49,7 @@ destroy_projectile_behaviors = Array[ExtResource("4_1rc6a")]([])
 piercing_projectile_behaviors = Array[ExtResource("6_rpb08")]([])
 bouncing_projectile_behaviors = Array[ExtResource("3_1g6ig")]([])
 trigger_projectile_behaviors = Array[ExtResource("12_s7nam")]([])
-custom_data = {}
+custom_data = []
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
 [node name="ExperimentPatternComposer7" type="Node2D"]

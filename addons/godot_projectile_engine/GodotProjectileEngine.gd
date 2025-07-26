@@ -102,6 +102,18 @@ func _ready() -> void:
 	pass
 
 
+func get_projectile_instance(area_rid: RID, area_shape_index: int) -> ProjectileInstance2D:
+	if !projectile_updater_2d_nodes.has(area_rid):
+		return null
+	var _projectile_updater_2d_node : ProjectileUpdater2D = projectile_updater_2d_nodes.get(area_rid)
+	if !_projectile_updater_2d_node:
+		return null
+	if _projectile_updater_2d_node.projectile_instance_array.size() < area_shape_index:
+		return null
+	return _projectile_updater_2d_node.projectile_instance_array[area_shape_index]
+	pass
+
+
 ## Count all active Projectiles
 func get_active_projectile_count() -> int:
 	return get_active_projectile_instance_count() + get_active_projectile_node_count()
