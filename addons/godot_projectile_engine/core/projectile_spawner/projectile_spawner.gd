@@ -145,8 +145,9 @@ func create_projectile_updater() -> void:
 	var _projectile_updater := ProjectileUpdater2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
-	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
+	_projectile_updater.custom_data = projectile_template_2d.custom_data
 
+	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid
 	projectile_template_2d.projectile_area_rid = _projectile_updater.projectile_area_rid
 	ProjectileEngine.projectile_updater_2d_nodes.get_or_add(projectile_area, _projectile_updater)
@@ -158,6 +159,7 @@ func create_projectile_updater_simple_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterSimple2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
+	_projectile_updater.custom_data = projectile_template_2d.custom_data
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid
@@ -171,6 +173,7 @@ func create_projectile_updater_advanced_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterAdvanced2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
+	_projectile_updater.custom_data = projectile_template_2d.custom_data
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid
@@ -184,6 +187,7 @@ func create_projectile_updater_custom_2d() -> void:
 	var _projectile_updater := ProjectileUpdaterCustom2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
+	_projectile_updater.custom_data = projectile_template_2d.custom_data
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_updater, true)
 	projectile_area = _projectile_updater.projectile_area_rid

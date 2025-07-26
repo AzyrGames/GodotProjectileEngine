@@ -18,7 +18,7 @@
 script = ExtResource("6_fw53g")
 projectile_2d_path = &"uid://c7rypyujt6vmj"
 projectile_pooling_amount = 100
-custom_data = {}
+custom_data = []
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="Resource" id="Resource_gur78"]

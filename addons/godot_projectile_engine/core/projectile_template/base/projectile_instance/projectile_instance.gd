@@ -16,7 +16,8 @@ var scale : Vector2 = Vector2.ONE
 var skew : float = 0.0
 var transform : Transform2D
 
-
 var life_time_second : float = 0.0
 var life_time_tick : float = 0.0
 var life_distance : float = 0.0
+
+var custom_data : Array[Variant]
