@@ -1,7 +1,6 @@
 extends ProjectileUpdater2D
 class_name ProjectileUpdaterSimple2D
 
-var projectile_damage: float = 1.0
 var projectile_velocity : Vector2 = Vector2.ZERO
 
 var projectile_life_time_second_max : float = 10.0
@@ -10,7 +9,6 @@ var projectile_life_distance_max : float = 300.0
 var projectile_texture_rotate_direction : bool 
 
 func init_updater_variable() -> void:
-	projectile_damage = projectile_template_2d.damage
 	projectile_speed = projectile_template_2d.speed
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateSimple2D
 	_new_projectile_instance = Callable(ProjectileInstanceSimple2D, "new")
@@ -63,7 +61,6 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 #region Update Projectile
 
 func update_projectile_instances(delta: float) -> void:
-	projectile_damage = projectile_template_2d.damage
 	projectile_speed = projectile_template_2d.speed
 	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
