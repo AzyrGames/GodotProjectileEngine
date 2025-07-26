@@ -9,12 +9,15 @@ var projectile_velocity : Vector2 = Vector2.ZERO
 var projectile_life_time_second_max : float = 10.0
 var projectile_life_distance_max : float = 300.0
 
+var destroy_on_body_collide : bool
+var destroy_on_area_collide : bool
+
 var projectile_speed_acceleration : float = 0.0
 var projectile_speed_max : float = 0.0
 
 var projectile_is_use_homing : bool = false
 var projectile_homing_target_group : String
-var projetile_max_homing_distance : float 
+var projetile_max_homing_distance : float
 var projectile_steer_speed : float
 var projectile_homing_strength : float
 var _homing_group_nodes : Array[Node]
@@ -42,22 +45,24 @@ var projectile_trigger_life_distance : float
 
 
 func init_updater_variable() -> void:
+	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
+
 	projectile_damage = projectile_template_2d.damage
 	projectile_speed = projectile_template_2d.speed
 	projectile_speed_acceleration = projectile_template_2d.speed_acceleration
 	projectile_speed_max = projectile_template_2d.speed_max
-	
 	# projectile_direction = projectile_template_2d.direction
-
-
 	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
 	projectile_direction_follow_rotation = projectile_template_2d.rotation_follow_direction
-	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
+
+	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
+	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
+
 	_new_projectile_instance = Callable(ProjectileInstanceAdvanced2D, "new")
 	pass
 
-#region Spawn Projectile 
+#region Spawn Projectile
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
 	for pattern_data : PatternComposerData in pattern_composer_pack:
@@ -78,29 +83,29 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_instance.rotation = pattern_data.direction.angle()
 		else:
 			_projectile_instance.rotation = pattern_data.rotation
-		
+
 		_projectile_instance.scale = projectile_template_2d.scale
 
 		_projectile_instance.velocity = pattern_data.direction * projectile_speed * (1.0 / Engine.physics_ticks_per_second)
 
 		_projectile_instance.transform = Transform2D(
-			_projectile_instance.rotation, 
+			_projectile_instance.rotation,
 			projectile_template_2d.scale,
 			projectile_template_2d.skew,
 			_projectile_instance.global_position
 			)
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
-				projectile_area_rid, 
-				projectile_pooling_index, 
+				projectile_area_rid,
+				projectile_pooling_index,
 				_projectile_instance.transform
 				)
 			PS.area_set_shape_disabled(
-				projectile_area_rid, 
-				projectile_pooling_index, 
+				projectile_area_rid,
+				projectile_pooling_index,
 				false
 				)
-		
+
 		_projectile_instance.life_time_second = 0.0
 		_projectile_instance.life_distance = 0.0
 
@@ -112,7 +117,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			projectile_active_index.append(projectile_pooling_index)
 
 		projectile_pooling_index += 1
-		
+
 		if projectile_pooling_index >= projectile_max_pooling:
 			projectile_pooling_index = 0
 
@@ -145,7 +150,7 @@ func update_projectile_instances(delta: float) -> void:
 
 	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
-	
+
 	projectile_is_use_trigger = projectile_template_2d.is_use_trigger
 	projectile_trigger_name = projectile_template_2d.trigger_name
 	projectile_trigger_amount = projectile_template_2d.trigger_amount
@@ -170,6 +175,20 @@ func update_projectile_instances(delta: float) -> void:
 				projectile_remove_index.append(index)
 				continue
 
+		if destroy_on_area_collide:
+			if has_overlapping_areas(index):
+				for _overlap_area in get_overlapping_areas(index):
+					if not _overlap_area.collision_layer & projectile_collision_mask:
+						continue
+					projectile_remove_index.append(index)
+
+		if destroy_on_body_collide:
+			if has_overlapping_bodies(index):
+				for _overlap_body in get_overlapping_bodies(index):
+					if not _overlap_body.collision_layer & projectile_collision_mask:
+						continue
+					projectile_remove_index.append(index)
+
 	# Destroy projectile
 	if projectile_remove_index.size() > 0:
 		for index : int in projectile_remove_index:
@@ -184,7 +203,7 @@ func update_projectile_instances(delta: float) -> void:
 	if _active_instances.size() <= 0: return
 	# Update active projectile
 	for _active_instance : ProjectileInstanceAdvanced2D in _active_instances:
-		
+
 		if projectile_is_use_trigger:
 			if _active_instance.trigger_count < projectile_trigger_amount:
 				if projectile_trigger_life_time > 0:
@@ -201,29 +220,29 @@ func update_projectile_instances(delta: float) -> void:
 			if !_homing_group_nodes.is_empty():
 				_homing_nearest_target = null
 				_homing_nearest_distance = INF
-				
+
 				for node in _homing_group_nodes:
 					if node is Node2D and is_instance_valid(node):
 						_homing_distance = _active_instance.global_position.distance_to(node.global_position)
 						if _homing_distance < _homing_nearest_distance:
 							_homing_nearest_distance = _homing_distance
 							_homing_nearest_target = node
-				
+
 					if _homing_nearest_target:
 						_homing_target_position = _homing_nearest_target.global_position
-					
+
 					# Calculate distance to target
 					_homing_distance_to_target = _active_instance.global_position.distance_to(_homing_target_position)
-					
+
 					# Check distance constraint
 					if projetile_max_homing_distance <= 0.0 or _homing_distance_to_target <= projetile_max_homing_distance:
 						# Calculate desired direction toward target
 						_homing_desired_direction = _active_instance.global_position.direction_to(_homing_target_position)
-						
+
 						# Gradually steer toward target
 						_homing_new_direction = _active_instance.direction.move_toward(_homing_desired_direction, projectile_steer_speed * delta)
 						_homing_final_direction = _homing_new_direction.normalized() * projectile_homing_strength + _active_instance.direction * (1.0 - projectile_homing_strength)
-						
+
 						_active_instance.direction = _homing_final_direction.normalized()
 
 			if projectile_speed_acceleration == 0:
@@ -231,7 +250,7 @@ func update_projectile_instances(delta: float) -> void:
 
 		if projectile_rotation_follow_direction:
 			_active_instance.rotation = _active_instance.direction.angle()
-		
+
 		if projectile_rotation_speed != 0:
 			_active_instance.rotation += deg_to_rad(projectile_rotation_speed) * delta
 		if projectile_direction_follow_rotation:
@@ -245,13 +264,13 @@ func update_projectile_instances(delta: float) -> void:
 					)
 
 			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
-	
+
 
 		if projectile_scale_acceleration != 0 and _active_instance.scale < projectile_scale_max:
 			_active_instance.scale = _active_instance.scale.move_toward(projectile_scale_max, projectile_scale_acceleration * delta)
-			
+
 		_active_instance.global_position += _active_instance.velocity
-	
+
 		_active_instance.transform = Transform2D(
 			_active_instance.rotation,
 			_active_instance.scale,
@@ -261,8 +280,8 @@ func update_projectile_instances(delta: float) -> void:
 
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
-				projectile_area_rid, 
-				_active_instance.area_index, 
+				projectile_area_rid,
+				_active_instance.area_index,
 				_active_instance.transform
 				)
 
