@@ -47,7 +47,7 @@ destroy_projectile_behaviors = Array[ExtResource("4_82a2v")]([])
 piercing_projectile_behaviors = Array[ExtResource("6_wf36e")]([])
 bouncing_projectile_behaviors = Array[ExtResource("3_eeat3")]([])
 trigger_projectile_behaviors = Array[ExtResource("11_d4pub")]([])
-custom_data = {}
+custom_data = []
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
 [node name="ExperimentPatternComposer6" type="Node2D"]
@@ -68,6 +68,7 @@ script = ExtResource("2_ylpdm")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_m0abk")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileSpawner2D4"]

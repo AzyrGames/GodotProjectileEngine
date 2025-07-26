@@ -73,7 +73,6 @@ metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
 [sub_resource type="Resource" id="Resource_eurcn"]
 script = ExtResource("3_5axtd")
-damage = 1.0
 speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("4_03f2f")
@@ -98,7 +97,6 @@ metadata/_custom_type_script = "uid://dqlixqba72p5f"
 
 [sub_resource type="Resource" id="Resource_vonl0"]
 script = ExtResource("3_03f2f")
-damage = 1.0
 speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("4_03f2f")
@@ -157,6 +155,7 @@ script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_vt8ne")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
@@ -168,6 +167,7 @@ script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_eurcn")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
@@ -180,6 +180,7 @@ script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_vonl0")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D6"]

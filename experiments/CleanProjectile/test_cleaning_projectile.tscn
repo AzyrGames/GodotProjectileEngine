@@ -25,7 +25,7 @@ script = ExtResource("3_njafw")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = ExtResource("3_frwyl")
 timing_scheduler = NodePath("../TimingScheduler")
-use_spawn_makers = false
+use_spawn_markers = false
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
@@ -34,7 +34,7 @@ script = ExtResource("3_njafw")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = ExtResource("4_njafw")
 timing_scheduler = NodePath("../TimingScheduler")
-use_spawn_makers = false
+use_spawn_markers = false
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
@@ -43,7 +43,7 @@ script = ExtResource("3_njafw")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = ExtResource("5_pxu6e")
 timing_scheduler = NodePath("../TimingScheduler")
-use_spawn_makers = false
+use_spawn_markers = false
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
@@ -52,7 +52,7 @@ script = ExtResource("3_njafw")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = ExtResource("6_01gb7")
 timing_scheduler = NodePath("../TimingScheduler")
-use_spawn_makers = false
+use_spawn_markers = false
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="PatternComposer2D" type="Node" parent="."]

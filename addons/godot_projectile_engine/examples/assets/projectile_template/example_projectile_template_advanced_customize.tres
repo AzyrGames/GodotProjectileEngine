@@ -7,7 +7,6 @@
 
 [resource]
 script = ExtResource("1_vky1s")
-damage = 1.0
 speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("2_t00kh")
@@ -32,6 +31,8 @@ target_group = ""
 steer_speed = 0.174533
 homing_strength = 1.0
 max_homing_distance = 0.0
+destroy_on_body_collide = true
+destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.0
 is_use_trigger = false
@@ -39,5 +40,5 @@ trigger_name = &""
 trigger_amount = 0
 trigger_life_time = 10.0
 trigger_life_distance = 1000.0
-custom_data = {}
+custom_data = []
 metadata/_custom_type_script = "uid://c7uapl8lqnia4"

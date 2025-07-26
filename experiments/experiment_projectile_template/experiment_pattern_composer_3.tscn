@@ -14,7 +14,6 @@
 
 [sub_resource type="Resource" id="Resource_n44xv"]
 script = ExtResource("3_o3n0l")
-damage = 1.0
 speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("11_cc4tb")
@@ -38,6 +37,8 @@ target_group = ""
 steer_speed = 0.174533
 homing_strength = 1.0
 max_homing_distance = 0.0
+destroy_on_body_collide = true
+destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.0
 is_use_trigger = false
