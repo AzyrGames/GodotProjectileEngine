@@ -21,7 +21,7 @@ gradient = SubResource("Gradient_td4cq")
 [sub_resource type="Resource" id="Resource_2xq1e"]
 script = ExtResource("3_n21my")
 projectile_2d_path = &"uid://bdqjr1pe0f3r4"
-projectile_pooling_amount = -5
+projectile_pooling_amount = 100
 custom_data = []
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
