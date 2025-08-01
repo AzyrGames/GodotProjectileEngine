@@ -52,7 +52,7 @@
 5. **Restart editor**
 
 ### Manual Installation
-1. Download [latest version](https://github.com/AzyrGames/GodotProjectileEngine/releases/tag/v0.5.1-alpha)
+1. Download [latest version](https://github.com/AzyrGames/GodotProjectileEngine/releases)
 2. Extract the ZIP or tar.gz archive
 3. Copy `/addons/godot_projectile_engine` folder
 4. Paste into your project's `/addons` directory
