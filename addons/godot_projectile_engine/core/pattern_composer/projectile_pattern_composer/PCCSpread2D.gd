@@ -1,4 +1,5 @@
 ## Projectile Pattern Component
+@icon("../../../icons/icons_pcc_spread_copy_1.svg")
 extends PatternComposerComponent
 class_name PCCSpread2D
 #@export_group("Spread Properties")

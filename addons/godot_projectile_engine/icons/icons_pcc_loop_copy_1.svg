@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 1 1"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">GodotProjectileEngineIcons</title>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch8"
+       gradientTransform="matrix(0,0,0,0,0.0624988,0.06249889)">
+      <stop
+         style="stop-color:#4adae9;stop-opacity:1;"
+         offset="0"
+         id="stop8" />
+    </linearGradient>
+    <linearGradient
+       id="swatch7"
+       gradientTransform="matrix(0.04512468,0,0,0.04468938,0.13200613,-0.28749963)">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop7" />
+    </linearGradient>
+  </defs>
+  <g
+     id="g47"
+     style="display:inline">
+    <circle
+       style="display:inline;fill:url(#swatch8);stroke:none;stroke-width:0.0780947;stroke-dasharray:none;stroke-opacity:1"
+       id="circle47"
+       cx="0.1662713"
+       cy="-0.68728006"
+       r="0.15625"
+       transform="rotate(121.39994)" />
+    <rect
+       style="display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:0.0625;stroke-opacity:1"
+       id="rect47"
+       width="1"
+       height="1"
+       x="0"
+       y="1.7347235e-17" />
+    <rect
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0652791;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect64"
+       width="0.5"
+       height="0.09375"
+       x="-0.875"
+       y="-0.921875"
+       transform="scale(-1)" />
+    <rect
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0484121;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect65"
+       width="0.09375"
+       height="0.12500001"
+       x="-0.171875"
+       y="-0.59375"
+       transform="scale(-1)" />
+    <path
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0954703;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 0.25,0.46875 0.125,0.25 0,0.46875 Z"
+       id="path65" />
+    <rect
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0533002;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect67"
+       width="0.5"
+       height="0.0625"
+       x="0.125"
+       y="0.125" />
+    <rect
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0395283;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect68"
+       width="0.0625"
+       height="0.12500001"
+       x="0.8125"
+       y="0.40625" />
+    <path
+       style="opacity:1;fill:#4adae9;fill-opacity:1;stroke:none;stroke-width:0.0826797;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 0.75,0.53125 0.84375,0.75 0.9375,0.53125 Z"
+       id="path68" />
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:url(#swatch8);stroke-width:0.0625;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0.625,0.15625 c 0.21875,0 0.21875,0.25 0.21875,0.25"
+       id="path69" />
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:url(#swatch8);stroke-width:0.09375;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 0.375,0.875 C 0.12597656,0.87597656 0.125,0.59375 0.125,0.59375"
+       id="path70" />
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>GodotProjectileEngineIcons</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

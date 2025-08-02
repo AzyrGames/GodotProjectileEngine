@@ -1,4 +1,5 @@
 
+@icon("uid://dbtos0e2nepy3")
 extends PatternComposerComponent
 class_name PCCLoop
 

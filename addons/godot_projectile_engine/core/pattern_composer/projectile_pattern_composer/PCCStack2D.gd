@@ -1,4 +1,5 @@
 ## Projectile Pattern Component
+@icon("../../../icons/icons_pcc_stack.svg")
 
 extends PatternComposerComponent
 class_name PCCStack2D
