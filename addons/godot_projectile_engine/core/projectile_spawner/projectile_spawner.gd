@@ -236,14 +236,16 @@ func _spawn_projectile_template_node_2d() -> void:
 
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
-	timing_scheduler.scheduler_timed.connect(spawn_pattern)
+	if !timing_scheduler.scheduler_timed.is_connected(spawn_pattern):
+		timing_scheduler.scheduler_timed.connect(spawn_pattern)
 	timing_scheduler.start_scheduler()
 	pass
 
 
 func disconnect_timing_scheduler() -> void:
 	if !timing_scheduler: return
-	timing_scheduler.scheduler_timed.disconnect(spawn_pattern)
+	if timing_scheduler.scheduler_timed.is_connected(spawn_pattern):
+		timing_scheduler.scheduler_timed.disconnect(spawn_pattern)
 	timing_scheduler.stop_scheduler()
 	pass
 
@@ -256,12 +258,14 @@ func play_audio() -> void:
 
 func connect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.scheduler_timed.connect(play_audio)
+	if !timing_scheduler.scheduler_timed.is_connected(play_audio):
+		timing_scheduler.scheduler_timed.connect(play_audio)
 	pass
 
 func disconnect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.scheduler_timed.disconnect(play_audio)
+	if timing_scheduler.scheduler_timed.is_connected(play_audio):
+		timing_scheduler.scheduler_timed.disconnect(play_audio)
 	pass
 
 
