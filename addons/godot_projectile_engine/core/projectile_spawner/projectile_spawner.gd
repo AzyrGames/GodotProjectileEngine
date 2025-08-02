@@ -56,7 +56,6 @@ func setup_projectile_spawner() -> void:
 		return
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
-
 	match projectile_template_2d.get_script():
 		ProjectileTemplateSimple2D:
 			if !is_instance_valid(
@@ -101,7 +100,6 @@ func setup_projectile_spawner() -> void:
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d.projectile_2d_path
 				)
-			projectile_node_manager_2d.setup_projectile_manager()
 		_:
 			return
 		#built-in classes don't have a script
@@ -206,6 +204,7 @@ func create_projectile_node_manager_2d() -> void:
 	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
 		projectile_template_2d.projectile_2d_path, _projectile_node_manager
 		)
+	_projectile_node_manager.setup_projectile_manager()
 	pass
 
 
