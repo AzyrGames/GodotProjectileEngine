@@ -177,7 +177,7 @@ func clear_projectile_nodes() -> void:
 	pass
 
 
-func active_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
+func activate_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
 	if _projectile_wrapper_name == "": return
 	if !projectile_wrapper_2d_nodes.has(_projectile_wrapper_name): return
 	for _projectile_wrapper in projectile_wrapper_2d_nodes.get(_projectile_wrapper_name):
@@ -187,7 +187,7 @@ func active_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
 	pass
 
 
-func deactive_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
+func deactivate_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
 	if _projectile_wrapper_name == "": return
 	if !projectile_wrapper_2d_nodes.has(_projectile_wrapper_name): return
 	for _projectile_wrapper in projectile_wrapper_2d_nodes.get(_projectile_wrapper_name):
