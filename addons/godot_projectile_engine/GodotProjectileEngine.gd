@@ -80,7 +80,7 @@ var active_projectile_node_count : int :
 var projectile_environment : ProjectileEnvironment2D
 var projectile_boundary_2d : ProjectileBoundary2D
 
-var projectile_wrapper_2d : Dictionary[String, ProjectileWrapper2D]
+var projectile_wrapper_2d_nodes : Dictionary[String, Array]
 
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
@@ -174,6 +174,26 @@ func clear_projectile_instances() -> void:
 func clear_projectile_nodes() -> void:
 	for _projectile_node_manager : ProjectileNodeManager2D in projectile_node_manager_2d_nodes.values():
 		_projectile_node_manager.clear_projectiles()
+	pass
+
+
+func active_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
+	if _projectile_wrapper_name == "": return
+	if !projectile_wrapper_2d_nodes.has(_projectile_wrapper_name): return
+	for _projectile_wrapper in projectile_wrapper_2d_nodes.get(_projectile_wrapper_name):
+		if !is_instance_valid(_projectile_wrapper): return
+		if !_projectile_wrapper is ProjectileWrapper2D: continue
+		_projectile_wrapper.active = true
+	pass
+
+
+func deactive_all_projectile_wrappers(_projectile_wrapper_name : String) -> void:
+	if _projectile_wrapper_name == "": return
+	if !projectile_wrapper_2d_nodes.has(_projectile_wrapper_name): return
+	for _projectile_wrapper in projectile_wrapper_2d_nodes.get(_projectile_wrapper_name):
+		if !is_instance_valid(_projectile_wrapper): return
+		if !_projectile_wrapper is ProjectileWrapper2D: continue
+		_projectile_wrapper.active = false
 	pass
 
 
