@@ -143,11 +143,11 @@ position = Vector2(0, 1.90735e-06)
 scale = Vector2(59.75, 39.625)
 texture = SubResource("GradientTexture2D_ylpdm")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_03f2f")
 metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 position = Vector2(0, -46)

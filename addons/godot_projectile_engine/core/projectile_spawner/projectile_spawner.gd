@@ -142,6 +142,9 @@ func spawn_pattern() -> void:
 
 
 func create_projectile_updater() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdater2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -156,6 +159,9 @@ func create_projectile_updater() -> void:
 
 
 func create_projectile_updater_simple_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterSimple2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -170,6 +176,9 @@ func create_projectile_updater_simple_2d() -> void:
 
 
 func create_projectile_updater_advanced_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterAdvanced2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -184,6 +193,9 @@ func create_projectile_updater_advanced_2d() -> void:
 
 
 func create_projectile_updater_custom_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterCustom2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -198,6 +210,9 @@ func create_projectile_updater_custom_2d() -> void:
 
 
 func create_projectile_node_manager_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_node_manager := ProjectileNodeManager2D.new()
 	_projectile_node_manager.projectile_template_2d = projectile_template_2d
 
