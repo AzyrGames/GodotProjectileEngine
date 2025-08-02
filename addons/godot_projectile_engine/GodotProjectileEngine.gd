@@ -72,6 +72,7 @@ var active_projectile_count : int:
 var active_projectile_instance_count : int:
 	get():
 		return get_active_projectile_instance_count()
+
 var active_projectile_node_count : int :
 	get():
 		return get_active_projectile_node_count()
@@ -79,10 +80,13 @@ var active_projectile_node_count : int :
 var projectile_environment : ProjectileEnvironment2D
 var projectile_boundary_2d : ProjectileBoundary2D
 
+var projectile_wrapper_2d : Dictionary[String, ProjectileWrapper2D]
+
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_node_manager_2d_nodes : Dictionary[StringName, ProjectileNodeManager2D]
+
 
 var _projectile_count_temp : int
 
