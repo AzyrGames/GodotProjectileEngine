@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://dev1adr6m1qj"]
+
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="1_cbklj"]
+[ext_resource type="Script" uid="uid://cgi5wxrd3qs15" path="res://addons/godot_projectile_engine/core/projectile_wrapper/projectile_wrapper_2d.gd" id="1_o4efc"]
+[ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="2_o4efc"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="3_ce42g"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="4_iqiwu"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="5_sl2hw"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="6_h3bpf"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="7_itpv4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bff2h"]
+
+[sub_resource type="Resource" id="Resource_ce42g"]
+script = ExtResource("2_o4efc")
+speed = 100.0
+projectile_pooling_amount = 500
+texture = ExtResource("3_ce42g")
+scale = Vector2(1, 1)
+rotation = 0.0
+skew = 0.0
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+collision_shape = SubResource("CircleShape2D_bff2h")
+collision_layer = 1
+collision_mask = 256
+texture_rotate_direction = false
+destroy_on_body_collide = true
+destroy_on_area_collide = true
+life_time_second_max = 10.0
+life_distance_max = 1000.0
+custom_data = []
+metadata/_custom_type_script = "uid://dqlixqba72p5f"
+
+[node name="TestProjectileWrapperNode" type="Node2D" node_paths=PackedStringArray("projectile_spawner_2d")]
+script = ExtResource("1_o4efc")
+active = true
+projectile_wrapper_name = "test_wrapper_node_1"
+projectile_spawner_2d = NodePath("ProjectileSpawner2D")
+metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("4_iqiwu")
+composer_name = "test_wrapper_composer_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("5_sl2hw")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("6_h3bpf")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("7_itpv4")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("1_cbklj")
+projectile_composer_name = "test_wrapper_composer_1"
+projectile_template_2d = SubResource("Resource_ce42g")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
