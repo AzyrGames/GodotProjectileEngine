@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [gd_scene load_steps=3 format=3 uid="uid://bsji5caisgs6h"]
 
 [ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_lazer_2d/projectile_lazer_2d.gd" id="1_gxj5o"]
@@ -9,3 +10,31 @@ script = ExtResource("1_gxj5o")
 start_full_length = false
 texture = ExtResource("2_gxj5o")
 metadata/_custom_type_script = "uid://cpgm6rw00lcfm"
+=======
+[gd_scene load_steps=5 format=3 uid="uid://bsji5caisgs6h"]
+
+[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_lazer_2d/projectile_lazer_2d.gd" id="1_gxj5o"]
+[ext_resource type="Texture2D" uid="uid://br7k1haa6x0kp" path="res://addons/godot_projectile_engine/icon_color.png" id="2_gxj5o"]
+
+[sub_resource type="Curve" id="Curve_gxj5o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.317576, 0.745773), 0.0, 0.0, 0, 0, Vector2(0.685092, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_gxj5o"]
+
+[node name="Node2D" type="Area2D"]
+script = ExtResource("1_gxj5o")
+metadata/_custom_type_script = "uid://cpgm6rw00lcfm"
+
+[node name="Line2D" type="Line2D" parent="."]
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 104, 15.9998, 144, 104, 320, 128)
+width_curve = SubResource("Curve_gxj5o")
+gradient = SubResource("Gradient_gxj5o")
+texture = ExtResource("2_gxj5o")
+texture_mode = 1
+joint_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 3.09
+>>>>>>> eac0fbe (Add projectile lazer 1)
