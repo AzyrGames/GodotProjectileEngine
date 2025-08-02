@@ -56,7 +56,6 @@ func setup_projectile_spawner() -> void:
 		return
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
-
 	match projectile_template_2d.get_script():
 		ProjectileTemplateSimple2D:
 			if !is_instance_valid(
@@ -101,7 +100,6 @@ func setup_projectile_spawner() -> void:
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d.projectile_2d_path
 				)
-			projectile_node_manager_2d.setup_projectile_manager()
 		_:
 			return
 		#built-in classes don't have a script
@@ -142,6 +140,9 @@ func spawn_pattern() -> void:
 
 
 func create_projectile_updater() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdater2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -156,6 +157,9 @@ func create_projectile_updater() -> void:
 
 
 func create_projectile_updater_simple_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterSimple2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -170,6 +174,9 @@ func create_projectile_updater_simple_2d() -> void:
 
 
 func create_projectile_updater_advanced_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterAdvanced2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -184,6 +191,9 @@ func create_projectile_updater_advanced_2d() -> void:
 
 
 func create_projectile_updater_custom_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_updater := ProjectileUpdaterCustom2D.new()
 
 	_projectile_updater.projectile_template_2d = projectile_template_2d
@@ -198,6 +208,9 @@ func create_projectile_updater_custom_2d() -> void:
 
 
 func create_projectile_node_manager_2d() -> void:
+	if !ProjectileEngine.projectile_environment:
+		return
+
 	var _projectile_node_manager := ProjectileNodeManager2D.new()
 	_projectile_node_manager.projectile_template_2d = projectile_template_2d
 
@@ -206,6 +219,7 @@ func create_projectile_node_manager_2d() -> void:
 	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
 		projectile_template_2d.projectile_2d_path, _projectile_node_manager
 		)
+	_projectile_node_manager.setup_projectile_manager()
 	pass
 
 
@@ -236,14 +250,16 @@ func _spawn_projectile_template_node_2d() -> void:
 
 func connect_timing_scheduler() -> void:
 	if !timing_scheduler: return
-	timing_scheduler.scheduler_timed.connect(spawn_pattern)
+	if !timing_scheduler.scheduler_timed.is_connected(spawn_pattern):
+		timing_scheduler.scheduler_timed.connect(spawn_pattern)
 	timing_scheduler.start_scheduler()
 	pass
 
 
 func disconnect_timing_scheduler() -> void:
 	if !timing_scheduler: return
-	timing_scheduler.scheduler_timed.disconnect(spawn_pattern)
+	if timing_scheduler.scheduler_timed.is_connected(spawn_pattern):
+		timing_scheduler.scheduler_timed.disconnect(spawn_pattern)
 	timing_scheduler.stop_scheduler()
 	pass
 
@@ -256,12 +272,14 @@ func play_audio() -> void:
 
 func connect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.scheduler_timed.connect(play_audio)
+	if !timing_scheduler.scheduler_timed.is_connected(play_audio):
+		timing_scheduler.scheduler_timed.connect(play_audio)
 	pass
 
 func disconnect_audio() -> void:
 	if !audio_stream: return
-	timing_scheduler.scheduler_timed.disconnect(play_audio)
+	if timing_scheduler.scheduler_timed.is_connected(play_audio):
+		timing_scheduler.scheduler_timed.disconnect(play_audio)
 	pass
 
 

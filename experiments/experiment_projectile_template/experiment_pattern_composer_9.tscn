@@ -22,11 +22,66 @@ position = Vector2(0, 1.90735e-06)
 scale = Vector2(59.75, 39.625)
 texture = SubResource("GradientTexture2D_ylpdm")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_03f2f")
 metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(0, -46)
+script = ExtResource("2_0pwon")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_vt8ne")
+timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawner2D5" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("2_0pwon")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_eurcn")
+timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawner2D6" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(0, 52)
+script = ExtResource("2_0pwon")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_vonl0")
+timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D6"]
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("5_o05jv")
+composer_name = "pattern_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("6_eoaio")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("7_hehyb")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("8_7fo6p")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 257
