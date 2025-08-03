@@ -1,5 +1,5 @@
-@icon("uid://bgwne7sou0e8r")
 ## Projectile Pattern Component
+@icon("uid://bgwne7sou0e8r")
 extends PatternComposerComponent
 class_name PCCSpread2D
 #@export_group("Spread Properties")
