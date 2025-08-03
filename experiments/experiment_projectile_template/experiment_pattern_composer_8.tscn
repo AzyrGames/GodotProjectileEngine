@@ -175,10 +175,6 @@ texture = ExtResource("8_2xq1e")
 
 [node name="ProjectileTriggerSpawner2D" type="Node2D" parent="."]
 script = ExtResource("22_jx8ps")
-active = null
-trigger_name = null
-is_instance = null
-projectile_spawner_scene = null
 metadata/_custom_type_script = "uid://p2i1fb33bf1x"
 
 [node name="ProjectileWrapper2D2" type="Node2D" parent="."]

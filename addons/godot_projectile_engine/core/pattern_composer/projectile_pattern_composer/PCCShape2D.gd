@@ -1,4 +1,3 @@
-("uid://cykbncidtxo66")
 extends PatternComposerComponent
 class_name PCCShape2D
 
