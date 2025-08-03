@@ -1,3 +1,4 @@
+@icon("uid://do6goevp2kieu")
 extends Node2D
 class_name ProjectileEnvironment2D
 

@@ -1,3 +1,4 @@
+@icon("uid://b6wnbpajc3guu")
 extends PatternComposerComponent
 class_name PCCShape2D
 

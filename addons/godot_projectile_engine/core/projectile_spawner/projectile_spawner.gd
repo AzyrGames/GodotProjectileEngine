@@ -1,4 +1,4 @@
-# @tool
+@icon("uid://dhtd7y4cpej7o")
 extends Node2D
 class_name ProjectileSpawner2D
 

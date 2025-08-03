@@ -1,3 +1,4 @@
+@icon("uid://dxl14aphe1elg")
 extends TimingSchedulerComponent
 class_name TSCTimingSet
 
