@@ -84,7 +84,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("6_eoaio")
-direction_type = 2
 metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="TimingScheduler" type="Node" parent="."]
