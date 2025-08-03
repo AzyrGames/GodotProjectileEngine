@@ -9,11 +9,6 @@ enum TargetType {
 	POSITION
 }
 
-enum GroupSelection {
-	FIRST,
-	NEAREST,
-	RANDOM
-}
 
 ## Type of target to home towards
 @export var target_type: TargetType = TargetType.GROUP
@@ -28,7 +23,7 @@ enum GroupSelection {
 @export var target_position: Vector2
 
 ## How to select target from group
-@export var group_selection: GroupSelection = GroupSelection.NEAREST
+@export var group_selection: ProjectileEngine.TargetGroupSelection = ProjectileEngine.TargetGroupSelection.NEAREST
 
 ## Speed at which the projectile steers toward target (radians per second)
 @export var steer_speed: float = 5.0
@@ -136,29 +131,22 @@ func _find_target(projectile_position: Vector2, _context: Dictionary) -> Variant
 			if target_group.is_empty():
 				return null
 			
-			var group_nodes: Array[Node] = ProjectileEngine.get_tree().get_nodes_in_group(target_group)
-			if group_nodes.is_empty():
-				return null
-			
 			# Filter to Node2D objects
-			var valid_targets: Array[Node2D] = []
-			for node in group_nodes:
-				if node is Node2D and is_instance_valid(node):
-					valid_targets.append(node)
-			
-			if valid_targets.is_empty():
+			var _valid_nodes: Array[Node2D] = ProjectileEngine.get_valid_target_group_nodes(target_group)
+
+			if _valid_nodes.is_empty():
 				return null
 			
 			# Select target based on group selection method
 			match group_selection:
-				GroupSelection.FIRST:
-					return valid_targets[0].global_position
+				ProjectileEngine.TargetGroupSelection.FIRST:
+					return _valid_nodes[0].global_position
 					
-				GroupSelection.NEAREST:
-					var nearest_target: Node2D = valid_targets[0]
+				ProjectileEngine.TargetGroupSelection.NEAREST:
+					var nearest_target: Node2D = _valid_nodes[0]
 					var nearest_distance: float = projectile_position.distance_to(nearest_target.global_position)
 					
-					for target in valid_targets:
+					for target in _valid_nodes:
 						var distance: float = projectile_position.distance_to(target.global_position)
 						if distance < nearest_distance:
 							nearest_distance = distance
@@ -166,8 +154,8 @@ func _find_target(projectile_position: Vector2, _context: Dictionary) -> Variant
 					
 					return nearest_target.global_position
 					
-				GroupSelection.RANDOM:
-					var random_target: Node2D = valid_targets[randi() % valid_targets.size()]
+				ProjectileEngine.TargetGroupSelection.RANDOM:
+					var random_target: Node2D = _valid_nodes[randi() % _valid_nodes.size()]
 					return random_target.global_position
 	
 	return null
