@@ -1,3 +1,4 @@
+@icon("uid://bswk1pv030lt3")
 extends Marker2D
 class_name ProjectileSpawnMarker2D
 

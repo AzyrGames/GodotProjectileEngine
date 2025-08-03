@@ -1,4 +1,5 @@
 ## Projectile Pattern Component
+@icon("uid://cq7tsfcj4e8tu")
 extends PatternComposerComponent
 class_name PCCCustomShape2D
 

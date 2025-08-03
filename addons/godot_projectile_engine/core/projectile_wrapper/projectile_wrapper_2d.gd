@@ -1,3 +1,4 @@
+@icon("uid://wonyn8c6ckbd")
 extends Node2D
 class_name ProjectileWrapper2D
 

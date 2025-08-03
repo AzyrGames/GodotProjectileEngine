@@ -1,3 +1,4 @@
+@icon("uid://n02eb63m5nbp")
 extends Node2D
 class_name ProjectileTriggerSpawner2D
 

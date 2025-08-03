@@ -1,3 +1,4 @@
+@icon("uid://bgwne7sou0e8r")
 ## Projectile Pattern Component
 extends PatternComposerComponent
 class_name PCCSpread2D

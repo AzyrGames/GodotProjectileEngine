@@ -1,3 +1,4 @@
+@icon("uid://vyba3qyd64yj")
 extends Area2D
 class_name ProjectileBoundary2D
 

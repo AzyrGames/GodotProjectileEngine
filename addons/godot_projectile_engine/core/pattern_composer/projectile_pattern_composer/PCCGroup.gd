@@ -1,4 +1,5 @@
 ## Projectile Pattern Component
+@icon("uid://cy7d1ahfwwkll")
 extends PatternComposerComponent
 class_name PCCGroup
 

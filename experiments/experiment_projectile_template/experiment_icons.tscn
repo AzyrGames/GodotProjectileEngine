@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c3a03alw4ndcj"]
+[gd_scene load_steps=28 format=3 uid="uid://c3a03alw4ndcj"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_jh4bn"]
 [ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="2_16atm"]
@@ -24,17 +24,8 @@
 [ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_cooldown.gd" id="22_4eysy"]
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="23_4nqao"]
 [ext_resource type="Script" uid="uid://cgi5wxrd3qs15" path="res://addons/godot_projectile_engine/core/projectile_wrapper/projectile_wrapper_2d.gd" id="24_ymh4b"]
-[ext_resource type="Script" uid="uid://ub1inehdx3gs" path="res://experiments/experiment_projectile_template/area_2d.gd" id="25_ctut8"]
-[ext_resource type="Texture2D" uid="uid://br7k1haa6x0kp" path="res://addons/godot_projectile_engine/icon_color.png" id="26_5jav3"]
 [ext_resource type="Script" uid="uid://p2i1fb33bf1x" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_trigger_spawner/projectile_trigger_spanwer.gd" id="27_ot4j2"]
 [ext_resource type="Script" uid="uid://b86jmxbx6fbr4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_bouncing_helper.gd" id="28_3gden"]
-
-[sub_resource type="Gradient" id="Gradient_td4cq"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ylpdm"]
-gradient = SubResource("Gradient_td4cq")
 
 [sub_resource type="Resource" id="Resource_2xq1e"]
 script = ExtResource("9_1itp0")
@@ -43,15 +34,7 @@ projectile_pooling_amount = 100
 custom_data = []
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n21my"]
-size = Vector2(20, 196)
-
 [node name="ExperimentPatternComposer8" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 1.90735e-06)
-scale = Vector2(59.75, 39.625)
-texture = SubResource("GradientTexture2D_ylpdm")
 
 [node name="ProjectileEnvironment2D" type="Node2D" parent="."]
 script = ExtResource("1_jh4bn")
@@ -78,10 +61,9 @@ script = ExtResource("6_kqkm3")
 metadata/_custom_type_script = "uid://cwxhrgei04bs5"
 
 [node name="ProjectileNodeManager2D" type="Node2D" parent="ProjectileEnvironment2D"]
+position = Vector2(0, -1)
 script = ExtResource("7_2fonu")
 metadata/_custom_type_script = "uid://bv6pdkj6uonkq"
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("8_wmrx6")
@@ -95,8 +77,6 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 script = ExtResource("10_oer8j")
 init_direction = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
-
-[node name="Marker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
 
 [node name="PatternComposer2D" type="Node" parent="."]
 script = ExtResource("11_t14pc")
@@ -158,21 +138,6 @@ metadata/_custom_type_script = "uid://d1jrqiont4u2h"
 script = ExtResource("24_ymh4b")
 metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 256
-script = ExtResource("25_ctut8")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(331.5, 16.5)
-shape = SubResource("RectangleShape2D_n21my")
-
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
-position = Vector2(331.75, 16.5)
-scale = Vector2(0.0209961, 0.196289)
-texture = ExtResource("26_5jav3")
-
-[node name="Timer" type="Timer" parent="."]
-
 [node name="ProjectileTriggerSpawner2D" type="Node2D" parent="."]
 script = ExtResource("27_ot4j2")
 metadata/_custom_type_script = "uid://p2i1fb33bf1x"
@@ -184,6 +149,3 @@ metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
 [node name="ProjectileBouncingHelper" type="RigidBody2D" parent="."]
 script = ExtResource("28_3gden")
 metadata/_custom_type_script = "uid://b86jmxbx6fbr4"
-
-[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
