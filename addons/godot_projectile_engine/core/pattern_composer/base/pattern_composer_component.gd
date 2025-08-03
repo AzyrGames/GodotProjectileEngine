@@ -5,9 +5,15 @@ class_name PatternComposerComponent
 
 @export var active: bool = true
 
-func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
-	return pattern_composer_pack
+var _new_pattern_composer_pack: Array[PatternComposerData]
+var _new_pattern_composer_data: PatternComposerData
+
+func process_pattern(
+	_pattern_composer_pack: Array[PatternComposerData], 
+	_pattern_composer_context : PatternComposerContext
+	) -> Array:
+	return _pattern_composer_pack
 
 
-func update(pattern_composer_pack : Array[PatternComposerData]) -> void:
+func update(_pattern_composer_pack : Array[PatternComposerData]) -> void:
 	pass

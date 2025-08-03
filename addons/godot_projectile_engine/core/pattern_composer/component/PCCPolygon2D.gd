@@ -11,24 +11,25 @@ class_name PCCPolygon2D
 @export var radius_random: Vector3
 @export var polygon_sides_random: Vector3i
 
-var _new_projectile_packs: Array[PatternComposerData]
-var _new_pattern_composer_data: PatternComposerData
 var _theta: float
 var _point_position: Vector2
 var _point_direction: Vector2
 
 
-func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context: PatternComposerContext) -> Array:
+func process_pattern(
+	pattern_composer_pack: Array[PatternComposerData], 
+	_pattern_composer_context: PatternComposerContext
+	) -> Array:
 	if radius_random != Vector3.ZERO:
 		radius = ProjectileEngine.get_random_float_value(radius_random)
 	if polygon_sides_random != Vector3i.ZERO:
 		polygon_sides = ProjectileEngine.get_random_int_value(polygon_sides_random)
 
-	_new_projectile_packs.clear()
+	_new_pattern_composer_pack.clear()
 	for _pattern_composer_data: PatternComposerData in pattern_composer_pack:
-		_new_projectile_packs.append_array(_add_projectile_polygon(_pattern_composer_data))
+		_new_pattern_composer_pack.append_array(_add_projectile_polygon(_pattern_composer_data))
 
-	return _new_projectile_packs
+	return _new_pattern_composer_pack
 
 
 func _add_projectile_polygon(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
