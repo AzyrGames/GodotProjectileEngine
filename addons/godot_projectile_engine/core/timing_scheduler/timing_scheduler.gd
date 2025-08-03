@@ -1,3 +1,4 @@
+@icon("uid://ctn5777goa2uq")
 extends Node
 class_name TimingScheduler
 

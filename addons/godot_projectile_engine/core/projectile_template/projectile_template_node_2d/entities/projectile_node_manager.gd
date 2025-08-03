@@ -1,3 +1,4 @@
+@icon("uid://b1j0h4n0fvbse")
 extends Node2D
 class_name ProjectileNodeManager2D
 

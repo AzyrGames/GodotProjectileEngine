@@ -1,3 +1,4 @@
+@icon("uid://buxedtgvr7tg")
 extends TimingSchedulerComponent
 class_name TSCCooldown
 

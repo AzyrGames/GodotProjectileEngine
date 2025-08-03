@@ -1,4 +1,4 @@
-
+@icon("uid://cnujqg7xhs2np")
 extends PatternComposerComponent
 class_name PCCLoop
 

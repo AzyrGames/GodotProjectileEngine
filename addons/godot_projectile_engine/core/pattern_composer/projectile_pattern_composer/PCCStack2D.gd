@@ -1,5 +1,5 @@
 ## Projectile Pattern Component
-
+@icon("uid://hhcp20t33vtb")
 extends PatternComposerComponent
 class_name PCCStack2D
 
