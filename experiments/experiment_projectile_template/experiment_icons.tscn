@@ -1,0 +1,151 @@
+[gd_scene load_steps=28 format=3 uid="uid://c3a03alw4ndcj"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_jh4bn"]
+[ext_resource type="Script" uid="uid://byoirooyga8su" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_boundary_2d.gd" id="2_16atm"]
+[ext_resource type="Script" uid="uid://bdp74ojelxg58" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_updater/projectile_updater_2d.gd" id="3_ofm4c"]
+[ext_resource type="Script" uid="uid://b6xmcpyan70ak" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_updater_advanced_2d.gd" id="4_q8akg"]
+[ext_resource type="Script" uid="uid://bmlaef8u1vic5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_updater_custom_2d.gd" id="5_vt8ne"]
+[ext_resource type="Script" uid="uid://cwxhrgei04bs5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_updater_simple_2d.gd" id="6_kqkm3"]
+[ext_resource type="Script" uid="uid://bv6pdkj6uonkq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_node_manager.gd" id="7_2fonu"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="8_wmrx6"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="9_1itp0"]
+[ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawn_maker_2d.gd" id="10_oer8j"]
+[ext_resource type="Script" uid="uid://1bygasnif26d" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCGroup.gd" id="11_t14pc"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="12_mlc8j"]
+[ext_resource type="Script" uid="uid://brqy6ew0t2b35" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSpread2D.gd" id="13_drna1"]
+[ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCPolygon2D.gd" id="14_esqat"]
+[ext_resource type="Script" uid="uid://cw3jfu53wt4vm" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCStack2D.gd" id="15_t4de5"]
+[ext_resource type="Script" uid="uid://cwpsu1ih5c60x" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCShape2D.gd" id="16_1ttua"]
+[ext_resource type="Script" uid="uid://cx6esy7bqcdgd" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCCustomShape2D.gd" id="17_g5quh"]
+[ext_resource type="Script" uid="uid://1iejq4nn3soy" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCLoop.gd" id="18_hrrhu"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="19_7shg7"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="20_b70gl"]
+[ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/tsc_timing_set.gd" id="21_jbpl5"]
+[ext_resource type="Script" uid="uid://b1ha7icvjophi" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_cooldown.gd" id="22_4eysy"]
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="23_4nqao"]
+[ext_resource type="Script" uid="uid://cgi5wxrd3qs15" path="res://addons/godot_projectile_engine/core/projectile_wrapper/projectile_wrapper_2d.gd" id="24_ymh4b"]
+[ext_resource type="Script" uid="uid://p2i1fb33bf1x" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_trigger_spawner/projectile_trigger_spanwer.gd" id="27_ot4j2"]
+[ext_resource type="Script" uid="uid://b86jmxbx6fbr4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_bouncing_helper.gd" id="28_3gden"]
+
+[sub_resource type="Resource" id="Resource_2xq1e"]
+script = ExtResource("9_1itp0")
+projectile_2d_path = &"uid://bdqjr1pe0f3r4"
+projectile_pooling_amount = 100
+custom_data = []
+metadata/_custom_type_script = "uid://drg85m51aqbj7"
+
+[node name="ExperimentPatternComposer8" type="Node2D"]
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_jh4bn")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="ProjectileBoundary2D" type="Area2D" parent="ProjectileEnvironment2D"]
+script = ExtResource("2_16atm")
+metadata/_custom_type_script = "uid://byoirooyga8su"
+
+[node name="ProjectileUpdater2D" type="Node2D" parent="ProjectileEnvironment2D"]
+script = ExtResource("3_ofm4c")
+metadata/_custom_type_script = "uid://bdp74ojelxg58"
+
+[node name="ProjectileUpdaterAdvanced2D" type="Node2D" parent="ProjectileEnvironment2D/ProjectileUpdater2D"]
+script = ExtResource("4_q8akg")
+metadata/_custom_type_script = "uid://b6xmcpyan70ak"
+
+[node name="ProjectileUpdaterCustom2D" type="Node2D" parent="ProjectileEnvironment2D/ProjectileUpdater2D/ProjectileUpdaterAdvanced2D"]
+script = ExtResource("5_vt8ne")
+metadata/_custom_type_script = "uid://bmlaef8u1vic5"
+
+[node name="ProjectileUpdaterSimple2D" type="Node2D" parent="ProjectileEnvironment2D/ProjectileUpdater2D/ProjectileUpdaterAdvanced2D/ProjectileUpdaterCustom2D"]
+script = ExtResource("6_kqkm3")
+metadata/_custom_type_script = "uid://cwxhrgei04bs5"
+
+[node name="ProjectileNodeManager2D" type="Node2D" parent="ProjectileEnvironment2D"]
+position = Vector2(0, -1)
+script = ExtResource("7_2fonu")
+metadata/_custom_type_script = "uid://bv6pdkj6uonkq"
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("8_wmrx6")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_2xq1e")
+timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
+script = ExtResource("10_oer8j")
+init_direction = Vector2(-1, 0)
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("11_t14pc")
+metadata/_custom_type_script = "uid://1bygasnif26d"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("12_mlc8j")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PCCSpread2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("13_drna1")
+metadata/_custom_type_script = "uid://brqy6ew0t2b35"
+
+[node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("14_esqat")
+metadata/_custom_type_script = "uid://cm1gi15tdc45s"
+
+[node name="PCCStack2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("15_t4de5")
+metadata/_custom_type_script = "uid://cw3jfu53wt4vm"
+
+[node name="PCCShape2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("16_1ttua")
+metadata/_custom_type_script = "uid://cwpsu1ih5c60x"
+
+[node name="PCCCustomShape2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("17_g5quh")
+metadata/_custom_type_script = "uid://cx6esy7bqcdgd"
+
+[node name="PCCLoop" type="Node" parent="PatternComposer2D"]
+script = ExtResource("18_hrrhu")
+metadata/_custom_type_script = "uid://1iejq4nn3soy"
+
+[node name="PCCGroup" type="Node" parent="PatternComposer2D"]
+script = ExtResource("11_t14pc")
+metadata/_custom_type_script = "uid://1bygasnif26d"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("19_7shg7")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("20_b70gl")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="TSCTimingSet" type="Node" parent="TimingScheduler"]
+script = ExtResource("21_jbpl5")
+metadata/_custom_type_script = "uid://cwr176dncae0f"
+
+[node name="TSCCooldown" type="Node" parent="TimingScheduler"]
+script = ExtResource("22_4eysy")
+metadata/_custom_type_script = "uid://b1ha7icvjophi"
+
+[node name="Projectile2D" type="Area2D" parent="."]
+script = ExtResource("23_4nqao")
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="ProjectileWrapper2D" type="Node2D" parent="."]
+script = ExtResource("24_ymh4b")
+metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
+
+[node name="ProjectileTriggerSpawner2D" type="Node2D" parent="."]
+script = ExtResource("27_ot4j2")
+metadata/_custom_type_script = "uid://p2i1fb33bf1x"
+
+[node name="ProjectileWrapper2D2" type="Node2D" parent="."]
+script = ExtResource("24_ymh4b")
+metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
+
+[node name="ProjectileBouncingHelper" type="RigidBody2D" parent="."]
+script = ExtResource("28_3gden")
+metadata/_custom_type_script = "uid://b86jmxbx6fbr4"

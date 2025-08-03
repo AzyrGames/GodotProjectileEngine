@@ -1,3 +1,4 @@
+@icon("uid://b8xxmwe5p03cx")
 extends TimingSchedulerComponent
 class_name TSCRepeater
 
