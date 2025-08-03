@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8xxmwe5p03cx"
-path="res://.godot/imported/icons_tsc_repeater.svg-08b2de1484ebaf498bc945c7bc015ae6.ctex"
+uid="uid://bswk1pv030lt3"
+path="res://.godot/imported/icons_projectile_spawn_marker.svg-4b253b55c14092b0c4097d0ebaee159f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/icons/icons_tsc_repeater.svg"
-dest_files=["res://.godot/imported/icons_tsc_repeater.svg-08b2de1484ebaf498bc945c7bc015ae6.ctex"]
+source_file="res://addons/godot_projectile_engine/icons/icons_projectile_spawn_marker.svg"
+dest_files=["res://.godot/imported/icons_projectile_spawn_marker.svg-4b253b55c14092b0c4097d0ebaee159f.ctex"]
 
 [params]
 

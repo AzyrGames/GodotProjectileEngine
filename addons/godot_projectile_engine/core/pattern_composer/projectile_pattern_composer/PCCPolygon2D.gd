@@ -1,5 +1,4 @@
 ## Projectile Pattern Component Base
-@icon("../../../icons/icons_pcc_polygon.svg")
 extends PatternComposerComponent
 class_name PCCPolygon2D
 

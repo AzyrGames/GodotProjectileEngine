@@ -1,4 +1,3 @@
-@icon("../../icons/icons_bullet_big_copy_2.svg")
 extends Node2D
 class_name ProjectileWrapper2D
 

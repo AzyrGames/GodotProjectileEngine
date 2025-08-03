@@ -1,5 +1,4 @@
 ## Projectile Pattern Component Base
-@icon("../../../icons/icons_pcc_single_copy_1.svg")
 extends PatternComposerComponent
 class_name PCCSingle2D
 enum DirectionType {

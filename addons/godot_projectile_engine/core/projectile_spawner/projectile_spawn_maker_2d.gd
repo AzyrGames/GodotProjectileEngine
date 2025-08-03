@@ -1,3 +1,4 @@
+
 extends Marker2D
 class_name ProjectileSpawnMarker2D
 
