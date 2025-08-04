@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dv7yve46k6l62"]
+[gd_scene load_steps=21 format=3 uid="uid://dv7yve46k6l62"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_03f2f"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_0pwon"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://cwpsu1ih5c60x" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCShape2D.gd" id="7_5axtd"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_hehyb"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="8_7fo6p"]
+[ext_resource type="Script" uid="uid://cx6esy7bqcdgd" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCCustomShape2D.gd" id="9_0pwon"]
+[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="10_tl5sj"]
 
 [sub_resource type="Gradient" id="Gradient_td4cq"]
 offsets = PackedFloat32Array(0)
@@ -42,8 +44,7 @@ life_distance_max = 1000.0
 custom_data = []
 metadata/_custom_type_script = "uid://dqlixqba72p5f"
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_03f2f"]
-points = PackedVector2Array(150, 0, -120, -100, 90, 42)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tl5sj"]
 
 [sub_resource type="Curve" id="Curve_o42ao"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.535877, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.998212), 0.0, 0.0, 0, 0]
@@ -84,19 +85,33 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 script = ExtResource("4_pv26p")
 metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D4"]
+position = Vector2(-128, -128)
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
 [node name="PatternComposer2D" type="Node" parent="."]
 script = ExtResource("5_o05jv")
 composer_name = "pattern_1"
 metadata/_custom_type_script = "uid://bc73oiea731jc"
 
+[node name="PCCCustomShape2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("9_0pwon")
+shape_path = ExtResource("10_tl5sj")
+shape_sample_method = 4
+uniform_distance = 30.0
+metadata/_custom_type_script = "uid://cx6esy7bqcdgd"
+
 [node name="PCCLoop" type="Node" parent="PatternComposer2D"]
 script = ExtResource("7_03f2f")
-loop_count = 5
+active = false
 metadata/_custom_type_script = "uid://1iejq4nn3soy"
 
 [node name="PCCShape2D" type="Node" parent="PatternComposer2D/PCCLoop"]
 script = ExtResource("7_5axtd")
-shape_2d = SubResource("ConvexPolygonShape2D_03f2f")
+shape_2d = SubResource("RectangleShape2D_tl5sj")
+shape_sample_method = 1
+active = false
 metadata/_custom_type_script = "uid://cwpsu1ih5c60x"
 
 [node name="TimingScheduler" type="Node" parent="."]

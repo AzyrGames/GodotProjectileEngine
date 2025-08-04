@@ -5,9 +5,9 @@ class_name PCCShape2D
 
 enum ShapeSampleMethod {
 	## Random sample(s) inside a shape.
-	INSIDE,
+	INSIDE_RANDOM,
 	## Random sample(s) along the perimeter of a shape.
-	PERIMETER,
+	PERIMETER_RANDOM,
 }
 
 @export var shape_2d: Shape2D
@@ -30,10 +30,10 @@ func process_pattern(
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
 		match shape_sample_method:
-			ShapeSampleMethod.INSIDE:
+			ShapeSampleMethod.INSIDE_RANDOM:
 				_new_pattern_composer_data.position = get_random_point_in_shape(shape_2d) \
 					+ _pattern_composer_data.position
-			ShapeSampleMethod.PERIMETER:
+			ShapeSampleMethod.PERIMETER_RANDOM:
 				_new_pattern_composer_data.position = get_random_point_along_shape(shape_2d) \
 					+ _pattern_composer_data.position
 		_new_pattern_composer_pack.append(_new_pattern_composer_data)
