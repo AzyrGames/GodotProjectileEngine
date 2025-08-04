@@ -20,4 +20,8 @@ var life_time_second : float = 0.0
 var life_time_tick : float = 0.0
 var life_distance : float = 0.0
 
+var life_time_second_max : float = 0.0
+var life_time_tick_max : float = 0.0
+var life_distance_max : float = 0.0
+
 var custom_data : Array[Variant]
