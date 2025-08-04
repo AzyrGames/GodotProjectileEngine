@@ -44,7 +44,7 @@ func process_pattern(
 ## Generating a random point inside a Shape2D.
 func get_random_point_in_shape(shape: Shape2D) -> Vector2:
 	if shape == null:
-		push_error("Null shape provided")
+		push_warning("Null shape provided")
 		return Vector2.ZERO
 
 	if shape is CircleShape2D:
@@ -56,7 +56,7 @@ func get_random_point_in_shape(shape: Shape2D) -> Vector2:
 	elif shape is ConvexPolygonShape2D:
 		return _get_random_point_in_convex_polygon(shape as ConvexPolygonShape2D)
 	else:
-		push_error("Unsupported shape type: %s" % str(shape))
+		push_warning("Unsupported shape type: %s" % str(shape))
 		return Vector2.ZERO
 
 func _get_random_point_in_circle(circle: CircleShape2D) -> Vector2:
@@ -140,7 +140,7 @@ func _is_point_in_polygon(point: Vector2, polygon: PackedVector2Array) -> bool:
 ## Get a random point along the perimeter of a Shape2D.
 func get_random_point_along_shape(shape: Shape2D) -> Vector2:
 	if shape == null:
-		push_error("Null shape provided")
+		push_warning("Null shape provided")
 		return Vector2.ZERO
 
 	if shape is CircleShape2D:
@@ -152,7 +152,7 @@ func get_random_point_along_shape(shape: Shape2D) -> Vector2:
 	elif shape is ConvexPolygonShape2D:
 		return _get_random_point_along_convex_polygon(shape as ConvexPolygonShape2D)
 	else:
-		push_error("Unsupported shape type: %s" % str(shape))
+		push_warning("Unsupported shape type: %s" % str(shape))
 		return Vector2.ZERO
 
 func _get_random_point_along_circle(circle: CircleShape2D) -> Vector2:

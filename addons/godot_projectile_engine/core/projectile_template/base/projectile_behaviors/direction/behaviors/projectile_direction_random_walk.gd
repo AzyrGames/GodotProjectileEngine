@@ -17,7 +17,6 @@ func _ready() -> void:
 	pass
 
 func setup_rng(_rng: RandomNumberGenerator) -> void:
-	# print(_rng)
 	if noise_seed == 0:
 		_rng.randomize()
 	else:

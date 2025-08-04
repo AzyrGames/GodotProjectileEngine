@@ -16,9 +16,9 @@ class_name ProjectileTemplateCustom2D
 ## The Projectile Instance Texture
 @export var texture : Texture2D
 ## The Projectile Instance Scale, default scale: [code](1.0, 1.0)[/code]
-@export_custom(PROPERTY_HINT_LINK, "suffix:") var scale : Vector2 = Vector2.ONE
+@export_custom(PROPERTY_HINT_LINK, "") var scale : Vector2 = Vector2.ONE
 ## Initial rotation of the texture in degrees
-@export_range(-360.0, 360.0) var rotation : float
+@export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var rotation : float
 ## Skew/shear effect applied to texture (-89.9 to 89.9 degrees)
 @export_range(-89.9, 89.9, 0.1) var skew : float = 0.0
 ## Toggles visibility of the projectile's texture

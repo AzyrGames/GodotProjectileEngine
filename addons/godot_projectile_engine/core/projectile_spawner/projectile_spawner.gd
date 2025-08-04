@@ -24,7 +24,7 @@ var projectile_area : RID
 var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
 
 var projectile_composer : PatternComposer2D
-var composer_context : PatternComposerContext
+var pattern_composer_context : PatternComposerContext
 var pattern_composer_pack: Array
 
 var projectile_updater_2d : ProjectileUpdater2D
@@ -112,25 +112,29 @@ func spawn_pattern() -> void:
 		print_debug("No Projectile Environment")
 		return
 
-	if !composer_context:
-		composer_context = PatternComposerContext.new()
-		composer_context.projectile_spawner = self
-
-	composer_context.use_spawn_markers = use_spawn_markers
+	if !pattern_composer_context:
+		pattern_composer_context = PatternComposerContext.new()
+	pattern_composer_context.projectile_spawner = self
+	pattern_composer_context.use_spawn_markers = use_spawn_markers
+	pattern_composer_context.position = global_position
+	pattern_composer_context.projectile_template_2d = projectile_template_2d
 	if use_spawn_markers:
 		setup_spawn_maker()
-		composer_context.projectile_spawn_makers = projectile_spawn_makers
+		pattern_composer_context.projectile_spawn_makers = projectile_spawn_makers
 	else:
-		composer_context.projectile_spawn_makers.clear()
-
-	composer_context.position = global_position
-	_pattern_composer_pack = projectile_composer.request_pattern(composer_context)
+		pattern_composer_context.projectile_spawn_makers.clear()
 
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
 	match projectile_template_2d.get_script():
 		ProjectileTemplateNode2D:
+			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
 			projectile_node_manager_2d.spawn_projectile_pattern(_pattern_composer_pack)
+		ProjectileTemplateAdvanced2D:
+			pattern_composer_context.speed = projectile_template_2d.speed
+			pattern_composer_context.direction_rotation = projectile_template_2d.direction_rotation
+			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
+			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		_:
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		## built-in classes don't have a script

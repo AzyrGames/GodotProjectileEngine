@@ -31,7 +31,7 @@ var _request_tick: bool = false
 ## Group node selection method 
 @export var group_selection: ProjectileEngine.TargetGroupSelection
 ## Direction Rotation as degrees
-@export_range(-360, 360, 0.1, "radians_as_degrees") var rotation: float = 0
+@export_range(-360, 360, 0.1, "radians_as_degrees","suffix:°") var direction_rotation: float = 0
 
 ## Direction Rotation Speed as degrees
 @export var rotation_speed: float = 0
@@ -66,25 +66,28 @@ func process_pattern(
 	_pattern_composer_pack: Array[PatternComposerData],
 	_pattern_composer_context: PatternComposerContext
 	) -> Array:
-	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
-		_final_rotation = _pattern_composer_data.rotation
-		if rotation != 0.0:
-			_final_rotation += rotation
-		if rotation_random != Vector3.ZERO:
-			_final_rotation += deg_to_rad(ProjectileEngine.get_random_float_value(rotation_random))
+	
+	_new_pattern_composer_pack.clear()
 
+	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
+		_new_pattern_composer_data = _pattern_composer_data.duplicate()
+		_final_rotation = _pattern_composer_context.direction_rotation
+		if direction_rotation != 0.0:
+			_final_rotation += direction_rotation
+		if rotation_random != Vector3.ZERO:
+			_final_rotation += ProjectileEngine.get_random_float_value(rotation_random)
+		_new_pattern_composer_data.direction_rotation = _final_rotation
 		match direction_type:
 			DirectionType.INHERIT:
-				_pattern_composer_data.direction = _pattern_composer_data.\
-				base_direction.rotated(_final_rotation).normalized()
+				_new_pattern_composer_pack.append(_new_pattern_composer_data)
+				continue
 
 			DirectionType.FIXED:
-				_pattern_composer_data.direction = fixed_direction.rotated(_final_rotation).normalized()
+				_new_pattern_composer_data.direction = fixed_direction
 
 			DirectionType.TARGET_GROUP:
 				if target_group == "":
-					_pattern_composer_data.direction = _pattern_composer_data.\
-					base_direction.rotated(_final_rotation).normalized()
+					_new_pattern_composer_pack.append(_new_pattern_composer_data)
 					continue
 		
 				if target_groups.is_empty():
@@ -93,20 +96,21 @@ func process_pattern(
 					_update_target_nodes_group_choice()
 				
 				if _target_nodes.is_empty():
-					_pattern_composer_data.direction = _pattern_composer_data.\
-					base_direction.rotated(_final_rotation).normalized()
+					_new_pattern_composer_pack.append(_new_pattern_composer_data)
 					continue
-	
-				_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(
+
+				_new_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(
 					get_target_position(_pattern_composer_data)
 					)
+				_new_pattern_composer_pack.append(_new_pattern_composer_data)
 
 			DirectionType.MOUSE:
 				_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(get_mouse_position())
+				_new_pattern_composer_pack.append(_new_pattern_composer_data)
 
 	if rotation_process_mode == RotationProcessMode.TICKS:
 		_request_tick = true
-	return _pattern_composer_pack
+	return _new_pattern_composer_pack
 
 
 func update(_pattern_composer_pack: Array[PatternComposerData]) -> void:
@@ -115,10 +119,10 @@ func update(_pattern_composer_pack: Array[PatternComposerData]) -> void:
 		match rotation_process_mode:
 			RotationProcessMode.TICKS:
 				if !_request_tick: return
-				_pattern_composer_data.rotation += deg_to_rad(rotation_speed)
+				_pattern_composer_data.direction_rotation += rotation_speed
 
 			RotationProcessMode.PHYSICS:
-				_pattern_composer_data.rotation += deg_to_rad(rotation_speed) * get_physics_process_delta_time()
+				_pattern_composer_data.direction_rotation += rotation_speed * get_physics_process_delta_time()
 	_request_tick = false
 
 

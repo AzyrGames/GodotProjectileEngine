@@ -9,8 +9,6 @@ var base_speed : float
 var base_direction : Vector2
 var raw_direction : Vector2
 var direction_addition : Vector2
-var direction_rotation : float
-
 var direction_final : Vector2
 
 var projectile_speed : float

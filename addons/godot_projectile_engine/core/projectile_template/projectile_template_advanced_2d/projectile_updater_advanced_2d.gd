@@ -14,7 +14,7 @@ var projectile_speed_acceleration : float = 0.0
 var projectile_speed_max : float = 0.0
 
 var projectile_is_use_homing : bool = false
-var projectile_homing_target_group : String
+var projectile_homing_target_group : String 
 var projetile_max_homing_distance : float
 var projectile_steer_speed : float
 var projectile_homing_strength : float
@@ -61,31 +61,110 @@ func init_updater_variable() -> void:
 #region Spawn Projectile
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
-	for pattern_data : PatternComposerData in pattern_composer_pack:
-
+	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
+	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
+		
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
+		_projectile_instance = _projectile_instance as ProjectileInstanceAdvanced2D
 
-		_projectile_instance.global_position = pattern_data.position
-		_projectile_instance.speed = projectile_speed
-		_projectile_instance.base_speed = projectile_speed
-		_projectile_instance.base_direction = pattern_data.direction
-
+		_projectile_instance.global_position = _pattern_composer_data.position
+		_projectile_instance.speed = _pattern_composer_data.speed
+		_projectile_instance.base_speed = _pattern_composer_data.speed
+		_projectile_instance.direction = _pattern_composer_data.direction
+		_projectile_instance.base_direction = _pattern_composer_data.direction
+		_projectile_instance.direction_rotation = _pattern_composer_data.direction_rotation
 		if projectile_template_2d.direction_follow_rotation:
-			_projectile_instance.direction = _projectile_instance.base_direction.rotated(pattern_data.rotation)
-		else:
-			_projectile_instance.direction = pattern_data.direction
-
+			_projectile_instance.direction = _projectile_instance.base_direction.rotated(_pattern_composer_data.direction_rotation)
 		if projectile_template_2d.rotation_follow_direction:
-			_projectile_instance.rotation = pattern_data.direction.angle()
-		else:
-			_projectile_instance.rotation = pattern_data.rotation
+			_projectile_instance.direction_rotation = _pattern_composer_data.direction.angle()
 
+		_projectile_instance.speed_acceleration = projectile_template_2d.speed_acceleration
+		_projectile_instance.speed_max = projectile_template_2d.speed_max
+
+		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
+		_projectile_instance.texture_rotation_speed = projectile_template_2d.texture_rotation_speed 
 		_projectile_instance.scale = projectile_template_2d.scale
+		_projectile_instance.scale_acceleration = projectile_template_2d.scale_acceleration
+		_projectile_instance.scale_max = projectile_template_2d.scale_max
+		_projectile_instance.life_time_second_max = projectile_template_2d.life_time_second_max
+		_projectile_instance.life_distance_max = projectile_template_2d.life_distance_max
 
-		_projectile_instance.velocity = pattern_data.direction * projectile_speed * (1.0 / Engine.physics_ticks_per_second)
+		
+
+		# # Check and update random variables
+		# var _speed_value: float = _projectile_instance.speed
+		# var _speed_max_value: float = projectile_template_2d.speed_max
+		# var _speed_acceleration_value: float = projectile_template_2d.speed_acceleration
+		var _scale_float: float
+		var _scale_max_float: float
+
+		# var _scale_value: Vector2 = projectile_template_2d.scale
+		# var _texture_rotation_value: float = _projectile_instance.texture_rotation
+
+		if projectile_template_2d.speed_random != Vector3.ZERO:
+			_projectile_instance.speed = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.speed_random
+				)
+		if projectile_template_2d.speed_max_random != Vector3.ZERO:
+			_projectile_instance.speed_max = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.speed_max_random
+				)
+		if projectile_template_2d.speed_acceleration_random != Vector3.ZERO:
+			_projectile_instance.speed_acceleration = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.speed_acceleration_random
+				)
+
+		if projectile_template_2d.direction_rotation_random != Vector3.ZERO:
+			_projectile_instance.direction_rotation = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.direction_rotation_random
+				)
+
+		if projectile_template_2d.texture_rotation_random != Vector3.ZERO:
+			_projectile_instance.texture_rotation = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.texture_rotation_random
+				)
+
+		if projectile_template_2d.texture_rotation_speed_random != Vector3.ZERO:
+			_projectile_instance.texture_rotation_speed = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.texture_rotation_speed_random
+				)
+
+		if projectile_template_2d.scale_random != Vector3.ZERO:
+			_scale_float = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.scale_random
+				)
+			_projectile_instance.scale = Vector2(_scale_float, _scale_float)
+
+		if projectile_template_2d.scale_acceleration_random != Vector3.ZERO:
+			_projectile_instance.scale_acceleration = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.scale_acceleration_random
+				)
+
+		if projectile_template_2d.scale_max_random != Vector3.ZERO:
+			_scale_max_float = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.scale_max_random
+				)
+			_projectile_instance.scale_max = Vector2(_scale_max_float, _scale_max_float)
+
+		if projectile_template_2d.life_time_second_random != Vector3.ZERO:
+			_projectile_instance.life_time_second_max = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.life_time_second_random
+				)
+		if projectile_template_2d.life_distance_random != Vector3.ZERO:
+			_projectile_instance.life_distance_max = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.life_distance_random
+				)
+
+		# Update Projectile Instance Properties
+		if _projectile_instance.direction_rotation != 0:
+			_projectile_instance.direction = _projectile_instance.direction.rotated(
+				_projectile_instance.direction_rotation
+				)
+
+		_projectile_instance.velocity = _projectile_instance.direction * _projectile_instance.speed * (1.0 / Engine.physics_ticks_per_second)
 
 		_projectile_instance.transform = Transform2D(
-			_projectile_instance.rotation,
+			_projectile_instance.texture_rotation,
 			projectile_template_2d.scale,
 			projectile_template_2d.skew,
 			_projectile_instance.global_position
@@ -123,27 +202,16 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 #region Update Projectile
 
 func update_projectile_instances(delta: float) -> void:
-	projectile_speed = projectile_template_2d.speed
-	projectile_speed_acceleration = projectile_template_2d.speed_acceleration
-	projectile_speed_max = projectile_template_2d.speed_max
+	# projectile_speed = projectile_template_2d.speed
+	# projectile_speed_acceleration = projectile_template_2d.speed_acceleration
+	# projectile_speed_max = projectile_template_2d.speed_max
+	
 	projectile_is_use_homing = projectile_template_2d.is_use_homing
-
 	if projectile_is_use_homing:
 		projectile_homing_target_group = projectile_template_2d.target_group
 		projetile_max_homing_distance = projectile_template_2d.max_homing_distance
 		projectile_steer_speed = projectile_template_2d.steer_speed
 		projectile_homing_strength = projectile_template_2d.homing_strength
-
-	projectile_rotation_speed = projectile_template_2d.rotation_speed
-	projectile_rotation_follow_direction = projectile_template_2d.rotation_follow_direction
-	projectile_direction_follow_rotation = projectile_template_2d.direction_follow_rotation
-
-	projectile_scale_acceleration = projectile_template_2d.scale_acceleration
-	projectile_scale_max = Vector2.ONE * projectile_template_2d.scale_max
-
-
-	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
-	projectile_life_distance_max  = projectile_template_2d.life_distance_max
 
 	projectile_is_use_trigger = projectile_template_2d.is_use_trigger
 	projectile_trigger_name = projectile_template_2d.trigger_name
@@ -187,7 +255,8 @@ func update_projectile_instances(delta: float) -> void:
 	if projectile_remove_index.size() > 0:
 		for index : int in projectile_remove_index:
 			projectile_active_index.erase(index)
-			PS.area_set_shape_disabled(projectile_area_rid, index, true)
+			if projectile_template_2d.collision_shape:
+				PS.area_set_shape_disabled(projectile_area_rid, index, true)
 		projectile_remove_index.clear()
 
 	# Update active projectile instances array
@@ -243,30 +312,29 @@ func update_projectile_instances(delta: float) -> void:
 				_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 
 		if projectile_rotation_follow_direction:
-			_active_instance.rotation = _active_instance.direction.angle()
+			_active_instance.texture_rotation = _active_instance.direction.angle()
 
-		if projectile_rotation_speed != 0:
-			_active_instance.rotation += deg_to_rad(projectile_rotation_speed) * delta
+		if _active_instance.texture_rotation_speed != 0:
+			_active_instance.texture_rotation += _active_instance.texture_rotation_speed * delta
+
 		if projectile_direction_follow_rotation:
-			_active_instance.direction = Vector2.RIGHT.rotated(_active_instance.rotation)
+			_active_instance.direction = Vector2.RIGHT.rotated(_active_instance.texture_rotation)
 			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 
-		if projectile_speed_acceleration != 0:
-			if _active_instance.speed < projectile_speed_max:
+		if _active_instance.speed_acceleration != 0:
+			if _active_instance.speed < _active_instance.speed_max:
 				_active_instance.speed = move_toward(
-					_active_instance.speed, projectile_speed_max, projectile_speed_acceleration * delta
+					_active_instance.speed, _active_instance.speed_max, _active_instance.speed_acceleration * delta
 					)
 
 			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
-
-
-		if projectile_scale_acceleration != 0 and _active_instance.scale < projectile_scale_max:
-			_active_instance.scale = _active_instance.scale.move_toward(projectile_scale_max, projectile_scale_acceleration * delta)
-
+		if _active_instance.scale_acceleration != 0:
+			if _active_instance.scale < _active_instance.scale_max:
+				_active_instance.scale = _active_instance.scale.move_toward(_active_instance.scale_max, _active_instance.scale_acceleration * delta)
 		_active_instance.global_position += _active_instance.velocity
 
 		_active_instance.transform = Transform2D(
-			_active_instance.rotation,
+			_active_instance.texture_rotation,
 			_active_instance.scale,
 			_active_instance.skew,
 			_active_instance.global_position

@@ -27,30 +27,32 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 	for _pattern_composer_data: PatternComposerData in pattern_composer_pack:
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
-		_projectile_instance.direction = _pattern_composer_data.direction
 		_projectile_instance.global_position = _pattern_composer_data.position
-		_projectile_instance.rotation = _pattern_composer_data.rotation
+		_projectile_instance.direction = _pattern_composer_data.direction
+		_projectile_instance.texture_rotation = _pattern_composer_data.texture_rotation
+		_projectile_instance.scale = _pattern_composer_data.scale
 
 		_projectile_instance.life_time_second_max = projectile_template_2d.life_time_second_max
 		_projectile_instance.life_distance_max = projectile_template_2d.life_distance_max
 		
 		if projectile_texture_rotate_direction:
-			_projectile_instance.rotation = _projectile_instance.direction.angle()
+			_projectile_instance.texture_rotation = _projectile_instance.direction.angle()
 
 		# Check and update random variables
 		var _speed_value: float = projectile_speed
 		var _scale_value_float: float
 		var _scale_value: Vector2 = projectile_template_2d.scale
-		var _rotation_value: float = _projectile_instance.rotation
+		var _rotation_value: float = _projectile_instance.texture_rotation
 		if projectile_template_2d.speed_random != Vector3.ZERO:
 			_speed_value = ProjectileEngine.get_random_float_value(projectile_template_2d.speed_random)
 		if projectile_template_2d.scale_random != Vector3.ZERO:
 			_scale_value_float = ProjectileEngine.get_random_float_value(projectile_template_2d.scale_random)
 			_scale_value = Vector2(_scale_value_float, _scale_value_float)
 			_projectile_instance.scale = _scale_value
+			
 		if projectile_template_2d.rotation_random != Vector3.ZERO:
 			_rotation_value = ProjectileEngine.get_random_float_value(projectile_template_2d.rotation_random)
-			_projectile_instance.rotation = deg_to_rad(_rotation_value)
+			_projectile_instance.texture_rotation = _rotation_value
 		if projectile_template_2d.life_time_second_random != Vector3.ZERO:
 			_projectile_instance.life_time_second_max = ProjectileEngine.get_random_float_value(
 				projectile_template_2d.life_time_second_random
@@ -65,7 +67,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			(1.0 / Engine.physics_ticks_per_second)
 			)
 		_projectile_instance.transform = Transform2D(
-			_projectile_instance.rotation,
+			_projectile_instance.texture_rotation,
 			_projectile_instance.scale,
 			projectile_template_2d.skew,
 			_projectile_instance.global_position
@@ -146,7 +148,7 @@ func update_projectile_instances(delta: float) -> void:
 		_active_instance.global_position += _active_instance.velocity
 
 		_active_instance.transform = Transform2D(
-			_active_instance.rotation,
+			_active_instance.texture_rotation,
 			_active_instance.scale,
 			_active_instance.skew,
 			_active_instance.global_position
