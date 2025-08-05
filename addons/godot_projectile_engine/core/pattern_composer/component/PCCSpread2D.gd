@@ -60,48 +60,33 @@ var _point_direction: Vector2
 func _add_projectile_straight_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
 	_new_sub_pattern_composer_data.clear()
 	_half_total_width = (spread_amount - 1) * spread_distance / 2.0
-	_projectile_position = _pattern_composer_data.position
-
 	for i in range(spread_amount):
-		_offset_distance = (i * spread_distance) - _half_total_width
-		_point_position = _projectile_position + _pattern_composer_data.direction.rotated(deg_to_rad(90)) * _offset_distance
-		
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
-		_new_pattern_composer_data.position = _point_position
+		_offset_distance = (i * spread_distance) - _half_total_width
+		_new_pattern_composer_data.position += (_pattern_composer_data.direction.rotated(deg_to_rad(90)) * _offset_distance)
 		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
-
 	return _new_sub_pattern_composer_data
 
 func _add_projectile_angle_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
 	_new_sub_pattern_composer_data.clear()
 	_half_total_deg = (spread_amount - 1) * spread_angle / 2.0
-
 	for i in range(spread_amount):
-		_offset_angle = (i * spread_angle) - _half_total_deg
-		_point_direction = _deg_to_dir(rad_to_deg(_pattern_composer_data.direction.angle()) - _offset_angle)
-
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
-		_new_pattern_composer_data.direction = _point_direction
+		_offset_angle = (i * spread_angle) - _half_total_deg
+		_new_pattern_composer_data.direction_rotation = _pattern_composer_data.direction.angle() - deg_to_rad(_offset_angle)
 		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
 	return _new_sub_pattern_composer_data
-
 
 func _add_projectile_hybrid_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
 	_new_sub_pattern_composer_data.clear()
 	_half_total_width = (spread_amount - 1) * spread_distance / 2.0
 	_half_total_deg = (spread_amount - 1) * spread_angle / 2.0
-	_projectile_position = _pattern_composer_data.position
-
 	for i in range(spread_amount):
+		_new_pattern_composer_data = _pattern_composer_data.duplicate()
 		_offset_distance = (i * spread_distance) - _half_total_width
 		_offset_angle = (i * spread_angle) - _half_total_deg
-
-		_point_position = _projectile_position + _pattern_composer_data.direction.rotated(deg_to_rad(90)) * _offset_distance
-		_point_direction = _deg_to_dir(rad_to_deg(_pattern_composer_data.direction.angle()) - _offset_angle)
-	
-		_new_pattern_composer_data = _pattern_composer_data.duplicate()
-		_new_pattern_composer_data.position = _point_position
-		_new_pattern_composer_data.direction = _point_direction
+		_new_pattern_composer_data.position += (_pattern_composer_data.direction.rotated(deg_to_rad(90)) * _offset_distance)
+		_new_pattern_composer_data.direction_rotation = _pattern_composer_data.direction.angle() - deg_to_rad(_offset_angle)
 		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
 	return _new_sub_pattern_composer_data
 

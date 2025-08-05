@@ -70,9 +70,11 @@ func process_pattern(
 	_new_pattern_composer_pack.clear()
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
-		_final_rotation = direction_rotation
+		_final_rotation = _pattern_composer_data.direction_rotation
 		if rotation_random != Vector3.ZERO:
 			_final_rotation += deg_to_rad(ProjectileEngine.get_random_float_value(rotation_random))
+		_final_rotation += direction_rotation
+		_new_pattern_composer_data.direction_rotation = _final_rotation
 		match direction_type:
 			DirectionType.INHERIT:
 				_new_pattern_composer_pack.append(_new_pattern_composer_data)
@@ -110,21 +112,22 @@ func process_pattern(
 
 	if rotation_process_mode == RotationProcessMode.TICKS:
 		_request_tick = true
-	# _pattern_composer_pack = _new_pattern_composer_pack
+
 	return _new_pattern_composer_pack
 
 
 func update(_pattern_composer_pack: Array[PatternComposerData]) -> void:
-	# for _pattern_composer_data in _pattern_composer_pack:
-	# 	if !_pattern_composer_data: return
-	# 	match rotation_process_mode:
-	# 		RotationProcessMode.TICKS:
-	# 			if !_request_tick: return
-	# 			_pattern_composer_data.direction_rotation += rotation_speed
+	for _pattern_composer_data in _pattern_composer_pack:
+		if !_pattern_composer_data: return
+		match rotation_process_mode:
+			RotationProcessMode.TICKS:
+				if !_request_tick: return
+				_pattern_composer_data.direction_rotation += deg_to_rad(rotation_speed)
 
-	# 		RotationProcessMode.PHYSICS:
-	# 			_pattern_composer_data.direction_rotation += rotation_speed * get_physics_process_delta_time()
-	# _request_tick = false
+			RotationProcessMode.PHYSICS:
+				_pattern_composer_data.direction_rotation += deg_to_rad(rotation_speed) * get_physics_process_delta_time()
+
+	_request_tick = false
 	pass
 
 

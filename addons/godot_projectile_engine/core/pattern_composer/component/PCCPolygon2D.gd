@@ -43,10 +43,10 @@ func _add_projectile_polygon(_pattern_composer_data: PatternComposerData) -> Arr
 			radius * Vector2.from_angle(
 				_theta + _pattern_composer_data.direction.angle() + \
 				_pattern_composer_data.direction_rotation)
-		if spread_out:
-			_point_direction = Vector2.from_angle(_theta)
-			_point_direction = _point_direction.rotated(_pattern_composer_data.direction.angle())
-			_new_pattern_composer_data.direction = _point_direction
 		_new_pattern_composer_data.position = _point_position
+		
+		if spread_out:
+			_new_pattern_composer_data.direction_rotation += _theta
+
 		_new_polygon_composer_data.append(_new_pattern_composer_data)
 	return _new_polygon_composer_data

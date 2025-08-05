@@ -44,14 +44,10 @@ var projectile_trigger_life_distance : float
 
 func init_updater_variable() -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
-	projectile_speed = projectile_template_2d.speed
-	projectile_speed_acceleration = projectile_template_2d.speed_acceleration
-	projectile_speed_max = projectile_template_2d.speed_max
-	# projectile_direction = projectile_template_2d.direction
+	projectile_rotation_follow_direction = projectile_template_2d.rotation_follow_direction
+	projectile_direction_follow_rotation = projectile_template_2d.direction_follow_rotation
 	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max  = projectile_template_2d.life_distance_max
-	projectile_direction_follow_rotation = projectile_template_2d.rotation_follow_direction
-
 	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
 	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 
@@ -62,6 +58,12 @@ func init_updater_variable() -> void:
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateAdvanced2D
+	projectile_rotation_follow_direction = projectile_template_2d.rotation_follow_direction
+	projectile_direction_follow_rotation = projectile_template_2d.direction_follow_rotation
+	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
+	projectile_life_distance_max  = projectile_template_2d.life_distance_max
+	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
+	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 		
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
@@ -71,18 +73,14 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.direction = _pattern_composer_data.direction
 		_projectile_instance.base_direction = _pattern_composer_data.direction
 		_projectile_instance.direction_rotation = _pattern_composer_data.direction_rotation
-		if projectile_template_2d.direction_follow_rotation:
-			_projectile_instance.direction = _projectile_instance.base_direction.rotated(_pattern_composer_data.direction_rotation)
-		if projectile_template_2d.rotation_follow_direction:
-			_projectile_instance.direction_rotation = _pattern_composer_data.direction.angle()
-
 
 		_projectile_instance.speed = projectile_template_2d.speed
 		_projectile_instance.base_speed = projectile_template_2d.speed
 		_projectile_instance.speed_acceleration = projectile_template_2d.speed_acceleration
 		_projectile_instance.speed_max = projectile_template_2d.speed_max
+		_projectile_instance.direction_rotation_speed = deg_to_rad(projectile_template_2d.direction_rotation_speed)
 		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
-		_projectile_instance.texture_rotation_speed = projectile_template_2d.texture_rotation_speed 
+		_projectile_instance.texture_rotation_speed = deg_to_rad(projectile_template_2d.texture_rotation_speed) 
 		_projectile_instance.scale = projectile_template_2d.scale
 		_projectile_instance.scale_acceleration = projectile_template_2d.scale_acceleration
 		_projectile_instance.scale_max = projectile_template_2d.scale_max
@@ -119,15 +117,24 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 				projectile_template_2d.direction_rotation_random
 				)
 
+		if projectile_template_2d.direction_rotation_speed_random != Vector3.ZERO:
+			_projectile_instance.direction_rotation_speed = deg_to_rad(
+					ProjectileEngine.get_random_float_value(
+					projectile_template_2d.direction_rotation_speed_random
+					)
+			)
+
 		if projectile_template_2d.texture_rotation_random != Vector3.ZERO:
 			_projectile_instance.texture_rotation = ProjectileEngine.get_random_float_value(
 				projectile_template_2d.texture_rotation_random
 				)
 
 		if projectile_template_2d.texture_rotation_speed_random != Vector3.ZERO:
-			_projectile_instance.texture_rotation_speed = ProjectileEngine.get_random_float_value(
-				projectile_template_2d.texture_rotation_speed_random
-				)
+			_projectile_instance.texture_rotation_speed = deg_to_rad(
+					ProjectileEngine.get_random_float_value(
+					projectile_template_2d.texture_rotation_speed_random
+					)
+			)
 
 		if projectile_template_2d.scale_random != Vector3.ZERO:
 			_scale_float = ProjectileEngine.get_random_float_value(
@@ -155,13 +162,16 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 				projectile_template_2d.life_distance_random
 				)
 
-		# Update Projectile Instance Properties
+		if projectile_direction_follow_rotation:
+			_projectile_instance.direction_rotation = _projectile_instance.texture_rotation
+
 		if _projectile_instance.direction_rotation != 0:
-			_projectile_instance.direction = _projectile_instance.direction.rotated(
+			_projectile_instance.direction = _projectile_instance.base_direction.rotated(
 				_projectile_instance.direction_rotation
 				)
-
-		_projectile_instance.velocity = _projectile_instance.direction * _projectile_instance.speed * (1.0 / Engine.physics_ticks_per_second)
+		
+		if projectile_rotation_follow_direction:
+			_projectile_instance.texture_rotation = _projectile_instance.direction_rotation
 
 		_projectile_instance.transform = Transform2D(
 			_projectile_instance.texture_rotation,
@@ -169,6 +179,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			projectile_template_2d.skew,
 			_projectile_instance.global_position
 			)
+			
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
 				projectile_area_rid,
@@ -311,15 +322,8 @@ func update_projectile_instances(delta: float) -> void:
 			if projectile_speed_acceleration == 0:
 				_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 
-		if projectile_rotation_follow_direction:
-			_active_instance.texture_rotation = _active_instance.direction.angle()
-
 		if _active_instance.texture_rotation_speed != 0:
 			_active_instance.texture_rotation += _active_instance.texture_rotation_speed * delta
-
-		if projectile_direction_follow_rotation:
-			_active_instance.direction = Vector2.RIGHT.rotated(_active_instance.texture_rotation)
-			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 
 		if _active_instance.scale_acceleration != 0:
 			if _active_instance.scale < _active_instance.scale_max:
@@ -330,6 +334,26 @@ func update_projectile_instances(delta: float) -> void:
 				_active_instance.speed = move_toward(
 					_active_instance.speed, _active_instance.speed_max, _active_instance.speed_acceleration * delta
 					)
+
+		if _active_instance.texture_rotation_speed != 0:
+			_active_instance.texture_rotation +=  _active_instance.texture_rotation_speed * delta
+
+		if projectile_direction_follow_rotation:
+			_active_instance.direction_rotation = _active_instance.texture_rotation
+
+		# Update Projectile Instance Properties
+		# print("direction rotation: ", _active_instance.direction_rotation_speed)
+		if _active_instance.direction_rotation_speed != 0:
+			_active_instance.direction_rotation += _active_instance.direction_rotation_speed * delta
+			# print(_active_instance.direction_rotation)
+
+		if _active_instance.direction_rotation != 0:
+			_active_instance.direction = _active_instance.base_direction.rotated(
+				_active_instance.direction_rotation
+				)
+
+		if projectile_rotation_follow_direction:
+			_active_instance.texture_rotation = _active_instance.direction_rotation
 
 		_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 

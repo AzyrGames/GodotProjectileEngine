@@ -81,6 +81,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 			if _key is ProjectileSpawnMarker2D:
 				pattern_composer_dict.erase(_key)
 		pattern_composer_dict.get_or_add(_pattern_composer_context.projectile_spawner, _init_pattern_composer_data)
+
 	## Get and update pattern composer data spawn position
 	# var other_pattern_composer_pack : Array[PatternComposerData]
 	_new_pattern_composer_pack = []
