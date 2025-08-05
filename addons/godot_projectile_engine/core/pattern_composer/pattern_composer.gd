@@ -74,15 +74,16 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 				_new_composer_data = _init_pattern_composer_data.duplicate()
 			pattern_composer_dict.get_or_add(_projectile_spawn_maker, _new_composer_data)
 	else:
-		push_warning("No active ProjectileSpawnMarker2D was found! Fallback to use ProjectileSpawner2D position")
+		if _pattern_composer_context.use_spawn_markers:
+			push_warning("No active ProjectileSpawnMarker2D was found! Fallback to use ProjectileSpawner2D position")
 		## Remove ProjectileSpawnMarker spawn position to prevent duplication
 		for _key in pattern_composer_dict.keys():
 			if _key is ProjectileSpawnMarker2D:
 				pattern_composer_dict.erase(_key)
 		pattern_composer_dict.get_or_add(_pattern_composer_context.projectile_spawner, _init_pattern_composer_data)
-
 	## Get and update pattern composer data spawn position
-	_new_pattern_composer_pack.clear()
+	# var other_pattern_composer_pack : Array[PatternComposerData]
+	_new_pattern_composer_pack = []
 	for _spawn_node : Node in pattern_composer_dict.keys():
 		if _spawn_node is ProjectileSpawnMarker2D:
 			if _spawn_node.use_global_position:
@@ -92,13 +93,12 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 		elif _spawn_node is ProjectileSpawner2D:
 			pattern_composer_dict.get(_spawn_node).set("position", _spawn_node.global_position)
 		_new_pattern_composer_pack.append(pattern_composer_dict.get(_spawn_node))
-
 	## Process Pattern composer component
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue
 		_new_pattern_composer_pack = pattern_component.process_pattern(_new_pattern_composer_pack, _pattern_composer_context)
-	
+
 	return _new_pattern_composer_pack
 
 ## Update Child Pattern Composer Components

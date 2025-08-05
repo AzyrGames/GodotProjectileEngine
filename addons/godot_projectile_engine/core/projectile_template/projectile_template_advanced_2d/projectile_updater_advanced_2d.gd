@@ -68,8 +68,6 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance = _projectile_instance as ProjectileInstanceAdvanced2D
 
 		_projectile_instance.global_position = _pattern_composer_data.position
-		_projectile_instance.speed = _pattern_composer_data.speed
-		_projectile_instance.base_speed = _pattern_composer_data.speed
 		_projectile_instance.direction = _pattern_composer_data.direction
 		_projectile_instance.base_direction = _pattern_composer_data.direction
 		_projectile_instance.direction_rotation = _pattern_composer_data.direction_rotation
@@ -78,9 +76,11 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		if projectile_template_2d.rotation_follow_direction:
 			_projectile_instance.direction_rotation = _pattern_composer_data.direction.angle()
 
+
+		_projectile_instance.speed = projectile_template_2d.speed
+		_projectile_instance.base_speed = projectile_template_2d.speed
 		_projectile_instance.speed_acceleration = projectile_template_2d.speed_acceleration
 		_projectile_instance.speed_max = projectile_template_2d.speed_max
-
 		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
 		_projectile_instance.texture_rotation_speed = projectile_template_2d.texture_rotation_speed 
 		_projectile_instance.scale = projectile_template_2d.scale
@@ -321,16 +321,18 @@ func update_projectile_instances(delta: float) -> void:
 			_active_instance.direction = Vector2.RIGHT.rotated(_active_instance.texture_rotation)
 			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
 
+		if _active_instance.scale_acceleration != 0:
+			if _active_instance.scale < _active_instance.scale_max:
+				_active_instance.scale = _active_instance.scale.move_toward(_active_instance.scale_max, _active_instance.scale_acceleration * delta)
+		
 		if _active_instance.speed_acceleration != 0:
 			if _active_instance.speed < _active_instance.speed_max:
 				_active_instance.speed = move_toward(
 					_active_instance.speed, _active_instance.speed_max, _active_instance.speed_acceleration * delta
 					)
 
-			_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
-		if _active_instance.scale_acceleration != 0:
-			if _active_instance.scale < _active_instance.scale_max:
-				_active_instance.scale = _active_instance.scale.move_toward(_active_instance.scale_max, _active_instance.scale_acceleration * delta)
+		_active_instance.velocity = _active_instance.speed * _active_instance.direction * delta
+
 		_active_instance.global_position += _active_instance.velocity
 
 		_active_instance.transform = Transform2D(
