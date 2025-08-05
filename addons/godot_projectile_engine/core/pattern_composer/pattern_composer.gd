@@ -74,7 +74,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 				_new_composer_data = _init_pattern_composer_data.duplicate()
 			pattern_composer_dict.get_or_add(_projectile_spawn_maker, _new_composer_data)
 	else:
-		push_warning("No active ProjectileSpawnMarker was found! fallback to use ProjectileSpawner position")
+		push_warning("No active ProjectileSpawnMarker2D was found! Fallback to use ProjectileSpawner2D position")
 		## Remove ProjectileSpawnMarker spawn position to prevent duplication
 		for _key in pattern_composer_dict.keys():
 			if _key is ProjectileSpawnMarker2D:

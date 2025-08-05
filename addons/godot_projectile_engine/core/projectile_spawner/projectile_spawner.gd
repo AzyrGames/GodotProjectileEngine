@@ -137,7 +137,6 @@ func spawn_pattern() -> void:
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		_:
 			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
-			print("Before spawn: ", _pattern_composer_pack[0].direction_rotation)
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		## built-in classes don't have a script
 		null:

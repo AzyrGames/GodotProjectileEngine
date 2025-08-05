@@ -71,11 +71,10 @@ func process_pattern(
 
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
-		_final_rotation = _new_pattern_composer_data.direction_rotation
-		if direction_rotation != 0.0:
-			_final_rotation += direction_rotation
+		_final_rotation = direction_rotation
 		if rotation_random != Vector3.ZERO:
-			_final_rotation += ProjectileEngine.get_random_float_value(rotation_random)
+			_final_rotation += deg_to_rad(ProjectileEngine.get_random_float_value(rotation_random))
+		_new_pattern_composer_data.direction_rotation += _final_rotation
 		match direction_type:
 			DirectionType.INHERIT:
 				_new_pattern_composer_pack.append(_new_pattern_composer_data)
@@ -83,6 +82,8 @@ func process_pattern(
 
 			DirectionType.FIXED:
 				_new_pattern_composer_data.direction = fixed_direction
+				_new_pattern_composer_pack.append(_new_pattern_composer_data)
+				continue
 
 			DirectionType.TARGET_GROUP:
 				if target_group == "":
@@ -102,14 +103,17 @@ func process_pattern(
 					get_target_position(_pattern_composer_data)
 					)
 				_new_pattern_composer_pack.append(_new_pattern_composer_data)
+				continue
+
 
 			DirectionType.MOUSE:
 				_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(get_mouse_position())
 				_new_pattern_composer_pack.append(_new_pattern_composer_data)
+				continue
+
 
 	if rotation_process_mode == RotationProcessMode.TICKS:
 		_request_tick = true
-	print("Single2D: ", _new_pattern_composer_pack[0].direction_rotation)
 	return _new_pattern_composer_pack
 
 
@@ -120,7 +124,6 @@ func update(_pattern_composer_pack: Array[PatternComposerData]) -> void:
 			RotationProcessMode.TICKS:
 				if !_request_tick: return
 				_pattern_composer_data.direction_rotation += rotation_speed
-				print("update: ", _pattern_composer_data.direction_rotation)
 
 			RotationProcessMode.PHYSICS:
 				_pattern_composer_data.direction_rotation += rotation_speed * get_physics_process_delta_time()
