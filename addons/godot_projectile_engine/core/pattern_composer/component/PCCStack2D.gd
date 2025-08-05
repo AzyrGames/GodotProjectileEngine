@@ -26,8 +26,10 @@ func process_pattern(
 	_new_pattern_composer_pack.clear()
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		for i in stack_amount:
-			_offset_distance = i * stack_distance * _pattern_composer_data.direction
-			
+			_offset_distance = i * stack_distance * _pattern_composer_data.direction.rotated(
+				_pattern_composer_data.direction_rotation
+				)
+
 			_new_pattern_composer_data = _pattern_composer_data.duplicate()
 			_new_pattern_composer_data.position = _pattern_composer_data.position + _offset_distance
 			_new_pattern_composer_pack.append(_new_pattern_composer_data)

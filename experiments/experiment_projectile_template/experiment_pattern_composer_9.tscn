@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_03f2f"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_0pwon"]
-[ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="3_tl5sj"]
+[ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="3_tl5sj"]
 [ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_arrowhead_1.png" id="4_03f2f"]
 [ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/spawn_marker/projectile_spawn_maker_2d.gd" id="4_pv26p"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_o05jv"]
@@ -20,7 +20,7 @@ colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ylpdm"]
 gradient = SubResource("Gradient_td4cq")
 
-[sub_resource type="Resource" id="Resource_5axtd"]
+[sub_resource type="Resource" id="Resource_pv26p"]
 script = ExtResource("3_tl5sj")
 speed = 100.0
 projectile_pooling_amount = 500
@@ -33,43 +33,19 @@ texture_z_index = 0
 texture_modulate = Color(1, 1, 1, 1)
 collision_layer = 0
 collision_mask = 0
-speed_acceleration = 0.0
-speed_max = 200.0
-direction_rotation = 0.0
-direction_rotation_speed = 0.0
-direction_follow_rotation = false
-texture_rotation_speed = 0.0
-rotation_follow_direction = true
-scale_acceleration = 0.0
-scale_max = Vector2(2, 2)
-is_use_homing = false
-target_group = ""
-steer_speed = 0.174533
-homing_strength = 1.0
-max_homing_distance = 0.0
+texture_rotate_direction = true
 destroy_on_body_collide = true
 destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.0
-is_use_trigger = false
-trigger_name = &""
-trigger_amount = 0
-trigger_life_time = 10.0
-trigger_life_distance = 1000.0
 speed_random = Vector3(0, 0, 0)
-speed_acceleration_random = Vector3(0, 0, 0)
-speed_max_random = Vector3(0, 0, 0)
 texture_rotation_random = Vector3(0, 0, 0)
 texture_rotation_speed_random = Vector3(0, 0, 0)
-direction_rotation_random = Vector3(0, 0, 0)
-direction_rotation_speed_random = Vector3(0, 0, 0)
 scale_random = Vector3(0, 0, 0)
-scale_max_random = Vector3(0, 0, 0)
-scale_acceleration_random = Vector3(0, 0, 0)
 life_time_second_random = Vector3(0, 0, 0)
 life_distance_random = Vector3(0, 0, 0)
 custom_data = []
-metadata/_custom_type_script = "uid://c7uapl8lqnia4"
+metadata/_custom_type_script = "uid://dqlixqba72p5f"
 
 [sub_resource type="Curve" id="Curve_o42ao"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.535877, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.998212), 0.0, 0.0, 0, 0]
@@ -101,7 +77,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
-projectile_template_2d = SubResource("Resource_5axtd")
+projectile_template_2d = SubResource("Resource_pv26p")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
@@ -126,11 +102,17 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_0pwon")
-active = false
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("9_tl5sj")
+spread_type = 2
+spread_angle = -10.0
+metadata/_custom_type_script = "uid://brqy6ew0t2b35"
+
+[node name="PCCSpread2D2" type="Node" parent="PatternComposer2D"]
+script = ExtResource("9_tl5sj")
+spread_type = 0
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="PCCStack2D" type="Node" parent="PatternComposer2D"]
