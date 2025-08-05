@@ -9,13 +9,14 @@ signal pattern_composed(_pattern_composer_pack: Dictionary)
 		_register_pattern_composer(composer_name)
 		composer_name = value
 
-var pattern_composer_pack : Array[PatternComposerData]
+# var pattern_composer_pack : Array[PatternComposerData]
 var pattern_composer_dict : Dictionary
 
 var _new_pattern_composer_pack : Array[PatternComposerData]
 var _new_composer_data : PatternComposerData
 var _init_pattern_composer_data : PatternComposerData
 
+var _user_projectile_spawn_marker : bool = false
 
 func _enter_tree() -> void:
 	_register_pattern_composer(composer_name)
@@ -52,51 +53,47 @@ func _physics_process(delta: float) -> void:
 func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
 	## Init pattern composer pack
 	_init_pattern_composer_data = PatternComposerData.new()
-	pattern_composer_pack.clear()
+	## Check if can using ProjectileSpawnMarker2Ds
+	_user_projectile_spawn_marker = false
+	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
+		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
+			if _projectile_spawn_maker.active:
+				_user_projectile_spawn_marker = true
 
 	## Check and update spawn locations
-	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
+	if _user_projectile_spawn_marker:
+		## Remove ProjectileSpawner spawn position to prevent duplication
 		for _key in pattern_composer_dict.keys():
 			if _key is ProjectileSpawner2D:
 				pattern_composer_dict.erase(_key)
+
 		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
 			if !_projectile_spawn_maker.active:
 				continue
-			if pattern_composer_dict.has(_projectile_spawn_maker):
-				pattern_composer_pack.append(pattern_composer_dict.get(_projectile_spawn_maker))
-				continue
-			## Setup new PatternComposerData for spawn marker
-			_new_composer_data = _init_pattern_composer_data.duplicate()
-			_new_composer_data.speed = _pattern_composer_context.speed
-			_new_composer_data.texture_rotation = _pattern_composer_context.texture_rotation
-			_new_composer_data.direction_rotation = _pattern_composer_context.direction_rotation
-
-			_new_composer_data.base_direction = _projectile_spawn_maker.init_direction
-			_new_composer_data.direction = _projectile_spawn_maker.init_direction
+			if !pattern_composer_dict.has(_projectile_spawn_maker):
+				_new_composer_data = _init_pattern_composer_data.duplicate()
 			pattern_composer_dict.get_or_add(_projectile_spawn_maker, _new_composer_data)
-			pattern_composer_pack.append(_new_composer_data)
 	else:
+		push_warning("No active ProjectileSpawnMarker was found! fallback to use ProjectileSpawner position")
+		## Remove ProjectileSpawnMarker spawn position to prevent duplication
 		for _key in pattern_composer_dict.keys():
 			if _key is ProjectileSpawnMarker2D:
 				pattern_composer_dict.erase(_key)
-		if pattern_composer_dict.has(_pattern_composer_context.projectile_spawner):
-			pattern_composer_pack.append(pattern_composer_dict.get(_pattern_composer_context.projectile_spawner))
-		else:
-			pattern_composer_dict.get_or_add(_pattern_composer_context.projectile_spawner, _init_pattern_composer_data)
-			pattern_composer_pack.append(_init_pattern_composer_data)
+		pattern_composer_dict.get_or_add(_pattern_composer_context.projectile_spawner, _init_pattern_composer_data)
 
-	## Update spawn position
-	if _pattern_composer_context.use_spawn_markers and pattern_composer_dict.values().size() > 0:
-		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
-			if _projectile_spawn_maker.use_global_position:
-				pattern_composer_dict.get(_projectile_spawn_maker).set("position", _projectile_spawn_maker.global_position)
+	## Get and update pattern composer data spawn position
+	_new_pattern_composer_pack.clear()
+	for _spawn_node : Node in pattern_composer_dict.keys():
+		if _spawn_node is ProjectileSpawnMarker2D:
+			if _spawn_node.use_global_position:
+				pattern_composer_dict.get(_spawn_node).set("position", _spawn_node.global_position)
 			else:
-				pattern_composer_dict.get(_projectile_spawn_maker).set("position", _projectile_spawn_maker.position)
-	else:
-		for pattern_composer_data : PatternComposerData in pattern_composer_dict.values():
-			pattern_composer_data.position = _pattern_composer_context.position
-	_new_pattern_composer_pack = pattern_composer_pack
+				pattern_composer_dict.get(_spawn_node).set("position", _spawn_node.position)
+		elif _spawn_node is ProjectileSpawner2D:
+			pattern_composer_dict.get(_spawn_node).set("position", _spawn_node.global_position)
+		_new_pattern_composer_pack.append(pattern_composer_dict.get(_spawn_node))
 
+	## Process Pattern composer component
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue

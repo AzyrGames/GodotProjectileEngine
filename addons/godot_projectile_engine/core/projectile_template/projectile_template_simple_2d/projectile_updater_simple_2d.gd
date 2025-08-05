@@ -29,15 +29,13 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
 		_projectile_instance.global_position = _pattern_composer_data.position
 		_projectile_instance.direction = _pattern_composer_data.direction
-		_projectile_instance.texture_rotation = _pattern_composer_data.texture_rotation
-		_projectile_instance.scale = _pattern_composer_data.scale
+		_projectile_instance.direction_rotation = _pattern_composer_data.direction_rotation
 
+		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
+		_projectile_instance.scale = projectile_template_2d.scale
 		_projectile_instance.life_time_second_max = projectile_template_2d.life_time_second_max
 		_projectile_instance.life_distance_max = projectile_template_2d.life_distance_max
 		
-		if projectile_texture_rotate_direction:
-			_projectile_instance.texture_rotation = _projectile_instance.direction.angle()
-
 		# Check and update random variables
 		var _speed_value: float = projectile_speed
 		var _scale_value_float: float
@@ -50,9 +48,10 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_scale_value = Vector2(_scale_value_float, _scale_value_float)
 			_projectile_instance.scale = _scale_value
 			
-		if projectile_template_2d.rotation_random != Vector3.ZERO:
-			_rotation_value = ProjectileEngine.get_random_float_value(projectile_template_2d.rotation_random)
-			_projectile_instance.texture_rotation = _rotation_value
+		if projectile_template_2d.texture_rotation_random != Vector3.ZERO:
+			_projectile_instance.texture_rotation = ProjectileEngine.get_random_float_value(
+				projectile_template_2d.texture_rotation_random
+				)
 		if projectile_template_2d.life_time_second_random != Vector3.ZERO:
 			_projectile_instance.life_time_second_max = ProjectileEngine.get_random_float_value(
 				projectile_template_2d.life_time_second_random
@@ -62,10 +61,18 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 				projectile_template_2d.life_distance_random
 				)
 	
+		_projectile_instance.direction = _projectile_instance.direction.rotated(
+			_projectile_instance.direction_rotation
+			)
+
 		_projectile_instance.velocity = (
-			_pattern_composer_data.direction * _speed_value *
+			_projectile_instance.direction * _speed_value *
 			(1.0 / Engine.physics_ticks_per_second)
 			)
+
+		if projectile_texture_rotate_direction:
+			_projectile_instance.texture_rotation = _projectile_instance.direction.angle()
+
 		_projectile_instance.transform = Transform2D(
 			_projectile_instance.texture_rotation,
 			_projectile_instance.scale,
