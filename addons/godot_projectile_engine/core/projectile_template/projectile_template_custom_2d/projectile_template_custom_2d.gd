@@ -18,7 +18,7 @@ class_name ProjectileTemplateCustom2D
 ## The Projectile Instance Scale, default scale: [code](1.0, 1.0)[/code]
 @export_custom(PROPERTY_HINT_LINK, "") var scale : Vector2 = Vector2.ONE
 ## Initial rotation of the texture in degrees
-@export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var rotation : float
+@export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var texture_rotation : float
 ## Skew/shear effect applied to texture (-89.9 to 89.9 degrees)
 @export_range(-89.9, 89.9, 0.1) var skew : float = 0.0
 ## Toggles visibility of the projectile's texture
@@ -48,6 +48,14 @@ class_name ProjectileTemplateCustom2D
 @export var bouncing_projectile_behaviors : Array[ProjectileBehaviorBouncing]
 @export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]
 
+@export_group("Random")
+@export var speed_random: Vector3
+@export var texture_rotation_random: Vector3
+@export var direction_rotation_random: Vector3
+@export var scale_random: Vector3
 
 ## Internal RID (Rendering ID) for the projectile's collision area
 var projectile_area_rid : RID
+
+
+

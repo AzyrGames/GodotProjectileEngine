@@ -145,28 +145,28 @@ func update_projectile_instances(delta: float) -> void:
 		projectile_remove_index.clear()
 
 	# Update active projectile instances array
-	_active_instances.clear()
+	_active_projectile_instances.clear()
 	for index: int in projectile_active_index:
-		_active_instances.append(projectile_instance_array[index])
-	if _active_instances.size() <= 0: return
+		_active_projectile_instances.append(projectile_instance_array[index])
+	if _active_projectile_instances.size() <= 0: return
 
 	# Update active projectile
-	for _active_instance: ProjectileInstanceSimple2D in _active_instances:
-		_active_instance.global_position += _active_instance.velocity
+	for _active_projectile_instance: ProjectileInstanceSimple2D in _active_projectile_instances:
+		_active_projectile_instance.global_position += _active_projectile_instance.velocity
 
-		_active_instance.transform = Transform2D(
-			_active_instance.texture_rotation,
-			_active_instance.scale,
-			_active_instance.skew,
-			_active_instance.global_position
+		_active_projectile_instance.transform = Transform2D(
+			_active_projectile_instance.texture_rotation,
+			_active_projectile_instance.scale,
+			_active_projectile_instance.skew,
+			_active_projectile_instance.global_position
 			)
 
-		# if _active_instance.area_rid:
+		# if _active_projectile_instance.area_rid:
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
 				projectile_area_rid,
-				_active_instance.area_index,
-				_active_instance.transform
+				_active_projectile_instance.area_index,
+				_active_projectile_instance.transform
 				)
 
 #endregion

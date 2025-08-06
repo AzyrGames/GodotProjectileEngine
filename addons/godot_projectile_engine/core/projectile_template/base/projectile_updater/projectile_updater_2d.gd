@@ -30,7 +30,7 @@ var spawner_destroyed : bool = false
 
 var custom_data : Array[Variant]
 
-var _active_instances : Array[ProjectileInstance2D]
+var _active_projectile_instances : Array[ProjectileInstance2D]
 
 var _projectile_instance : ProjectileInstance2D
 var _new_projectile_instance : Callable
@@ -239,7 +239,7 @@ func clear_projectile_updater() -> void:
 
 
 func get_active_projectile_count() -> int:
-	return _active_instances.size()
+	return _active_projectile_instances.size()
 	pass
 
 
