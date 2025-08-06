@@ -1,0 +1,5 @@
+- [Getting Started](README.md)
+- [Test page](manual/test_page.md)
+  - [Test Page 2](manual/test_page_2.md)
+    - [Test Page 3](manual/test_page_3.md)
+- [Contribute](contribute.md)
