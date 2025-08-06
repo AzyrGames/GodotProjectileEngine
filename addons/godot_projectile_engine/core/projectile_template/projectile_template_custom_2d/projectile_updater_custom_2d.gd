@@ -282,7 +282,6 @@ func update_projectile_instances(delta: float) -> void:
 			if _projectile_behavior.process_behavior(null, _projectile_instance.behavior_context):
 				projectile_remove_index.append(index)
 
-
 	# Destroy projectile
 	if projectile_remove_index.size() > 0:
 		for index : int in projectile_remove_index:
@@ -296,8 +295,8 @@ func update_projectile_instances(delta: float) -> void:
 	for index : int in projectile_active_index:
 		_active_projectile_instances.append(projectile_instance_array[index])
 	if _active_projectile_instances.size() <= 0: return
-	# Update active projectile
-
+	
+	## Update Active Projectile Instances
 	for _active_projectile_instance : ProjectileInstanceCustom2D in _active_projectile_instances:
 		## Process Projectile Transform Behaviors
 		## Projectile Behavior Speed
@@ -384,6 +383,7 @@ func update_projectile_instances(delta: float) -> void:
 								_projectile_behavior,
 								_rotation_behavior_values.get("rotation_multiply")
 								)
+		
 		## Projectile Behavior Scale
 		if projectile_template_2d.scale_projectile_behaviors.size() > 0:
 			_scale_behavior_additions.clear()
@@ -415,86 +415,76 @@ func update_projectile_instances(delta: float) -> void:
 								)
 
 		## Apply Projectile behaviors
-		
+
 		## Apply Projectile behaviors Rotation
 		rotation_final = _active_projectile_instance.texture_rotation
-
 		if _rotation_behavior_multiplies.size() > 0:
 			_rotation_multiply_value = 0.0
 			for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
 				_rotation_multiply_value += _rotation_behavior_multiply
 			_rotation_multiply = base_rotation * _rotation_multiply_value
 			rotation_final += _rotation_multiply
-
 		if _rotation_behavior_additions.size() > 0:
 			_rotation_addition = 0.0
 			for _rotation_behavior_addition in _rotation_behavior_additions.values():
 				_rotation_addition += _rotation_behavior_addition
 			rotation_final += _rotation_addition
-
 		_active_projectile_instance.texture_rotation = rotation_final
 
 		## Apply Projectile behaviors Scale
 		scale_final = _active_projectile_instance.base_scale
-
 		if _scale_behavior_multiplies.size() > 0:
 			_scale_multiply_value = Vector2.ZERO
 			for _scale_behavior_multiply in _scale_behavior_multiplies.values():
 				_scale_multiply_value += _scale_behavior_multiply
 			_scale_multiply = base_scale * _scale_multiply_value
 			scale_final += _scale_multiply
-
 		if _scale_behavior_additions.size() > 0:
 			_scale_addition = Vector2.ZERO
 			for _scale_behavior_addition in _scale_behavior_additions.values():
 				_scale_addition += _scale_behavior_addition
 			scale_final += _scale_addition
-
 		_active_projectile_instance.scale = scale_final
 
 		## Apply Projectile behaviors Direction
+		var _direction_rotation_final := _active_projectile_instance.direction_rotation
 		if _direction_behavior_rotations.size() > 0:
 			for _direction_behavior_rotation in _direction_behavior_rotations.values():
-				_direction_rotation_value += _direction_behavior_rotation
-
-		if _direction_behavior_additions.size() > 0:
-			for _direction_behavior_addition in _direction_behavior_additions.values():
-				_direction_addition_value += _direction_behavior_addition
-			_direction_addition = _projectile_instance.base_direction + _direction_addition_value
-
-		if _direction_addition != Vector2.ZERO:
-			_active_projectile_instance.direction = _direction_addition.normalized()
-
-		if _direction_rotation_value != 0:
-			_active_projectile_instance.direction = _projectile_instance.base_direction.rotated(_direction_rotation_value)
-
-		_active_projectile_instance.direction = _active_projectile_instance.direction.normalized()
-
+				_direction_rotation_final += _direction_behavior_rotation
+		_active_projectile_instance.direction_rotation = _direction_rotation_final
+	
 		## Apply Projectile behaviors Speed
-		speed_final = _active_projectile_instance.projectile_speed
+		speed_final = _active_projectile_instance.base_speed
 		if _speed_behavior_multiplies.size() > 0:
 			_speed_multiply_value = 0
 			for _speed_behavior_multiply in _speed_behavior_multiplies.values():
 				_speed_multiply_value += _speed_behavior_multiply
 			_speed_multiply = base_speed * _speed_multiply_value
 			speed_final += _speed_multiply
-
 		if _speed_behavior_additions.size() > 0:
 			_speed_addition = 0
 			for _speed_behavior_addition in _speed_behavior_additions.values():
 				_speed_addition += _speed_behavior_addition
 			speed_final += _speed_addition
-		
 		_active_projectile_instance.speed = speed_final
 
-		_active_projectile_instance.velocity = 100 * _active_projectile_instance.direction * delta
+
+		## Update Velocity
+		if _active_projectile_instance.direction_rotation != 0:
+			_active_projectile_instance.direction = _active_projectile_instance.base_direction.rotated(
+				_active_projectile_instance.direction_rotation
+			)
+
+		_active_projectile_instance.velocity = _active_projectile_instance.speed * _active_projectile_instance.direction * delta
 		_active_projectile_instance.global_position += _active_projectile_instance.velocity
+
 		_active_projectile_instance.transform = Transform2D(
 			_active_projectile_instance.texture_rotation,
 			_active_projectile_instance.scale,
 			_active_projectile_instance.skew,
 			_active_projectile_instance.global_position
 			)
+
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
 				projectile_area_rid,
