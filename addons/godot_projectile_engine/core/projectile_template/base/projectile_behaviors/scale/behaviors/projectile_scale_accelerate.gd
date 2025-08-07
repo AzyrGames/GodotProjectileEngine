@@ -23,7 +23,7 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	if not _context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
 		return {}
 	return {
-		"scale_overwrite": _value.move_toward(
+		ProjectileEngine.ScaleModify.SCALE_OVERWRITE: _value.move_toward(
 			Vector2.ONE * scale_max,  scale_acceleration_value * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
 			)
 		}

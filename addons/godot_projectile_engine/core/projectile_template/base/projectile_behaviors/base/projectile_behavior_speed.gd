@@ -14,7 +14,6 @@ enum SpeedModifyMethod{
 	OVERRIDE,
 }
 
-var _speed_behavior_values : Dictionary = {}
 
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	return {ProjectileEngine.SpeedModify.SPEED_OVERWRITE : _value}

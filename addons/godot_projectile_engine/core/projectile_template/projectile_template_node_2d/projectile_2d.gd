@@ -41,7 +41,7 @@ var base_speed : float
 var speed_final : float
 var _speed_addition : float
 var _speed_multiply : float
-var _speed_behavior_values : Dictionary
+# var behavior_values : Dictionary
 var _speed_behavior_additions : Dictionary
 var _speed_behavior_multiplies : Dictionary
 var _speed_multiply_value : float
@@ -61,7 +61,7 @@ var _direction_addition : Vector2
 # var projectile_rotation : float
 var base_rotation : float
 var rotation_final : float
-var _rotation_behavior_values : Dictionary
+var behavior_values : Dictionary
 var _rotation_behavior_additions : Dictionary
 var _rotation_behavior_multiplies : Dictionary
 var _rotation_multiply_value : float
@@ -71,7 +71,7 @@ var _rotation_addition : float
 var projectile_scale : Vector2
 var base_scale : Vector2
 var scale_final : Vector2
-var _scale_behavior_values : Dictionary
+# var behavior_values : Dictionary
 var _scale_behavior_additions : Dictionary
 var _scale_behavior_multiplies : Dictionary
 var _scale_multiply_value : Vector2
@@ -254,15 +254,15 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 			if not _projectile_behavior.active:
 				continue
-			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
-			for _behavior_key in _speed_behavior_values.keys():
+			behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
+			for _behavior_key in behavior_values.keys():
 				match _behavior_key:
 					ProjectileEngine.SpeedModify.SPEED_OVERWRITE:
-						speed = _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_OVERWRITE)
+						speed = behavior_values.get(ProjectileEngine.SpeedModify.SPEED_OVERWRITE)
 					ProjectileEngine.SpeedModify.SPEED_ADDITION:
-						_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_ADDITION))
+						_speed_behavior_additions.get_or_add(_projectile_behavior, behavior_values.get(ProjectileEngine.SpeedModify.SPEED_ADDITION))
 					ProjectileEngine.SpeedModify.SPEED_MULTIPLY:
-						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_MULTIPLY))
+						_speed_behavior_multiplies.get_or_add(_projectile_behavior, behavior_values.get(ProjectileEngine.SpeedModify.SPEED_MULTIPLY))
 
 	if direction_projectile_behaviors.size() > 0:
 		_direction_behavior_rotations.clear()
@@ -296,16 +296,16 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 			if not _projectile_behavior.active:
 				continue
-			_rotation_behavior_values = _projectile_behavior.process_behavior(texture_rotation, projectile_behavior_context)
-			for _behavior_key in _rotation_behavior_values.keys():
+			behavior_values = _projectile_behavior.process_behavior(texture_rotation, projectile_behavior_context)
+			for _behavior_key in behavior_values.keys():
 				match _behavior_key:
 					ProjectileEngine.RotationModify.ROTATION_OVERWRITE:
-						texture_rotation = _rotation_behavior_values.get(
+						texture_rotation = behavior_values.get(
 							ProjectileEngine.RotationModify.ROTATION_OVERWRITE)
 					ProjectileEngine.RotationModify.ROTATION_ADDITION:
 						_rotation_behavior_additions.get_or_add(
 							_projectile_behavior, 
-							_rotation_behavior_values.get(ProjectileEngine.RotationModify.ROTATION_ADDITION))
+							behavior_values.get(ProjectileEngine.RotationModify.ROTATION_ADDITION))
 	if scale_projectile_behaviors.size() > 0:
 		_scale_behavior_additions.clear()
 		_scale_behavior_multiplies.clear()
@@ -314,17 +314,17 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 			if not _projectile_behavior.active:
 				continue
-			_scale_behavior_values = _projectile_behavior.process_behavior(projectile_scale, projectile_behavior_context)
-			if _scale_behavior_values.size() <= 0:
+			behavior_values = _projectile_behavior.process_behavior(projectile_scale, projectile_behavior_context)
+			if behavior_values.size() <= 0:
 				continue
-			for _behavior_key in _scale_behavior_values.keys():
+			for _behavior_key in behavior_values.keys():
 				match _behavior_key:
-					"scale_overwrite":
-						projectile_scale = _scale_behavior_values.get("scale_overwrite")
-					"scale_addition":
-						_scale_behavior_additions.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_addition"))
-					"scale_multiply":
-						_scale_behavior_multiplies.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_multiply"))
+					ProjectileEngine.ScaleModify.SCALE_OVERWRITE:
+						projectile_scale = behavior_values.get(ProjectileEngine.ScaleModify.SCALE_OVERWRITE)
+					ProjectileEngine.ScaleModify.SCALE_ADDITION:
+						_scale_behavior_additions.get_or_add(_projectile_behavior, behavior_values.get(ProjectileEngine.ScaleModify.SCALE_ADDITION))
+					ProjectileEngine.ScaleModify.SCALE_MULTIPLY:
+						_scale_behavior_multiplies.get_or_add(_projectile_behavior, behavior_values.get(ProjectileEngine.ScaleModify.SCALE_MULTIPLY))
 
 	# Apply Projectile behaviors
 	rotation_final = texture_rotation
@@ -373,7 +373,6 @@ func update_projectile_2d(delta: float) -> void:
 		for _speed_behavior_addition in _speed_behavior_additions.values():
 			_speed_addition += _speed_behavior_addition
 		speed_final += _speed_addition
-
 
 	velocity = speed_final * direction_final * delta
 	global_position += velocity

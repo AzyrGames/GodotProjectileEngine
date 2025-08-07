@@ -19,8 +19,5 @@ enum RotationProcessMode {
 	TICKS,
 }
 
-var _rotation_behavior_values : Dictionary = {}
-
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
-	return _rotation_behavior_values
-
+	return behavior_values

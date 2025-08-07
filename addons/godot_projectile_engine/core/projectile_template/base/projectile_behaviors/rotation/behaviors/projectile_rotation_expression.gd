@@ -51,25 +51,25 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Fallback to original value if expression fails
 	if _expression.has_execute_failed() or _rotation_expression_result is not float:
 		return {}
-	_rotation_behavior_values.clear()
+	behavior_values.clear()
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_ADDITION] = deg_to_rad(_rotation_expression_result)
+			behavior_values[ProjectileEngine.RotationModify.ROTATION_ADDITION] = deg_to_rad(_rotation_expression_result)
 		RotationModifyMethod.ADDITION_OVER_TIME:
 			var _new_rotation_value : float
 			match rotation_process_mode:
 				RotationProcessMode.PHYSICS:
 					if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-						return _rotation_behavior_values
+						return behavior_values
 					_new_rotation_value = deg_to_rad(_rotation_expression_result) * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
 				RotationProcessMode.TICKS:
 					_new_rotation_value = deg_to_rad(_rotation_expression_result)
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
+			behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
 		RotationModifyMethod.OVERRIDE:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(_rotation_expression_result)
+			behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(_rotation_expression_result)
 		null:
-			_rotation_behavior_values
+			behavior_values
 		_:
-			_rotation_behavior_values
+			behavior_values
 
-	return _rotation_behavior_values
+	return behavior_values

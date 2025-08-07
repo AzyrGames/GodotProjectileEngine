@@ -52,15 +52,15 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	# Apply expression result based on modification method
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return {"scale_overwrite" : _value + Vector2.ONE * _scale_expression_result}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value + Vector2.ONE * _scale_expression_result}
 		ScaleModifyMethod.ADDITION_OVER_BASE:
-			return {"scale_addition" : Vector2.ONE * _scale_expression_result}
+			return {ProjectileEngine.ScaleModify.SCALE_ADDITION : Vector2.ONE * _scale_expression_result}
 		ScaleModifyMethod.MULTIPLICATION:
-			return {"scale_overwrite" : _value * _scale_expression_result}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value * _scale_expression_result}
 		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
-			return {"scale_multiply" : Vector2.ONE * _scale_expression_result}
+			return {ProjectileEngine.ScaleModify.SCALE_MULTIPLY : Vector2.ONE * _scale_expression_result}
 		ScaleModifyMethod.OVERRIDE:
-			return {"scale_overwrite" : Vector2.ONE * _scale_expression_result}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : Vector2.ONE * _scale_expression_result}
 		null:
 			{}
 		_:

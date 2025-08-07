@@ -19,6 +19,7 @@ enum LoopMethod {
 
 ## How the curve value modifies the speed (add/multiply/override)
 @export var speed_modify_method : SpeedModifyMethod = SpeedModifyMethod.MULTIPLICATION
+@export var speed_process_mode : ProcessMode
 ## How the curve loops over time
 @export var speed_curve_loop_method : LoopMethod = LoopMethod.ONCE_AND_DONE
 ## What value to use for sampling the curve (time/distance/etc)
@@ -41,7 +42,6 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
 		ProjectileEngine.BehaviorContext.PHYSICS_DELTA
-
 	]
 
 
@@ -70,30 +70,38 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 			else:
 				_speed_curve_sample = speed_curve.max_domain - fmod(_context_life_time_second, speed_curve.max_domain)
 	_speed_curve_sample_value = speed_curve.sample_baked(_speed_curve_sample)
-	_speed_behavior_values.clear()
+
+	behavior_values.clear()
 	match speed_modify_method:
 		SpeedModifyMethod.ADDITION:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_ADDITION] = _speed_curve_sample_value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_ADDITION] = _speed_curve_sample_value
 
 		SpeedModifyMethod.ADDITION_OVER_TIME:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_curve_sample_value \
-				* _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+			match speed_process_mode:
+				ProcessMode.PHYSICS:
+					behavior_values[
+						ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_curve_sample_value \
+						* _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+				ProcessMode.TICKS:
+					behavior_values[
+						ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_curve_sample_value
 
 		SpeedModifyMethod.MULTIPLICATION:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_MULTIPLY] = _speed_curve_sample_value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_MULTIPLY] = _speed_curve_sample_value
 
 		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY] =  _speed_curve_sample_value
+			behavior_values[ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY] =  _speed_curve_sample_value
 
 		SpeedModifyMethod.OVERRIDE:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _speed_curve_sample_value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _speed_curve_sample_value
 
 		null:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
 
 		_:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
-	return _speed_behavior_values
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
+
+	return behavior_values
 
 
 

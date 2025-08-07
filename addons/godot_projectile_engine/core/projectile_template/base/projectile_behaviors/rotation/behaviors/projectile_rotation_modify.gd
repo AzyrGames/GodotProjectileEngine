@@ -23,28 +23,36 @@ func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 
 
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
-	match rotation_process_mode:
-		RotationProcessMode.PHYSICS:
-			if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-				return _rotation_behavior_values
-			_new_rotation_value = deg_to_rad(rotation_modify_value) * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
-
-		RotationProcessMode.TICKS:
-			_new_rotation_value = deg_to_rad(rotation_modify_value)
-
-	_rotation_behavior_values.clear()
+	behavior_values.clear()
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_ADDITION] =  deg_to_rad(rotation_modify_value)
+			behavior_values[
+				ProjectileEngine.RotationModify.ROTATION_ADDITION] =  deg_to_rad(rotation_modify_value)
+	
 		RotationModifyMethod.ADDITION_OVER_TIME:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
-		RotationModifyMethod.OVERRIDE:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(rotation_modify_value)
-		null:
-			_rotation_behavior_values
-		_:
-			_rotation_behavior_values
+			match rotation_process_mode:
+				RotationProcessMode.PHYSICS:
+					if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+						return behavior_values
+					_new_rotation_value = deg_to_rad(rotation_modify_value) * _context.get(
+						ProjectileEngine.BehaviorContext.PHYSICS_DELTA
+						)
 
-	return _rotation_behavior_values
+				RotationProcessMode.TICKS:
+					_new_rotation_value = deg_to_rad(rotation_modify_value)
+			behavior_values[
+				ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
+
+		RotationModifyMethod.OVERRIDE:
+			behavior_values[
+				ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(rotation_modify_value)
+
+		null:
+			behavior_values
+			
+		_:
+			behavior_values
+
+	return behavior_values
 
 

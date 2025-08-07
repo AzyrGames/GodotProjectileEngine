@@ -10,7 +10,8 @@ class_name ProjectileSpeedExpression
 ## What value to use for the expression variable (time/distance/etc)
 @export var speed_expression_sample_method : SampleMethod = SampleMethod.LIFE_TIME_SECOND
 ## How the expression result modifies speed (add/multiply/override)
-@export var speed_modify_method : SpeedModifyMethod = SpeedModifyMethod.OVERRIDE 
+@export var speed_modify_method : SpeedModifyMethod = SpeedModifyMethod.OVERRIDE
+@export var speed_process_mode : ProcessMode
 ## Variable name to use in the expression (default 't')
 @export var speed_expression_variable : String = "t"
 ## Mathematical expression defining speed behavior e.g. [code]sin(t) * 100[/code]
@@ -36,7 +37,7 @@ func _init() -> void:
 ## Processes speed behavior by evaluating the expression
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Parse the expression with our variable
-	_speed_behavior_values.clear()
+	behavior_values.clear()
 	_expression.parse(speed_expression, [speed_expression_variable])
 
 	# Return original value if required context is missing
@@ -54,27 +55,34 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 		return {ProjectileEngine.SpeedModify.SPEED_OVERWRITE : _value}
 
 	# Apply expression result based on modification method
+	behavior_values.clear()
 	match speed_modify_method:
 		SpeedModifyMethod.ADDITION:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_ADDITION] = _speed_expression_result
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_ADDITION] = _speed_expression_result
 
 		SpeedModifyMethod.ADDITION_OVER_TIME:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_expression_result \
-				* _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+			match speed_process_mode:
+				ProcessMode.PHYSICS:
+					behavior_values[
+						ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_expression_result \
+						* _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+				ProcessMode.TICKS:
+					behavior_values[
+						ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_expression_result
 
 		SpeedModifyMethod.MULTIPLICATION:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_MULTIPLY] = _speed_expression_result
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_MULTIPLY] = _speed_expression_result
 
 		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY] =  _speed_expression_result
+			behavior_values[ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY] =  _speed_expression_result
 
 		SpeedModifyMethod.OVERRIDE:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _speed_expression_result
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _speed_expression_result
 
 		null:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
 
 		_:
-			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
+			behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
 
-	return _speed_behavior_values
+	return behavior_values

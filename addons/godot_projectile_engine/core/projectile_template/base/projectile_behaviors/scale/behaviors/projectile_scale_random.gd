@@ -76,15 +76,15 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return {"scale_overwrite" : _value + Vector2.ONE * _noise_scale}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value + Vector2.ONE * _noise_scale}
 		ScaleModifyMethod.ADDITION_OVER_BASE:
-			return {"scale_addition" : Vector2.ONE * _noise_scale}
+			return {ProjectileEngine.ScaleModify.SCALE_ADDITION : Vector2.ONE * _noise_scale}
 		ScaleModifyMethod.MULTIPLICATION:
-			return {"scale_overwrite" : _value * _noise_scale}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value * _noise_scale}
 		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
-			return {"scale_multiply" : Vector2.ONE * _noise_scale}
+			return {ProjectileEngine.ScaleModify.SCALE_MULTIPLY : Vector2.ONE * _noise_scale}
 		ScaleModifyMethod.OVERRIDE:
-			return {"scale_overwrite" : Vector2.ONE * _noise_scale}
+			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : Vector2.ONE * _noise_scale}
 		null:
 			{}
 		_:

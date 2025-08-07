@@ -16,6 +16,13 @@ enum SampleMethod {
 	LIFE_DISTANCE,
 }
 
+enum ProcessMode {
+	PHYSICS,
+	TICKS,
+}
+
+var behavior_values : Dictionary = {}
+
 ## Whether this behavior is currently active
 @export var active : bool = true
 

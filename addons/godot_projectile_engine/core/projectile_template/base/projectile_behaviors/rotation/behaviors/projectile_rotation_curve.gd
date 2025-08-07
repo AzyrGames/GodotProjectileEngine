@@ -33,6 +33,7 @@ var _rotation_curve_sample : float
 var _rotation_curve_sample_value : float
 var _result_value : float
 
+var _new_rotation_value : float
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -64,31 +65,38 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 				_rotation_curve_sample = rotation_curve.max_domain - fmod(_context_life_time_second, rotation_curve.max_domain)
 
 	_rotation_curve_sample_value = rotation_curve.sample_baked(_rotation_curve_sample)
-	
-	_rotation_behavior_values.clear()
+
+	behavior_values.clear()
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_ADDITION] = deg_to_rad(_rotation_curve_sample_value)
+			behavior_values[
+				ProjectileEngine.RotationModify.ROTATION_ADDITION] =  deg_to_rad(_rotation_curve_sample_value)
+	
 		RotationModifyMethod.ADDITION_OVER_TIME:
-			var _new_rotation_value : float
 			match rotation_process_mode:
+				# var _new_rotation_value : float
 				RotationProcessMode.PHYSICS:
 					if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
-						return _rotation_behavior_values
-					_new_rotation_value = deg_to_rad(_rotation_curve_sample_value) * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+						return behavior_values
+					_new_rotation_value = deg_to_rad(_rotation_curve_sample_value) * _context.get(
+						ProjectileEngine.BehaviorContext.PHYSICS_DELTA
+						)
+
 				RotationProcessMode.TICKS:
 					_new_rotation_value = deg_to_rad(_rotation_curve_sample_value)
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
+			behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
+
 		RotationModifyMethod.OVERRIDE:
-			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(_rotation_curve_sample_value)
+			behavior_values[
+				ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(_rotation_curve_sample_value)
+
 		null:
-			_rotation_behavior_values
+			behavior_values
+			
 		_:
-			_rotation_behavior_values
+			behavior_values
 
-	return _rotation_behavior_values
-
-
+	return behavior_values
 
 ## Caches sampled curve values for performance optimization
 ## Samples curve at physics tick intervals and stores in array
