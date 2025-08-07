@@ -21,7 +21,7 @@
 [ext_resource type="Script" uid="uid://cw3jfu53wt4vm" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCStack2D.gd" id="10_pv26p"]
 [ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_arrowhead_1.png" id="11_yxsq7"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_trigger.gd" id="12_jh4bn"]
-[ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="15_vonl0"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_template_node_2d.gd" id="15_vonl0"]
 
 [sub_resource type="Gradient" id="Gradient_td4cq"]
 offsets = PackedFloat32Array(0)
@@ -66,53 +66,10 @@ metadata/_custom_type_script = "uid://d3yyxyx6shhya"
 
 [sub_resource type="Resource" id="Resource_aswlq"]
 script = ExtResource("15_vonl0")
-speed = 100.0
-projectile_pooling_amount = 500
-scale = Vector2(1, 1)
-texture_rotation = 0.0
-skew = 0.0
-texture_visible = true
-texture_z_index = 0
-texture_modulate = Color(1, 1, 1, 1)
-collision_layer = 0
-collision_mask = 0
-speed_acceleration = 0.0
-speed_max = 200.0
-direction_rotation = 0.0
-direction_rotation_speed = 0.0
-direction_follow_rotation = false
-texture_rotation_speed = 0.0
-rotation_follow_direction = false
-scale_acceleration = 0.0
-scale_max = Vector2(2, 2)
-is_use_homing = false
-target_group = ""
-steer_speed = 0.174533
-homing_strength = 1.0
-max_homing_distance = 0.0
-destroy_on_body_collide = true
-destroy_on_area_collide = true
-life_time_second_max = 10.0
-life_distance_max = 1000.0
-is_use_trigger = false
-trigger_name = &""
-trigger_amount = 0
-trigger_life_time = 10.0
-trigger_life_distance = 1000.0
-speed_random = Vector3(0, 0, 0)
-speed_acceleration_random = Vector3(0, 0, 0)
-speed_max_random = Vector3(0, 0, 0)
-texture_rotation_random = Vector3(0, 0, 0)
-texture_rotation_speed_random = Vector3(0, 0, 0)
-direction_rotation_random = Vector3(0, 0, 0)
-direction_rotation_speed_random = Vector3(0, 0, 0)
-scale_random = Vector3(0, 0, 0)
-scale_max_random = Vector3(0, 0, 0)
-scale_acceleration_random = Vector3(0, 0, 0)
-life_time_second_random = Vector3(0, 0, 0)
-life_distance_random = Vector3(0, 0, 0)
+projectile_2d_path = &"uid://ertr7ab7jyvy"
+projectile_pooling_amount = 100
 custom_data = []
-metadata/_custom_type_script = "uid://c7uapl8lqnia4"
+metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [sub_resource type="Curve" id="Curve_o42ao"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.535877, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.998212), 0.0, 0.0, 0, 0]
@@ -143,6 +100,7 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_0pwon")
+active = false
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_16atm")
 timing_scheduler = NodePath("../TimingScheduler")
@@ -160,7 +118,6 @@ metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
 [node name="ProjectileSpawner2D5" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_0pwon")
-active = false
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_aswlq")
 timing_scheduler = NodePath("../TimingScheduler")

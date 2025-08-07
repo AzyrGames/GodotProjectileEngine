@@ -8,6 +8,7 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
+@export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var texture_rotation : float
 # @export var pooling_amount : int = 200
 @export_group("Projectile Behavior")
 @export_subgroup("Transform")
@@ -22,6 +23,11 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 @export var piercing_projectile_behaviors : Array[ProjectileBehaviorPiercing]
 @export var bouncing_projectile_behaviors : Array[ProjectileBehaviorBouncing]
 @export var trigger_projectile_behaviors : Array[ProjectileBehaviorTrigger]
+
+@export_group("Random")
+@export var speed_random: Vector3
+@export var texture_rotation_random: Vector3
+@export var scale_random: Vector3
 
 var projectile_node_manager : ProjectileNodeManager2D
 var projectile_node_index : int
@@ -50,7 +56,7 @@ var _direction_rotation_value : float
 var _direction_addition_value : Vector2
 var _direction_addition : Vector2
 
-var projectile_rotation : float
+# var projectile_rotation : float
 var base_rotation : float
 var rotation_final : float
 var _rotation_behavior_values : Dictionary
@@ -75,14 +81,14 @@ var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
 var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
 var _normal_behavior_context : Dictionary
 var _persist_behavior_context : Dictionary
-
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
 func _set(property: StringName, value: Variant) -> bool:
 	match property:
 		"rotation":
 			rotation = value
-			projectile_rotation = value
+			texture_rotation = value
+			# projectile_rotation = value
 			base_rotation = value
 			return true
 		"scale":
@@ -107,7 +113,8 @@ func _physics_process(delta: float) -> void:
 func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
 	position = _pattern_composer_data.position
 	direction = _pattern_composer_data.direction
-	rotation = _pattern_composer_data.rotation
+	
+	# texture_rotation = _pattern_composer_data.texture_rotation
 	scale = _pattern_composer_data.scale
 
 
@@ -119,10 +126,11 @@ func setup_projectile_2d() -> void:
 
 
 func init_base_properties() -> void:
+	print(texture_rotation)
 	base_speed = speed
 	base_direction = direction
-	base_rotation = rotation
-	projectile_rotation = rotation
+	base_rotation = texture_rotation
+	# projectile_rotation = rotation
 	base_scale = scale
 	projectile_scale = scale
 
@@ -281,11 +289,11 @@ func update_projectile_2d(delta: float) -> void:
 				continue
 			if not _projectile_behavior.active:
 				continue
-			_rotation_behavior_values = _projectile_behavior.process_behavior(projectile_rotation, projectile_behavior_context)
+			_rotation_behavior_values = _projectile_behavior.process_behavior(texture_rotation, projectile_behavior_context)
 			for _behavior_key in _rotation_behavior_values.keys():
 				match _behavior_key:
 					"rotation_overwrite":
-						projectile_rotation = _rotation_behavior_values.get("rotation_overwrite")
+						texture_rotation = _rotation_behavior_values.get("rotation_overwrite")
 					"rotation_addition":
 						_rotation_behavior_additions.get_or_add(_projectile_behavior, _rotation_behavior_values.get("rotation_addition"))
 					"rotation_multiply":
@@ -312,7 +320,7 @@ func update_projectile_2d(delta: float) -> void:
 						_scale_behavior_multiplies.get_or_add(_projectile_behavior, _scale_behavior_values.get("scale_multiply"))
 
 	# Apply Projectile behaviors
-	rotation_final = projectile_rotation
+	rotation_final = texture_rotation
 	if _rotation_behavior_multiplies.size() > 0:
 		_rotation_multiply_value = 0
 		for _rotation_behavior_multiply in _rotation_behavior_multiplies.values():
@@ -324,7 +332,7 @@ func update_projectile_2d(delta: float) -> void:
 		for _rotation_behavior_addition in _rotation_behavior_additions.values():
 			_rotation_addition += _rotation_behavior_addition
 		rotation_final += _rotation_addition
-	rotation = rotation_final
+	texture_rotation = rotation_final
 
 	scale_final = projectile_scale
 	if _scale_behavior_multiplies.size() > 0:
@@ -368,7 +376,8 @@ func update_projectile_2d(delta: float) -> void:
 
 	velocity = speed_final * direction * delta
 	global_position += velocity
-
+	print(texture_rotation)
+	rotation = texture_rotation
 
 func process_behavior_context_request(
 	_behavior_context: Dictionary,
@@ -407,7 +416,7 @@ func process_behavior_context_request(
 				_behavior_context.get_or_add(_behavior_context_request, base_direction)
 
 			ProjectileEngine.BehaviorContext.ROTATION:
-				_behavior_context.get_or_add(_behavior_context_request, projectile_rotation)
+				_behavior_context.get_or_add(_behavior_context_request, texture_rotation)
 
 			ProjectileEngine.BehaviorContext.BASE_SCALE:
 				_behavior_context.get_or_add(_behavior_context_request, scale)
