@@ -113,8 +113,8 @@ func _physics_process(delta: float) -> void:
 func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) -> void:
 	position = _pattern_composer_data.position
 	direction = _pattern_composer_data.direction
-	
-	# texture_rotation = _pattern_composer_data.texture_rotation
+	print(_pattern_composer_data.texture_rotation)
+	texture_rotation = _pattern_composer_data.texture_rotation
 	scale = _pattern_composer_data.scale
 
 
@@ -126,11 +126,9 @@ func setup_projectile_2d() -> void:
 
 
 func init_base_properties() -> void:
-	print(texture_rotation)
 	base_speed = speed
 	base_direction = direction
 	base_rotation = texture_rotation
-	# projectile_rotation = rotation
 	base_scale = scale
 	projectile_scale = scale
 
@@ -376,7 +374,6 @@ func update_projectile_2d(delta: float) -> void:
 
 	velocity = speed_final * direction * delta
 	global_position += velocity
-	print(texture_rotation)
 	rotation = texture_rotation
 
 func process_behavior_context_request(

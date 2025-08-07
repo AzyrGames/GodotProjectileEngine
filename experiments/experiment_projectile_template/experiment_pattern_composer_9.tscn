@@ -144,7 +144,6 @@ metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_0pwon")
-active = false
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D"]
