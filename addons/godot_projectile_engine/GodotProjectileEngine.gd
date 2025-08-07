@@ -24,6 +24,15 @@ enum TargetGroupSelection {
 	RANDOM
 }
 
+enum SpeedModify {
+	SPEED_OVERWRITE,
+	SPEED_ADDITION,
+	SPEED_MULTIPLY,
+	BASE_SPEED_MULTIPLY,
+	SPEED_CLAMP,
+}
+
+
 signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
 signal projectile_node_triggered(trigger_name: String, projectile_node: Projectile2D)
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)

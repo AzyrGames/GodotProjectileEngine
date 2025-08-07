@@ -13,4 +13,7 @@ class_name ProjectileSpeedClamp
 
 ## Clamps the speed value between min_value and max_value
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
-	return {"speed_overwrite" : clampf(_value, min_value, max_value)}
+	return {ProjectileEngine.SpeedModify.SPEED_CLAMP : Vector2(
+		min(min_value, max_value),
+		max(min_value, max_value)
+		)}

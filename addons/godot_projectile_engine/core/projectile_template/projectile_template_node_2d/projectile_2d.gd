@@ -248,12 +248,12 @@ func update_projectile_2d(delta: float) -> void:
 			_speed_behavior_values = _projectile_behavior.process_behavior(speed, projectile_behavior_context)
 			for _behavior_key in _speed_behavior_values.keys():
 				match _behavior_key:
-					"speed_overwrite":
-						speed = _speed_behavior_values.get("speed_overwrite")
-					"speed_addition":
-						_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_addition"))
-					"speed_multiply":
-						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get("speed_multiply"))
+					ProjectileEngine.SpeedModify.SPEED_OVERWRITE:
+						speed = _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_OVERWRITE)
+					ProjectileEngine.SpeedModify.SPEED_ADDITION:
+						_speed_behavior_additions.get_or_add(_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_ADDITION))
+					ProjectileEngine.SpeedModify.SPEED_MULTIPLY:
+						_speed_behavior_multiplies.get_or_add(_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_MULTIPLY))
 
 	if direction_projectile_behaviors.size() > 0:
 		_direction_behavior_rotations.clear()

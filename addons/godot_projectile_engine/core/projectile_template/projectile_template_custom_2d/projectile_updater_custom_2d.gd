@@ -24,6 +24,8 @@ var _speed_multiply : float
 var _speed_behavior_values : Dictionary
 var _speed_behavior_additions : Dictionary
 var _speed_behavior_multiplies : Dictionary
+var _base_speed_behavior_multiplies : Dictionary
+
 var _speed_multiply_value : float
 
 var base_direction : Vector2
@@ -83,8 +85,6 @@ func init_updater_variable() -> void:
 		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
 		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
 
-	# print(projectile_behaviors)
-
 #region Spawn Projectile
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
@@ -109,10 +109,10 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 				projectile_template_2d.speed_random
 			)
 	
-		if projectile_template_2d.direction_rotation_random != Vector3.ZERO:
-			_projectile_instance.direction_rotation = ProjectileEngine.get_random_float_value(
-				projectile_template_2d.direction_rotation_random
-			)
+		# if projectile_template_2d.direction_rotation_random != Vector3.ZERO:
+		# 	_projectile_instance.direction_rotation = ProjectileEngine.get_random_float_value(
+		# 		projectile_template_2d.direction_rotation_random
+		# 	)
 	
 		if projectile_template_2d.texture_rotation_random != Vector3.ZERO:
 			_projectile_instance.texture_rotation = ProjectileEngine.get_random_float_value(
@@ -164,6 +164,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		if projectile_pooling_index >= projectile_max_pooling:
 			projectile_pooling_index = 0
 
+	# update_projectile_instances(get_physics_process_delta_time())
 #endregion
 
 
@@ -303,28 +304,35 @@ func update_projectile_instances(delta: float) -> void:
 		if projectile_template_2d.speed_projectile_behaviors.size() > 0:
 			_speed_behavior_additions.clear()
 			_speed_behavior_multiplies.clear()
+			_base_speed_behavior_multiplies.clear()
 			for _projectile_behavior in projectile_template_2d.speed_projectile_behaviors:
 				if !_projectile_behavior:
 					continue
 				if not _projectile_behavior.active:
 					continue
 				_speed_behavior_values = _projectile_behavior.process_behavior(
-					_active_projectile_instance.projectile_speed,
+					_active_projectile_instance.speed,
 					_active_projectile_instance.behavior_context
 					)
 				for _behavior_key in _speed_behavior_values.keys():
 					match _behavior_key:
-						"speed_overwrite":
-							_active_projectile_instance.projectile_speed = _speed_behavior_values.get("speed_overwrite")
-						"speed_addition":
+						ProjectileEngine.SpeedModify.SPEED_OVERWRITE:
+							_active_projectile_instance.speed = _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_OVERWRITE)
+						ProjectileEngine.SpeedModify.SPEED_ADDITION:
 							_speed_behavior_additions.get_or_add(
-								_projectile_behavior, _speed_behavior_values.get("speed_addition")
+								_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_ADDITION)
 								)
-						"speed_multiply":
+						ProjectileEngine.SpeedModify.SPEED_MULTIPLY:
 							_speed_behavior_multiplies.get_or_add(
-								_projectile_behavior, _speed_behavior_values.get("speed_multiply")
+								_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_MULTIPLY)
 								)
-
+						ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY:
+							_base_speed_behavior_multiplies.get_or_add(
+								_projectile_behavior, _speed_behavior_values.get(ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY)
+								)
+						ProjectileEngine.SpeedModify.SPEED_CLAMP:
+							_projectile_instance.speed_clamp = _speed_behavior_values.get(ProjectileEngine.SpeedModify.SPEED_CLAMP)
+	
 		## Projectile Behavior Direction
 		if projectile_template_2d.direction_projectile_behaviors.size() > 0:
 			_direction_behavior_rotations.clear()
@@ -368,7 +376,6 @@ func update_projectile_instances(delta: float) -> void:
 					_active_projectile_instance.texture_rotation,
 					_active_projectile_instance.behavior_context
 					)
-				print(_rotation_behavior_values)
 				for _behavior_key in _rotation_behavior_values.keys():
 					match _behavior_key:
 						"rotation_overwrite":
@@ -432,7 +439,7 @@ func update_projectile_instances(delta: float) -> void:
 		_active_projectile_instance.texture_rotation = rotation_final
 
 		## Apply Projectile behaviors Scale
-		scale_final = _active_projectile_instance.base_scale
+		scale_final = _active_projectile_instance.scale
 		if _scale_behavior_multiplies.size() > 0:
 			_scale_multiply_value = Vector2.ZERO
 			for _scale_behavior_multiply in _scale_behavior_multiplies.values():
@@ -454,20 +461,32 @@ func update_projectile_instances(delta: float) -> void:
 		_active_projectile_instance.direction_rotation = _direction_rotation_final
 	
 		## Apply Projectile behaviors Speed
-		speed_final = _active_projectile_instance.base_speed
-		if _speed_behavior_multiplies.size() > 0:
-			_speed_multiply_value = 0
-			for _speed_behavior_multiply in _speed_behavior_multiplies.values():
-				_speed_multiply_value += _speed_behavior_multiply
-			_speed_multiply = base_speed * _speed_multiply_value
-			speed_final += _speed_multiply
+		_active_projectile_instance.speed_final = _active_projectile_instance.speed
 		if _speed_behavior_additions.size() > 0:
 			_speed_addition = 0
 			for _speed_behavior_addition in _speed_behavior_additions.values():
 				_speed_addition += _speed_behavior_addition
-			speed_final += _speed_addition
-		_active_projectile_instance.speed = speed_final
-
+			_active_projectile_instance.speed_final += _speed_addition
+		if _speed_behavior_multiplies.size() > 0:
+			_speed_multiply_value = 0
+			for _speed_behavior_multiply in _speed_behavior_multiplies.values():
+				_speed_multiply_value += _speed_behavior_multiply - 1.0
+			_speed_multiply = _active_projectile_instance.speed * _speed_multiply_value
+			_active_projectile_instance.speed_final += _speed_multiply
+		if _base_speed_behavior_multiplies.size() > 0:
+			_speed_multiply_value = 0
+			for _base_speed_behavior_multiply in _base_speed_behavior_multiplies.values():
+				_speed_multiply_value += _base_speed_behavior_multiply
+			_speed_multiply = _active_projectile_instance.base_speed * _speed_multiply_value
+			_active_projectile_instance.speed_final += _speed_multiply
+		
+		# _active_projectile_instance.speed_final _projectile_instance.speed_clamp
+		if _projectile_instance.speed_clamp != Vector2.ZERO:
+			_active_projectile_instance.speed_final = clamp(
+				_active_projectile_instance.speed_final, 
+				_projectile_instance.speed_clamp.x, 
+				_projectile_instance.speed_clamp.y
+				)
 
 		## Update Velocity
 		if _active_projectile_instance.direction_rotation != 0:
@@ -475,7 +494,7 @@ func update_projectile_instances(delta: float) -> void:
 				_active_projectile_instance.direction_rotation
 			)
 
-		_active_projectile_instance.velocity = _active_projectile_instance.speed * _active_projectile_instance.direction * delta
+		_active_projectile_instance.velocity = _active_projectile_instance.speed_final * _active_projectile_instance.direction * delta
 		_active_projectile_instance.global_position += _active_projectile_instance.velocity
 
 		_active_projectile_instance.transform = Transform2D(

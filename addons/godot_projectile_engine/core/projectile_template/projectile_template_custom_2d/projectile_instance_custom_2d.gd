@@ -11,7 +11,9 @@ var base_direction_rotation : float
 var base_texture_rotation : float
 var base_scale : Vector2
 var base_skew : float
+var speed_clamp : Vector2
 
+var speed_final : float
 
 var raw_direction : Vector2
 var direction_addition : Vector2

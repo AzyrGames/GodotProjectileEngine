@@ -51,8 +51,8 @@ class_name ProjectileTemplateCustom2D
 @export_group("Random")
 @export var speed_random: Vector3
 @export var texture_rotation_random: Vector3
-@export var direction_rotation_random: Vector3
 @export var scale_random: Vector3
+
 
 ## Internal RID (Rendering ID) for the projectile's collision area
 var projectile_area_rid : RID

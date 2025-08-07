@@ -40,6 +40,8 @@ var _result_value : float
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
 		ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND,
+		ProjectileEngine.BehaviorContext.PHYSICS_DELTA
+
 	]
 
 
@@ -51,7 +53,7 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return {"speed_overwrite" : _value}
+		return {ProjectileEngine.SpeedModify.SPEED_OVERWRITE : _value}
 		
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
 
@@ -67,28 +69,30 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 				_speed_curve_sample = fmod(_context_life_time_second, speed_curve.max_domain)
 			else:
 				_speed_curve_sample = speed_curve.max_domain - fmod(_context_life_time_second, speed_curve.max_domain)
-
 	_speed_curve_sample_value = speed_curve.sample_baked(_speed_curve_sample)
+	_speed_behavior_values.clear()
 	match speed_modify_method:
 		SpeedModifyMethod.ADDITION:
-			_speed_behavior_values["speed_overwrite"] = _value + _speed_curve_sample_value
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_ADDITION] = _speed_curve_sample_value
 
-		SpeedModifyMethod.ADDITION_OVER_BASE:
-			_speed_behavior_values["speed_addition"] = _speed_curve_sample_value
+		SpeedModifyMethod.ADDITION_OVER_TIME:
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value + _speed_curve_sample_value \
+				* _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
 
 		SpeedModifyMethod.MULTIPLICATION:
-			_speed_behavior_values["speed_overwrite"] = _value * _speed_curve_sample_value
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_MULTIPLY] = _speed_curve_sample_value
 
 		SpeedModifyMethod.MULTIPLICATION_OVER_BASE:
-			_speed_behavior_values["speed_multiply"] =  _speed_curve_sample_value
+			_speed_behavior_values[ProjectileEngine.SpeedModify.BASE_SPEED_MULTIPLY] =  _speed_curve_sample_value
 
 		SpeedModifyMethod.OVERRIDE:
-			_speed_behavior_values["speed_overwrite"] = _speed_curve_sample_value
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _speed_curve_sample_value
+
 		null:
-			_speed_behavior_values["speed_overwrite"] = _value
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
+
 		_:
-			_speed_behavior_values["speed_overwrite"] = _value
-			
+			_speed_behavior_values[ProjectileEngine.SpeedModify.SPEED_OVERWRITE] = _value
 	return _speed_behavior_values
 
 
