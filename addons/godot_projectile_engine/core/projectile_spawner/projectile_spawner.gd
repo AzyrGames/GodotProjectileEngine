@@ -247,8 +247,9 @@ func _spawn_projectile_template_node_2d() -> void:
 	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 		##TODO Instance Node is expensive, need object pooling or better way to instance
 		_new_projectile_2d = _projectile_2d_instance.duplicate()
-		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
 		_new_projectile_2d.apply_pattern_composer_data(_pattern_composer_data)
+		ProjectileEngine.projectile_environment.add_child(_new_projectile_2d, true)
+		_new_projectile_2d.owner = ProjectileEngine.projectile_environment
 		pass
 	pass
 

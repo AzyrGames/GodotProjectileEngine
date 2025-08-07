@@ -31,10 +31,10 @@ func _init() -> void:
 ## Processes direction behavior by sampling the curve
 func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictionary:
 	if curve_2d == null:
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 		
 	if not _component_context.has(ProjectileEngine.BehaviorContext.LIFE_DISTANCE):
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
 	var life_distance: float = _component_context[ProjectileEngine.BehaviorContext.LIFE_DISTANCE]
 	# curve_2d
@@ -61,27 +61,37 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictio
 	_behavior_variable_direction_curve_2d.is_processed = true
 
 	var _next_curve_position: Vector2 = curve_2d.sample_baked(life_distance)
-	var _new_direction : Vector2
+	var _new_direction_value : Vector2
 
 	if _behavior_variable_direction_curve_2d.last_sample_position != _next_curve_position:
-		_new_direction = _behavior_variable_direction_curve_2d.last_sample_position.direction_to(_next_curve_position)
+		_new_direction_value = _behavior_variable_direction_curve_2d.last_sample_position.direction_to(_next_curve_position)
 		_behavior_variable_direction_curve_2d.last_sample_position = _next_curve_position
 
-	if _new_direction == Vector2.ZERO:
-		return {"direction_overwrite": _value}
+	if _new_direction_value == Vector2.ZERO:
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
 	# todo: Curve position as direction
 	
+	_direction_behavior_values.clear()
 	match direction_modify_method:
 		DirectionModifyMethod.ROTATION:
-			_direction_behavior_values["direction_rotation"] = _new_direction.angle()
+			if direction_normalize:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ROTATION] = _new_direction_value.normalized().angle()
+			else:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ROTATION] = _new_direction_value.angle()
 		DirectionModifyMethod.ADDITION:
-			_direction_behavior_values["direction_addition"] = _new_direction * curve_strenght
+			if direction_normalize:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ADDITION] = (_new_direction_value.normalized())
+			else:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ADDITION] = _new_direction_value
 		DirectionModifyMethod.OVERRIDE:
-			_direction_behavior_values["direction_overwrite"] = _new_direction * curve_strenght
-		null:
-			_direction_behavior_values["direction_overwrite"] = _value
+			_direction_behavior_values[
+				ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _new_direction_value.normalized()
 		_:
-			_direction_behavior_values["direction_overwrite"] = _value
+			pass
 	
 	return _direction_behavior_values

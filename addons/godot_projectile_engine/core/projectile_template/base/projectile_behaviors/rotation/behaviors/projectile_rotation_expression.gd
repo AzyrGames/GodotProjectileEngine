@@ -11,6 +11,7 @@ class_name ProjectileRotationExpression
 @export var rotation_expression_sample_method : SampleMethod = SampleMethod.LIFE_TIME_SECOND
 ## How the expression result modifies rotation (add/multiply/override)
 @export var rotation_modify_method : RotationModifyMethod = RotationModifyMethod.OVERRIDE
+@export var rotation_process_mode : RotationProcessMode = RotationProcessMode.TICKS
 ## Variable name to use in the expression (default 't')
 @export var rotation_expression_variable : String = "t"
 ## Mathematical expression defining rotation behavior e.g. [code]sin(t) * 100[/code]
@@ -50,21 +51,25 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	# Fallback to original value if expression fails
 	if _expression.has_execute_failed() or _rotation_expression_result is not float:
 		return {}
-
+	_rotation_behavior_values.clear()
 	match rotation_modify_method:
 		RotationModifyMethod.ADDITION:
-			return {"rotation_overwrite" : _value + _rotation_expression_result}
-		RotationModifyMethod.ADDITION_OVER_BASE:
-			return {"rotation_addition" : _rotation_expression_result}
-		RotationModifyMethod.MULTIPLICATION:
-			return {"rotation_overwrite" :_value * _rotation_expression_result}
-		RotationModifyMethod.MULTIPLICATION_OVER_BASE:
-			return {"rotation_multiply" :_rotation_expression_result}
+			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_ADDITION] = deg_to_rad(_rotation_expression_result)
+		RotationModifyMethod.ADDITION_OVER_TIME:
+			var _new_rotation_value : float
+			match rotation_process_mode:
+				RotationProcessMode.PHYSICS:
+					if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+						return _rotation_behavior_values
+					_new_rotation_value = deg_to_rad(_rotation_expression_result) * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+				RotationProcessMode.TICKS:
+					_new_rotation_value = deg_to_rad(_rotation_expression_result)
+			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = _value + _new_rotation_value
 		RotationModifyMethod.OVERRIDE:
-			return {"rotation_overwrite" :_rotation_expression_result}
+			_rotation_behavior_values[ProjectileEngine.RotationModify.ROTATION_OVERWRITE] = deg_to_rad(_rotation_expression_result)
 		null:
-			{}
+			_rotation_behavior_values
 		_:
-			{}
+			_rotation_behavior_values
 
-	return {}
+	return _rotation_behavior_values

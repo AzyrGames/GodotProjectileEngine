@@ -63,8 +63,6 @@ var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
 
 var projectile_behaviors : Array[ProjectileBehavior] = []
 
-
-
 func init_updater_variable() -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
 	_new_projectile_instance = Callable(ProjectileInstanceCustom2D, "new")
@@ -270,8 +268,8 @@ func update_projectile_instances(delta: float) -> void:
 				)
 			if _bouncing_behavior_values.size() <= 0:
 				continue
-			if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has("direction_overwrite"):
-				_projectile_instance.direction = _bouncing_behavior_values.get("direction_overwrite")
+			if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE):
+				_projectile_instance.direction = _bouncing_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE)
 				pass
 
 		# Projectile Destroy Behaviors
@@ -348,19 +346,19 @@ func update_projectile_instances(delta: float) -> void:
 					)
 				for _behavior_key in _direction_behavior_values.keys():
 					match _behavior_key:
-						"direction_overwrite":
+						ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE:
 							_active_projectile_instance.direction = _direction_behavior_values.get(
-								"direction_overwrite"
+								ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE
 								)
-						"direction_rotation":
+						ProjectileEngine.DirectionModify.DIRECTION_ROTATION:
 							_direction_behavior_rotations.get_or_add(
 								_projectile_behavior,
-								_direction_behavior_values.get("direction_rotation")
+								_direction_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_ROTATION)
 								)
-						"direction_addition":
+						ProjectileEngine.DirectionModify.DIRECTION_ADDITION:
 							_direction_behavior_additions.get_or_add(
 								_projectile_behavior,
-								_direction_behavior_values.get("direction_addition")
+								_direction_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_ADDITION)
 								)
 
 		## Projectile Behavior Rotation
@@ -378,12 +376,12 @@ func update_projectile_instances(delta: float) -> void:
 					)
 				for _behavior_key in _rotation_behavior_values.keys():
 					match _behavior_key:
-						"rotation_overwrite":
-							_active_projectile_instance.texture_rotation = _rotation_behavior_values.get("rotation_overwrite")
-						"rotation_addition":
+						ProjectileEngine.RotationModify.ROTATION_OVERWRITE:
+							_active_projectile_instance.texture_rotation = _rotation_behavior_values.get(ProjectileEngine.RotationModify.ROTATION_OVERWRITE)
+						ProjectileEngine.RotationModify.ROTATION_ADDITION:
 							_rotation_behavior_additions.get_or_add(
 								_projectile_behavior,
-								_rotation_behavior_values.get("rotation_addition")
+								_rotation_behavior_values.get(ProjectileEngine.RotationModify.ROTATION_ADDITION)
 								)
 						"rotation_multiply":
 							_rotation_behavior_multiplies.get_or_add(

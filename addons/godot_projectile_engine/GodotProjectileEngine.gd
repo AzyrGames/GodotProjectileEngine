@@ -11,9 +11,12 @@ enum BehaviorContext{
 	BASE_SPEED,
 	DIRECTION_COMPONENT,
 	DIRECTION,
+	DIRECTION_ROTATION,
 	BASE_DIRECTION,
 	BASE_SCALE,
 	ROTATION,
+	TEXTURE_ROTATION,
+	TEXTURE_ROTATION_FINAL,
 	RANDOM_NUMBER_GENERATOR,
 	ARRAY_VARIABLE,
 }
@@ -31,6 +34,28 @@ enum SpeedModify {
 	BASE_SPEED_MULTIPLY,
 	SPEED_CLAMP,
 }
+
+enum DirectionModify {
+	DIRECTION_OVERWRITE,
+	DIRECTION_ROTATION,
+	DIRECTION_ADDITION,
+}
+
+
+enum RotationModify {
+	ROTATION_OVERWRITE,
+	ROTATION_ADDITION,
+}
+
+enum ScaleModify {
+	SCALE_OVERWRITE,
+	SCALE_ADDITION,
+	SCALE_MULTIPLY,
+	BASE_SCALE_MULTIPLY,
+	SCALE_CLAMP,
+
+}
+
 
 
 signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
