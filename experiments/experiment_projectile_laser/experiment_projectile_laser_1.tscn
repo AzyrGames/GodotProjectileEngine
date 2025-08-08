@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bdi8heboymiao"]
 
-[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_laser_2d/projectile_lazer_2d.gd" id="1_gxj5o"]
+[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_laser_2d/projectile_laser_2d.gd" id="1_gxj5o"]
 [ext_resource type="Texture2D" uid="uid://dsuqrnrd06d73" path="res://experiments/Asset/Sprite-0001.png" id="2_gxj5o"]
 
 [node name="Node2D" type="Area2D"]
