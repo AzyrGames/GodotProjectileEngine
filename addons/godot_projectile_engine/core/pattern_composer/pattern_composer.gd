@@ -102,9 +102,6 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 		if _erase_list.size() > 0:
 			for thing in _erase_list:
 				_pattern_composer_spawner.erase(thing)
-				# _pattern_composer_spawner.size()
-			# print(_pattern_composer_spawner.size())
-		print(_pattern_composer_spawner.size())
 		if _pattern_composer_spawner.size() <= 0:
 			_new_composer_data = PatternComposerData.new()
 			_new_composer_data.position = _pattern_composer_context.projectile_spawner.global_position
@@ -117,7 +114,6 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 		
 		
 	_new_pattern_composer_pack = pattern_composer_dict.get(_pattern_composer_context.projectile_spawner)
-	print(_use_projectile_spawn_marker)
 	## Process Pattern composer component
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
