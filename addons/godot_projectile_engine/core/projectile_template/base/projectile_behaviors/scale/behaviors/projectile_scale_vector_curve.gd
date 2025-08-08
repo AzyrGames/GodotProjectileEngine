@@ -19,6 +19,7 @@ enum LoopMethod {
 @export_group("X Scale Curve")
 ## How the x curve value modifies the scale (add/multiply/override)
 @export var scale_modify_method_x : ScaleModifyMethod = ScaleModifyMethod.MULTIPLICATION
+@export var scale_process_mode_x : ProcessMode
 ## How the x curve loops over time
 @export var scale_curve_loop_method_x : LoopMethod = LoopMethod.ONCE_AND_DONE
 ## What value to use for sampling the x curve (time/distance/etc)
@@ -29,6 +30,7 @@ enum LoopMethod {
 @export_group("Y Scale Curve")
 ## How the y curve value modifies the scale (add/multiply/override)
 @export var scale_modify_method_y : ScaleModifyMethod = ScaleModifyMethod.MULTIPLICATION
+@export var scale_process_mode_y : ProcessMode
 ## How the y curve loops over time
 @export var scale_curve_loop_method_y : LoopMethod = LoopMethod.ONCE_AND_DONE
 ## What value to use for sampling the y curve (time/distance/etc)
@@ -40,6 +42,9 @@ var _scale_curve_sample_x : float
 var _scale_curve_sample_y : float
 var _scale_curve_sample_value_x : float
 var _scale_curve_sample_value_y : float
+
+var _new_scale_value : Vector2
+
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -78,36 +83,30 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 
 		match scale_modify_method_x:
 			ScaleModifyMethod.ADDITION:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].x = _value.x + _scale_curve_sample_value_x
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_value.x + _scale_curve_sample_value_x, _value.y) 
-			ScaleModifyMethod.ADDITION_OVER_BASE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_ADDITION):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_ADDITION].x = _scale_curve_sample_value_x
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_ADDITION] = Vector2(_scale_curve_sample_value_x, 0) 
-				result.x = _scale_curve_sample_value_x
+				behavior_values[
+					ProjectileEngine.ScaleModify.SCALE_ADDITION].x = _scale_curve_sample_value_x
+			ScaleModifyMethod.ADDITION_OVER_TIME:
+				match scale_process_mode_x:
+					ProcessMode.PHYSICS:
+						if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+							return behavior_values
+						_new_scale_value.x = _scale_curve_sample_value_x * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+					ProcessMode.TICKS:
+						_new_scale_value.x = _scale_curve_sample_value_x
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = _value + Vector2.ONE * _new_scale_value
 			ScaleModifyMethod.MULTIPLICATION:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].x = _value.x * _scale_curve_sample_value_x
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_value.x * _scale_curve_sample_value_x, _value.y) 
-				# result.x = _value.x + _scale_curve_sample_value_x
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY] = _value * _scale_curve_sample_value_x
 			ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_MULTIPLY):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY].x = _scale_curve_sample_value_x
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY] = Vector2(_scale_curve_sample_value_x, 0) 
+				behavior_values[ProjectileEngine.ScaleModify.BASE_SCALE_MULTIPLY] =  _scale_curve_sample_value_x
 			ScaleModifyMethod.OVERRIDE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].x = _scale_curve_sample_value_x
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_scale_curve_sample_value_x, _value.y) 
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] =  _scale_curve_sample_value_x
 			null:
-				pass
+				behavior_values
 			_:
-				pass
+				behavior_values
+
+		return behavior_values
+
 
 	# Handle y scale if curve exists
 	if scale_curve_y:
@@ -123,39 +122,30 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 				else:
 					_scale_curve_sample_y = scale_curve_y.max_domain - fmod(_context_life_time_second, scale_curve_y.max_domain)
 		
-		# Sample curve and apply modification
-		_scale_curve_sample_value_y = scale_curve_y.sample_baked(_scale_curve_sample_y)
 		match scale_modify_method_y:
 			ScaleModifyMethod.ADDITION:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].y = _value.y + _scale_curve_sample_value_y
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_value.x, _value.y + _scale_curve_sample_value_y) 
-			ScaleModifyMethod.ADDITION_OVER_BASE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_ADDITION):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_ADDITION].y = _scale_curve_sample_value_y
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_ADDITION] = Vector2(_scale_curve_sample_value_y, 0) 
-				result.y = _scale_curve_sample_value_y
+				behavior_values[
+					ProjectileEngine.ScaleModify.SCALE_ADDITION].y = _scale_curve_sample_value_y
+			ScaleModifyMethod.ADDITION_OVER_TIME:
+				match scale_process_mode_y:
+					ProcessMode.PHYSICS:
+						if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+							return behavior_values
+						_new_scale_value.y = _scale_curve_sample_value_y * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+					ProcessMode.TICKS:
+						_new_scale_value.y = _scale_curve_sample_value_y
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = _value + Vector2.ONE * _new_scale_value
 			ScaleModifyMethod.MULTIPLICATION:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].y = _value.y * _scale_curve_sample_value_y
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_value.x, _value.y * _scale_curve_sample_value_y) 
-				# result.y = _value.y + _scale_curve_sample_value_y
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY] = _value * _scale_curve_sample_value_y
 			ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_MULTIPLY):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY].y = _scale_curve_sample_value_y
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY] = Vector2(0, _scale_curve_sample_value_y) 
+				behavior_values[ProjectileEngine.ScaleModify.BASE_SCALE_MULTIPLY] =  _scale_curve_sample_value_y
 			ScaleModifyMethod.OVERRIDE:
-				if behavior_values.has(ProjectileEngine.ScaleModify.SCALE_OVERWRITE):
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE].y = _scale_curve_sample_value_y
-				else:
-					behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = Vector2(_value.x, _scale_curve_sample_value_y) 
+				behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] =  _scale_curve_sample_value_y
 			null:
-				pass
+				behavior_values
 			_:
-				pass
+				behavior_values
+
+		return behavior_values
 	
 	return behavior_values

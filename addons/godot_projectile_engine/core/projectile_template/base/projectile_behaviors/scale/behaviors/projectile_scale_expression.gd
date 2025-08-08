@@ -11,6 +11,7 @@ class_name ProjectileScaleExpression
 @export var scale_expression_sample_method : SampleMethod = SampleMethod.LIFE_TIME_SECOND
 ## How the expression result modifies scale (add/multiply/override)
 @export var scale_modify_method : ScaleModifyMethod = ScaleModifyMethod.OVERRIDE
+@export var scale_process_mode : ProcessMode
 ## Variable name to use in the expression (default 't')
 @export var scale_expression_variable : String = "t"
 ## Mathematical expression defining scale behavior e.g. [code]sin(t) * 2[/code]
@@ -19,6 +20,8 @@ class_name ProjectileScaleExpression
 var _scale_expression_result : Variant
 var _expression : Expression
 var _result_value : Vector2
+var _new_scale_value : float
+
 
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
@@ -49,21 +52,29 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	if _expression.has_execute_failed() or _scale_expression_result is not float:
 		return {}
 
-	# Apply expression result based on modification method
+	behavior_values.clear()
 	match scale_modify_method:
 		ScaleModifyMethod.ADDITION:
-			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value + Vector2.ONE * _scale_expression_result}
-		ScaleModifyMethod.ADDITION_OVER_BASE:
-			return {ProjectileEngine.ScaleModify.SCALE_ADDITION : Vector2.ONE * _scale_expression_result}
+			behavior_values[
+				ProjectileEngine.ScaleModify.SCALE_ADDITION] = Vector2.ONE * _scale_expression_result
+		ScaleModifyMethod.ADDITION_OVER_TIME:
+			match scale_process_mode:
+				ProcessMode.PHYSICS:
+					if !_context.has(ProjectileEngine.BehaviorContext.PHYSICS_DELTA):
+						return behavior_values
+					_new_scale_value = _scale_expression_result * _context.get(ProjectileEngine.BehaviorContext.PHYSICS_DELTA)
+				ProcessMode.TICKS:
+					_new_scale_value = _scale_expression_result
+			behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = _value + Vector2.ONE * _new_scale_value
 		ScaleModifyMethod.MULTIPLICATION:
-			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : _value * _scale_expression_result}
+			behavior_values[ProjectileEngine.ScaleModify.SCALE_MULTIPLY] = _value * _scale_expression_result
 		ScaleModifyMethod.MULTIPLICATION_OVER_BASE:
-			return {ProjectileEngine.ScaleModify.SCALE_MULTIPLY : Vector2.ONE * _scale_expression_result}
+			behavior_values[ProjectileEngine.ScaleModify.BASE_SCALE_MULTIPLY] =  Vector2.ONE * _scale_expression_result
 		ScaleModifyMethod.OVERRIDE:
-			return {ProjectileEngine.ScaleModify.SCALE_OVERWRITE : Vector2.ONE * _scale_expression_result}
+			behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] =  Vector2.ONE * _scale_expression_result
 		null:
-			{}
+			behavior_values
 		_:
-			{}
+			behavior_values
 
-	return {}
+	return behavior_values
