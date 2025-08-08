@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqvoigq2fteqh"]
+
+[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_lazer_2d/projectile_lazer_2d.gd" id="1_nicws"]
+[ext_resource type="Texture2D" uid="uid://crco3hx7cevvm" path="res://experiments/Asset/Sprite-0002.png" id="2_76co1"]
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d.gd" id="3_pnnvp"]
+[ext_resource type="Texture2D" uid="uid://dsuqrnrd06d73" path="res://experiments/Asset/Sprite-0001.png" id="4_nnncl"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_direction.gd" id="5_rdl4a"]
+[ext_resource type="Script" uid="uid://b434oxe86dd25" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_follow_rotation.gd" id="6_phakr"]
+
+[sub_resource type="Gradient" id="Gradient_td4cq"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nicws"]
+gradient = SubResource("Gradient_td4cq")
+
+[sub_resource type="Resource" id="Resource_k7qpn"]
+script = ExtResource("6_phakr")
+direction_normalize = true
+active = true
+metadata/_custom_type_script = "uid://b434oxe86dd25"
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(144, -80)
+scale = Vector2(59.75, 39.625)
+texture = SubResource("GradientTexture2D_nicws")
+
+[node name="Projectile2D" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape")]
+script = ExtResource("3_pnnvp")
+collision_shape = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://d1jrqiont4u2h"
+
+[node name="Sprite2D" type="Sprite2D" parent="Projectile2D"]
+texture = ExtResource("4_nnncl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile2D"]
+
+[node name="ProjectileLazer2D" type="Area2D" parent="."]
+position = Vector2(0, 64)
+script = ExtResource("1_nicws")
+texture = ExtResource("2_76co1")
+active = true
+speed = 20.0
+texture_rotation = -0.787143
+direction_projectile_behaviors = Array[ExtResource("5_rdl4a")]([SubResource("Resource_k7qpn")])
+metadata/_custom_type_script = "uid://cpgm6rw00lcfm"
+
+[node name="Camera2D" type="Camera2D" parent="."]

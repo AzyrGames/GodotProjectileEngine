@@ -7,7 +7,7 @@ class_name ProjectileDirectionFollowRotation
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
-		ProjectileEngine.BehaviorContext.TEXTURE_ROTATION_FINAL,
+		ProjectileEngine.BehaviorContext.ROTATION,
 	]
 
 
@@ -16,9 +16,9 @@ var _rotation: float
 
 func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	_direction_behavior_values.clear()
-	if !_context.has(ProjectileEngine.BehaviorContext.TEXTURE_ROTATION_FINAL): 
+	if !_context.has(ProjectileEngine.BehaviorContext.ROTATION): 
 		return _direction_behavior_values
-	_rotation = _context.get(ProjectileEngine.BehaviorContext.TEXTURE_ROTATION_FINAL)
+	_rotation = _context.get(ProjectileEngine.BehaviorContext.ROTATION)
 	_direction_behavior_values[
 		ProjectileEngine.DirectionModify.DIRECTION_ROTATION] =  _rotation
 	return _direction_behavior_values
