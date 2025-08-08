@@ -1,5 +1,61 @@
 extends Node
 
+enum BehaviorContext{
+	PHYSICS_DELTA,
+	GLOBAL_POSITION,
+	PROJECTILE_OWNER,
+	BEHAVIOR_OWNER,
+	LIFE_TIME_TICK,
+	LIFE_TIME_SECOND,
+	LIFE_DISTANCE,
+	BASE_SPEED,
+	DIRECTION_COMPONENT,
+	DIRECTION,
+	DIRECTION_ROTATION,
+	BASE_DIRECTION,
+	BASE_SCALE,
+	ROTATION,
+	TEXTURE_ROTATION,
+	TEXTURE_ROTATION_FINAL,
+	RANDOM_NUMBER_GENERATOR,
+	ARRAY_VARIABLE,
+}
+
+enum TargetGroupSelection {
+	FIRST,
+	NEAREST,
+	RANDOM
+}
+
+enum SpeedModify {
+	SPEED_OVERWRITE,
+	SPEED_ADDITION,
+	SPEED_MULTIPLY,
+	BASE_SPEED_MULTIPLY,
+	SPEED_CLAMP,
+}
+
+enum DirectionModify {
+	DIRECTION_OVERWRITE,
+	DIRECTION_ROTATION,
+	DIRECTION_ADDITION,
+}
+
+
+enum RotationModify {
+	ROTATION_OVERWRITE,
+	ROTATION_ADDITION,
+}
+
+enum ScaleModify {
+	SCALE_OVERWRITE,
+	SCALE_ADDITION,
+	SCALE_MULTIPLY,
+	BASE_SCALE_MULTIPLY,
+	SCALE_CLAMP,
+
+}
+
 
 
 signal projectile_instance_triggered(trigger_name: String, projectile_instance: ProjectileInstance2D)
@@ -46,24 +102,6 @@ signal projectile_instance_area_exited(
 	projectile_instance, area: Node,
 	)
 
-
-enum BehaviorContext{
-	PHYSICS_DELTA,
-	GLOBAL_POSITION,
-	PROJECTILE_OWNER,
-	BEHAVIOR_OWNER,
-	LIFE_TIME_TICK,
-	LIFE_TIME_SECOND,
-	LIFE_DISTANCE,
-	BASE_SPEED,
-	DIRECTION_COMPONENT,
-	DIRECTION,
-	BASE_DIRECTION,
-	BASE_SCALE,
-	ROTATION,
-	RANDOM_NUMBER_GENERATOR,
-	ARRAY_VARIABLE,
-}
 
 var active_projectile_count : int:
 	get():
@@ -284,3 +322,62 @@ func _test_projectile_instance_area_exited(
 	
 	print("{0} - {1}".format([projectile_instance, area]))
 	pass
+
+
+#region Utils
+
+
+
+#region Random Utils
+
+var _random_int_min_range : int
+var _random_int_max_range : int
+
+var _random_float_min_range : float
+var _random_float_max_range : float
+
+
+func get_random_int_value(value : Vector3i) -> int:
+	if value.z == 1:
+		_random_int_min_range = value.x - abs(value.y)
+		_random_int_max_range = value.x + abs(value.y)
+	else :
+		_random_int_min_range = min(value.x, value.y)
+		_random_int_max_range = max(value.x, value.y)
+
+	randomize()
+	return randi_range(_random_int_min_range, _random_int_max_range)
+
+
+func get_random_float_value(value : Vector3) -> float:
+	if value.z == 1:
+		_random_float_min_range = value.x - abs(value.y)
+		_random_float_max_range = value.x + abs(value.y)
+	else:
+		_random_float_min_range = min(value.x, value.y)
+		_random_float_max_range = max(value.x, value.y)
+
+	randomize()
+	return randf_range(_random_float_min_range, _random_float_max_range)
+
+
+#endregion
+
+
+#region Group Utils
+
+func get_valid_target_group_nodes(_group_name: String) -> Array[Node2D]:
+	var _valid_nodes : Array[Node2D]
+	for _node: Node in get_tree().get_nodes_in_group(_group_name):
+		if _node is Node2D and is_instance_valid(_node):
+			_valid_nodes.append(_node)
+	return _valid_nodes
+
+
+#endregion 
+
+
+
+
+
+#endregion

@@ -1,38 +1,38 @@
 [gd_resource type="Resource" script_class="ProjectileTemplateCustom2D" load_steps=57 format=3 uid="uid://dct2nl4m318uu"]
 
-[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="1_6223l"]
-[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="2_gxq5l"]
-[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="3_b0kpl"]
-[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_direction.gd" id="4_h4knv"]
-[ext_resource type="Script" uid="uid://c4vh2pal3nbnl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_modify.gd" id="5_jgvmb"]
-[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_expression.gd" id="6_o217s"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_bouncing.gd" id="1_6223l"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_destroy.gd" id="2_gxq5l"]
+[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/destroy/behaviors/projectile_destroy_collision.gd" id="3_b0kpl"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_direction.gd" id="4_h4knv"]
+[ext_resource type="Script" uid="uid://c4vh2pal3nbnl" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_modify.gd" id="5_jgvmb"]
+[ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_expression.gd" id="6_o217s"]
 [ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="7_wqak3"]
-[ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_curve_2d.gd" id="8_lbcke"]
-[ext_resource type="Script" uid="uid://ds4xe1drkirks" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/direction/behaviors/projectile_direction_random_walk.gd" id="9_hno5m"]
-[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_piercing.gd" id="10_f0fo5"]
-[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_rotation.gd" id="11_iukyb"]
-[ext_resource type="Script" uid="uid://2ncg6dcceecr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_set.gd" id="12_akh50"]
+[ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_curve_2d.gd" id="8_lbcke"]
+[ext_resource type="Script" uid="uid://ds4xe1drkirks" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_random_walk.gd" id="9_hno5m"]
+[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_piercing.gd" id="10_f0fo5"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_rotation.gd" id="11_iukyb"]
+[ext_resource type="Script" uid="uid://2ncg6dcceecr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_set.gd" id="12_akh50"]
 [ext_resource type="Curve" uid="uid://s4g8cm3mp3nt" path="res://tests/projectile_template/test_projectile_template_resources/test_curve2d_simple.tres" id="13_8kwti"]
-[ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_curve.gd" id="14_k0ccw"]
-[ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_expression.gd" id="15_cw384"]
-[ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/rotation/behaviors/projectile_rotation_modify.gd" id="16_urcq5"]
-[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_scale.gd" id="17_7j1sc"]
-[ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_set.gd" id="18_hsjo3"]
-[ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_accelerate.gd" id="19_jbl2j"]
-[ext_resource type="Script" uid="uid://chcvl00lgnkc8" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_curve.gd" id="20_xjhbt"]
-[ext_resource type="Script" uid="uid://dkhljenoddn8k" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_random.gd" id="21_vckt8"]
-[ext_resource type="Script" uid="uid://4e5y6t2mxh08" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_modify.gd" id="22_2a1ve"]
-[ext_resource type="Script" uid="uid://biap0y2q31n5e" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/scale/behaviors/projectile_scale_expression.gd" id="23_cw04j"]
+[ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_curve.gd" id="14_k0ccw"]
+[ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_expression.gd" id="15_cw384"]
+[ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_modify.gd" id="16_urcq5"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_scale.gd" id="17_7j1sc"]
+[ext_resource type="Script" uid="uid://cr2ftvrtv8t16" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_set.gd" id="18_hsjo3"]
+[ext_resource type="Script" uid="uid://d0yojlb4mvhsj" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_accelerate.gd" id="19_jbl2j"]
+[ext_resource type="Script" uid="uid://chcvl00lgnkc8" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_curve.gd" id="20_xjhbt"]
+[ext_resource type="Script" uid="uid://dkhljenoddn8k" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_random.gd" id="21_vckt8"]
+[ext_resource type="Script" uid="uid://4e5y6t2mxh08" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_modify.gd" id="22_2a1ve"]
+[ext_resource type="Script" uid="uid://biap0y2q31n5e" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/scale/behaviors/projectile_scale_expression.gd" id="23_cw04j"]
 [ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="24_uq5xw"]
-[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_speed.gd" id="25_hpayo"]
-[ext_resource type="Script" uid="uid://ospvxnky04he" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_set.gd" id="26_0lhk8"]
-[ext_resource type="Script" uid="uid://d35n2jogawdcq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_acceleration.gd" id="27_w87vn"]
-[ext_resource type="Script" uid="uid://bnautbd467qq2" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_curve.gd" id="28_ekg8i"]
-[ext_resource type="Script" uid="uid://cjan1hd6214vl" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_modify.gd" id="29_tngv5"]
-[ext_resource type="Script" uid="uid://dkm0o1v05i58y" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_expression.gd" id="30_gnmqu"]
-[ext_resource type="Script" uid="uid://chmjku6lmvmaq" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/speed/behaviors/projectile_speed_clamp.gd" id="31_y3s5n"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_speed.gd" id="25_hpayo"]
+[ext_resource type="Script" uid="uid://ospvxnky04he" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_set.gd" id="26_0lhk8"]
+[ext_resource type="Script" uid="uid://d35n2jogawdcq" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_acceleration.gd" id="27_w87vn"]
+[ext_resource type="Script" uid="uid://bnautbd467qq2" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_curve.gd" id="28_ekg8i"]
+[ext_resource type="Script" uid="uid://cjan1hd6214vl" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_modify.gd" id="29_tngv5"]
+[ext_resource type="Script" uid="uid://dkm0o1v05i58y" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_expression.gd" id="30_gnmqu"]
+[ext_resource type="Script" uid="uid://chmjku6lmvmaq" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_clamp.gd" id="31_y3s5n"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="32_l3jnm"]
-[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_trigger.gd" id="33_nj4cj"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_trigger.gd" id="33_nj4cj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ijeta"]
 
@@ -225,7 +225,7 @@ speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("32_l3jnm")
 scale = Vector2(1, 1)
-rotation = 0.0
+texture_rotation = 0.0
 skew = 0.0
 texture_visible = true
 texture_z_index = 0
@@ -241,5 +241,8 @@ destroy_projectile_behaviors = Array[ExtResource("2_gxq5l")]([SubResource("Resou
 piercing_projectile_behaviors = Array[ExtResource("10_f0fo5")]([SubResource("Resource_smfuh")])
 bouncing_projectile_behaviors = Array[ExtResource("1_6223l")]([])
 trigger_projectile_behaviors = Array[ExtResource("33_nj4cj")]([])
-custom_data = {}
+speed_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+custom_data = []
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
