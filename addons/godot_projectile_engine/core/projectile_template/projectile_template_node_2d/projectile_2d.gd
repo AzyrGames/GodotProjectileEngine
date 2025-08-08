@@ -10,6 +10,7 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 @export var direction : Vector2 = Vector2.RIGHT
 @export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var texture_rotation : float
 @export var collision_shape : CollisionShape2D
+
 # @export var pooling_amount : int = 200
 @export_group("Projectile Behavior")
 @export_subgroup("Transform")
@@ -123,7 +124,6 @@ func apply_pattern_composer_data(_pattern_composer_data: PatternComposerData) ->
 func setup_projectile_2d() -> void:
 	init_base_properties()
 	setup_projectile_behavior()
-	print(direction_rotation)
 	update_projectile_2d(get_physics_process_delta_time())
 	pass
 
