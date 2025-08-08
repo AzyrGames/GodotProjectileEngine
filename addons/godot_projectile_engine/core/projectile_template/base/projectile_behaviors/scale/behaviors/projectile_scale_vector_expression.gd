@@ -45,13 +45,13 @@ func _init() -> void:
 
 ## Processes scale behavior by evaluating the expressions
 func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
+	behavior_values.clear()
 	# Return original value if required context is missing
 	if not _context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
 		return {}
 
 	# Get current time/distance value for expression
 	var _context_life_time_second := _context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND) as float
-
 	# Handle y scale expression exists
 	if scale_expression_x:
 		# Parse and execute x expression
@@ -81,7 +81,6 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 				behavior_values
 			_:
 				behavior_values
-
 
 	# Handle y scale expression exists
 	if scale_expression_y:
