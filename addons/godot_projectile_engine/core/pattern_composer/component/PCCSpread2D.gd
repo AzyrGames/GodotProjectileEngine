@@ -2,75 +2,103 @@
 @icon("uid://bgwne7sou0e8r")
 extends PatternComposerComponent
 class_name PCCSpread2D
-#@export_group("Spread Properties")
 
 
 enum SpreadType {
 	STRAIGHT,
-	ANGLE
+	ANGLE,
+	HYBRID
 }
 
-@export var spread_amount : int = 3
-@export var spread_type : SpreadType = SpreadType.ANGLE
-@export var spread_value : float = 5
 
-func process_pattern(pattern_composer_pack: Array[PatternComposerData], _pattern_composer_context : PatternComposerContext) -> Array:
-	var _new_pattern_composer_pack : Array[PatternComposerData] = []
+@export var spread_type: SpreadType = SpreadType.ANGLE
+@export var spread_amount: int = 3
+# @export var spread_value : float = 5
+@export var spread_distance: float = 10
+@export var spread_angle: float = 5
+
+
+@export_group("Random")
+@export var spread_amount_random: Vector3i
+@export var spread_distance_random: Vector3
+@export var spread_angle_random: Vector3
+
+
+func process_pattern(
+	_pattern_composer_pack: Array[PatternComposerData],
+	_pattern_composer_context: PatternComposerContext
+	) -> Array:
+	if spread_amount_random != Vector3i.ZERO:
+		spread_amount = ProjectileEngine.get_random_int_value(spread_amount_random)
+	if spread_distance_random != Vector3.ZERO:
+		spread_distance = ProjectileEngine.get_random_float_value(spread_distance_random)
+	if spread_angle_random != Vector3.ZERO:
+		spread_angle = ProjectileEngine.get_random_float_value(spread_angle_random)
+
+	_new_pattern_composer_pack.clear()
 	match spread_type:
 		SpreadType.STRAIGHT:
-			for pattern_data : PatternComposerData in pattern_composer_pack:
-				_new_pattern_composer_pack.append_array(_add_projectile_straight_spread(pattern_data))
+			for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
+				_new_pattern_composer_pack.append_array(_add_projectile_straight_spread(_pattern_composer_data))
 		SpreadType.ANGLE:
-			for pattern_data : PatternComposerData in pattern_composer_pack:
-				_new_pattern_composer_pack.append_array(_add_projectile_angle_spread(pattern_data))
+			for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
+				_new_pattern_composer_pack.append_array(_add_projectile_angle_spread(_pattern_composer_data))
+		SpreadType.HYBRID:
+			for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
+				_new_pattern_composer_pack.append_array(_add_projectile_hybrid_spread(_pattern_composer_data))
 	return _new_pattern_composer_pack
 
+var _new_sub_pattern_composer_data: Array[PatternComposerData]
+var _half_total_width: float
+var _half_total_deg: float
+var _projectile_position: Vector2
+var _offset_angle: float
+var _offset_distance: float
+var _point_position: Vector2
+var _point_direction: Vector2
 
-func _add_projectile_straight_spread(pattern_data: PatternComposerData) -> Array[PatternComposerData]:
-	var _new_instances : Array[PatternComposerData] = []
-
-	var _half_total_width : float = (spread_amount - 1) * spread_value / 2.0
-	var _projectile_position : Vector2 = pattern_data.position
-
+func _add_projectile_straight_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
+	_new_sub_pattern_composer_data.clear()
+	_half_total_width = (spread_amount - 1) * spread_distance / 2.0
 	for i in range(spread_amount):
-		var _new_pattern_data := PatternComposerData.new()
-		_new_pattern_data.position = pattern_data.position
-		_new_pattern_data.direction = pattern_data.direction
-		_new_pattern_data.rotation = pattern_data.rotation
-		_new_pattern_data.speed_mod = pattern_data.speed_mod
-		
-		var _offset : float = (i * spread_value) - _half_total_width
-		var _point : Vector2 = _projectile_position + pattern_data.direction.rotated(deg_to_rad(90)) * _offset
+		_new_pattern_composer_data = _pattern_composer_data.duplicate()
+		_offset_distance = (i * spread_distance) - _half_total_width
+		_new_pattern_composer_data.position += (
+			_pattern_composer_data.direction.rotated(deg_to_rad(90) + _pattern_composer_data.direction_rotation)
+			* _offset_distance
+			)
+		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
+	return _new_sub_pattern_composer_data
 
-		_new_pattern_data.position = _point
-
-		_new_instances.append(_new_pattern_data)
-
-	return _new_instances
-
-func _add_projectile_angle_spread(pattern_data: PatternComposerData) -> Array[PatternComposerData]:
-	var _new_instances : Array[PatternComposerData] = []
-
-	var _half_total_deg : float = (spread_amount - 1) * spread_value / 2.0
-
+func _add_projectile_angle_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
+	_new_sub_pattern_composer_data.clear()
+	_half_total_deg = (spread_amount - 1) * spread_angle / 2.0
 	for i in range(spread_amount):
-		var _offset : float = (i * spread_value) - _half_total_deg
-		var _direction_vector : Vector2 = deg_to_dir(rad_to_deg(pattern_data.direction.angle()) - _offset)
-		var _new_pattern_data := PatternComposerData.new()
-		_new_pattern_data.position = pattern_data.position
-		_new_pattern_data.direction = pattern_data.direction
-		_new_pattern_data.rotation = pattern_data.rotation
-		_new_pattern_data.speed_mod = pattern_data.speed_mod
+		_new_pattern_composer_data = _pattern_composer_data.duplicate()
+		_offset_angle = (i * spread_angle) - _half_total_deg
+		_new_pattern_composer_data.direction_rotation += _pattern_composer_data.direction.angle() - deg_to_rad(_offset_angle)
+		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
+	return _new_sub_pattern_composer_data
 
-		_new_pattern_data.direction = _direction_vector
-	
-		_new_instances.append(_new_pattern_data)
+func _add_projectile_hybrid_spread(_pattern_composer_data: PatternComposerData) -> Array[PatternComposerData]:
+	_new_sub_pattern_composer_data.clear()
+	_half_total_width = (spread_amount - 1) * spread_distance / 2.0
+	_half_total_deg = (spread_amount - 1) * spread_angle / 2.0
+	for i in range(spread_amount):
+		_new_pattern_composer_data = _pattern_composer_data.duplicate()
+		_offset_distance = (i * spread_distance) - _half_total_width
+		_offset_angle = (i * spread_angle) - _half_total_deg
+		_new_pattern_composer_data.position += (
+			_pattern_composer_data.direction.rotated(deg_to_rad(90) + _pattern_composer_data.direction_rotation)
+			* _offset_distance
+			)
+		_new_pattern_composer_data.direction_rotation += _pattern_composer_data.direction.angle() - deg_to_rad(_offset_angle)
+		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
+	return _new_sub_pattern_composer_data
 
 
-	return _new_instances
-
-func deg_to_dir(deg: float) -> Vector2:
-	var radian_angle := deg_to_rad(deg)
-	var x := cos(radian_angle)
-	var y := sin(radian_angle)
-	return Vector2(x, y)
+#func _deg_to_dir(deg: float) -> Vector2:
+#	var radian_angle := deg_to_rad(deg)
+#	var x := cos(radian_angle)
+#	var y := sin(radian_angle)
+#	return Vector2(x, y)

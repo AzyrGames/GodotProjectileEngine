@@ -22,7 +22,7 @@ class_name ProjectileDirectionExpression
 var _expression_x: Expression
 var _expression_y: Expression
 
-var _parse_value : Vector2
+var _direction_parse_value : Vector2
 
 var _result_value: Vector2
 
@@ -44,16 +44,16 @@ func process_behavior(_value: Vector2, context: Dictionary) -> Dictionary:
 	_expression_x.parse(direction_x_expression, [direction_expression_variable])
 	if _expression_x.parse(direction_x_expression, [direction_expression_variable]) != OK:
 		push_error("Failed to parse direction expression: " + _expression_x.get_error_text())
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
 	if _expression_y.parse(direction_y_expression, [direction_expression_variable]) != OK:
 		push_error("Failed to parse direction expression: " + _expression_y.get_error_text())
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
 
 	# Return original value if required context is missing
 	if not context.has(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND): 
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
 	# Get current time/distance value for expression
 	var current_value: float = context.get(ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND)
@@ -62,26 +62,36 @@ func process_behavior(_value: Vector2, context: Dictionary) -> Dictionary:
 	var _result_x = _expression_x.execute([current_value])
 	# Fallback to original value if expression fails or returns wrong type
 	if _expression_x.has_execute_failed():
-		return {"direction_overwrite": _value}
-	_parse_value.x = _result_x
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
+	_direction_parse_value.x = _result_x
 
 	var _result_y = _expression_y.execute([current_value])
 	# Fallback to original value if expression fails or returns wrong type
 	if _expression_y.has_execute_failed():
-		return {"direction_overwrite": _value}
+		return {ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE: _value}
 
-	_parse_value.y = _result_y
+	_direction_parse_value.y = _result_y
 
+	_direction_behavior_values.clear()
 	match direction_modify_method:
 		DirectionModifyMethod.ROTATION:
-			return {"direction_rotation": _parse_value.angle()}
+			if direction_normalize:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ROTATION] = _direction_parse_value.normalized().angle()
+			else:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ROTATION] = _direction_parse_value.angle()
 		DirectionModifyMethod.ADDITION:
-			if _parse_value == Vector2.ZERO: 
-				return {"direction_overwrite": _value}
-			return {"direction_addition": _parse_value * expression_streght}
+			if direction_normalize:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ADDITION] = (_direction_parse_value.normalized())
+			else:
+				_direction_behavior_values[
+					ProjectileEngine.DirectionModify.DIRECTION_ADDITION] = _direction_parse_value
 		DirectionModifyMethod.OVERRIDE:
-			return {"direction_overwrite": _parse_value}
+			_direction_behavior_values[
+				ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _direction_parse_value.normalized()
 		_:
-			return {"direction_overwrite": _value}
-
-	return {"direction_overwrite": _value}
+			pass
+	
+	return _direction_behavior_values
