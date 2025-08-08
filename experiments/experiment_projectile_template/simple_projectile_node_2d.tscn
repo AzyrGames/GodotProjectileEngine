@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://c7rypyujt6vmj"]
 
-[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/entities/projectile_2d.gd" id="1_dnndo"]
-[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_destroy.gd" id="2_c06gt"]
-[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/destroy/behaviors/projectile_destroy_collision.gd" id="3_lbmsn"]
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d/projectile_2d.gd" id="1_dnndo"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_destroy.gd" id="2_c06gt"]
+[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/destroy/behaviors/projectile_destroy_collision.gd" id="3_lbmsn"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="4_5k3qs"]
-[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_behavior_bouncing.gd" id="4_c06gt"]
-[ext_resource type="Script" uid="uid://5uv8vjegm0j5" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/components/bouncing/behaviors/projectile_bouncing_reflect.gd" id="5_lbmsn"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_bouncing.gd" id="4_c06gt"]
+[ext_resource type="Script" uid="uid://5uv8vjegm0j5" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/bouncing/behaviors/projectile_bouncing_reflect.gd" id="5_lbmsn"]
 
 [sub_resource type="Resource" id="Resource_5k3qs"]
 script = ExtResource("3_lbmsn")

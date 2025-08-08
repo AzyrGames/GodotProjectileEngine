@@ -6,20 +6,19 @@
 [ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="4_3ps2g"]
 [ext_resource type="Texture2D" uid="uid://d0u3dixs4nwan" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_big_cirle_1.png" id="5_sgtqx"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="6_qqgmg"]
-[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="7_feml4"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="7_feml4"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="8_8vw84"]
-[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="9_5urus"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="9_5urus"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0bxyl"]
 
 [sub_resource type="Resource" id="Resource_qmm7m"]
 script = ExtResource("4_3ps2g")
-damage = 1.34
 speed = 99.53
 projectile_pooling_amount = 100
 texture = ExtResource("5_sgtqx")
 scale = Vector2(1.04, 1.04)
-rotation = 28.056
+texture_rotation = 0.0
 skew = -3.9
 texture_visible = true
 texture_z_index = 3
@@ -29,16 +28,20 @@ collision_layer = 64
 collision_mask = 8
 speed_acceleration = 0.365
 speed_max = 198.45
-scale_acceleration = 0.39
-scale_max = 2.225
-rotation_speed = 1.03847
-rotation_follow_direction = false
+direction_rotation = 0.0
+direction_rotation_speed = 0.0
 direction_follow_rotation = true
+texture_rotation_speed = 0.0
+rotation_follow_direction = false
+scale_acceleration = 0.39
+scale_max = Vector2(2, 2)
 is_use_homing = true
 target_group = "TestHoming"
 steer_speed = -0.436332
 homing_strength = 0.93
 max_homing_distance = 500.0
+destroy_on_body_collide = true
+destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.2
 is_use_trigger = true
@@ -46,16 +49,28 @@ trigger_name = &"TestTemplateAdvanced"
 trigger_amount = 5
 trigger_life_time = 10.0
 trigger_life_distance = 300.0
+speed_random = Vector3(0, 0, 0)
+speed_acceleration_random = Vector3(0, 0, 0)
+speed_max_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+texture_rotation_speed_random = Vector3(0, 0, 0)
+direction_rotation_random = Vector3(0, 0, 0)
+direction_rotation_speed_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+scale_max_random = Vector3(0, 0, 0)
+scale_acceleration_random = Vector3(0, 0, 0)
+life_time_second_random = Vector3(0, 0, 0)
+life_distance_random = Vector3(0, 0, 0)
+custom_data = []
 metadata/_custom_type_script = "uid://c7uapl8lqnia4"
 
 [sub_resource type="Resource" id="Resource_0bxyl"]
 script = ExtResource("4_3ps2g")
-damage = 1.34
 speed = 99.53
 projectile_pooling_amount = 500
 texture = ExtResource("5_sgtqx")
 scale = Vector2(1.04, 1.04)
-rotation = 28.056
+texture_rotation = 0.0
 skew = -3.9
 texture_visible = true
 texture_z_index = 3
@@ -65,16 +80,20 @@ collision_layer = 64
 collision_mask = 8
 speed_acceleration = -100.0
 speed_max = -200.0
-scale_acceleration = 0.17
-scale_max = 2.0
-rotation_speed = -1.83434
-rotation_follow_direction = true
+direction_rotation = 0.0
+direction_rotation_speed = 0.0
 direction_follow_rotation = false
+texture_rotation_speed = 0.0
+rotation_follow_direction = true
+scale_acceleration = 0.17
+scale_max = Vector2(2, 2)
 is_use_homing = true
 target_group = "TestHoming"
 steer_speed = -0.436332
 homing_strength = 0.93
 max_homing_distance = 0.0
+destroy_on_body_collide = true
+destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.2
 is_use_trigger = true
@@ -82,6 +101,19 @@ trigger_name = &"TestTemplateAdvanced"
 trigger_amount = -1
 trigger_life_time = 10.0
 trigger_life_distance = 300.0
+speed_random = Vector3(0, 0, 0)
+speed_acceleration_random = Vector3(0, 0, 0)
+speed_max_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+texture_rotation_speed_random = Vector3(0, 0, 0)
+direction_rotation_random = Vector3(0, 0, 0)
+direction_rotation_speed_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+scale_max_random = Vector3(0, 0, 0)
+scale_acceleration_random = Vector3(0, 0, 0)
+life_time_second_random = Vector3(0, 0, 0)
+life_distance_random = Vector3(0, 0, 0)
+custom_data = []
 metadata/_custom_type_script = "uid://c7uapl8lqnia4"
 
 [node name="TestProjectileTemplateSimple" type="Node2D"]

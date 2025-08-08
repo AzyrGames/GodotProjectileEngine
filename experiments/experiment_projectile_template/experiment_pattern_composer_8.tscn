@@ -11,12 +11,12 @@
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="18_tlgy0"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="19_lovv8"]
 
-[sub_resource type="Gradient" id="Gradient_td4cq"]
+[sub_resource type="Gradient" id="Gradient_p5lid"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ylpdm"]
-gradient = SubResource("Gradient_td4cq")
+gradient = SubResource("Gradient_p5lid")
 
 [sub_resource type="Resource" id="Resource_2xq1e"]
 script = ExtResource("3_n21my")

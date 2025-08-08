@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ertr7ab7jyvy"]
 
-[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d.gd" id="1_l1d6a"]
+[ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d/projectile_2d.gd" id="1_l1d6a"]
 [ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_speed.gd" id="2_beqwv"]
 [ext_resource type="Script" uid="uid://bnautbd467qq2" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/speed/behaviors/projectile_speed_curve.gd" id="3_5k7y5"]
 [ext_resource type="Curve" uid="uid://s4g8cm3mp3nt" path="res://tests/projectile_template/test_projectile_template_resources/test_curve2d_simple.tres" id="4_mbyla"]
