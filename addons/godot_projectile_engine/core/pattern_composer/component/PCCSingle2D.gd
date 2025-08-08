@@ -123,6 +123,7 @@ func update(_pattern_composer_pack: Array[PatternComposerData]) -> void:
 			RotationProcessMode.TICKS:
 				if !_request_tick: return
 				_pattern_composer_data.direction_rotation += deg_to_rad(rotation_speed)
+				# print("_pattern_composer_data.direction_rotation", _pattern_composer_data.direction_rotation)
 
 			RotationProcessMode.PHYSICS:
 				_pattern_composer_data.direction_rotation += deg_to_rad(rotation_speed) * get_physics_process_delta_time()
