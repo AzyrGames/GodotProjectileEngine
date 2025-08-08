@@ -1,0 +1,186 @@
+[gd_scene load_steps=32 format=3 uid="uid://dv7yve46k6l62"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_03f2f"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_0pwon"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_bouncing.gd" id="3_yxsq7"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_destroy.gd" id="4_eurcn"]
+[ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/spawn_marker/projectile_spawn_maker_2d.gd" id="4_pv26p"]
+[ext_resource type="Script" uid="uid://xxc1sjlrqacn" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/destroy/behaviors/projectile_destroy_life_distance.gd" id="5_aswlq"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_o05jv"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_direction.gd" id="5_vonl0"]
+[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_piercing.gd" id="6_aswlq"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_rotation.gd" id="7_fk004"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_hehyb"]
+[ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCPolygon2D.gd" id="8_0pwon"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="8_03f2f"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="8_7fo6p"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_scale.gd" id="8_t2un4"]
+[ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="9_a5qnn"]
+[ext_resource type="Script" uid="uid://brqy6ew0t2b35" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSpread2D.gd" id="9_tl5sj"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_speed.gd" id="10_dief0"]
+[ext_resource type="Script" uid="uid://cw3jfu53wt4vm" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCStack2D.gd" id="10_pv26p"]
+[ext_resource type="Texture2D" uid="uid://psxtpca1c73l" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_arrowhead_1.png" id="11_yxsq7"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_trigger.gd" id="12_jh4bn"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_template_node_2d.gd" id="15_vonl0"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="23_aswlq"]
+
+[sub_resource type="Gradient" id="Gradient_td4cq"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ylpdm"]
+gradient = SubResource("Gradient_td4cq")
+
+[sub_resource type="Resource" id="Resource_t2un4"]
+script = ExtResource("5_aswlq")
+destroy_distance = 1000.0
+active = true
+metadata/_custom_type_script = "uid://xxc1sjlrqacn"
+
+[sub_resource type="Resource" id="Resource_16atm"]
+script = ExtResource("9_a5qnn")
+damage = 1.0
+speed = 100.0
+projectile_pooling_amount = 500
+texture = ExtResource("11_yxsq7")
+scale = Vector2(1, 1)
+texture_rotation = 0.0
+skew = 0.0
+texture_visible = true
+texture_z_index = 0
+texture_modulate = Color(1, 1, 1, 1)
+collision_layer = 0
+collision_mask = 0
+speed_projectile_behaviors = Array[ExtResource("10_dief0")]([])
+direction_projectile_behaviors = Array[ExtResource("5_vonl0")]([])
+rotation_projectile_behaviors = Array[ExtResource("7_fk004")]([])
+scale_projectile_behaviors = Array[ExtResource("8_t2un4")]([])
+destroy_projectile_behaviors = Array[ExtResource("4_eurcn")]([SubResource("Resource_t2un4")])
+piercing_projectile_behaviors = Array[ExtResource("6_aswlq")]([])
+bouncing_projectile_behaviors = Array[ExtResource("3_yxsq7")]([])
+trigger_projectile_behaviors = Array[ExtResource("12_jh4bn")]([])
+speed_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+custom_data = []
+metadata/_custom_type_script = "uid://d3yyxyx6shhya"
+
+[sub_resource type="Resource" id="Resource_aswlq"]
+script = ExtResource("15_vonl0")
+projectile_2d_path = &"uid://ertr7ab7jyvy"
+projectile_pooling_amount = 100
+custom_data = []
+metadata/_custom_type_script = "uid://drg85m51aqbj7"
+
+[sub_resource type="Curve" id="Curve_o42ao"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.535877, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.998212), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_5axtd"]
+curve_x = SubResource("Curve_o42ao")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_03f2f"]
+particle_flag_disable_z = true
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_5axtd")
+gravity = Vector3(0, 98, 0)
+
+[node name="ExperimentPatternComposer8" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(272, 24)
+scale = Vector2(59.75, 39.625)
+texture = SubResource("GradientTexture2D_ylpdm")
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_03f2f")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("2_0pwon")
+active = false
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_16atm")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
+position = Vector2(-190, -62)
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D4"]
+position = Vector2(258, -62)
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawner2D5" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
+script = ExtResource("2_0pwon")
+projectile_composer_name = "pattern_1"
+projectile_template_2d = SubResource("Resource_aswlq")
+timing_scheduler = NodePath("../TimingScheduler")
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
+position = Vector2(-190, -62)
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D5"]
+position = Vector2(258, -62)
+script = ExtResource("4_pv26p")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="PatternComposer2D" type="Node" parent="."]
+script = ExtResource("5_o05jv")
+composer_name = "pattern_1"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("8_03f2f")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("8_0pwon")
+radius = 20.0
+metadata/_custom_type_script = "uid://cm1gi15tdc45s"
+
+[node name="PCCSpread2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("9_tl5sj")
+spread_type = 2
+spread_angle = -10.0
+active = false
+metadata/_custom_type_script = "uid://brqy6ew0t2b35"
+
+[node name="PCCStack2D" type="Node" parent="PatternComposer2D"]
+script = ExtResource("10_pv26p")
+active = false
+metadata/_custom_type_script = "uid://cw3jfu53wt4vm"
+
+[node name="TimingScheduler" type="Node" parent="."]
+script = ExtResource("7_hehyb")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
+script = ExtResource("8_7fo6p")
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+process_material = SubResource("ParticleProcessMaterial_03f2f")
+
+[node name="Target1" type="Node2D" parent="." groups=["Target1"]]
+position = Vector2(192, -128)
+
+[node name="Target2" type="Node2D" parent="." groups=["Target2"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="Target2"]
+texture = ExtResource("23_aswlq")
+
+[node name="Target3" type="Node2D" parent="." groups=["Target3"]]
+position = Vector2(112, 112)
+
+[node name="Node" type="Node" parent="."]

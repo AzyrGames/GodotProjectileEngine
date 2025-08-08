@@ -79,7 +79,7 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 				_new_direction = _behavior_owner.direction.reflect(_collider.get_normal()) * -1.0
 				_bouncing_behavior_values["bounced_node"] = _overlap_body
 				_bouncing_behavior_values["is_bouncing"] = _should_bouncing
-				_bouncing_behavior_values["direction_overwrite"] = _new_direction
+				_bouncing_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _new_direction
 				_behavior_variable_bouncing_reflect.is_bouncing = true
 				_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
 
@@ -109,7 +109,7 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 				_new_direction = _behavior_owner.direction.reflect(_collider.get_normal()) * -1.0
 				_bouncing_behavior_values["bounced_node"] = _overlap_body
 				_bouncing_behavior_values["is_bouncing"] = _should_bouncing
-				_bouncing_behavior_values["direction_overwrite"] = _new_direction
+				_bouncing_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _new_direction
 				_behavior_variable_bouncing_reflect.is_bouncing = true
 				_behavior_variable_bouncing_reflect.bounced_targets.append(_overlap_body)
 				if bouncing_count == 1:

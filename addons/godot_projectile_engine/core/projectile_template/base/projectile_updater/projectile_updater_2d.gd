@@ -30,7 +30,7 @@ var spawner_destroyed : bool = false
 
 var custom_data : Array[Variant]
 
-var _active_instances : Array[ProjectileInstance2D]
+var _active_projectile_instances : Array[ProjectileInstance2D]
 
 var _projectile_instance : ProjectileInstance2D
 var _new_projectile_instance : Callable
@@ -96,12 +96,10 @@ func create_projectile_pool() -> void:
 		_collision_rid = projectile_template_2d.collision_shape.get_rid()
 
 	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
-
 	for _index in range(projectile_max_pooling):
-		_projectile_instance = _new_projectile_instance.call()
 		if _collision_rid:
 			PS.area_add_shape(projectile_area_rid, _collision_rid, _transform, true)
-
+		_projectile_instance = _new_projectile_instance.call()
 		_projectile_instance.projectile_updater = self
 		_projectile_instance.custom_data = custom_data
 		_projectile_instance.area_rid = projectile_area_rid
@@ -241,7 +239,7 @@ func clear_projectile_updater() -> void:
 
 
 func get_active_projectile_count() -> int:
-	return _active_instances.size()
+	return _active_projectile_instances.size()
 	pass
 
 

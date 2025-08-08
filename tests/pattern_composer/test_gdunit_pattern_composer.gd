@@ -1,7 +1,7 @@
 extends GdUnitTestSuite
 
 
-func test_pattern_composer_simple() -> void:
+func test_pattern_composer_single() -> void:
 	var runner := scene_runner("uid://c100r43aw5b57")
 	await runner.simulate_frames(5)
 	runner._scene_auto_free = false

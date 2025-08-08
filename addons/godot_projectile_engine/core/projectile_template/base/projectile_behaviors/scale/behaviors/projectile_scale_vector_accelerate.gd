@@ -31,4 +31,6 @@ func process_behavior(_value: Vector2, _context: Dictionary) -> Dictionary:
 	_new_scale.x = move_toward(_value.x, scale_max.x, scale_accel_speed.x * physics_delta)
 	_new_scale.y = move_toward(_value.y, scale_max.y, scale_accel_speed.y * physics_delta)
 
-	return {"scale_overwrite" : _new_scale}
+	behavior_values.clear()
+	behavior_values[ProjectileEngine.ScaleModify.SCALE_OVERWRITE] = _new_scale
+	return behavior_values

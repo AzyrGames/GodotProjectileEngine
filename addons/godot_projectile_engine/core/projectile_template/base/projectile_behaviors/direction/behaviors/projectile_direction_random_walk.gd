@@ -17,7 +17,6 @@ func _ready() -> void:
 	pass
 
 func setup_rng(_rng: RandomNumberGenerator) -> void:
-	# print(_rng)
 	if noise_seed == 0:
 		_rng.randomize()
 	else:
@@ -78,13 +77,13 @@ func process_behavior(_value: Vector2, _component_context: Dictionary) -> Dictio
 		_noise_direction = _generate_new_noise(_component_context.get(ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR)[0])
 		match direction_modify_method:
 			DirectionModifyMethod.ROTATION:
-				_direction_behavior_values["direction_rotation"] = _noise_direction.angle()
+				_direction_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_ROTATION] = _noise_direction.angle()
 			DirectionModifyMethod.ADDITION:
-				_direction_behavior_values["direction_addition"] = _noise_direction
+				_direction_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_ADDITION] = _noise_direction
 			DirectionModifyMethod.OVERRIDE:
-				_direction_behavior_values["direction_overwrite"] = _noise_direction
+				_direction_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _noise_direction
 			_:
-				_direction_behavior_values["direction_overwrite"] = _value
+				_direction_behavior_values[ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE] = _value
 	
 
 	return _direction_behavior_values

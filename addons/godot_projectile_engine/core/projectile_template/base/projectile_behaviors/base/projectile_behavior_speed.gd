@@ -2,10 +2,10 @@ extends ProjectileBehavior
 class_name ProjectileBehaviorSpeed
 
 enum SpeedModifyMethod{
-	## Add value to the current speed
+	## Addition value to the current speed
 	ADDITION,
-	## Add value to the base speed
-	ADDITION_OVER_BASE,
+	## Addition value overtime the the current speed
+	ADDITION_OVER_TIME,
 	## Multiply value to the current speed
 	MULTIPLICATION,
 	## Multiply value to the base speed
@@ -14,8 +14,7 @@ enum SpeedModifyMethod{
 	OVERRIDE,
 }
 
-var _speed_behavior_values : Dictionary = {}
 
 func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
-	return {"speed_overwrite" : _value}
+	return {ProjectileEngine.SpeedModify.SPEED_OVERWRITE : _value}
 
