@@ -9,10 +9,10 @@
 [ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_pn7vb"]
 [ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_yaktm"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_xodb8"]
-[ext_resource type="Script" uid="uid://cw3jfu53wt4vm" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCStack2D.gd" id="10_v8awa"]
+[ext_resource type="Script" uid="uid://cw3jfu53wt4vm" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCStack2D.gd" id="10_v8awa"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="11_4tk6e"]
-[ext_resource type="Script" uid="uid://cwpsu1ih5c60x" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCShape2D.gd" id="11_twdm3"]
-[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="12_wwaa7"]
+[ext_resource type="Script" uid="uid://cwpsu1ih5c60x" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCShape2D.gd" id="11_twdm3"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="12_wwaa7"]
 
 [node name="TestPatternComposerSingle" type="Node2D"]
 

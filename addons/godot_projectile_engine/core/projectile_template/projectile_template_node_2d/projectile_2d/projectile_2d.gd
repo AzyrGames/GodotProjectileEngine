@@ -5,10 +5,12 @@ class_name Projectile2D
 signal projectile_pierced(projectile_node: Projectile2D, pierced_node: Node2D)
 signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierced_node: Node2D)
 
-
+@export var active : bool = false
 @export var speed : float = 100
 @export var direction : Vector2 = Vector2.RIGHT
 @export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var texture_rotation : float
+@export var collision_shape : CollisionShape2D
+
 # @export var pooling_amount : int = 200
 @export_group("Projectile Behavior")
 @export_subgroup("Transform")
@@ -31,7 +33,6 @@ signal projectile_instance_pierced(projectile_node: ProjectileInstance2D, pierce
 
 var projectile_node_manager : ProjectileNodeManager2D
 var projectile_node_index : int
-var active : bool = false
 
 var velocity : Vector2
 var life_time_second: float
@@ -358,8 +359,8 @@ func update_projectile_2d(delta: float) -> void:
 		_direction_rotation_value = 0
 		for _direction_behavior_rotation in _direction_behavior_rotations.values():
 			_direction_rotation_value += _direction_behavior_rotation
-		direction_rotation = base_direction_rotation + _direction_rotation_value
-	direction_final = direction_final.rotated(direction_rotation)
+		direction_rotation = base_direction_rotation + _direction_rotation_value	
+	direction_final = direction_final.rotated(direction_rotation).normalized()
 
 	speed_final = speed
 	if _speed_behavior_multiplies.size() > 0:
@@ -419,7 +420,7 @@ func process_behavior_context_request(
 				_behavior_context.get_or_add(_behavior_context_request, base_direction)
 
 			ProjectileEngine.BehaviorContext.ROTATION:
-				_behavior_context.get_or_add(_behavior_context_request, texture_rotation)
+				_behavior_context.get_or_add(_behavior_context_request, rotation)
 
 			ProjectileEngine.BehaviorContext.TEXTURE_ROTATION:
 				_behavior_context.get_or_add(_behavior_context_request, texture_rotation)
@@ -448,4 +449,3 @@ func queue_free_projectile() -> void:
 		monitorable = false
 	else:
 		queue_free()
-	pass

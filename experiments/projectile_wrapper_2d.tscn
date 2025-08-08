@@ -5,9 +5,9 @@
 [ext_resource type="Script" uid="uid://dqlixqba72p5f" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_simple_2d/projectile_template_simple_2d.gd" id="3_ae5w8"]
 [ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="4_vp2pq"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="5_wnqrh"]
-[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="6_ew38g"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="6_ew38g"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="7_l8vjd"]
-[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="8_mnskm"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="8_mnskm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0w6f3"]
 
@@ -17,7 +17,7 @@ speed = 100.0
 projectile_pooling_amount = 500
 texture = ExtResource("4_vp2pq")
 scale = Vector2(1, 1)
-rotation = 0.0
+texture_rotation = 0.0
 skew = 0.0
 texture_visible = true
 texture_z_index = 0
@@ -30,6 +30,12 @@ destroy_on_body_collide = true
 destroy_on_area_collide = true
 life_time_second_max = 10.0
 life_distance_max = 1000.0
+speed_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+texture_rotation_speed_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+life_time_second_random = Vector3(0, 0, 0)
+life_distance_random = Vector3(0, 0, 0)
 custom_data = []
 metadata/_custom_type_script = "uid://dqlixqba72p5f"
 

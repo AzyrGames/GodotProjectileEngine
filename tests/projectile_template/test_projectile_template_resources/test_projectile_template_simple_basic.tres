@@ -7,15 +7,11 @@
 
 [resource]
 script = ExtResource("1_2ijmo")
-damage = 1.0
 speed = 100.0
-life_time_second_max = 10.0
-life_distance_max = 1000.0
 projectile_pooling_amount = 500
 texture = ExtResource("2_1myb5")
-rotation = 0.0
-texture_rotate_direction = false
 scale = Vector2(1, 1)
+texture_rotation = 0.0
 skew = 0.0
 texture_visible = true
 texture_z_index = 0
@@ -23,4 +19,16 @@ texture_modulate = Color(1, 1, 1, 1)
 collision_shape = SubResource("CircleShape2D_0uclx")
 collision_layer = 1
 collision_mask = 256
+texture_rotate_direction = false
+destroy_on_body_collide = true
+destroy_on_area_collide = true
+life_time_second_max = 10.0
+life_distance_max = 1000.0
+speed_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+texture_rotation_speed_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+life_time_second_random = Vector3(0, 0, 0)
+life_distance_random = Vector3(0, 0, 0)
+custom_data = []
 metadata/_custom_type_script = "uid://dqlixqba72p5f"

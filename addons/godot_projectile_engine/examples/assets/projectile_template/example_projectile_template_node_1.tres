@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="ProjectileTemplateNode2D" load_steps=2 format=3 uid="uid://dwpqrf585p5k2"]
 
-[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/base/projectile_template_node_2d.gd" id="1_8oc52"]
+[ext_resource type="Script" uid="uid://drg85m51aqbj7" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_template_node_2d.gd" id="1_8oc52"]
 
 [resource]
 script = ExtResource("1_8oc52")
 projectile_2d_path = &"uid://elu5weic5047"
+projectile_pooling_amount = 100
+custom_data = []
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
