@@ -131,8 +131,6 @@ func spawn_pattern() -> void:
 			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
 			projectile_node_manager_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		ProjectileTemplateAdvanced2D:
-			# pattern_composer_context.speed = projectile_template_2d.speed
-			# pattern_composer_context.direction_rotation = projectile_template_2d.direction_rotation
 			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 		_:

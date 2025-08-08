@@ -122,6 +122,7 @@ script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_aswlq")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
