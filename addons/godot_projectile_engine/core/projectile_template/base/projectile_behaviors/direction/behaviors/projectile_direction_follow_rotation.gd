@@ -7,7 +7,7 @@ class_name ProjectileDirectionFollowRotation
 ## Returns required context values for this behavior
 func _request_behavior_context() -> Array[ProjectileEngine.BehaviorContext]:
 	return [
-		ProjectileEngine.BehaviorContext.ROTATION,
+		ProjectileEngine.BehaviorContext.TEXTURE_ROTATION_FINAL,
 	]
 
 
