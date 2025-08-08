@@ -449,4 +449,3 @@ func queue_free_projectile() -> void:
 		monitorable = false
 	else:
 		queue_free()
-	pass

@@ -71,6 +71,9 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.visible = true
 			_projectile_node_2d.monitoring = true
 			_projectile_node_2d.monitorable = true
+			_projectile_node_2d.life_time_second = 0.0
+			_projectile_node_2d.life_distance = 0.0
+
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
 			_projectile_node_2d.setup_projectile_2d()
 
@@ -87,9 +90,8 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.projectile_node_index = -1
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
 			_projectile_node_2d.active = true
-
-			add_child(_projectile_node_2d, true)
 			_projectile_node_2d.set_owner(self)
+			add_child(_projectile_node_2d, true)
 			active_nodes.append(_projectile_node_2d)
 			pass
 

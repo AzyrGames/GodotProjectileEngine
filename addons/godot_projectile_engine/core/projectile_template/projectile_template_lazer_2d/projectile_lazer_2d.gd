@@ -66,32 +66,42 @@ var lazer_line_2d : Line2D
 
 func _ready() -> void:
 	super()
-	setup_projectile_lazer()
 	pass
 
 
+func setup_projectile_2d() -> void:
+	init_base_properties()
+	setup_projectile_behavior()
+	update_projectile_2d(get_physics_process_delta_time())
+	setup_projectile_lazer()
+	pass
+
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if start_full_length: return
-	lazer_line_2d.clear_points()
-	match lazer_type:
-		LazerType.STRAIGHT:
-			if life_distance < lazer_length:
-				# velocity = Vector2.ZERO
-				lazer_line_2d.add_point(lazer_line_2d.position - direction_final * life_distance)
-				lazer_line_2d.add_point(lazer_line_2d.position)
-				collision_shape.global_position = global_position - direction_final * life_distance / 2
-				collision_shape.shape.size = Vector2(life_distance, collision_width)
-				collision_shape.rotation = direction_rotation
-
-			else:
-				lazer_line_2d.add_point(lazer_line_2d.position - direction_final * lazer_length)
-				lazer_line_2d.add_point(lazer_line_2d.position)
-				collision_shape.global_position = global_position - direction_final * lazer_length / 2
-				collision_shape.shape.size = Vector2(lazer_length, collision_width)
-				collision_shape.rotation = direction_rotation
-		_:
-			pass
+	if start_full_length:
+		lazer_line_2d.clear_points()
+		lazer_line_2d.add_point(lazer_line_2d.position)
+		lazer_line_2d.add_point(lazer_line_2d.position + direction.rotated(direction_rotation) * lazer_length)
+		collision_shape.global_position = global_position + direction.rotated(direction_rotation) * lazer_length / 2
+	else:
+		lazer_line_2d.clear_points()
+		match lazer_type:
+			LazerType.STRAIGHT:
+				if life_distance < lazer_length:
+					# velocity = Vector2.ZERO
+					lazer_line_2d.add_point(lazer_line_2d.position - direction_final * life_distance)
+					lazer_line_2d.add_point(lazer_line_2d.position)
+					collision_shape.global_position = global_position - direction_final * life_distance / 2
+					collision_shape.shape.size = Vector2(life_distance, collision_width)
+					collision_shape.rotation = direction_rotation
+				else:
+					lazer_line_2d.add_point(lazer_line_2d.position - direction_final * lazer_length)
+					lazer_line_2d.add_point(lazer_line_2d.position)
+					collision_shape.global_position = global_position - direction_final * lazer_length / 2
+					collision_shape.shape.size = Vector2(lazer_length, collision_width)
+					collision_shape.rotation = direction_rotation
+			_:
+				pass
 	# update_lazer_line_2d()
 	pass
 
@@ -120,6 +130,8 @@ func update_lazer_line_2d() -> void:
 	pass
 
 func setup_projectile_lazer() -> void:
+	if lazer_line_2d:
+		lazer_line_2d.queue_free()
 	lazer_line_2d = Line2D.new()
 	lazer_line_2d.texture = texture
 	lazer_line_2d.texture_mode = texture_mode
@@ -128,29 +140,26 @@ func setup_projectile_lazer() -> void:
 	lazer_line_2d.begin_cap_mode = begin_cap_mode
 	lazer_line_2d.end_cap_mode = end_cap_mode
 	lazer_line_2d.width = lazer_width
-	lazer_line_2d.owner = owner
 	add_child(lazer_line_2d, true)
 	lazer_line_2d.clear_points()
+	if !collision_shape:
+		var _new_collision_shape = CollisionShape2D.new()
+		add_child(_new_collision_shape)
+		collision_shape = _new_collision_shape
 	match lazer_type:
 		LazerType.STRAIGHT:
-			collision_shape = CollisionShape2D.new()
 			var _rect_shape = RectangleShape2D.new()
 			collision_shape.shape = _rect_shape
-			# lazer_line_2d.add_point(lazer_line_2d.position)
 			if start_full_length:
+				lazer_line_2d.add_point(lazer_line_2d.position)
 				lazer_line_2d.add_point(lazer_line_2d.position + direction.rotated(direction_rotation) * lazer_length)
-				collision_shape.global_position = direction.rotated(direction_rotation) * lazer_length / 2
-				# collision_shape.shape.size = Vector2(lazer_length, collision_width)
-				collision_shape.rotation = direction_rotation
+				collision_shape.shape.size = Vector2(lazer_length, lazer_width) * 0.8
+				collision_shape.global_position = global_position + direction.rotated(direction_rotation) * lazer_length / 2
 			else:
-				# collision_shape.global_position = 
+				collision_shape.position = global_position
 				collision_shape.shape.size = Vector2(1, collision_width)
 
+			collision_shape.rotation = direction_rotation
 		_:
 			pass
-	
-
-
-	add_child(collision_shape)
-	# collision_shape.shape.
 	pass
