@@ -7,15 +7,11 @@
 
 [resource]
 script = ExtResource("1_oaa8f")
-damage = 1.115
 speed = 99.77
-life_time_second_max = 10.72
-life_distance_max = 999.165
 projectile_pooling_amount = 2065
 texture = ExtResource("2_sdsjo")
-rotation = 0.0
-texture_rotate_direction = true
 scale = Vector2(1.195, 1.195)
+texture_rotation = 0.0
 skew = 9.0
 texture_visible = true
 texture_z_index = 5
@@ -23,4 +19,16 @@ texture_modulate = Color(1, 1, 0.286275, 1)
 collision_shape = SubResource("CapsuleShape2D_oaa8f")
 collision_layer = 2080
 collision_mask = 288
+texture_rotate_direction = true
+destroy_on_body_collide = true
+destroy_on_area_collide = true
+life_time_second_max = 10.72
+life_distance_max = 999.165
+speed_random = Vector3(0, 0, 0)
+texture_rotation_random = Vector3(0, 0, 0)
+texture_rotation_speed_random = Vector3(0, 0, 0)
+scale_random = Vector3(0, 0, 0)
+life_time_second_random = Vector3(0, 0, 0)
+life_distance_random = Vector3(0, 0, 0)
+custom_data = []
 metadata/_custom_type_script = "uid://dqlixqba72p5f"

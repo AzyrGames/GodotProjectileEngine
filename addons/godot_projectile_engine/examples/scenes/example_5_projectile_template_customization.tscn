@@ -6,9 +6,9 @@
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="4_eu0xx"]
 [ext_resource type="Resource" uid="uid://d0p8da37u5h8r" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_custom_customize.tres" id="4_gbt36"]
 [ext_resource type="Resource" uid="uid://b7g7afg6kf4pg" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_node_customize.tres" id="5_gbt36"]
-[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="5_pnh5e"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="5_pnh5e"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="6_7fuhw"]
-[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_repeater.gd" id="7_pk87e"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="7_pk87e"]
 [ext_resource type="AudioStream" uid="uid://b7ka75wcwrtcq" path="res://addons/godot_projectile_engine/examples/assets/audio/laserShoot.wav" id="10_1qu44"]
 
 [node name="Example1FirstProjectile" type="Node2D"]

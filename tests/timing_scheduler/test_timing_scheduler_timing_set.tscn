@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_0nwu1"]
 [ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_1g5yw"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="4_yyk0s"]
-[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/projectile_pattern_composer/PCCSingle2D.gd" id="5_i8etg"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="5_i8etg"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="6_kaw6m"]
-[ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/tsc_timing_set.gd" id="7_0nwu1"]
-[ext_resource type="Script" uid="uid://ssup2p0b2bqp" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler_component/tsc_timing_set/timing_set.gd" id="8_1g5yw"]
+[ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_set/tsc_timing_set.gd" id="7_0nwu1"]
+[ext_resource type="Script" uid="uid://ssup2p0b2bqp" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_set/base/timing_set.gd" id="8_1g5yw"]
 
 [sub_resource type="Resource" id="Resource_yyk0s"]
 script = ExtResource("8_1g5yw")
