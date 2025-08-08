@@ -8,3 +8,4 @@ class_name PatternComposerData
 @export var texture_rotation: float = 0.0
 @export var direction_rotation: float = 0.0
 @export var scale: Vector2 = Vector2.ONE
+var projectile_spawn_marker : ProjectileSpawnMarker2D = null
