@@ -52,42 +52,72 @@ func _physics_process(delta: float) -> void:
 ## return a new Array[PatternComposerData]
 func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
 	## Init pattern composer pack
-	_init_pattern_composer_data = PatternComposerData.new()
+	# _init_pattern_composer_data = PatternComposerData.new()
 	## Check if can using ProjectileSpawnMarker2Ds
 	_use_projectile_spawn_marker = false
-	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_makers.size() > 0:
-		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
-			if _projectile_spawn_maker.active:
+	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_markers.size() > 0:
+		for _projectile_spawn_marker in _pattern_composer_context.projectile_spawn_markers:
+			if _projectile_spawn_marker.active:
 				_use_projectile_spawn_marker = true
 
 	if _use_projectile_spawn_marker:
 		if !pattern_composer_dict.has(_pattern_composer_context.projectile_spawner):
 			pattern_composer_dict[_pattern_composer_context.projectile_spawner] = [] as Array[PatternComposerData]
 		var _pattern_composer_spawner : Array = pattern_composer_dict.get(_pattern_composer_context.projectile_spawner)
-		## Todo make this not update every ticks
-		_pattern_composer_spawner.clear()
-		for _projectile_spawn_maker in _pattern_composer_context.projectile_spawn_makers:
-			if !_projectile_spawn_maker.active:
-				continue
-			_new_composer_data = _init_pattern_composer_data.duplicate()
-			_new_composer_data.projectile_spawn_marker = _projectile_spawn_maker
-			if _projectile_spawn_maker.use_global_position:
-				_new_composer_data.position =  _projectile_spawn_maker.global_position
-			else:
-				_new_composer_data.position =  _projectile_spawn_maker.position
-			_pattern_composer_spawner.append(_new_composer_data)
+		var _erase_list : Array = []
+		for _composer_data in _pattern_composer_spawner:
+			if _composer_data.projectile_spawn_marker == null:
+				_erase_list.append(_composer_data)
+		if _erase_list.size() > 0:
+			for thing in _erase_list:
+				_pattern_composer_spawner.erase(thing)
+		if _pattern_composer_spawner.size() <= 0:
+			for _projectile_spawn_marker in _pattern_composer_context.projectile_spawn_markers:
+				if !_projectile_spawn_marker.active:
+					continue
+				_new_composer_data = PatternComposerData.new()
+				_new_composer_data.projectile_spawn_marker = _projectile_spawn_marker
+				if _projectile_spawn_marker.use_global_position:
+					_new_composer_data.position =  _projectile_spawn_marker.global_position
+				else:
+					_new_composer_data.position =  _projectile_spawn_marker.position
+				_pattern_composer_spawner.append(_new_composer_data)
+		else:
+			for _composer_data in _pattern_composer_spawner:
+				if _composer_data.projectile_spawn_marker.use_global_position:
+					_composer_data.position =  _composer_data.projectile_spawn_marker.global_position
+				else:
+					_composer_data.position =  _composer_data.projectile_spawn_marker.position
+
 	else:
 		if _pattern_composer_context.use_spawn_markers:
 			push_warning("No active ProjectileSpawnMarker2D was found! Fallback to use ProjectileSpawner2D position")
 		if !pattern_composer_dict.has(_pattern_composer_context.projectile_spawner):
 			pattern_composer_dict[_pattern_composer_context.projectile_spawner] = [] as Array[PatternComposerData]
 		var _pattern_composer_spawner : Array[PatternComposerData] = pattern_composer_dict.get(_pattern_composer_context.projectile_spawner)
-		_pattern_composer_spawner.clear()
-		_init_pattern_composer_data.position = _pattern_composer_context.projectile_spawner.global_position
-		_pattern_composer_spawner.append(_init_pattern_composer_data)
+		var _erase_list : Array = []
+		for _composer_data in _pattern_composer_spawner:
+			if _composer_data.projectile_spawn_marker != null:
+				_erase_list.append(_composer_data)
+		if _erase_list.size() > 0:
+			for thing in _erase_list:
+				_pattern_composer_spawner.erase(thing)
+				# _pattern_composer_spawner.size()
+			# print(_pattern_composer_spawner.size())
+		print(_pattern_composer_spawner.size())
+		if _pattern_composer_spawner.size() <= 0:
+			_new_composer_data = PatternComposerData.new()
+			_new_composer_data.position = _pattern_composer_context.projectile_spawner.global_position
+			_pattern_composer_spawner.append(_new_composer_data)
+			pattern_composer_dict[_pattern_composer_context.projectile_spawner] = _pattern_composer_spawner
 
+		else:
+			for _composer_data in _pattern_composer_spawner:
+				_composer_data.position = _pattern_composer_context.projectile_spawner.global_position
+		
+		
 	_new_pattern_composer_pack = pattern_composer_dict.get(_pattern_composer_context.projectile_spawner)
-
+	print(_use_projectile_spawn_marker)
 	## Process Pattern composer component
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
