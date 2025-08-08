@@ -122,10 +122,6 @@ script = ExtResource("2_0pwon")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_aswlq")
 timing_scheduler = NodePath("../TimingScheduler")
-<<<<<<< HEAD
-use_spawn_markers = true
-=======
->>>>>>> e93d3d8 (Improve core logics and add more randomness options (#202))
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
 [node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D5"]
@@ -145,11 +141,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSingle2D" type="Node" parent="PatternComposer2D"]
 script = ExtResource("8_03f2f")
-<<<<<<< HEAD
-rotation_speed = 12.0
-rotation_process_mode = 1
-=======
->>>>>>> e93d3d8 (Improve core logics and add more randomness options (#202))
 metadata/_custom_type_script = "uid://co24jiat0y46s"
 
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D"]
@@ -175,10 +166,6 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("8_7fo6p")
-<<<<<<< HEAD
-duration = 0.2
-=======
->>>>>>> e93d3d8 (Improve core logics and add more randomness options (#202))
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
