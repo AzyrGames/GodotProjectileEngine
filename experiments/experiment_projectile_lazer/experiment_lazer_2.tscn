@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cqvoigq2fteqh"]
 
-[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_lazer_2d/projectile_lazer_2d.gd" id="1_nicws"]
+[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_laser_2d/projectile_laser_2d.gd" id="1_nicws"]
 [ext_resource type="Texture2D" uid="uid://crco3hx7cevvm" path="res://experiments/Asset/Sprite-0002.png" id="2_76co1"]
 [ext_resource type="Script" uid="uid://d1jrqiont4u2h" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_2d.gd" id="3_pnnvp"]
 [ext_resource type="Texture2D" uid="uid://dsuqrnrd06d73" path="res://experiments/Asset/Sprite-0001.png" id="4_nnncl"]
@@ -37,7 +37,7 @@ texture = ExtResource("4_nnncl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile2D"]
 
-[node name="ProjectileLazer2D" type="Area2D" parent="."]
+[node name="ProjectileLaser2D" type="Area2D" parent="."]
 position = Vector2(0, 64)
 script = ExtResource("1_nicws")
 texture = ExtResource("2_76co1")

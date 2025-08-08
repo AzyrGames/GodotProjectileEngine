@@ -90,8 +90,8 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.projectile_node_index = -1
 			_projectile_node_2d.apply_pattern_composer_data(_pattern_composer_data)
 			_projectile_node_2d.active = true
-			_projectile_node_2d.set_owner(self)
 			add_child(_projectile_node_2d, true)
+			_projectile_node_2d.set_owner(self)
 			active_nodes.append(_projectile_node_2d)
 			pass
 

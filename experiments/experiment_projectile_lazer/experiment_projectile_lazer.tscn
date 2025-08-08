@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="8_dsrhf"]
 [ext_resource type="Script" uid="uid://ub1inehdx3gs" path="res://experiments/experiment_projectile_template/area_2d.gd" id="9_as2rn"]
 [ext_resource type="Texture2D" uid="uid://br7k1haa6x0kp" path="res://addons/godot_projectile_engine/icon_color.png" id="10_o6y13"]
-[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_lazer_2d/projectile_lazer_2d.gd" id="11_wcq1m"]
+[ext_resource type="Script" uid="uid://cpgm6rw00lcfm" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_node_2d/projectile_laser_2d/projectile_lazer_2d.gd" id="11_wcq1m"]
 
 [sub_resource type="Gradient" id="Gradient_td4cq"]
 offsets = PackedFloat32Array(0)
@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://drg85m51aqbj7"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nmnmq"]
 size = Vector2(20, 196)
 
-[node name="ExperimentProjectileLazer" type="Node2D"]
+[node name="ExperimentProjectileLaser" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -97,7 +97,7 @@ position = Vector2(331.75, 16.5)
 scale = Vector2(0.0209961, 0.196289)
 texture = ExtResource("10_o6y13")
 
-[node name="ProjectileLazer2D" type="Area2D" parent="."]
+[node name="ProjectileLaser2D" type="Area2D" parent="."]
 script = ExtResource("11_wcq1m")
 texture = ExtResource("10_o6y13")
 metadata/_custom_type_script = "uid://cpgm6rw00lcfm"
