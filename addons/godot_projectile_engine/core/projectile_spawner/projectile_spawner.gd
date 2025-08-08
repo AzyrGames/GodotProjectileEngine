@@ -21,7 +21,7 @@ signal scheduler_completed
 
 var projectile_area : RID
 
-var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
+var projectile_spawn_markers : Array[ProjectileSpawnMarker2D]
 
 var projectile_composer : PatternComposer2D
 var pattern_composer_context : PatternComposerContext
@@ -119,10 +119,10 @@ func spawn_pattern() -> void:
 	pattern_composer_context.position = global_position
 	pattern_composer_context.projectile_template_2d = projectile_template_2d
 	if use_spawn_markers:
-		setup_spawn_maker()
-		pattern_composer_context.projectile_spawn_makers = projectile_spawn_makers
+		setup_spawn_marker()
+		pattern_composer_context.projectile_spawn_markers = projectile_spawn_markers
 	else:
-		pattern_composer_context.projectile_spawn_makers.clear()
+		pattern_composer_context.projectile_spawn_markers.clear()
 
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
@@ -226,11 +226,11 @@ func create_projectile_node_manager_2d() -> void:
 	pass
 
 
-func setup_spawn_maker() -> void:
-	projectile_spawn_makers.clear()
+func setup_spawn_marker() -> void:
+	projectile_spawn_markers.clear()
 	for child : Node in get_children():
 		if child is ProjectileSpawnMarker2D:
-			projectile_spawn_makers.append(child)
+			projectile_spawn_markers.append(child)
 
 
 func deactive_projectile_spanwer() -> void:

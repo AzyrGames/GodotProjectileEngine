@@ -11,4 +11,4 @@ var projectile_template_2d : ProjectileTemplate2D
 
 var projectile_spawner : ProjectileSpawner2D
 var use_spawn_markers : bool
-var projectile_spawn_makers : Array[ProjectileSpawnMarker2D]
+var projectile_spawn_markers : Array[ProjectileSpawnMarker2D]
