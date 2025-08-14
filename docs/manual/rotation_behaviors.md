@@ -1,11 +1,13 @@
 # Rotation Behaviors
+
+[ProjectileBehaviorRotation](manual/rotation_behaviors.md) is a [Projectile Behavior](manual/projectile_behaviors_overview.md) that modify the projectile's rotation, specifically Texture Rotation.
 ## Components
 - [ProjectileRotationCurve](#projectilerotationcurve)
 - [ProjectileRotationExpression](#projectilerotationexpression)
 - [ProjectileRotationFollowDirection](#projectilerotationfollowdirection)
 - [ProjectileRotationModify](#projectilerotationmodify)
 - [ProjectileRotationSet](#projectilerotationset)
-Rotation behaviors modify the projectile's rotation over time.
+
 ## ProjectileRotationCurve
 Modifies rotation based on a curve.
 ## Properties

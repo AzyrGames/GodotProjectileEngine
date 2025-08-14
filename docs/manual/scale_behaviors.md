@@ -1,4 +1,7 @@
 # Scale Behaviors
+
+[ProjectileBehaviorScale](manual/scale_behaviors.md) is a [Projectile Behavior](manual/projectile_behaviors_overview.md) that modify the projectile's scale.
+
 ## Components
 - [ProjectileScaleAccelerate](#projectilescaleaccelerate)
 - [ProjectileScaleCurve](#projectilescalecurve)
@@ -6,7 +9,7 @@
 - [ProjectileScaleVectorAccelerate](#projectilescalevectoraccelerate)
 - [ProjectileScaleModify](#projectilescalemodify)
 - [ProjectileScaleVectorExpression](#projectilescalevectorexpression)
-Scale behaviors modify the projectile's scale over time.
+
 ## ProjectileScaleAccelerate
 Accelerates the projectile's scale.
 ## Properties

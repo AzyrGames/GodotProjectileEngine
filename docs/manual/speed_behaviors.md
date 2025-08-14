@@ -12,15 +12,20 @@
 
 ## Properties
 
-### LoopMethod
+### SpeedModifyMethod
+
 ```gdscript
-enum LoopMethod {
-	## Play curve once and keep final value
-	ONCE_AND_DONE,
-	## Loop curve from start to end repeatedly
-	LOOP_FROM_START, 
-	## Play forward then backward (ping-pong)
-	LOOP_FROM_END,
+enum SpeedModifyMethod{
+	## Addition value to the current speed
+	ADDITION,
+	## Addition value overtime the the current speed
+	ADDITION_OVER_TIME,
+	## Multiply value to the current speed
+	MULTIPLICATION,
+	## Multiply value to the base speed
+	MULTIPLICATION_OVER_BASE,
+	## Override the current speed
+	OVERRIDE,
 }
 ```
 
@@ -47,7 +52,7 @@ Modifies speed based on a curve.
 |------|---------------|----------------|--------------|
 | Curve | `curve` | Curve | Resource defining speed over time |
 | Speed Curve Sample Method | `speed_curve_sample_method` | String | Sampling value (time/distance) |
-| Speed Modify Method | `speed_modify_method` | String | How curve modifies speed (add/override) |
+| Speed Modify Method | `speed_modify_method` | [SpeedModifyMethod](#SpeedModifyMethod) | How curve modifies speed (add/override) |
 
 
 ## ProjectileSpeedExpression
@@ -56,7 +61,7 @@ Modifies speed using mathematical expressions.
 | Name | Variable Name | Variable Types | Descriptions |
 |------|---------------|----------------|--------------|
 | Speed Expression Sample Method | `speed_expression_sample_method` | String | Value for expression variable |
-| Speed Modify Method | `speed_modify_method` | String | How expression modifies speed |
+| Speed Modify Method | `speed_modify_method` | [SpeedModifyMethod](#SpeedModifyMethod) | How expression modifies speed |
 | Expression Strength | `expression_strength` | float | Strength of expression effect |
 | Speed Expression Variable | `speed_expression_variable` | String | Variable name (default 't') |
 | Speed Expression | `speed_expression` | String | Mathematical expression (e.g., `100 * sin(t)`) |
@@ -66,7 +71,7 @@ Modifies speed by a fixed value.
 | Name | Variable Name | Variable Types | Descriptions |
 |------|---------------|----------------|--------------|
 | Speed Modify Value | `speed_modify_value` | float | Value to modify speed |
-| Speed Modify Method | `speed_modify_method` | String | Modification method (addition/override) |
+| Speed Modify Method | `speed_modify_method` | [SpeedModifyMethod](#SpeedModifyMethod) | Modification method (addition/override) |
 ## ProjectileSpeedSet
 Sets speed to a specific value.
 

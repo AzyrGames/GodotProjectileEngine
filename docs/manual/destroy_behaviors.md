@@ -1,11 +1,14 @@
 # Destroy Behaviors
+
+[ProjectileBehaviorDestroy](manual/destroy_behaviors.md) is a [Projectile Behavior](manual/projectile_behaviors_overview.md) that define conditions under which a projectile should be destroyed.
+
 ## Components
 - [ProjectileDestroyBoundary](#projectiledestroyboundary)
 - [ProjectileDestroyCollision](#projectiledestroycollision)
 - [ProjectileDestroyImmediate](#projectiledestroyimmediate)
 - [ProjectileDestroyLifeDistance](#projectiledestroylifedistance)
 - [ProjectileDestroyLifeTime](#projectiledestroylifetime)
-Destroy behaviors define conditions under which a projectile should be destroyed.
+
 ## ProjectileDestroyBoundary
 Destroys projectiles when they enter or leave a ProjectileBoundary2D.
 ## Properties
