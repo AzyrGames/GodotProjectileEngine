@@ -1,20 +1,38 @@
 # Speed Behaviors
+
+[ProjectileBehaviorSpeed](manual/speed_behaviors.md) is a [Projectile Behavior](manual/projectile_behaviors_overview.md) that modify the projectile's speed.
+
 ## Components
-- [ProjectileSpeedAccelerate](#projectilespeedaccelerate)
+- [ProjectileSpeedAcceleration](#ProjectileSpeedAcceleration)
 - [ProjectileSpeedClamp](#projectilespeedclamp)
 - [ProjectileSpeedCurve](#projectilespeedcurve)
 - [ProjectileSpeedExpression](#projectilespeedexpression)
 - [ProjectileSpeedModify](#projectilespeedmodify)
 - [ProjectileSpeedSet](#projectilespeedset)
-Speed behaviors modify the projectile's speed over time.
-## ProjectileSpeedAccelerate
-Accelerates the projectile's speed.
+
+## Properties
+
+### LoopMethod
+```gdscript
+enum LoopMethod {
+	## Play curve once and keep final value
+	ONCE_AND_DONE,
+	## Loop curve from start to end repeatedly
+	LOOP_FROM_START, 
+	## Play forward then backward (ping-pong)
+	LOOP_FROM_END,
+}
+```
+
+## ProjectileSpeedAcceleration
+Accelerates the projectile's speed to the max value.
 
 | Name | Variable Name | Variable Types | Descriptions |
 |------|---------------|----------------|--------------|
 | Speed Accelerate | `speed_accelerate` | float | Acceleration rate in units/sec² |
-| Speed Min | `speed_min` | float | Minimum speed limit |
 | Speed Max | `speed_max` | float | Maximum speed limit |
+
+
 ## ProjectileSpeedClamp
 Clamps the projectile's speed within a range.
 
@@ -30,6 +48,8 @@ Modifies speed based on a curve.
 | Curve | `curve` | Curve | Resource defining speed over time |
 | Speed Curve Sample Method | `speed_curve_sample_method` | String | Sampling value (time/distance) |
 | Speed Modify Method | `speed_modify_method` | String | How curve modifies speed (add/override) |
+
+
 ## ProjectileSpeedExpression
 Modifies speed using mathematical expressions.
 

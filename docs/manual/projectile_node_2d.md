@@ -1,17 +1,8 @@
-# ProjectileTemplateNode2D
-## Components
-- [ProjectileTemplateNode2D](#projectiletemplatenode2d) - Base template for scene-based projectiles
-- [Projectile2D](#projectile2d-properties) - Core implementation for custom projectile scenes
-- [ProjectileLaser2D](#projectilelaser2d-properties) - Specialized laser beam implementation
+# Projectile Node 2D
 
-The ProjectileTemplateNode2D class is a projectile template that uses a separate scene to define the projectile's appearance and behavior. It extends the ProjectileTemplate2D class and provides the following properties:
+Projectile Node 2D including [Projectile2D](#Projectile2D) and [ProjectileLaser2D](#ProjectileLaser2D) are Node2D Scene that can use [Projectile]
 
-| Name | Variable Name | Variable Types | Descriptions |
-|------|---------------|----------------|--------------|
-| Projectile 2D Path | `projectile_2d_path` | StringName | Path to Projectile2D Scene |
-| Projectile Pooling Amount | `projectile_pooling_amount` | int | Number of projectiles to preload in object pool |
-
-## Projectile2D Properties
+## Projectile2D
 Core projectile properties defined in the Projectile2D scene:
 
 | Name | Variable Name | Variable Types | Descriptions |
@@ -66,5 +57,3 @@ Extended properties for laser-type projectiles:
 | Width Curve | `width_curve` | Curve | Width variation along beam |
 | Begin Cap | `begin_cap_mode` | Line2D.LineCapMode | Start cap style |
 | End Cap | `end_cap_mode` | Line2D.LineCapMode | End cap style |
----
-[Back to Documentation Index](_sidebar.md)

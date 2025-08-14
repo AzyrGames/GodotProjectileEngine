@@ -1,5 +1,7 @@
 # ProjectileTemplateCustom2D
-The ProjectileTemplateCustom2D class is a custom projectile template that allows for defining custom behaviors using ProjectileBehaviors. It extends the ProjectileTemplate2D class and provides the following properties:
+The ProjectileTemplateCustom2D class is a custom projectile template that allows for defining custom behaviors using ProjectileBehaviors. 
+
+It extends the [ProjectileTemplate2D](manual/projectile_template.md) class and provides the following properties:
 
 | Name | Variable Name | Variable Types | Descriptions |
 |------|---------------|----------------|--------------|
@@ -37,5 +39,6 @@ The ProjectileTemplateCustom2D class is a custom projectile template that allows
 | Speed Random | `speed_random` | Vector3 | Random variation for speed |
 | Texture Rotation Random | `texture_rotation_random` | Vector3 | Random variation for texture rotation |
 | Scale Random | `scale_random` | Vector3 | Random variation for scale |
+
 ---
-[Back to Documentation Index](_sidebar.md)
+[Back to Projectile Templates Overview](/manual/projectile_template_overview.md)

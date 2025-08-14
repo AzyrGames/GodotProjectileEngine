@@ -10,7 +10,7 @@
 > **Alpha Notice (0.5.x-alpha)**  
 > This version contains many bugs and frequent breaking changes and is not recommended for production use.
 
-## Showcases
+## ✨Showcases
 <img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-093611_hyprshot.png?raw=true" /> <img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-094046_hyprshot.png?raw=true" />
 
 
@@ -52,7 +52,7 @@
 5. **Restart editor**
 
 ### Manual Installation
-1. Download [latest version](https://github.com/AzyrGames/GodotProjectileEngine/releases/tag/v0.5.1-alpha)
+1. Download [latest version](https://github.com/AzyrGames/GodotProjectileEngine/releases)
 2. Extract the ZIP or tar.gz archive
 3. Copy `/addons/godot_projectile_engine` folder
 4. Paste into your project's `/addons` directory
@@ -83,8 +83,9 @@ Create a basic projectile system in 5 steps:
 
 6. **Optional**: Add `Camera2D` for better viewing
 
-**Test**: Run the scene to see projectiles in action!
-**Explore**: See advanced examples in `addons/godot_projectile_engine/examples/`
+Run the scene to see projectiles in action!
+
+**Explore**: See more examples in `addons/godot_projectile_engine/examples/`
 
 ## Documentation
 *Work in Progress*  

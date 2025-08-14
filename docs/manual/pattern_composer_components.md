@@ -58,7 +58,12 @@ The `PCCSingle2D` component sets the direction and rotation for each incoming Pa
 | Rotation Speed | rotation_speed | float | Rotation speed in degrees |
 | Target Groups | target_groups | Array[String] | Array of target group names |
 ## PCCSpeedMod2D
-The `PCCSpeedMod2D` component modifies the speed of projectiles. It extends the `PatternComposerComponent` class.
+The `PCCSpeedMod2D` component modifies the speed of projectiles.
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Speed Modifier | `speed_modifier` | float | Multiplier applied to projectile speed |
+| Speed Modifier Random | `speed_modifier_random` | float | Random variation for speed modifier |
 ## PCCSpread2D
 The `PCCSpread2D` component generates a spread of projectiles.
 
