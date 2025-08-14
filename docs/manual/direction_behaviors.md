@@ -9,32 +9,44 @@ Direction behaviors modify the projectile's direction over time.
 ## ProjectileDirectionCurve2D
 Modifies direction based on a Curve2D resource.
 ## Properties
-- **curve_2d**: Curve2D resource defining the path
-- **curve_strenght**: Strength of the curve effect
-- **direction_curve_sample_method**: Value to use for sampling (time/distance)
-- **direction_modify_method**: How curve modifies direction (add/override)
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Curve 2D | `curve_2d` | Curve2D | Resource defining the path |
+| Curve Strength | `curve_strength` | float | Strength of the curve effect |
+| Direction Curve Sample Method | `direction_curve_sample_method` | String | Value to use for sampling (time/distance) |
+| Direction Modify Method | `direction_modify_method` | String | How curve modifies direction (add/override) |
 ## ProjectileDirectionExpression
 Modifies direction using mathematical expressions.
 ## Properties
-- **direction_expression_sample_method**: Value for expression variable
-- **direction_modify_method**: How expression modifies direction
-- **expression_streght**: Expression strength
-- **direction_expression_variable**: Variable name (default 't')
-- **direction_x_expression**: X-direction expression (e.g., `cos(t)`)
-- **direction_y_expression**: Y-direction expression (e.g., `sin(t)`)
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Direction Expression Sample Method | `direction_expression_sample_method` | String | Value for expression variable |
+| Direction Modify Method | `direction_modify_method` | String | How expression modifies direction |
+| Expression Strength | `expression_streght` | float | Strength of the expression effect |
+| Direction Expression Variable | `direction_expression_variable` | String | Variable name (default 't') |
+| Direction X Expression | `direction_x_expression` | String | X-direction expression (e.g., `cos(t)`) |
+| Direction Y Expression | `direction_y_expression` | String | Y-direction expression (e.g., `sin(t)`) |
 ## ProjectileDirectionFollowRotation
 Makes direction follow projectile rotation.
 ## ProjectileDirectionModify
 Modifies direction by a fixed value.
 ## Properties
-- **direction_modify_value**: Value to modify direction
-- **direction_modify_method**: Modification method (rotation/addition/override)
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Direction Modify Value | `direction_modify_value` | float | Value to modify direction |
+| Direction Modify Method | `direction_modify_method` | String | Modification method (rotation/addition/override) |
 ## ProjectileDirectionRandomWalk
 Modifies direction with random noise.
 ## Properties
-- **noise_strength**: Strength of noise
-- **noise_frequency**: Noise frequency
-- **noise_seed**: Seed for noise generation
-- **direction_modify_method**: How noise modifies direction
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Noise Strength | `noise_strength` | float | Strength of noise |
+| Noise Frequency | `noise_frequency` | float | Noise frequency |
+| Noise Seed | `noise_seed` | int | Seed for noise generation |
+| Direction Modify Method | `direction_modify_method` | String | How noise modifies direction |
 ---
 [Back to Documentation Index](_sidebar.md)

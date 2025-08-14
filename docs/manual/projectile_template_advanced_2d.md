@@ -1,52 +1,59 @@
 # ProjectileTemplateAdvanced2D
 The ProjectileTemplateAdvanced2D class is an advanced projectile template that provides more projectile behavior options. It extends the ProjectileTemplate2D class and provides the following properties:
-- **speed**: The movement speed of the projectile in pixels per second.
-- **projectile_pooling_amount**: The number of projectiles to preload in the object pool for better performance.
-- **texture**: The Projectile Instance Texture.
-- **scale**: The Projectile Instance Scale.
-- **texture_rotation**: The initial rotation of the texture in degrees.
-- **skew**: Skew/shear effect applied to texture (-89.9 to 89.9 degrees).
-- **texture_visible**: Toggles visibility of the projectile's texture.
-- **texture_z_index**: Render layer for the texture (higher values render on top).
-- **texture_modulate**: Color modulation applied to the texture (RGBA).
-- **collision_shape**: Collision shape used for physics detection.
-- **collision_layer**: Physics layers this projectile can collide with (bitmask).
-- **collision_mask**: Physics layers that can detect collisions with this projectile (bitmask).
-- **speed_acceleration**: Acceleration rate in units per second squared (how quickly speed increases).
-- **speed_max**: Maximum speed the projectile can reach (in units per second).
-- **direction_rotation**: Initial direction of the projectile in degrees.
-- **direction_rotation_speed**: Speed at which the projectile rotates its direction.
-- **direction_follow_rotation**: If true, direction will rotate to match projectile's texture rotation.
-- **texture_rotation_speed**: Speed at which the projectile rotates its texture.
-- **rotation_follow_direction**: If true, texture rotation will rotate to match projectile's direction.
-- **scale_acceleration**: Acceleration rate in units per second squared (how quickly scale increases).
-- **scale_max**: Maximum scale the projectile can reach.
-- **is_use_homing**: If true, the projectile will home towards a target.
-- **target_group**: Group name to target.
-- **steer_speed**: Speed at which the projectile steers toward target (radians per second).
-- **homing_strength**: Strength of homing effect (0.0 to 1.0).
-- **max_homing_distance**: Maximum distance at which homing is active (0 = unlimited).
-- **destroy_on_body_collide**: Destroy when collided with a body.
-- **destroy_on_area_collide**: Destroy when collided with a area.
-- **life_time_second_max**: Maximum lifetime of projectile in seconds before it's automatically destroyed.
-- **life_distance_max**: Maximum travel distance in pixels before projectile is automatically destroyed.
-- **is_use_trigger**: If true, the projectile will trigger an event.
-- **trigger_name**: Name of the trigger to activate.
--   **trigger_amount**: Amount of trigger to activate.
--   **trigger_life_time**: The trigger life time.
--   **trigger_life_distance**: The trigger life distance.
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Speed | `speed` | float | Movement speed in pixels per second |
+| Projectile Pooling Amount | `projectile_pooling_amount` | int | Number of projectiles to preload in object pool |
+| Texture | `texture` | Texture2D | Projectile instance texture |
+| Scale | `scale` | Vector2 | Projectile instance scale |
+| Texture Rotation | `texture_rotation` | float | Initial texture rotation in degrees |
+| Skew | `skew` | float | Skew/shear effect (-89.9 to 89.9 degrees) |
+| Texture Visible | `texture_visible` | bool | Toggles texture visibility |
+| Texture Z Index | `texture_z_index` | int | Render layer for texture |
+| Texture Modulate | `texture_modulate` | Color | Color modulation (RGBA) |
+| Collision Shape | `collision_shape` | Shape2D | Collision shape for physics detection |
+| Collision Layer | `collision_layer` | int | Physics layers for collisions (bitmask) |
+| Collision Mask | `collision_mask` | int | Physics layers to detect collisions (bitmask) |
+| Speed Acceleration | `speed_acceleration` | float | Acceleration rate (units/sec²) |
+| Max Speed | `speed_max` | float | Maximum speed (units/sec) |
+| Direction Rotation | `direction_rotation` | float | Initial direction in degrees |
+| Direction Rotation Speed | `direction_rotation_speed` | float | Rotation speed of direction (degrees/sec) |
+| Direction Follow Rotation | `direction_follow_rotation` | bool | Match direction to texture rotation |
+| Texture Rotation Speed | `texture_rotation_speed` | float | Rotation speed of texture (degrees/sec) |
+| Rotation Follow Direction | `rotation_follow_direction` | bool | Match texture rotation to direction |
+| Scale Acceleration | `scale_acceleration` | float | Acceleration rate for scale (units/sec²) |
+| Max Scale | `scale_max` | Vector2 | Maximum scale the projectile can reach (as Vector2) |
+| Use Homing | `is_use_homing` | bool | Enable target homing behavior |
+| Target Group | `target_group` | String | Group name to target |
+| Steer Speed | `steer_speed` | float | Steering speed (radians/sec) |
+| Homing Strength | `homing_strength` | float | Homing effect strength (0.0-1.0) |
+| Max Homing Distance | `max_homing_distance` | float | Maximum active homing distance (0=unlimited) |
+| Destroy on Body Collide | `destroy_on_body_collide` | bool | Destroy on body collision |
+| Destroy on Area Collide | `destroy_on_area_collide` | bool | Destroy on area collision |
+| Max Lifetime | `life_time_second_max` | float | Maximum lifetime in seconds |
+| Max Life Distance | `life_distance_max` | float | Maximum travel distance in pixels |
+| Use Trigger | `is_use_trigger` | bool | Enable trigger events |
+| Trigger Name | `trigger_name` | String | Name of the trigger to activate |
+| Trigger Amount | `trigger_amount` | int | Amount of trigger to activate |
+| Trigger Life Time | `trigger_life_time` | float | Trigger lifetime duration (seconds) |
+| Trigger Life Distance | `trigger_life_distance` | float | Trigger lifetime distance (pixels) |
+
 It also provides random variation properties:
--   **speed_random**: Random variation for speed.
--   **speed_acceleration_random**: Random variation for speed acceleration.
--   **speed_max_random**: Random variation for speed max.
--   **texture_rotation_random**: Random variation for texture rotation.
--   **texture_rotation_speed_random**: Random variation for texture rotation speed.
--   **direction_rotation_random**: Random variation for direction rotation.
--   **direction_rotation_speed_random**: Random variation for direction rotation speed.
--   **scale_random**: Random variation for scale.
--   **scale_max_random**: Random variation for scale max.
--   **scale_acceleration_random**: Random variation for scale acceleration.
--   **life_time_second_random**: Random variation for lifetime.
--   **life_distance_random**: Random variation for life distance.
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Speed Random | `speed_random` | Vector3 | Random variation for speed |
+| Speed Acceleration Random | `speed_acceleration_random` | Vector3 | Random variation for speed acceleration |
+| Max Speed Random | `speed_max_random` | Vector3 | Random variation for maximum speed |
+| Texture Rotation Random | `texture_rotation_random` | Vector3 | Random variation for texture rotation |
+| Texture Rotation Speed Random | `texture_rotation_speed_random` | Vector3 | Random variation for texture rotation speed |
+| Direction Rotation Random | `direction_rotation_random` | Vector3 | Random variation for direction rotation |
+| Direction Rotation Speed Random | `direction_rotation_speed_random` | Vector3 | Random variation for direction rotation speed |
+| Scale Random | `scale_random` | Vector3 | Random variation for scale |
+| Max Scale Random | `scale_max_random` | Vector3 | Random variation for maximum scale |
+| Scale Acceleration Random | `scale_acceleration_random` | Vector3 | Random variation for scale acceleration |
+| Lifetime Random | `life_time_second_random` | Vector3 | Random variation for lifetime |
+| Life Distance Random | `life_distance_random` | Vector3 | Random variation for life distance |
 ---
 [Back to Documentation Index](_sidebar.md)

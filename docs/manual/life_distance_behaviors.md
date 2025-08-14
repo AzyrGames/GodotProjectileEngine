@@ -5,6 +5,9 @@ Life distance behaviors define conditions for destroying projectiles after they 
 ## ProjectileDestroyLifeDistance
 Destroys projectiles after traveling a specified distance.
 ## Properties
-- **destroy_distance**: Distance in pixels before destruction
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy Distance | `destroy_distance` | float | Distance in pixels before destruction |
 ---
 [Back to Documentation Index](_sidebar.md)

@@ -1,4 +1,4 @@
-# Projectile Behaviors
+# Projectile Behaviors Overview
 Projectile Behaviors are reusable components that define specific aspects of a projectile's behavior. They can be attached to ProjectileTemplateCustom2D to create custom projectile behaviors.
 The `ProjectileBehavior` class is the base class for all projectile behaviors in the projectile engine. It provides core functionality and an interface that all behavior implementations must follow. Behaviors modify projectile properties over time.
 ## Projectile Behavior Components

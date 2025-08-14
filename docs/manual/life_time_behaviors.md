@@ -5,6 +5,9 @@ Life time behaviors define conditions for destroying projectiles after a certain
 ## ProjectileDestroyLifeTime
 Destroys projectiles after a specified duration.
 ## Properties
-- **destroy_time**: Time in seconds before destruction
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy Time | `destroy_time` | float | Time in seconds before destruction |
 ---
 [Back to Documentation Index](_sidebar.md)

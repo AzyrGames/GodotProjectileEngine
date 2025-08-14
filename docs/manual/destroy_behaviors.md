@@ -9,23 +9,35 @@ Destroy behaviors define conditions under which a projectile should be destroyed
 ## ProjectileDestroyBoundary
 Destroys projectiles when they enter or leave a ProjectileBoundary2D.
 ## Properties
-- **destroy_on_enter**: Whether to destroy when entering (true) or leaving (false) the boundary
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy On Enter | `destroy_on_enter` | bool | Whether to destroy when entering (true) or leaving (false) the boundary |
 ## ProjectileDestroyCollision
 Destroys projectiles when they collide with an object.
 ## Properties
-- **destroy_on_area_collide**: Destroy when colliding with an area
-- **destroy_on_body_collide**: Destroy when colliding with a body
-- **wait_projectile_piercing**: Wait for piercing to complete
-- **wait_projectile_bouncing**: Wait for bouncing to complete
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy On Area Collide | `destroy_on_area_collide` | bool | Destroy when colliding with an area |
+| Destroy On Body Collide | `destroy_on_body_collide` | bool | Destroy when colliding with a body |
+| Wait Projectile Piercing | `wait_projectile_piercing` | bool | Wait for piercing to complete |
+| Wait Projectile Bouncing | `wait_projectile_bouncing` | bool | Wait for bouncing to complete |
 ## ProjectileDestroyImmediate
 Destroys projectiles instantly when processed.
 ## ProjectileDestroyLifeDistance
 Destroys projectiles after traveling a specified distance.
 ## Properties
-- **destroy_distance**: Distance in pixels before destruction
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy Distance | `destroy_distance` | float | Distance in pixels before destruction |
 ## ProjectileDestroyLifeTime
 Destroys projectiles after a specified duration.
 ## Properties
-- **destroy_time**: Time in seconds before destruction
+
+| Name | Variable Name | Variable Types | Descriptions |
+|------|---------------|----------------|--------------|
+| Destroy Time | `destroy_time` | float | Time in seconds before destruction |
 ---
 [Back to Documentation Index](_sidebar.md)

@@ -1,4 +1,4 @@
-# Projectile Template
+# Projectile Template Overview
 The Projectile Template is a core component of the Godot Projectile Engine, defining how bullets work and behave when spawned. It provides a base for creating various types of projectiles with different properties and behaviors.
 ## Projectile Updaters and Templates
 The Godot Projectile Engine provides different types of Projectile Templates and corresponding Projectile Updaters to handle various projectile behaviors:
