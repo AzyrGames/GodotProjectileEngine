@@ -1,0 +1,52 @@
+# ProjectileTemplateAdvanced2D
+The ProjectileTemplateAdvanced2D class is an advanced projectile template that provides more projectile behavior options. It extends the ProjectileTemplate2D class and provides the following properties:
+- **speed**: The movement speed of the projectile in pixels per second.
+- **projectile_pooling_amount**: The number of projectiles to preload in the object pool for better performance.
+- **texture**: The Projectile Instance Texture.
+- **scale**: The Projectile Instance Scale.
+- **texture_rotation**: The initial rotation of the texture in degrees.
+- **skew**: Skew/shear effect applied to texture (-89.9 to 89.9 degrees).
+- **texture_visible**: Toggles visibility of the projectile's texture.
+- **texture_z_index**: Render layer for the texture (higher values render on top).
+- **texture_modulate**: Color modulation applied to the texture (RGBA).
+- **collision_shape**: Collision shape used for physics detection.
+- **collision_layer**: Physics layers this projectile can collide with (bitmask).
+- **collision_mask**: Physics layers that can detect collisions with this projectile (bitmask).
+- **speed_acceleration**: Acceleration rate in units per second squared (how quickly speed increases).
+- **speed_max**: Maximum speed the projectile can reach (in units per second).
+- **direction_rotation**: Initial direction of the projectile in degrees.
+- **direction_rotation_speed**: Speed at which the projectile rotates its direction.
+- **direction_follow_rotation**: If true, direction will rotate to match projectile's texture rotation.
+- **texture_rotation_speed**: Speed at which the projectile rotates its texture.
+- **rotation_follow_direction**: If true, texture rotation will rotate to match projectile's direction.
+- **scale_acceleration**: Acceleration rate in units per second squared (how quickly scale increases).
+- **scale_max**: Maximum scale the projectile can reach.
+- **is_use_homing**: If true, the projectile will home towards a target.
+- **target_group**: Group name to target.
+- **steer_speed**: Speed at which the projectile steers toward target (radians per second).
+- **homing_strength**: Strength of homing effect (0.0 to 1.0).
+- **max_homing_distance**: Maximum distance at which homing is active (0 = unlimited).
+- **destroy_on_body_collide**: Destroy when collided with a body.
+- **destroy_on_area_collide**: Destroy when collided with a area.
+- **life_time_second_max**: Maximum lifetime of projectile in seconds before it's automatically destroyed.
+- **life_distance_max**: Maximum travel distance in pixels before projectile is automatically destroyed.
+- **is_use_trigger**: If true, the projectile will trigger an event.
+- **trigger_name**: Name of the trigger to activate.
+-   **trigger_amount**: Amount of trigger to activate.
+-   **trigger_life_time**: The trigger life time.
+-   **trigger_life_distance**: The trigger life distance.
+It also provides random variation properties:
+-   **speed_random**: Random variation for speed.
+-   **speed_acceleration_random**: Random variation for speed acceleration.
+-   **speed_max_random**: Random variation for speed max.
+-   **texture_rotation_random**: Random variation for texture rotation.
+-   **texture_rotation_speed_random**: Random variation for texture rotation speed.
+-   **direction_rotation_random**: Random variation for direction rotation.
+-   **direction_rotation_speed_random**: Random variation for direction rotation speed.
+-   **scale_random**: Random variation for scale.
+-   **scale_max_random**: Random variation for scale max.
+-   **scale_acceleration_random**: Random variation for scale acceleration.
+-   **life_time_second_random**: Random variation for lifetime.
+-   **life_distance_random**: Random variation for life distance.
+---
+[Back to Documentation Index](_sidebar.md)
