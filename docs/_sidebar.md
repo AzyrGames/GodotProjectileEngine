@@ -1,5 +1,6 @@
-- [Getting Started](README.md)
+- [**Getting Started**](README.md)
 
+- [**Introduction**](manual/introduction.md)
 
 - [**Godot Projectile Engine**](manual/godot_projectile_engine.md)
   - [<img src="assets/icons/icons_projectile_updater.svg"> **ProjectileEngine Autoload**](manual/projectile_engine.md)
