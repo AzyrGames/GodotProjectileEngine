@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://be8ucqxbrv04s"
+=======
+uid="uid://cy7d1ahfwwkll"
+>>>>>>> 8d8b945 (Add Documentation Page (#191))
 path="res://.godot/imported/icons_pcc_group.svg-530899b1f75049e787acfc0cd5aab68b.ctex"
 metadata={
 "vram_texture": false

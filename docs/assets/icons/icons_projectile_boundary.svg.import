@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://bu6axuxi65ye0"
+=======
+uid="uid://vyba3qyd64yj"
+>>>>>>> 8d8b945 (Add Documentation Page (#191))
 path="res://.godot/imported/icons_projectile_boundary.svg-ed540ab7f005c8914c1dd8d49e2322b5.ctex"
 metadata={
 "vram_texture": false

@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://chix3iuh0x5na"
+=======
+uid="uid://b848vxv35dbv7"
+>>>>>>> 8d8b945 (Add Documentation Page (#191))
 path="res://.godot/imported/icons_projectile_laser_2d.svg-126358520248ddebfcd6a0b39fa09bec.ctex"
 metadata={
 "vram_texture": false

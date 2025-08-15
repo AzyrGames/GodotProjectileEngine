@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://dnham12ue5sb7"
+=======
+uid="uid://buxedtgvr7tg"
+>>>>>>> 8d8b945 (Add Documentation Page (#191))
 path="res://.godot/imported/icons_tsc_cooldown.svg-b0f5e51f617d49dac6834a3354114eb1.ctex"
 metadata={
 "vram_texture": false

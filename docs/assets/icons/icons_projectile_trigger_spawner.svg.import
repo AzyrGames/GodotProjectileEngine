@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://b75swa8o5j707"
+=======
+uid="uid://n02eb63m5nbp"
+>>>>>>> 8d8b945 (Add Documentation Page (#191))
 path="res://.godot/imported/icons_projectile_trigger_spawner.svg-be2545e48f5fe66d01fe803bcb18a754.ctex"
 metadata={
 "vram_texture": false
