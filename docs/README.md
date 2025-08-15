@@ -7,20 +7,19 @@
 **Streamlined feature-packed Projectile Engine for Godot 4** - A modular system for creating and managing thousands of customizable projectiles with optimal performance.
 
 > [!WARNING]  
-> **Alpha Notice (0.5.x-alpha)**  
-> This version contains many bugs and frequent breaking changes and is not recommended for production use.
+> **Beta Notice (0.6.x-beta)**  
+> This version contains many bugs, frequent breaking changes, and documentation in progress. It is not recommended for production use.
 
 ## ✨Showcases
 <img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-093611_hyprshot.png?raw=true" /> <img width="480" height="270" alt="Godot Projectile Engine showcase 1" src="https://github.com/AzyrGames/GodotProjectileEngine/blob/main/showcases/Media/2025-07-22-094046_hyprshot.png?raw=true" />
-
 ## Features
 
 ### 🧩 Modular Architecture
 - **Separated components** for specialized functionality:
-  - `ProjectileSpawner` - Handle projectile spawn process
-  - `ProjectileTemplate` - Define projectile properties and behaviors
-  - `PatternComposer` - Design simple to complex projectile/bullet patterns
-  - `TimingScheduler` - Control when to spawn the patterns
+  - `ProjectileTemplate` - Define projectile properties
+  - `ProjectileSpawner` - Handle projectile instantiation
+  - `PatternComposer` - Design complex projectile/bullet patterns
+  - `TimingScheduler` - Control firing sequences
 - Components can be used for a different purpose.
 
 ### 🚀 Performance Optimized
@@ -84,13 +83,13 @@ Run the scene to see projectiles in action!
 **Explore**: See more examples in `addons/godot_projectile_engine/examples/`
 
 ## Documentation
-*Work in Progress*  
+
+[Godot Projectile Engine Official Documentation](https://azyrgames.github.io/GodotProjectileEngine/)
 
 ## Media
 Project that used Godot Projectile Engine
 ### [UTOZ](https://azyrgames.itch.io/utoz)
 A 10-day Twin-stick shooter Bullet Hell game submission for Bullet Hell Jam 6, made by one person.
-
 <img width="480" height="270" alt="UTOZ Preview 1" src="https://img.itch.zone/aW1hZ2UvMzU0NzQyNS8yMTE1NDE1OC5wbmc=/original/JsVEFO.png" /> <img width="480" height="270" alt="UTOZ Preview 2" src="https://img.itch.zone/aW1hZ2UvMzU0NzQyNS8yMTE1NDIzNi5wbmc=/original/UQ9ZpH.png" />
 
 
