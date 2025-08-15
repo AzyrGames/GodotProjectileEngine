@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://br7k1haa6x0kp"
-path="res://.godot/imported/icon_color.png-7b3699d5eaf8894caa298a96359e7621.ctex"
+path="res://.godot/imported/icon_color.png-c50fb0a323792555e806d82cc688b3dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_projectile_engine/icon_color.png"
-dest_files=["res://.godot/imported/icon_color.png-7b3699d5eaf8894caa298a96359e7621.ctex"]
+source_file="res://showcases/icon_color.png"
+dest_files=["res://.godot/imported/icon_color.png-c50fb0a323792555e806d82cc688b3dc.ctex"]
 
 [params]
 
