@@ -4,6 +4,14 @@ The Godot Projectile Engine (**GPE**) is a specialized 2D add-on for the Godot 4
 
 GPE uses a modular component and behavior system to make the creation process easier, helping you create bullet patterns that are faster, more flexible, and efficient.
 
+## Showcases
+
+*(Showcases will be showing here)*
+
+## Tutorials
+
+*(Tutorials will be showing here)*
+
 ## What GPE is not
 
 ### A Particle System
