@@ -1,12 +1,12 @@
 # Projectile Environment 2D
-Central management node for all projectile-related systems. Acts as a singleton that coordinates projectile interactions and physics.
 
-![Environment Icon](assets/icons/environment_icon.svg)
+Local management node for [ProjectileUpdater2D], ProjectileNodeManager2D, and other helper node.
+
+This is where information about Projectile be holded.
 
 ## Key Responsibilities
 - Manages projectile updater instances
 - Handles collision detection and response
-- Provides damage value lookup
 - Coordinates bouncing physics
 - Maintains projectile system state
 

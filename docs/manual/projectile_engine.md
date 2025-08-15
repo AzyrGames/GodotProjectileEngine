@@ -1,5 +1,5 @@
 # Projectile Engine Autoload
-An Global Autoload for Godot Projectile Engine. Acts as the backbone of the Godot Projectile Engine, coordinating between all components and providing global access to Projectile Engine.
+An Global Autoload for Godot Projectile Engine. Acts as the Singleton of the Godot Projectile Engine, coordinating between all components and providing global access to Projectile Engine.
 
 ## Key Responsibilities
 - Maintains registries of active projectile components

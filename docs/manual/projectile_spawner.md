@@ -4,7 +4,7 @@ The ProjectileSpawner2D node coordinates projectile pattern spawning with timing
 
 ## Key Features
 - Timed projectile pattern spawning via [TimingScheduler](timing_scheduler.md)
-- Multiple spawn position support using Spawn Markers
+- Multiple spawn position support using [ProjectileSpawnMarker2D](manual/spawn_marker.md)
 - Automatic projectile initialization
 - Audio integration for spawn events
 - Supports all projectile template types
