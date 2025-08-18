@@ -106,7 +106,7 @@ func process_pattern(
 				continue
 
 			DirectionType.MOUSE:
-				_pattern_composer_data.direction = _pattern_composer_data.position.direction_to(get_mouse_position())
+				_new_pattern_composer_data.direction = _new_pattern_composer_data.position.direction_to(get_mouse_position())
 				_new_pattern_composer_pack.append(_new_pattern_composer_data)
 				continue
 
