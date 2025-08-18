@@ -77,6 +77,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 					continue
 				_new_composer_data = PatternComposerData.new()
 				_new_composer_data.projectile_spawn_marker = _projectile_spawn_marker
+				_new_composer_data.direction =  _projectile_spawn_marker.init_direction
 				if _projectile_spawn_marker.use_global_position:
 					_new_composer_data.position =  _projectile_spawn_marker.global_position
 				else:
@@ -84,6 +85,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 				_pattern_composer_spawner.append(_new_composer_data)
 		else:
 			for _composer_data in _pattern_composer_spawner:
+				_composer_data.direction =  _composer_data.projectile_spawn_marker.init_direction
 				if _composer_data.projectile_spawn_marker.use_global_position:
 					_composer_data.position =  _composer_data.projectile_spawn_marker.global_position
 				else:
