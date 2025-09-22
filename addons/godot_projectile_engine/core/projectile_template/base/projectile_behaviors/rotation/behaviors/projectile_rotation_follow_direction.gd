@@ -19,5 +19,4 @@ func process_behavior(_value: float, _context: Dictionary) -> Dictionary:
 	var _direction := _context.get(ProjectileEngine.BehaviorContext.DIRECTION)
 	var _direction_rotation := _context.get(ProjectileEngine.BehaviorContext.DIRECTION_ROTATION)
 	var _rotation_final : float = _direction.rotated(_direction_rotation).angle()
-
 	return {ProjectileEngine.RotationModify.ROTATION_OVERWRITE : _rotation_final}

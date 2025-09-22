@@ -88,7 +88,8 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		if destroy_on_body_collide:
 			if _behavior_owner.has_overlapping_bodies():
 				for _overlap_body in _behavior_owner.get_overlapping_bodies():
-					if not _overlap_body.collision_layer & _behavior_owner.collision_mask:
+					var _overlap_body_collision_layer : int = ProjectileEngine.get_collider_collision_layer(_overlap_body)
+					if not _overlap_body_collision_layer & _behavior_owner.collision_mask:
 						continue
 
 					if wait_projectile_piercing:
@@ -128,8 +129,16 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		var _projectile_updater : ProjectileUpdater2D = _behavior_owner.projectile_updater
 		if destroy_on_area_collide:
 			if _projectile_updater.has_overlapping_areas(_behavior_owner.area_index):
+				# print("ProjectileEngine ProjectileEngine: ", ProjectileEngine)
 				for _overlap_area in _projectile_updater.get_overlapping_areas(_behavior_owner.area_index):
-					if not _overlap_area.collision_layer & _projectile_updater.projectile_collision_mask:
+					if !_overlap_area:
+						_projectile_updater.get_overlapping_areas(_behavior_owner.area_index).erase(_overlap_area)
+						return true
+					# print("ProjectileEngine ProjectileEngine: ", ProjectileEngine)
+					
+					var _overlap_area_collision_layer : int = ProjectileEngine.get_collider_collision_layer(_overlap_area)
+					
+					if not _overlap_area_collision_layer & _projectile_updater.projectile_collision_mask:
 						continue
 
 					if wait_projectile_piercing:
@@ -168,7 +177,8 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		if destroy_on_body_collide:
 			if _projectile_updater.has_overlapping_bodies(_behavior_owner.area_index):
 				for _overlap_body in _projectile_updater.get_overlapping_bodies(_behavior_owner.area_index):
-					if not _overlap_body.collision_layer & _projectile_updater.projectile_collision_mask:
+					var _overlap_body_collision_layer : int = ProjectileEngine.get_collider_collision_layer(_overlap_body)
+					if not _overlap_body_collision_layer & _projectile_updater.projectile_collision_mask:
 						continue
 
 					if wait_projectile_piercing:

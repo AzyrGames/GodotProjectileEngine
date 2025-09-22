@@ -162,7 +162,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		if projectile_pooling_index >= projectile_max_pooling:
 			projectile_pooling_index = 0
 
-	# update_projectile_instances(get_physics_process_delta_time())
+	update_projectile_instances(get_physics_process_delta_time())
 #endregion
 
 
@@ -543,6 +543,9 @@ func process_behavior_context_request(
 
 			ProjectileEngine.BehaviorContext.DIRECTION:
 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction)
+
+			ProjectileEngine.BehaviorContext.DIRECTION_ROTATION:
+				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction_rotation)
 
 			ProjectileEngine.BehaviorContext.BASE_DIRECTION:
 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_direction)

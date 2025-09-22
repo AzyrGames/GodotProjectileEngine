@@ -10,13 +10,20 @@ enum UpdateMode {
 	INHERIT, ## Inherit the [code]update_mode[/code] from the parent TimingScheduler node.
 }
 
+enum TimingMode {
+	INSTANT, ## Timed instantly when process
+	RELEASE, ## Timed after timing finished
+	NO, ## No timed emited.
+}
+
 @export var active : bool = true:
 	set(value):
 		active = value
 		if !value:
 			clear_timing_timer()
-
+@export var timing_mode: TimingMode = TimingMode.INSTANT
 @export var update_mode: UpdateMode = UpdateMode.INHERIT
+
 
 var timing_timer: Timer
 

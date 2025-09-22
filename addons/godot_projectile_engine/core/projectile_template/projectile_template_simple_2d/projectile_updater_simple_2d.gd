@@ -104,11 +104,11 @@ func update_projectile_instances(delta: float) -> void:
 	projectile_life_time_second_max = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max = projectile_template_2d.life_distance_max
 	projectile_texture_rotate_direction = projectile_template_2d.texture_rotate_direction
+	var _overlap_collision_layer : int 
 
 	# Check for projectile destroy condition
 	for index: int in projectile_active_index:
 		_projectile_instance = projectile_instance_array[index]
-
 		# Life Time & Distance
 		if _projectile_instance.life_time_second_max >= 0:
 			_projectile_instance.life_time_second += delta
@@ -125,14 +125,22 @@ func update_projectile_instances(delta: float) -> void:
 		if destroy_on_area_collide:
 			if has_overlapping_areas(index):
 				for _overlap_area in get_overlapping_areas(index):
-					if not _overlap_area.collision_layer & projectile_collision_mask:
+					# if !ProjectileEngine: return
+					_overlap_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_area)
+					if not _overlap_collision_layer & projectile_collision_mask:
 						continue
 					projectile_remove_index.append(index)
 
 		if destroy_on_body_collide:
 			if has_overlapping_bodies(index):
 				for _overlap_body in get_overlapping_bodies(index):
-					if not _overlap_body.collision_layer & projectile_collision_mask:
+					# print("ProjectileEngine ProjectileEngine: ", ProjectileEngine)
+					# print(_overlap_body)
+					if !_overlap_body:
+						get_overlapping_bodies(index).erase(_overlap_body)
+						continue
+					_overlap_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_body)
+					if !_overlap_collision_layer & projectile_collision_mask:
 						continue
 					projectile_remove_index.append(index)
 

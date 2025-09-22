@@ -51,9 +51,6 @@ func _physics_process(delta: float) -> void:
 ## Take a request pattern to process thorugh Pattern Composer Component to
 ## return a new Array[PatternComposerData]
 func request_pattern(_pattern_composer_context : PatternComposerContext) -> Array:
-	## Init pattern composer pack
-	# _init_pattern_composer_data = PatternComposerData.new()
-	## Check if can using ProjectileSpawnMarker2Ds
 	_use_projectile_spawn_marker = false
 	if _pattern_composer_context.use_spawn_markers and _pattern_composer_context.projectile_spawn_markers.size() > 0:
 		for _projectile_spawn_marker in _pattern_composer_context.projectile_spawn_markers:
@@ -77,6 +74,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 					continue
 				_new_composer_data = PatternComposerData.new()
 				_new_composer_data.projectile_spawn_marker = _projectile_spawn_marker
+				_new_composer_data.direction =  _projectile_spawn_marker.init_direction
 				if _projectile_spawn_marker.use_global_position:
 					_new_composer_data.position =  _projectile_spawn_marker.global_position
 				else:
@@ -84,6 +82,7 @@ func request_pattern(_pattern_composer_context : PatternComposerContext) -> Arra
 				_pattern_composer_spawner.append(_new_composer_data)
 		else:
 			for _composer_data in _pattern_composer_spawner:
+				_composer_data.direction =  _composer_data.projectile_spawn_marker.init_direction
 				if _composer_data.projectile_spawn_marker.use_global_position:
 					_composer_data.position =  _composer_data.projectile_spawn_marker.global_position
 				else:

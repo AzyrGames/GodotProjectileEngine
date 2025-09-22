@@ -123,7 +123,7 @@ var projectile_wrapper_2d_nodes : Dictionary[String, Array]
 var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
-var projectile_node_manager_2d_nodes : Dictionary[StringName, ProjectileNodeManager2D]
+var projectile_node_manager_2d_nodes : Dictionary[ProjectileTemplate2D, ProjectileNodeManager2D]
 
 
 var _projectile_count_temp : int
@@ -374,10 +374,35 @@ func get_valid_target_group_nodes(_group_name: String) -> Array[Node2D]:
 	return _valid_nodes
 
 
+func get_collider_collision_layer(_collider: Node) -> int:
+	if !_collider: return 0
+	if _collider is CollisionObject2D:
+		return _collider.collision_layer
+	elif _collider is TileMapLayer:
+		if !_collider.tile_set:
+			return 0
+		var _tile_set : TileSet = _collider.tile_set
+		if _tile_set.get_physics_layers_count() <= 0 :
+			return 0
+		for i in range(_tile_set.get_physics_layers_count()):
+			return _tile_set.get_physics_layer_collision_layer(i)
+	return 0
+
+func get_collider_collision_mask(_collider: Node) -> int:
+	if _collider is CollisionObject2D:
+		return _collider.collision_mask
+	elif _collider is TileMapLayer:
+		if !_collider.tile_set:
+			return 0
+		var _tile_set : TileSet = _collider.tile_set
+		if _tile_set.get_physics_layers_count() <= 0 :
+			return 0
+		for i in range(_tile_set.get_physics_layers_count()):
+			return _tile_set.get_physics_layer_collision_mask(i)
+	return 0
+
+
 #endregion 
-
-
-
 
 
 #endregion
