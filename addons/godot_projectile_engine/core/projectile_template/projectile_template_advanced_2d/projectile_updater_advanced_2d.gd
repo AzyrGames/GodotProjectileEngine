@@ -2,44 +2,44 @@ extends ProjectileUpdater2D
 class_name ProjectileUpdaterAdvanced2D
 
 
-var projectile_velocity : Vector2 = Vector2.ZERO
+var projectile_velocity: Vector2 = Vector2.ZERO
 
-var projectile_life_time_second_max : float = 10.0
-var projectile_life_distance_max : float = 300.0
+var projectile_life_time_second_max: float = 10.0
+var projectile_life_distance_max: float = 300.0
 
-var destroy_on_body_collide : bool
-var destroy_on_area_collide : bool
+var destroy_on_body_collide: bool
+var destroy_on_area_collide: bool
 
-var projectile_speed_acceleration : float = 0.0
-var projectile_speed_max : float = 0.0
+var projectile_speed_acceleration: float = 0.0
+var projectile_speed_max: float = 0.0
 
-var projectile_is_use_homing : bool = false
-var projectile_homing_target_group : String 
-var projetile_max_homing_distance : float
-var projectile_steer_speed : float
-var projectile_homing_strength : float
-var _homing_group_nodes : Array[Node]
-var _homing_nearest_target : Node2D
-var _homing_nearest_distance : float
-var _homing_distance : float
-var _homing_target_position : Vector2
-var _homing_distance_to_target : float
-var _homing_desired_direction : Vector2
-var _homing_new_direction : Vector2
-var _homing_final_direction : Vector2
+var projectile_is_use_homing: bool = false
+var projectile_homing_target_group: String
+var projetile_max_homing_distance: float
+var projectile_steer_speed: float
+var projectile_homing_strength: float
+var _homing_group_nodes: Array[Node]
+var _homing_nearest_target: Node2D
+var _homing_nearest_distance: float
+var _homing_distance: float
+var _homing_target_position: Vector2
+var _homing_distance_to_target: float
+var _homing_desired_direction: Vector2
+var _homing_new_direction: Vector2
+var _homing_final_direction: Vector2
 
-var projectile_rotation_speed : float
-var projectile_rotation_follow_direction : bool
-var projectile_direction_follow_rotation : bool
+var projectile_rotation_speed: float
+var projectile_rotation_follow_direction: bool
+var projectile_direction_follow_rotation: bool
 
-var projectile_scale_acceleration : float
-var projectile_scale_max : Vector2
+var projectile_scale_acceleration: float
+var projectile_scale_max: Vector2
 
-var projectile_is_use_trigger : bool
-var projectile_trigger_name : StringName
-var projectile_trigger_amount : int
-var projectile_trigger_life_time : float
-var projectile_trigger_life_distance : float
+var projectile_is_use_trigger: bool
+var projectile_trigger_name: StringName
+var projectile_trigger_amount: int
+var projectile_trigger_life_time: float
+var projectile_trigger_life_distance: float
 
 
 func init_updater_variable() -> void:
@@ -49,8 +49,8 @@ func init_updater_variable() -> void:
 	
 	projectile_rotation_follow_direction = projectile_template_2d.rotation_follow_direction
 	projectile_direction_follow_rotation = projectile_template_2d.direction_follow_rotation
-	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
-	projectile_life_distance_max  = projectile_template_2d.life_distance_max
+	projectile_life_time_second_max = projectile_template_2d.life_time_second_max
+	projectile_life_distance_max = projectile_template_2d.life_distance_max
 	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
 	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 
@@ -63,12 +63,12 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 	
 	projectile_rotation_follow_direction = projectile_template_2d.rotation_follow_direction
 	projectile_direction_follow_rotation = projectile_template_2d.direction_follow_rotation
-	projectile_life_time_second_max  = projectile_template_2d.life_time_second_max
-	projectile_life_distance_max  = projectile_template_2d.life_distance_max
+	projectile_life_time_second_max = projectile_template_2d.life_time_second_max
+	projectile_life_distance_max = projectile_template_2d.life_distance_max
 	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
 	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 	
-	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
+	for _pattern_composer_data: PatternComposerData in pattern_composer_pack:
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
 		_projectile_instance = _projectile_instance as ProjectileInstanceAdvanced2D
 
@@ -85,7 +85,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.direction_rotation_speed = deg_to_rad(projectile_template_2d.direction_rotation_speed)
 		
 		_projectile_instance.texture_rotation = projectile_template_2d.texture_rotation
-		_projectile_instance.texture_rotation_speed = deg_to_rad(projectile_template_2d.texture_rotation_speed) 
+		_projectile_instance.texture_rotation_speed = deg_to_rad(projectile_template_2d.texture_rotation_speed)
 		
 		_projectile_instance.scale = projectile_template_2d.scale
 		_projectile_instance.scale_acceleration = projectile_template_2d.scale_acceleration
@@ -214,7 +214,6 @@ func update_projectile_instances(delta: float) -> void:
 	# projectile_speed = projectile_template_2d.speed
 	# projectile_speed_acceleration = projectile_template_2d.speed_acceleration
 	# projectile_speed_max = projectile_template_2d.speed_max
-	
 	projectile_is_use_homing = projectile_template_2d.is_use_homing
 	if projectile_is_use_homing:
 		projectile_homing_target_group = projectile_template_2d.target_group
@@ -228,9 +227,10 @@ func update_projectile_instances(delta: float) -> void:
 	projectile_trigger_life_time = projectile_template_2d.trigger_life_time
 	projectile_trigger_life_distance = projectile_template_2d.trigger_life_distance
 
+	var _overlap_collision_layer: int
 
 	# Check for projectile destroy condition
-	for index : int in projectile_active_index:
+	for index: int in projectile_active_index:
 		_projectile_instance = projectile_instance_array[index]
 
 		# Life Time & Distance
@@ -249,20 +249,22 @@ func update_projectile_instances(delta: float) -> void:
 		if destroy_on_area_collide:
 			if has_overlapping_areas(index):
 				for _overlap_area in get_overlapping_areas(index):
-					if not _overlap_area.collision_layer & projectile_collision_mask:
+					_overlap_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_area)
+					if not _overlap_collision_layer & projectile_collision_mask:
 						continue
 					projectile_remove_index.append(index)
 
 		if destroy_on_body_collide:
 			if has_overlapping_bodies(index):
 				for _overlap_body in get_overlapping_bodies(index):
-					if not _overlap_body.collision_layer & projectile_collision_mask:
+					_overlap_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_body)
+					if not _overlap_collision_layer & projectile_collision_mask:
 						continue
 					projectile_remove_index.append(index)
 
 	# Destroy projectile
 	if projectile_remove_index.size() > 0:
-		for index : int in projectile_remove_index:
+		for index: int in projectile_remove_index:
 			projectile_active_index.erase(index)
 			if projectile_template_2d.collision_shape:
 				PS.area_set_shape_disabled(projectile_area_rid, index, true)
@@ -270,12 +272,11 @@ func update_projectile_instances(delta: float) -> void:
 
 	# Update active projectile instances array
 	_active_projectile_instances.clear()
-	for index : int in projectile_active_index:
+	for index: int in projectile_active_index:
 		_active_projectile_instances.append(projectile_instance_array[index])
 	if _active_projectile_instances.size() <= 0: return
 	# Update active projectile
-	for _active_projectile_instance : ProjectileInstanceAdvanced2D in _active_projectile_instances:
-
+	for _active_projectile_instance: ProjectileInstanceAdvanced2D in _active_projectile_instances:
 		if projectile_is_use_trigger:
 			if _active_projectile_instance.trigger_count < projectile_trigger_amount:
 				if projectile_trigger_life_time > 0:
@@ -334,7 +335,7 @@ func update_projectile_instances(delta: float) -> void:
 					)
 
 		if _active_projectile_instance.texture_rotation_speed != 0:
-			_active_projectile_instance.texture_rotation +=  _active_projectile_instance.texture_rotation_speed * delta
+			_active_projectile_instance.texture_rotation += _active_projectile_instance.texture_rotation_speed * delta
 
 		if projectile_direction_follow_rotation:
 			_active_projectile_instance.direction_rotation = _active_projectile_instance.texture_rotation

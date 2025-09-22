@@ -118,7 +118,6 @@ func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_
 		return
 	match status:
 		PS.AREA_BODY_ADDED:
-			
 			ProjectileEngine.projectile_instance_area_shape_entered.emit(
 				projectile_instance_array[self_shape_idx],
 				area_rid, _instance_node, area_shape_idx,
@@ -153,7 +152,7 @@ func _area_monitor_callback(status: int, area_rid : RID, instance_id: int, area_
 	pass
 
 func _body_monitor_callback(status: int, body_rid : RID, instance_id: int, body_shape_idx: int, self_shape_idx: int) -> void:
-	var _instance_node : PhysicsBody2D = instance_from_id(instance_id)
+	var _instance_node : Node = instance_from_id(instance_id)
 	if !is_instance_valid(_instance_node):
 		return
 	match status:
@@ -224,7 +223,6 @@ func draw_projectile_texture() -> void:
 	projectile_texture = projectile_template_2d.texture
 	projectile_texture_modulate = projectile_template_2d.texture_modulate
 	projectile_texture_draw_offset = Vector2.ZERO - projectile_template_2d.texture.get_size() * 0.5
-
 	for index : int in projectile_active_index:
 		draw_set_transform_matrix(projectile_instance_array[index].transform)
 		draw_texture(projectile_texture, projectile_texture_draw_offset, projectile_texture_modulate)
@@ -246,7 +244,8 @@ func get_active_projectile_count() -> int:
 ## Clear all ProjectileInstances in this ProjectileUpdater
 func clear_projectiles() -> void:
 	for _index in range(projectile_max_pooling):
-		projectile_active_index.erase(_index)
+		if projectile_active_index.has(_index):
+			projectile_active_index.erase(_index)
 		PS.area_set_shape_disabled(projectile_area_rid, _index, true)
 	projectile_active_index.clear()
 	pass
