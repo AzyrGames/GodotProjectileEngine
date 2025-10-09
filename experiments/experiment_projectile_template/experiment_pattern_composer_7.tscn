@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cuq1uhamp76cc"]
+[gd_scene load_steps=26 format=3 uid="uid://cuq1uhamp76cc"]
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_iv4ua"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_phdum"]
@@ -12,13 +12,15 @@
 [ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_speed.gd" id="10_0ueia"]
 [ext_resource type="Texture2D" uid="uid://b6j1n8v6vliwk" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_star_1.png" id="11_thm6q"]
 [ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_trigger.gd" id="12_s7nam"]
+[ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/spawn_marker/projectile_spawn_maker_2d.gd" id="13_704py"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="14_5ovmj"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="15_tumm6"]
 [ext_resource type="Script" uid="uid://1bygasnif26d" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCGroup.gd" id="16_1g6ig"]
 [ext_resource type="Script" uid="uid://cm1gi15tdc45s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCPolygon2D.gd" id="16_phdum"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="16_sxtnh"]
 [ext_resource type="Script" uid="uid://brqy6ew0t2b35" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSpread2D.gd" id="17_1g6ig"]
-[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="17_bv78k"]
+[ext_resource type="Script" uid="uid://cwr176dncae0f" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_set/tsc_timing_set.gd" id="20_704py"]
+[ext_resource type="Script" uid="uid://ssup2p0b2bqp" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_set/base/timing_set.gd" id="21_rpb08"]
 
 [sub_resource type="Gradient" id="Gradient_td4cq"]
 offsets = PackedFloat32Array(0)
@@ -29,31 +31,14 @@ gradient = SubResource("Gradient_td4cq")
 
 [sub_resource type="Resource" id="Resource_m0abk"]
 script = ExtResource("9_gvipp")
-damage = 1.0
-speed = 100.0
-projectile_pooling_amount = 500
 texture = ExtResource("11_thm6q")
-scale = Vector2(1, 1)
-texture_rotation = 0.0
-skew = 0.0
-texture_visible = true
-texture_z_index = 0
-texture_modulate = Color(1, 1, 1, 1)
-collision_layer = 0
-collision_mask = 0
-speed_projectile_behaviors = Array[ExtResource("10_0ueia")]([])
-direction_projectile_behaviors = Array[ExtResource("5_704py")]([])
-rotation_projectile_behaviors = Array[ExtResource("7_vcjro")]([])
-scale_projectile_behaviors = Array[ExtResource("8_qgwhk")]([])
-destroy_projectile_behaviors = Array[ExtResource("4_1rc6a")]([])
-piercing_projectile_behaviors = Array[ExtResource("6_rpb08")]([])
-bouncing_projectile_behaviors = Array[ExtResource("3_1g6ig")]([])
-trigger_projectile_behaviors = Array[ExtResource("12_s7nam")]([])
-speed_random = Vector3(0, 0, 0)
-texture_rotation_random = Vector3(0, 0, 0)
-scale_random = Vector3(0, 0, 0)
-custom_data = []
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
+
+[sub_resource type="Resource" id="Resource_vcjro"]
+script = ExtResource("21_rpb08")
+entries = Array[float]([0.5, 1.0])
+repeat_count = -1
+metadata/_custom_type_script = "uid://ssup2p0b2bqp"
 
 [node name="ExperimentPatternComposer7" type="Node2D"]
 
@@ -73,7 +58,18 @@ script = ExtResource("2_phdum")
 projectile_composer_name = "pattern_1"
 projectile_template_2d = SubResource("Resource_m0abk")
 timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileSpawner2D4"]
+position = Vector2(-128, -64)
+script = ExtResource("13_704py")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileSpawner2D4"]
+position = Vector2(256, 0)
+script = ExtResource("13_704py")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
 
 [node name="PatternComposer2D" type="Node" parent="."]
 script = ExtResource("14_5ovmj")
@@ -99,14 +95,13 @@ metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 [node name="PCCPolygon2D" type="Node" parent="PatternComposer2D/PCCGroup"]
 script = ExtResource("16_phdum")
 polygon_sides = 4
-spread_out = false
 metadata/_custom_type_script = "uid://cm1gi15tdc45s"
 
 [node name="TimingScheduler" type="Node" parent="."]
 script = ExtResource("16_sxtnh")
 metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 
-[node name="TSCRepeater" type="Node" parent="TimingScheduler"]
-script = ExtResource("17_bv78k")
-duration = 0.2
-metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+[node name="TSCTimingSet" type="Node" parent="TimingScheduler"]
+script = ExtResource("20_704py")
+timing_set = SubResource("Resource_vcjro")
+metadata/_custom_type_script = "uid://cwr176dncae0f"

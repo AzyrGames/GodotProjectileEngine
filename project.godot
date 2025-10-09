@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GodotProjectileEngine"
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.5")
 run/max_fps=60
 
 [autoload]
@@ -24,7 +24,7 @@ gdscript/warnings/untyped_declaration=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/godot_projectile_engine/plugin.cfg", "res://addons/remove_orphan_uid/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg", "res://addons/remove_orphan_uid/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [gdunit4]
 
