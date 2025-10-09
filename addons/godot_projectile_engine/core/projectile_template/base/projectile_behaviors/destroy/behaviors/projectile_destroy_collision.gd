@@ -48,8 +48,9 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 	var _behavior_owner = _context.get(ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER)
 	if !_behavior_owner:
 		return false
-	if !_projectile_updater:
-		_projectile_updater = _behavior_owner.projectile_updater
+
+	# if !_projectile_updater:
+	# 	_projectile_updater = _behavior_owner.projectile_updater
 
 	if _behavior_owner is Projectile2D:
 		if !_behavior_owner.monitorable or !_behavior_owner.monitoring:
@@ -134,6 +135,7 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 
 	if _behavior_owner is ProjectileInstance2D:
 		if destroy_on_area_collide:
+			_projectile_updater = _behavior_owner.projectile_updater
 			if _projectile_updater.has_overlapping_areas(_behavior_owner.area_index):
 				for _overlap_area in _projectile_updater.get_overlapping_areas(_behavior_owner.area_index):
 					if !_overlap_area:
