@@ -3,8 +3,6 @@ class_name ProjectileTemplateCustom2D
 
 ## Template for Custom Projectile 2D that using ProjectileBehavior
 
-## Base damage dealt by the projectile
-@export var damage: float = 1.0
 ## Movement speed of the projectile in pixels per second
 @export var speed : float = 100
 # ## The normalized Direction of the projectile moving toward
