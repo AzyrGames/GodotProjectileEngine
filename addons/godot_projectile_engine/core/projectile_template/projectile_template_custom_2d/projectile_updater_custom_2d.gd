@@ -1,18 +1,6 @@
 extends ProjectileUpdater2D
 class_name ProjectileUpdaterCustom2D
 
-# var projectile_damage: float = 1.0
-
-# var projectile_rotation_speed : float
-
-# var behavior_static_context : Dictionary
-# var behavior_dynamic_context : Dictionary
-# var behavior_persist_context : Dictionary
-
-# var behavior_context : Dictionary
-# var projectile_behaviors : Array[ProjectileBehavior] = []
-
-
 var velocity: Vector2
 var life_time_second: float
 var life_distance: float
