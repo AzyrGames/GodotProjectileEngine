@@ -1,0 +1,1 @@
+extends CharacterBody2D

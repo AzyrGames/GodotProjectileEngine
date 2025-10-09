@@ -16,18 +16,18 @@ func _request_persist_behavior_context() -> Array[ProjectileEngine.BehaviorConte
 		ProjectileEngine.BehaviorContext.ARRAY_VARIABLE
 	]
 
-@export var piercing_count : int = 3
-@export var pierce_area : bool = false
-@export_flags_2d_physics var pierce_area_layer : int = 0
-@export var pierce_body : bool = false
-@export_flags_2d_physics var pierce_body_layer : int = 0
+@export var piercing_count: int = 3
+@export var pierce_area: bool = false
+@export_flags_2d_physics var pierce_area_layer: int = 0
+@export var pierce_body: bool = false
+@export_flags_2d_physics var pierce_body_layer: int = 0
 
 
-var _variable_array : Array
-var _behavior_variable_piercing : BehaviorVariablePiercing
-var _should_piercing : bool = false
+var _variable_array: Array
+var _behavior_variable_piercing: BehaviorVariablePiercing
+var _should_piercing: bool = false
 
-var _piercing_behavior_values : Dictionary
+var _piercing_behavior_values: Dictionary
 
 ## Processes the piercing behavior and returns whether piercing should occur
 ## Returns bool: true if projectile should pierce, false if it should be stopped/destroyed
@@ -123,8 +123,9 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 			else:
 				_behavior_variable_piercing.is_overlap_piercing = false
 
-	elif _behavior_owner is ProjectileInstance2D:
-		var _projectile_updater : ProjectileUpdater2D = _behavior_owner.projectile_updater
+	if _behavior_owner is ProjectileInstance2D:
+		var _projectile_updater: ProjectileUpdater2D = _behavior_owner.projectile_updater
+		_behavior_variable_piercing.is_overlap_piercing = false
 		if pierce_area:
 			if _projectile_updater.has_overlapping_areas(_behavior_owner.area_index):
 				for _overlap_area in _projectile_updater.get_overlapping_areas(_behavior_owner.area_index):
@@ -141,15 +142,11 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 					_behavior_variable_piercing.is_overlap_piercing = true
 					_behavior_variable_piercing.pierced_targets.append(_overlap_area)
 
-					if piercing_count == 1:
-						_behavior_variable_piercing.is_piercing_just_done = true
-					elif _behavior_variable_piercing.current_piercing_count < piercing_count - 1:
+					if _behavior_variable_piercing.current_piercing_count <= piercing_count:
 						_behavior_variable_piercing.current_piercing_count += 1
-					else:
+					
+					if _behavior_variable_piercing.current_piercing_count > piercing_count:
 						_behavior_variable_piercing.is_piercing_just_done = true
-			else:
-				_behavior_variable_piercing.is_overlap_piercing = false
-
 		if pierce_body:
 			if _projectile_updater.has_overlapping_bodies(_behavior_owner.area_index):
 				for _overlap_body in _projectile_updater.get_overlapping_bodies(_behavior_owner.area_index):
@@ -157,7 +154,7 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 						continue
 					if _behavior_variable_piercing.pierced_targets.has(_overlap_body):
 						continue
-					if not _overlap_body.collision_layer & pierce_area_layer:
+					if not _overlap_body.collision_layer & pierce_body_layer:
 						continue
 
 					_should_piercing = true
@@ -166,13 +163,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 					_behavior_variable_piercing.is_overlap_piercing = true
 					_behavior_variable_piercing.pierced_targets.append(_overlap_body)
 
-					if piercing_count == 1:
-						_behavior_variable_piercing.is_piercing_just_done = true
-					elif _behavior_variable_piercing.current_piercing_count < piercing_count - 1:
+					if _behavior_variable_piercing.current_piercing_count <= piercing_count:
 						_behavior_variable_piercing.current_piercing_count += 1
-					else:
+					if _behavior_variable_piercing.current_piercing_count > piercing_count:
 						_behavior_variable_piercing.is_piercing_just_done = true
-			else:
-				_behavior_variable_piercing.is_overlap_piercing = false
-
 	return _piercing_behavior_values

@@ -1,0 +1,288 @@
+[gd_scene load_steps=30 format=3 uid="uid://b6lex8httuuux"]
+
+[ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_tit6q"]
+[ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_cujoe"]
+[ext_resource type="Script" uid="uid://cgi5wxrd3qs15" path="res://addons/godot_projectile_engine/core/projectile_wrapper/projectile_wrapper_2d.gd" id="2_l4o06"]
+[ext_resource type="Script" uid="uid://dg832mp2dyxuh" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_bouncing.gd" id="3_xua5m"]
+[ext_resource type="Texture2D" uid="uid://xej5ti53m73n" path="res://addons/godot_projectile_engine/examples/assets/projectile/projectile_circle_1.png" id="4_l4o06"]
+[ext_resource type="Script" uid="uid://b8xk7m2n5qr3w" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_destroy.gd" id="4_q2ber"]
+[ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_direction.gd" id="5_v51ro"]
+[ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_piercing.gd" id="6_n7q0r"]
+[ext_resource type="Script" uid="uid://bkjnay24vltjg" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/destroy/behaviors/projectile_destroy_collision.gd" id="6_tit6q"]
+[ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_rotation.gd" id="7_pbvgo"]
+[ext_resource type="Script" uid="uid://dqtdroky03dsm" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_scale.gd" id="8_2ac4a"]
+[ext_resource type="Script" uid="uid://d3yyxyx6shhya" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_custom_2d/projectile_template_custom_2d.gd" id="9_a2knd"]
+[ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="9_l4o06"]
+[ext_resource type="Texture2D" uid="uid://dckkwf5fftsyf" path="res://icon.svg" id="10_5qxhe"]
+[ext_resource type="Script" uid="uid://cyaiiufjywo0g" path="res://experiments/experiment_collision/area_collision_2d.gd" id="10_hmwhn"]
+[ext_resource type="Script" uid="uid://1xodvevoujyr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_speed.gd" id="10_og3i8"]
+[ext_resource type="Script" uid="uid://dpxtdopu17nru" path="res://experiments/experiment_collision/body_collision_2d.gd" id="12_7so6a"]
+[ext_resource type="Script" uid="uid://cmlvc7d6q6iec" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_trigger.gd" id="12_cgiv7"]
+[ext_resource type="Script" uid="uid://cs3yq53jlx0po" path="res://addons/godot_projectile_engine/core/projectile_spawner/spawn_marker/projectile_spawn_maker_2d.gd" id="13_mgua7"]
+[ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="14_yjiyj"]
+[ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="15_7scfr"]
+[ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="19_cl0ke"]
+
+[sub_resource type="Gradient" id="Gradient_td4cq"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0705882, 0.0705882, 0.121569, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ehko"]
+gradient = SubResource("Gradient_td4cq")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4xol"]
+
+[sub_resource type="Resource" id="Resource_cujoe"]
+script = ExtResource("6_tit6q")
+wait_projectile_piercing = true
+metadata/_custom_type_script = "uid://bkjnay24vltjg"
+
+[sub_resource type="Resource" id="Resource_xua5m"]
+script = ExtResource("6_n7q0r")
+piercing_count = 2
+pierce_area = true
+pierce_area_layer = 256
+pierce_body = true
+pierce_body_layer = 512
+metadata/_custom_type_script = "uid://f77iu3txs7r5"
+
+[sub_resource type="Resource" id="Resource_tit6q"]
+script = ExtResource("9_a2knd")
+texture = ExtResource("4_l4o06")
+collision_shape = SubResource("CircleShape2D_t4xol")
+collision_layer = 1
+collision_mask = 768
+destroy_projectile_behaviors = Array[ExtResource("4_q2ber")]([SubResource("Resource_cujoe")])
+piercing_projectile_behaviors = Array[ExtResource("6_n7q0r")]([SubResource("Resource_xua5m")])
+custom_data = [{
+"damage": 5
+}, null]
+metadata/_custom_type_script = "uid://d3yyxyx6shhya"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vha0g"]
+
+[node name="ExperimentCollision1" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1.9073486e-06)
+scale = Vector2(59.75, 39.625)
+texture = SubResource("GradientTexture2D_0ehko")
+
+[node name="ProjectileEnvironment2D" type="Node2D" parent="."]
+script = ExtResource("1_tit6q")
+metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProjectileWrapper2D" type="Node2D" parent="." node_paths=PackedStringArray("projectile_spawner_2d")]
+script = ExtResource("2_l4o06")
+projectile_spawner_2d = NodePath("ProjectileSpawner2D4")
+metadata/_custom_type_script = "uid://cgi5wxrd3qs15"
+
+[node name="ProjectileSpawner2D4" type="Node2D" parent="ProjectileWrapper2D" node_paths=PackedStringArray("timing_scheduler")]
+position = Vector2(-192, 0)
+script = ExtResource("2_cujoe")
+projectile_composer_name = "pattern_collision"
+projectile_template_2d = SubResource("Resource_tit6q")
+timing_scheduler = NodePath("../TimingScheduler")
+use_spawn_markers = true
+metadata/_custom_type_script = "uid://cnqgcej10tinn"
+
+[node name="ProjectileSpawnMarker2D" type="Marker2D" parent="ProjectileWrapper2D/ProjectileSpawner2D4"]
+script = ExtResource("13_mgua7")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D2" type="Marker2D" parent="ProjectileWrapper2D/ProjectileSpawner2D4"]
+position = Vector2(0, 64)
+script = ExtResource("13_mgua7")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D3" type="Marker2D" parent="ProjectileWrapper2D/ProjectileSpawner2D4"]
+position = Vector2(0, 128)
+script = ExtResource("13_mgua7")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="ProjectileSpawnMarker2D4" type="Marker2D" parent="ProjectileWrapper2D/ProjectileSpawner2D4"]
+position = Vector2(0, -64)
+script = ExtResource("13_mgua7")
+metadata/_custom_type_script = "uid://cs3yq53jlx0po"
+
+[node name="PatternComposer2D" type="Node" parent="ProjectileWrapper2D"]
+script = ExtResource("14_yjiyj")
+composer_name = "pattern_collision"
+metadata/_custom_type_script = "uid://bc73oiea731jc"
+
+[node name="PCCSingle2D" type="Node" parent="ProjectileWrapper2D/PatternComposer2D"]
+script = ExtResource("15_7scfr")
+metadata/_custom_type_script = "uid://co24jiat0y46s"
+
+[node name="TimingScheduler" type="Node" parent="ProjectileWrapper2D"]
+script = ExtResource("19_cl0ke")
+metadata/_custom_type_script = "uid://b8nclaklcf4uu"
+
+[node name="TSCRepeater" type="Node" parent="ProjectileWrapper2D/TimingScheduler"]
+script = ExtResource("9_l4o06")
+duration = 5.0
+metadata/_custom_type_script = "uid://sjpvs4m6jk71"
+
+[node name="CollisionSet1" type="Node2D" parent="."]
+position = Vector2(0, 64)
+
+[node name="AreaCollision2D" type="Area2D" parent="CollisionSet1"]
+position = Vector2(-64, 64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet1/AreaCollision2D"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet1/AreaCollision2D"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="AreaCollision2D2" type="Area2D" parent="CollisionSet1"]
+position = Vector2(32, 64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet1/AreaCollision2D2"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet1/AreaCollision2D2"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="AreaCollision2D3" type="Area2D" parent="CollisionSet1"]
+position = Vector2(128, 64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet1/AreaCollision2D3"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet1/AreaCollision2D3"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="CollisionSet2" type="Node2D" parent="."]
+position = Vector2(0, 64)
+
+[node name="BodyCollision2D" type="StaticBody2D" parent="CollisionSet2"]
+position = Vector2(-64, 0)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet2/BodyCollision2D"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet2/BodyCollision2D"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="BodyCollision2D2" type="StaticBody2D" parent="CollisionSet2"]
+position = Vector2(32, 0)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet2/BodyCollision2D2"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet2/BodyCollision2D2"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="BodyCollision2D3" type="StaticBody2D" parent="CollisionSet2"]
+position = Vector2(128, 0)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet2/BodyCollision2D3"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet2/BodyCollision2D3"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="CollisionSet3" type="Node2D" parent="."]
+position = Vector2(0, 64)
+
+[node name="AreaCollision2D4" type="Area2D" parent="CollisionSet3"]
+position = Vector2(-64, -64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet3/AreaCollision2D4"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet3/AreaCollision2D4"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="BodyCollision2D4" type="StaticBody2D" parent="CollisionSet3"]
+position = Vector2(32, -64)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet3/BodyCollision2D4"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet3/BodyCollision2D4"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="AreaCollision2D5" type="Area2D" parent="CollisionSet3"]
+position = Vector2(128, -64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet3/AreaCollision2D5"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet3/AreaCollision2D5"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="CollisionSet4" type="Node2D" parent="."]
+
+[node name="BodyCollision2D4" type="StaticBody2D" parent="CollisionSet4"]
+position = Vector2(128, -64)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet4/BodyCollision2D4"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet4/BodyCollision2D4"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="AreaCollision2D5" type="Area2D" parent="CollisionSet4"]
+position = Vector2(32, -64)
+collision_layer = 256
+script = ExtResource("10_hmwhn")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet4/AreaCollision2D5"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet4/AreaCollision2D5"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[node name="BodyCollision2D5" type="StaticBody2D" parent="CollisionSet4"]
+position = Vector2(-64, -64)
+collision_layer = 512
+script = ExtResource("12_7so6a")
+
+[node name="Icon" type="Sprite2D" parent="CollisionSet4/BodyCollision2D5"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_5qxhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionSet4/BodyCollision2D5"]
+shape = SubResource("RectangleShape2D_vha0g")
+
+[connection signal="area_shape_entered" from="CollisionSet1/AreaCollision2D" to="CollisionSet1/AreaCollision2D" method="_on_area_shape_entered"]
+[connection signal="area_shape_entered" from="CollisionSet1/AreaCollision2D2" to="CollisionSet1/AreaCollision2D2" method="_on_area_shape_entered"]
+[connection signal="area_shape_entered" from="CollisionSet1/AreaCollision2D3" to="CollisionSet1/AreaCollision2D3" method="_on_area_shape_entered"]
+[connection signal="area_shape_entered" from="CollisionSet3/AreaCollision2D4" to="CollisionSet3/AreaCollision2D4" method="_on_area_shape_entered"]
+[connection signal="area_shape_entered" from="CollisionSet3/AreaCollision2D5" to="CollisionSet3/AreaCollision2D5" method="_on_area_shape_entered"]
+[connection signal="area_shape_entered" from="CollisionSet4/AreaCollision2D5" to="CollisionSet4/AreaCollision2D5" method="_on_area_shape_entered"]

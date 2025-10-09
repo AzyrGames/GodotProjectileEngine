@@ -25,5 +25,5 @@ func _on_area_shape_entered(area_rid:RID, area:Area2D, area_shape_index:int, loc
 	var _projectile_instance : ProjectileInstance2D = ProjectileEngine.get_projectile_instance(area_rid, area_shape_index)
 	if !_projectile_instance:
 		return
-	print(_projectile_instance.custom_data)
+	# print(_projectile_instance.custom_data)
 	pass # Replace with function body.
