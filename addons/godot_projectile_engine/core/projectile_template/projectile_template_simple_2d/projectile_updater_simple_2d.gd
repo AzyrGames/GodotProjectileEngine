@@ -122,10 +122,10 @@ func update_projectile_instances(delta: float) -> void:
 				projectile_remove_index.append(index)
 				continue
 
+
 		if destroy_on_area_collide:
 			if has_overlapping_areas(index):
 				for _overlap_area in get_overlapping_areas(index):
-					# if !ProjectileEngine: return
 					_overlap_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_area)
 					if not _overlap_collision_layer & projectile_collision_mask:
 						continue
@@ -134,8 +134,6 @@ func update_projectile_instances(delta: float) -> void:
 		if destroy_on_body_collide:
 			if has_overlapping_bodies(index):
 				for _overlap_body in get_overlapping_bodies(index):
-					# print("ProjectileEngine ProjectileEngine: ", ProjectileEngine)
-					# print(_overlap_body)
 					if !_overlap_body:
 						get_overlapping_bodies(index).erase(_overlap_body)
 						continue

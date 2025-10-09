@@ -284,7 +284,6 @@ func disconnect_timing_scheduler() -> void:
 func play_audio() -> void:
 	# audio_stream.playing = true
 	if audio_stream_2d:
-		print("play aduio")
 		audio_stream_2d.playing = true
 	pass
 

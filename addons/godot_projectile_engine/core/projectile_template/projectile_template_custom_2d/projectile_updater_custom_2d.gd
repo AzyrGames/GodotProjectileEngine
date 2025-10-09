@@ -13,55 +13,55 @@ class_name ProjectileUpdaterCustom2D
 # var projectile_behaviors : Array[ProjectileBehavior] = []
 
 
-var velocity : Vector2
+var velocity: Vector2
 var life_time_second: float
-var life_distance : float
+var life_distance: float
 
-var base_speed : float
-var speed_final : float
-var _speed_addition : float
-var _speed_multiply : float
-var behavior_values : Dictionary
-var _speed_behavior_additions : Dictionary
-var _speed_behavior_multiplies : Dictionary
-var _base_speed_behavior_multiplies : Dictionary
+var base_speed: float
+var speed_final: float
+var _speed_addition: float
+var _speed_multiply: float
+var behavior_values: Dictionary
+var _speed_behavior_additions: Dictionary
+var _speed_behavior_multiplies: Dictionary
+var _base_speed_behavior_multiplies: Dictionary
 
-var _speed_multiply_value : float
+var _speed_multiply_value: float
 
-var base_direction : Vector2
-var raw_direction : Vector2
-var direction_final : Vector2
-var _direction_behavior_values : Dictionary
-var _direction_behavior_additions : Dictionary
-var _direction_behavior_rotations : Dictionary
-var _direction_rotation_value : float
-var _direction_addition_value : Vector2
-var _direction_addition : Vector2
+var base_direction: Vector2
+var raw_direction: Vector2
+var direction_final: Vector2
+var _direction_behavior_values: Dictionary
+var _direction_behavior_additions: Dictionary
+var _direction_behavior_rotations: Dictionary
+var _direction_rotation_value: float
+var _direction_addition_value: Vector2
+var _direction_addition: Vector2
 
-var projectile_rotation : float
-var base_rotation : float
-var rotation_final : float
+var projectile_rotation: float
+var base_rotation: float
+var rotation_final: float
 # var behavior_values : Dictionary
-var _rotation_behavior_additions : Dictionary
-var _rotation_behavior_multiplies : Dictionary
-var _rotation_multiply_value : float
-var _rotation_multiply : float
-var _rotation_addition : float
+var _rotation_behavior_additions: Dictionary
+var _rotation_behavior_multiplies: Dictionary
+var _rotation_multiply_value: float
+var _rotation_multiply: float
+var _rotation_addition: float
 
-var projectile_scale : Vector2
-var base_scale : Vector2
-var scale_final : Vector2
+var projectile_scale: Vector2
+var base_scale: Vector2
+var scale_final: Vector2
 # var behavior_values : Dictionary
-var _scale_behavior_additions : Dictionary
-var _scale_behavior_multiplies : Dictionary
-var _scale_multiply_value : Vector2
-var _scale_multiply : Vector2
-var _scale_addition : Vector2
+var _scale_behavior_additions: Dictionary
+var _scale_behavior_multiplies: Dictionary
+var _scale_multiply_value: Vector2
+var _scale_multiply: Vector2
+var _scale_addition: Vector2
 
-var _behavior_context_requests_normal : Array[ProjectileEngine.BehaviorContext]
-var _behavior_contest_requests_persist : Array[ProjectileEngine.BehaviorContext]
+var _behavior_context_requests_normal: Array[ProjectileEngine.BehaviorContext]
+var _behavior_contest_requests_persist: Array[ProjectileEngine.BehaviorContext]
 
-var projectile_behaviors : Array[ProjectileBehavior] = []
+var projectile_behaviors: Array[ProjectileBehavior] = []
 
 func init_updater_variable() -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
@@ -87,7 +87,7 @@ func init_updater_variable() -> void:
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
-	for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
+	for _pattern_composer_data: PatternComposerData in pattern_composer_pack:
 		_projectile_instance = projectile_instance_array[projectile_pooling_index]
 		_projectile_instance = _projectile_instance as ProjectileInstanceCustom2D
 
@@ -138,13 +138,13 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
-				projectile_area_rid, 
-				projectile_pooling_index, 
+				projectile_area_rid,
+				projectile_pooling_index,
 				_projectile_instance.transform
 				)
 			PS.area_set_shape_disabled(
-				projectile_area_rid, 
-				projectile_pooling_index, 
+				projectile_area_rid,
+				projectile_pooling_index,
 				false
 				)
 		
@@ -170,7 +170,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 func update_projectile_instances(delta: float) -> void:
 	# Check for projectile destroy condition
-	for index : int in projectile_active_index:
+	for index: int in projectile_active_index:
 		_projectile_instance = projectile_instance_array[index]
 
 		_projectile_instance.behavior_context.clear()
@@ -213,7 +213,7 @@ func update_projectile_instances(delta: float) -> void:
 					continue
 				if !_trigger_behavior.active:
 					continue
-				var _trigger_behavior_values : Dictionary = _trigger_behavior.process_behavior(
+				var _trigger_behavior_values: Dictionary = _trigger_behavior.process_behavior(
 					null, _projectile_instance.behavior_context
 					)
 				if _trigger_behavior_values.has("is_trigger"):
@@ -230,11 +230,10 @@ func update_projectile_instances(delta: float) -> void:
 		for _projectile_behavior in projectile_template_2d.piercing_projectile_behaviors:
 			if !_projectile_behavior:
 				continue
-
 			if !_projectile_behavior.active:
 				continue
 
-			var _piercing_behavior_values : Dictionary = _projectile_behavior.process_behavior(
+			var _piercing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
 				null, _projectile_instance.behavior_context
 				)
 
@@ -250,7 +249,6 @@ func update_projectile_instances(delta: float) -> void:
 		for _projectile_behavior in projectile_template_2d.bouncing_projectile_behaviors:
 			if !_projectile_behavior:
 				continue
-
 			if !_projectile_behavior.active:
 				continue
 
@@ -263,12 +261,12 @@ func update_projectile_instances(delta: float) -> void:
 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.projectile_collision_layer
 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.projectile_collision_mask
 
-			var _bouncing_behavior_values : Dictionary = _projectile_behavior.process_behavior(
+			var _bouncing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
 				null, _projectile_instance.behavior_context
 				)
 			if _bouncing_behavior_values.size() <= 0:
 				continue
-			if _bouncing_behavior_values.has("is_bouncing"): #and _bouncing_behavior_values.has(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE):
+			if _bouncing_behavior_values.has("is_bouncing"): # and _bouncing_behavior_values.has(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE):
 				_projectile_instance.direction = _bouncing_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE)
 				pass
 
@@ -278,12 +276,14 @@ func update_projectile_instances(delta: float) -> void:
 				continue
 			if !_projectile_behavior.active:
 				continue
+
 			if _projectile_behavior.process_behavior(null, _projectile_instance.behavior_context):
 				projectile_remove_index.append(index)
 
+
 	# Destroy projectile
 	if projectile_remove_index.size() > 0:
-		for index : int in projectile_remove_index:
+		for index: int in projectile_remove_index:
 			projectile_active_index.erase(index)
 			if projectile_template_2d.collision_shape:
 				PS.area_set_shape_disabled(projectile_area_rid, index, true)
@@ -291,12 +291,12 @@ func update_projectile_instances(delta: float) -> void:
 
 	# Update active projectile instances array
 	_active_projectile_instances.clear()
-	for index : int in projectile_active_index:
+	for index: int in projectile_active_index:
 		_active_projectile_instances.append(projectile_instance_array[index])
 	if _active_projectile_instances.size() <= 0: return
 	
 	## Update Active Projectile Instances
-	for _active_projectile_instance : ProjectileInstanceCustom2D in _active_projectile_instances:
+	for _active_projectile_instance: ProjectileInstanceCustom2D in _active_projectile_instances:
 		## Process Projectile Transform Behaviors
 		## Projectile Behavior Speed
 		if projectile_template_2d.speed_projectile_behaviors.size() > 0:
@@ -481,8 +481,8 @@ func update_projectile_instances(delta: float) -> void:
 		# _active_projectile_instance.speed_final _projectile_instance.speed_clamp
 		if _projectile_instance.speed_clamp != Vector2.ZERO:
 			_active_projectile_instance.speed_final = clamp(
-				_active_projectile_instance.speed_final, 
-				_projectile_instance.speed_clamp.x, 
+				_active_projectile_instance.speed_final,
+				_projectile_instance.speed_clamp.x,
 				_projectile_instance.speed_clamp.y
 				)
 
