@@ -7,12 +7,12 @@ class_name TSCTimingSet
 
 
 ## TimingSet Resource containing timing intervals and playback parameters for sequenced or randomized execution.
-@export var timing_set: TimingSet  
+@export var timing_set: TimingSet
 
-var _timing_set_index: int = -1  # Current index in timing entries
-var _current_repeat_count: int = 0  # Number of completed cycles
-var _current_interval: float = 0.0  # Current interval duration
-var _shuffled_entries: Array[float] = []  # Shuffled entries for RANDOM mode
+var _timing_set_index: int = -1 # Current index in timing entries
+var _current_repeat_count: int = 0 # Number of completed cycles
+var _current_interval: float = 0.0 # Current interval duration
+var _shuffled_entries: Array[float] = [] # Shuffled entries for RANDOM mode
 
 
 func _validate_property(property: Dictionary) -> void:
@@ -91,7 +91,7 @@ func get_next_timing_value() -> float:
 			_interval_value = timing_set.entries[_timing_set_index]
 			if _timing_set_index >= timing_set.entries.size() - 1:
 				_current_repeat_count += 1
-				_timing_set_index = -1  # Reset index for next cycle
+				_timing_set_index = -1 # Reset index for next cycle
 
 		TimingSet.PlaybackMode.RANDOM:
 			# Initialize shuffled list at start of cycle

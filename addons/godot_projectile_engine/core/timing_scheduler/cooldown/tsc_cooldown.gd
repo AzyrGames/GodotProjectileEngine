@@ -2,8 +2,6 @@
 extends TimingSchedulerComponent
 class_name TSCCooldown
 
-## Cooldown timing scheduler component that waits for a fixed duration before completing
-
 ## Duration of the cooldown in seconds
 @export var cooldown_duration : float = 1.0
 
