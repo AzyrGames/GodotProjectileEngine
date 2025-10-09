@@ -16,18 +16,19 @@ enum TimingMode {
 	NO, ## No timed emited.
 }
 
-@export var active : bool = true:
+@export var active: bool = true:
 	set(value):
 		active = value
 		if !value:
 			clear_timing_timer()
+
 @export var timing_mode: TimingMode = TimingMode.INSTANT
 @export var update_mode: UpdateMode = UpdateMode.INHERIT
 
-
 var timing_timer: Timer
+var request_stop: bool = false
 
-var request_stop : bool = false
+
 
 func start_next_timing_value() -> void:
 	pass

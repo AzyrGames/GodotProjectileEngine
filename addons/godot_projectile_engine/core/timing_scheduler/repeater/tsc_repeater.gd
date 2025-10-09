@@ -2,17 +2,20 @@
 extends TimingSchedulerComponent
 class_name TSCRepeater
 
-## Repeats a duration multiple times
-## - repeat_count = 0: Complete immediately
-## - repeat_count < 0: Infinite repetitions
-## - repeat_count > 0: Finite repetitions
 
 ## Duration to repeat in seconds
-@export var duration: float = 1.0  
-## Repetition count (0=immediate, <0 infinite, >0 finite)
-@export var repeat_count: int = -1  
+@export var duration: float = 1.0
+@export var repeat_count: int = 1
+var current_count: int = 0 ## Current repetition count
 
-var current_count: int = 0  ## Current repetition count
+@export_group("Random")
+@export var random_duration: Vector3 = Vector3.ZERO
+@export var random_repeat_count: Vector3i = Vector3i.ZERO
+
+
+func _ready() -> void:
+	if random_repeat_count != Vector3i.ZERO:
+		repeat_count = ProjectileEngine.get_random_int_value(random_repeat_count)
 
 ## Override stop_tsc to reset counter and call parent implementation
 func stop_tsc() -> void:
@@ -35,7 +38,7 @@ func start_next_timing_value() -> void:
 	
 	# Reset counter and start first repetition
 	current_count = 0
-	timing_timer.start(duration)
+	start_timing_timer()
 
 ## Handles timer timeout events
 func on_timing_timer_timeout() -> void:
@@ -47,13 +50,18 @@ func on_timing_timer_timeout() -> void:
 		else:
 			# Infinite mode - always restart timer
 			tsc_timed.emit()
-			timing_timer.start(duration)
+			start_timing_timer()
 	else:
 		# Finite mode - increment count and check if complete
 		current_count += 1
 		if current_count < repeat_count:
 			tsc_timed.emit()
-			timing_timer.start(duration)
+			start_timing_timer()
 		else:
 			tsc_completed.emit()
-		
+
+func start_timing_timer() -> void:
+	if random_duration != Vector3.ZERO:
+		duration = ProjectileEngine.get_random_float_value(random_duration)
+	timing_timer.start(duration)
+	pass
