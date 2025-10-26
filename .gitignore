@@ -15,3 +15,6 @@ mono_crash.*.json
 # VSCode-specific ignores
 .vscode/
 reports/
+
+# Experiment folder
+experiments/
