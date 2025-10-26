@@ -223,9 +223,19 @@ func draw_projectile_texture() -> void:
 	projectile_texture = projectile_template_2d.texture
 	projectile_texture_modulate = projectile_template_2d.texture_modulate
 	projectile_texture_draw_offset = Vector2.ZERO - projectile_template_2d.texture.get_size() * 0.5
-	for index : int in projectile_active_index:
-		draw_set_transform_matrix(projectile_instance_array[index].transform)
-		draw_texture(projectile_texture, projectile_texture_draw_offset, projectile_texture_modulate)
+	
+	var start = Time.get_ticks_usec()
+	if not projectile_template_2d.reverse_z_index:
+		for index in projectile_active_index:
+			draw_set_transform_matrix(projectile_instance_array[index].transform)
+			draw_texture(projectile_texture, projectile_texture_draw_offset, projectile_texture_modulate)
+	else:
+		for i in range(projectile_active_index.size() - 1, -1, -1):
+			draw_set_transform_matrix(projectile_instance_array[projectile_active_index[i]].transform)
+			draw_texture(projectile_texture, projectile_texture_draw_offset, projectile_texture_modulate)
+	var end = Time.get_ticks_usec()
+	var worker_time = (end-start)/1000000.0
+	print("%s" % [worker_time])
 
 #endregion
 
