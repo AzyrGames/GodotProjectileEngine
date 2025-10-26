@@ -6,13 +6,12 @@
 [ext_resource type="Script" uid="uid://chtssqssdvls7" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_direction.gd" id="4_h4knv"]
 [ext_resource type="Script" uid="uid://c4vh2pal3nbnl" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_modify.gd" id="5_jgvmb"]
 [ext_resource type="Script" uid="uid://b6mye22ih14le" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_expression.gd" id="6_o217s"]
-[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="7_wqak3"]
 [ext_resource type="Script" uid="uid://cjtoo7n0xa5e2" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_curve_2d.gd" id="8_lbcke"]
 [ext_resource type="Script" uid="uid://ds4xe1drkirks" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/direction/behaviors/projectile_direction_random_walk.gd" id="9_hno5m"]
 [ext_resource type="Script" uid="uid://f77iu3txs7r5" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_piercing.gd" id="10_f0fo5"]
 [ext_resource type="Script" uid="uid://lr7r36tmtarr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/base/projectile_behavior_rotation.gd" id="11_iukyb"]
 [ext_resource type="Script" uid="uid://2ncg6dcceecr" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_set.gd" id="12_akh50"]
-[ext_resource type="Curve" uid="uid://s4g8cm3mp3nt" path="res://tests/projectile_template/test_projectile_template_resources/test_curve2d_simple.tres" id="13_8kwti"]
+[ext_resource type="Curve" uid="uid://s4g8cm3mp3nt" path="res://tests/test_resources/test_projectile_template_resources/test_curve2d_simple.tres" id="13_8kwti"]
 [ext_resource type="Script" uid="uid://didjqd7lmis6t" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_curve.gd" id="14_k0ccw"]
 [ext_resource type="Script" uid="uid://c71ywbr61cvc3" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_expression.gd" id="15_cw384"]
 [ext_resource type="Script" uid="uid://ucfv3eq8fafp" path="res://addons/godot_projectile_engine/core/projectile_template/base/projectile_behaviors/rotation/behaviors/projectile_rotation_modify.gd" id="16_urcq5"]
@@ -32,51 +31,36 @@
 
 [sub_resource type="Resource" id="Resource_147qi"]
 script = ExtResource("3_b0kpl")
-destroy_on_area_collide = true
-destroy_on_body_collide = true
 wait_projectile_piercing = true
-wait_projectile_bouncing = false
-active = true
 metadata/_custom_type_script = "uid://bkjnay24vltjg"
 
 [sub_resource type="Resource" id="Resource_s78sl"]
 script = ExtResource("5_jgvmb")
 direction_modify_value = Vector2(-1, 0)
 direction_modify_method = 2
-direction_normalize = true
-active = true
 metadata/_custom_type_script = "uid://c4vh2pal3nbnl"
 
 [sub_resource type="Resource" id="Resource_n04yf"]
 script = ExtResource("6_o217s")
-direction_expression_sample_method = 0
 direction_modify_method = 1
-expression_streght = 0.5
-direction_expression_variable = "t"
 direction_x_expression = "sin(t) + 2"
 direction_y_expression = "cos(t) + 2"
-direction_normalize = true
-active = true
 metadata/_custom_type_script = "uid://b6mye22ih14le"
+
+[sub_resource type="Resource" id="Resource_autlm"]
+metadata/__load_path__ = "res://experiments/experiment_projectile_template/square_curve_2d.tres"
 
 [sub_resource type="Resource" id="Resource_2lb1m"]
 script = ExtResource("8_lbcke")
-curve_2d = ExtResource("7_wqak3")
-curve_strenght = 0.5
-direction_curve_sample_method = 1
+curve_2d = SubResource("Resource_autlm")
 direction_modify_method = 0
-direction_normalize = true
-active = true
 metadata/_custom_type_script = "uid://cjtoo7n0xa5e2"
 
 [sub_resource type="Resource" id="Resource_41qqr"]
 script = ExtResource("9_hno5m")
 noise_strength = 0.5
 noise_frequency = 0.1
-noise_seed = 0
 direction_modify_method = 1
-direction_normalize = true
-active = true
 metadata/_custom_type_script = "uid://ds4xe1drkirks"
 
 [sub_resource type="Resource" id="Resource_smfuh"]
@@ -84,118 +68,72 @@ script = ExtResource("10_f0fo5")
 piercing_count = 1
 pierce_area = true
 pierce_area_layer = 256
-pierce_body = false
-pierce_body_layer = 0
-active = true
 metadata/_custom_type_script = "uid://f77iu3txs7r5"
 
 [sub_resource type="Resource" id="Resource_mb3tj"]
 script = ExtResource("12_akh50")
 rotation_value = 42.0
-active = true
 metadata/_custom_type_script = "uid://2ncg6dcceecr"
 
 [sub_resource type="Resource" id="Resource_08sl7"]
 script = ExtResource("14_k0ccw")
-rotation_modify_method = 0
-rotation_process_mode = 1
-rotation_curve_loop_method = 0
-rotation_curve_sample_method = 0
 rotation_curve = ExtResource("13_8kwti")
-active = true
 metadata/_custom_type_script = "uid://didjqd7lmis6t"
 
 [sub_resource type="Resource" id="Resource_h6whu"]
 script = ExtResource("15_cw384")
-rotation_expression_sample_method = 0
 rotation_modify_method = 1
-rotation_process_mode = 1
-rotation_expression_variable = "t"
 rotation_expression = "sin(t)"
-active = true
 metadata/_custom_type_script = "uid://c71ywbr61cvc3"
 
 [sub_resource type="Resource" id="Resource_523xv"]
 script = ExtResource("16_urcq5")
 rotation_modify_value = -10.0
-rotation_process_mode = 1
-rotation_modify_method = 0
-active = true
 metadata/_custom_type_script = "uid://ucfv3eq8fafp"
 
 [sub_resource type="Resource" id="Resource_fiy2d"]
 script = ExtResource("26_0lhk8")
 speed_value = 100.0
-active = true
 metadata/_custom_type_script = "uid://ospvxnky04he"
 
 [sub_resource type="Resource" id="Resource_q6qyn"]
 script = ExtResource("27_w87vn")
 acceleration_speed = 10.0
 max_speed = 300.0
-active = true
 metadata/_custom_type_script = "uid://d35n2jogawdcq"
 
 [sub_resource type="Resource" id="Resource_0k070"]
 script = ExtResource("28_ekg8i")
 speed_modify_method = 3
-speed_process_mode = 0
-speed_curve_loop_method = 0
-speed_curve_sample_method = 0
 speed_curve = ExtResource("13_8kwti")
-active = true
 metadata/_custom_type_script = "uid://bnautbd467qq2"
 
 [sub_resource type="Resource" id="Resource_pxrv5"]
 script = ExtResource("29_tngv5")
 speed_modify_value = 20.0
-speed_process_mode = 0
 speed_modify_method = 1
-active = true
 metadata/_custom_type_script = "uid://cjan1hd6214vl"
 
 [sub_resource type="Resource" id="Resource_yumop"]
 script = ExtResource("30_gnmqu")
-speed_expression_sample_method = 0
 speed_modify_method = 1
-speed_process_mode = 0
-speed_expression_variable = "t"
 speed_expression = "t + 1"
-active = true
 metadata/_custom_type_script = "uid://dkm0o1v05i58y"
 
 [sub_resource type="Resource" id="Resource_vq1eq"]
 script = ExtResource("31_y3s5n")
 max_value = 600.0
-min_value = -300.0
-active = true
 metadata/_custom_type_script = "uid://chmjku6lmvmaq"
 
 [resource]
 script = ExtResource("24_uq5xw")
-damage = 1.0
-speed = 100.0
-projectile_pooling_amount = 500
 texture = ExtResource("32_l3jnm")
-scale = Vector2(1, 1)
-texture_rotation = 0.0
-skew = 0.0
-texture_visible = true
-texture_z_index = 0
-texture_modulate = Color(1, 1, 1, 1)
 collision_shape = SubResource("RectangleShape2D_ijeta")
 collision_layer = 1
 collision_mask = 256
 speed_projectile_behaviors = Array[ExtResource("25_hpayo")]([SubResource("Resource_fiy2d"), SubResource("Resource_q6qyn"), SubResource("Resource_0k070"), SubResource("Resource_pxrv5"), SubResource("Resource_yumop"), SubResource("Resource_vq1eq")])
 direction_projectile_behaviors = Array[ExtResource("4_h4knv")]([SubResource("Resource_s78sl"), SubResource("Resource_n04yf"), SubResource("Resource_2lb1m"), SubResource("Resource_41qqr")])
 rotation_projectile_behaviors = Array[ExtResource("11_iukyb")]([SubResource("Resource_mb3tj"), SubResource("Resource_08sl7"), SubResource("Resource_h6whu"), SubResource("Resource_523xv")])
-scale_projectile_behaviors = Array[ExtResource("17_7j1sc")]([])
 destroy_projectile_behaviors = Array[ExtResource("2_gxq5l")]([SubResource("Resource_147qi")])
 piercing_projectile_behaviors = Array[ExtResource("10_f0fo5")]([SubResource("Resource_smfuh")])
-bouncing_projectile_behaviors = Array[ExtResource("1_6223l")]([])
-trigger_projectile_behaviors = Array[ExtResource("33_nj4cj")]([])
-speed_random = Vector3(0, 0, 0)
-texture_rotation_random = Vector3(0, 0, 0)
-scale_random = Vector3(0, 0, 0)
-custom_data = []
 metadata/_custom_type_script = "uid://d3yyxyx6shhya"
