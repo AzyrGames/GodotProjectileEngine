@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_as32i"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_h84bo"]
-[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_finw8"]
-[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_41i3y"]
-[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_b5vg0"]
-[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_1.tres" id="6_1d7aq"]
-[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_egn54"]
-[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_v5a3q"]
+[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_finw8"]
+[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_41i3y"]
+[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_b5vg0"]
+[ext_resource type="Resource" uid="uid://d2fbngr8ph0y4" path="res://tests/test_resources/test_projectile_template_advanced.tres" id="6_as32i"]
+[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_egn54"]
+[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_v5a3q"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_rnje6"]
 [ext_resource type="Script" uid="uid://brqy6ew0t2b35" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSpread2D.gd" id="10_h84bo"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="11_pdyjo"]
@@ -87,7 +87,7 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 position = Vector2(-3, 0)
 script = ExtResource("2_h84bo")
 projectile_composer_name = "spread_mix"
-projectile_template_2d = ExtResource("6_1d7aq")
+projectile_template_2d = ExtResource("6_as32i")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
@@ -153,7 +153,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D4"]
 script = ExtResource("10_h84bo")
-spread_value = 30.0
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="PatternComposer2D9" type="Node" parent="."]
@@ -163,7 +162,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D9"]
 script = ExtResource("10_h84bo")
-spread_value = -20.0
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="PatternComposer2D7" type="Node" parent="."]
@@ -173,9 +171,8 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 
 [node name="PCCSpread2D" type="Node" parent="PatternComposer2D7"]
 script = ExtResource("10_h84bo")
-spread_amount = 4
 spread_type = 0
-spread_value = 12.0
+spread_amount = 4
 metadata/_custom_type_script = "uid://brqy6ew0t2b35"
 
 [node name="TimingScheduler" type="Node" parent="."]

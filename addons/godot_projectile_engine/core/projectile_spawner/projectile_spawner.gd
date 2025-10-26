@@ -60,6 +60,7 @@ func setup_projectile_spawner() -> void:
 		return
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
 		return
+
 	match projectile_template_2d.get_script():
 		ProjectileTemplateSimple2D:
 			if !is_instance_valid(
@@ -101,6 +102,7 @@ func setup_projectile_spawner() -> void:
 					)
 			):
 				create_projectile_node_manager_2d()
+
 			projectile_node_manager_2d = ProjectileEngine.projectile_node_manager_2d_nodes.get(
 				projectile_template_2d
 				)
@@ -231,9 +233,13 @@ func create_projectile_node_manager_2d() -> void:
 
 	ProjectileEngine.projectile_environment.add_child(_projectile_node_manager, true)
 	_projectile_node_manager.owner = ProjectileEngine.projectile_environment
-	ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
-		projectile_template_2d, _projectile_node_manager
-		)
+
+	if ProjectileEngine.projectile_node_manager_2d_nodes.has(projectile_template_2d):
+		ProjectileEngine.projectile_node_manager_2d_nodes.set(projectile_template_2d, _projectile_node_manager)
+	else:
+		ProjectileEngine.projectile_node_manager_2d_nodes.get_or_add(
+			projectile_template_2d, _projectile_node_manager
+			)
 	_projectile_node_manager.setup_projectile_manager()
 	pass
 

@@ -203,14 +203,19 @@ func clear_all_projectiles() -> void:
 
 ## Clear all ProjectileInstances
 func clear_projectile_instances() -> void:
+	print(projectile_updater_2d_nodes)
 	for _projectile_udpater_node : ProjectileUpdater2D in projectile_updater_2d_nodes.values():
-		_projectile_udpater_node.clear_projectiles()
+		if is_instance_valid(_projectile_udpater_node):
+			_projectile_udpater_node.clear_projectiles()
 	pass
 
 
 ## Clear all ProjectileNode2Ds
 func clear_projectile_nodes() -> void:
+	print(projectile_node_manager_2d_nodes)
 	for _projectile_node_manager : ProjectileNodeManager2D in projectile_node_manager_2d_nodes.values():
+		if is_instance_valid(_projectile_node_manager):
+			_projectile_node_manager.clear_projectiles()
 		_projectile_node_manager.clear_projectiles()
 	pass
 
