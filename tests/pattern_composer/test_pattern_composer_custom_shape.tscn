@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_8gt1f"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_asdxy"]
-[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_dpmww"]
-[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_uu3uj"]
-[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_e4w75"]
-[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_1.tres" id="6_m2jvt"]
-[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_paut7"]
-[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_nebvw"]
+[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_dpmww"]
+[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_uu3uj"]
+[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_e4w75"]
+[ext_resource type="Resource" uid="uid://d2fbngr8ph0y4" path="res://tests/test_resources/test_projectile_template_advanced.tres" id="6_asdxy"]
+[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_paut7"]
+[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_nebvw"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_iaaan"]
 [ext_resource type="Script" uid="uid://cx6esy7bqcdgd" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCCustomShape2D.gd" id="10_asdxy"]
 [ext_resource type="Script" uid="uid://b8nclaklcf4uu" path="res://addons/godot_projectile_engine/core/timing_scheduler/timing_scheduler.gd" id="11_2v6jc"]
-[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://experiments/experiment_projectile_template/square_curve_2d.tres" id="11_asdxy"]
+[ext_resource type="Curve2D" uid="uid://bt8dtk3k0xac0" path="res://tests/test_resources/test_square_curve_2d.tres" id="11_asdxy"]
 [ext_resource type="Script" uid="uid://sjpvs4m6jk71" path="res://addons/godot_projectile_engine/core/timing_scheduler/repeater/tsc_repeater.gd" id="12_hbuh1"]
 
 [node name="TestPatternComposerSingle" type="Node2D"]
@@ -72,7 +72,7 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 position = Vector2(-3, 0)
 script = ExtResource("2_asdxy")
 projectile_composer_name = "custom_shape_mix"
-projectile_template_2d = ExtResource("6_m2jvt")
+projectile_template_2d = ExtResource("6_asdxy")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
@@ -108,7 +108,6 @@ metadata/_custom_type_script = "uid://bc73oiea731jc"
 [node name="PCCCustomShape2D" type="Node" parent="PatternComposer2D2"]
 script = ExtResource("10_asdxy")
 shape_path = ExtResource("11_asdxy")
-point_type = 1
 
 [node name="PatternComposer2D8" type="Node" parent="."]
 script = ExtResource("9_iaaan")

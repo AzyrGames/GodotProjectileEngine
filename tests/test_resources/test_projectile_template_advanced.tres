@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ProjectileTemplateAdvanced2D" load_steps=4 format=3 uid="uid://d2fbngr8ph0y4"]
+
+[ext_resource type="Script" uid="uid://c7uapl8lqnia4" path="res://addons/godot_projectile_engine/core/projectile_template/projectile_template_advanced_2d/projectile_template_advanced_2d.gd" id="1_gwwlm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nn4gp"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l1xdq"]
+load_path = "res://.godot/imported/projectile_rice_1.png-e5ed9c25ec737c1f670ed4b9b84a3db1.ctex"
+
+[resource]
+script = ExtResource("1_gwwlm")
+texture = SubResource("CompressedTexture2D_l1xdq")
+collision_shape = SubResource("CircleShape2D_nn4gp")
+steer_speed = 0.174533
+metadata/_custom_type_script = "uid://c7uapl8lqnia4"

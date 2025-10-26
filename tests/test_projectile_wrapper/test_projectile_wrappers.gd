@@ -3,7 +3,7 @@ extends GdUnitTestSuite
 
 func test_projectile_template_simple() -> void:
 	var runner := scene_runner("uid://uf11mp6p4ldp")
-	runner.simulate_frames(5)
+	await runner.simulate_frames(10)
 	assert_object(runner).is_not_null()
 	ProjectileEngine.activate_all_projectile_wrappers("")
 	ProjectileEngine.activate_all_projectile_wrappers("wrong_wrapper")

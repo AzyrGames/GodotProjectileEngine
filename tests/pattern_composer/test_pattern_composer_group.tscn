@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dn7rm61wq3t3s" path="res://addons/godot_projectile_engine/core/projectile_environment/projectile_environment.gd" id="1_obcrw"]
 [ext_resource type="Script" uid="uid://cnqgcej10tinn" path="res://addons/godot_projectile_engine/core/projectile_spawner/projectile_spawner.gd" id="2_57kgr"]
-[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_eakl3"]
-[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_2n4vl"]
-[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_x7q7g"]
-[ext_resource type="Resource" uid="uid://dv7tscon4nv84" path="res://addons/godot_projectile_engine/examples/assets/projectile_template/example_projectile_template_advanced_1.tres" id="6_6kvvi"]
-[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_fnys6"]
-[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/projectile_template/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_vhvrr"]
+[ext_resource type="Resource" uid="uid://cpi2kow6y6b26" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_simple_basic.tres" id="3_eakl3"]
+[ext_resource type="Resource" uid="uid://dxwntxwh1rc2j" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_custom_basic.tres" id="4_2n4vl"]
+[ext_resource type="Resource" uid="uid://cwuljq73r3hlk" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_basic.tres" id="5_x7q7g"]
+[ext_resource type="Resource" uid="uid://d2fbngr8ph0y4" path="res://tests/test_resources/test_projectile_template_advanced.tres" id="6_obcrw"]
+[ext_resource type="Resource" uid="uid://dct2nl4m318uu" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_custom_complex.tres" id="7_fnys6"]
+[ext_resource type="Resource" uid="uid://bh6mjx2xbu7a8" path="res://tests/test_resources/test_projectile_template_resources/test_projectile_template_node_complex.tres" id="8_vhvrr"]
 [ext_resource type="Script" uid="uid://bc73oiea731jc" path="res://addons/godot_projectile_engine/core/pattern_composer/pattern_composer.gd" id="9_ewcbk"]
 [ext_resource type="Script" uid="uid://1bygasnif26d" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCGroup.gd" id="10_obcrw"]
 [ext_resource type="Script" uid="uid://co24jiat0y46s" path="res://addons/godot_projectile_engine/core/pattern_composer/component/PCCSingle2D.gd" id="11_x5gny"]
@@ -50,7 +50,7 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawner2D9" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler")]
 script = ExtResource("2_57kgr")
 projectile_composer_name = "group_mix"
-projectile_template_2d = ExtResource("6_6kvvi")
+projectile_template_2d = ExtResource("6_obcrw")
 timing_scheduler = NodePath("../TimingScheduler")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
 
@@ -110,7 +110,6 @@ metadata/_custom_type_script = "uid://b8nclaklcf4uu"
 [node name="TSCRepeater" type="Node" parent="TimingScheduler"]
 script = ExtResource("16_ffbux")
 duration = 0.017
-repeat_count = 1
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="Camera2D" type="Camera2D" parent="."]
