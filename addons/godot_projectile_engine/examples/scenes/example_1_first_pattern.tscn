@@ -49,5 +49,4 @@ script = ExtResource("8_1kks5")
 metadata/_custom_type_script = "uid://sjpvs4m6jk71"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-process_mode = 4
 stream = ExtResource("9_8rnjn")
