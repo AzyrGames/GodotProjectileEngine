@@ -25,6 +25,8 @@ class_name ProjectileTemplateAdvanced2D
 @export var texture_visible: bool = true
 ## Render layer for the texture (higher values render on top)
 @export var texture_z_index: int = 0
+## Render newer bullets underneath older bullets?
+@export var reverse_z_index: bool = false
 ## Color modulation applied to the texture (RGBA)
 @export var texture_modulate: Color = Color(1, 1, 1, 1)
 
