@@ -1,2 +1,4 @@
 extends ProjectileInstance2D
 class_name ProjectileInstanceSimple2D
+
+var velocity_length: float

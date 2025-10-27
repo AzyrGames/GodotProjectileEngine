@@ -17,6 +17,7 @@ var texture_rotation: float = 0
 var scale: Vector2 = Vector2.ONE
 var skew: float = 0.0
 var transform: Transform2D
+var canvas_item_rid: RID
 
 var life_time_second: float = 0.0
 var life_time_tick: float = 0.0
