@@ -20,12 +20,6 @@ func _physics_process(delta: float) -> void:
 	pass
 
 
-func spawner_destroyed(area_rid: RID) -> void:
-	if !ProjectileEngine.projectile_updater_2d_nodes.get(area_rid): return
-	ProjectileEngine.projectile_updater_2d_nodes.get(area_rid).spawner_destroyed = true
-	pass
-
-
 func projectile_collided(projectile_area_rid: RID, shape_idx: int) -> void:
 	if !ProjectileEngine.projectile_updater_2d_nodes.has(projectile_area_rid): return
 	if !is_instance_valid(ProjectileEngine.projectile_updater_2d_nodes[projectile_area_rid]):

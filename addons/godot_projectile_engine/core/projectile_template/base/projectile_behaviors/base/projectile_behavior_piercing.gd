@@ -77,8 +77,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 
 	if _behavior_owner is Projectile2D:
 		if pierce_area:
-			if _behavior_owner.has_overlapping_areas():
-				var _overlap_areas : Array[Area2D] = _behavior_owner.get_overlapping_areas()
+			if _behavior_owner.hasprojectile_overlapping_areas():
+				var _overlap_areas : Array[Area2D] = _behavior_owner.getprojectile_overlapping_areas()
 				for _overlap_area in _overlap_areas:
 					if _behavior_variable_piercing.pierced_targets.has(_overlap_area):
 						continue
@@ -100,8 +100,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 			else:
 				_behavior_variable_piercing.is_overlap_piercing = false
 		if pierce_body:
-			if _behavior_owner.has_overlapping_bodies():
-				var _overlap_bobies : Array[Area2D] = _behavior_owner.get_overlapping_bodies()
+			if _behavior_owner.hasprojectile_overlapping_bodies():
+				var _overlap_bobies : Array[Area2D] = _behavior_owner.getprojectile_overlapping_bodies()
 				for _overlap_body in _overlap_bobies:
 					if _behavior_variable_piercing.pierced_targets.has(_overlap_body):
 						continue
@@ -127,8 +127,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 		var _projectile_updater: ProjectileUpdater2D = _behavior_owner.projectile_updater
 		_behavior_variable_piercing.is_overlap_piercing = false
 		if pierce_area:
-			if _projectile_updater.has_overlapping_areas(_behavior_owner.area_index):
-				for _overlap_area in _projectile_updater.get_overlapping_areas(_behavior_owner.area_index):
+			if _projectile_updater.hasprojectile_overlapping_areas(_behavior_owner.area_index):
+				for _overlap_area in _projectile_updater.getprojectile_overlapping_areas(_behavior_owner.area_index):
 					if not _overlap_area.collision_layer & _projectile_updater.projectile_collision_mask:
 						continue
 					if _behavior_variable_piercing.pierced_targets.has(_overlap_area):
@@ -148,8 +148,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 					if _behavior_variable_piercing.current_piercing_count > piercing_count:
 						_behavior_variable_piercing.is_piercing_just_done = true
 		if pierce_body:
-			if _projectile_updater.has_overlapping_bodies(_behavior_owner.area_index):
-				for _overlap_body in _projectile_updater.get_overlapping_bodies(_behavior_owner.area_index):
+			if _projectile_updater.hasprojectile_overlapping_bodies(_behavior_owner.area_index):
+				for _overlap_body in _projectile_updater.getprojectile_overlapping_bodies(_behavior_owner.area_index):
 					if not _overlap_body.collision_layer & _projectile_updater.projectile_collision_mask:
 						continue
 					if _behavior_variable_piercing.pierced_targets.has(_overlap_body):

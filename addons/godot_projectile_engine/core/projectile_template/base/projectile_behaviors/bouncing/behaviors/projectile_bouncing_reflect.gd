@@ -62,8 +62,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 	var _new_direction : Vector2
 
 	if _behavior_owner is Projectile2D:
-		if _behavior_owner.has_overlapping_bodies():
-			for _overlap_body  in _behavior_owner.get_overlapping_bodies():
+		if _behavior_owner.hasprojectile_overlapping_bodies():
+			for _overlap_body  in _behavior_owner.getprojectile_overlapping_bodies():
 				if _behavior_variable_bouncing_reflect.bounced_targets.has(_overlap_body):
 					continue
 				if not _overlap_body.collision_layer & _behavior_owner.collision_mask:
@@ -92,8 +92,8 @@ func process_behavior(_value, _context: Dictionary) -> Dictionary:
 
 	if _behavior_owner is ProjectileInstance2D:
 		var _projectile_updater : ProjectileUpdater2D = _behavior_owner.projectile_updater
-		if _projectile_updater.has_overlapping_bodies(_behavior_owner.area_index):
-			for _overlap_body  in _projectile_updater.get_overlapping_bodies(_behavior_owner.area_index):
+		if _projectile_updater.hasprojectile_overlapping_bodies(_behavior_owner.area_index):
+			for _overlap_body  in _projectile_updater.getprojectile_overlapping_bodies(_behavior_owner.area_index):
 				if _behavior_variable_bouncing_reflect.bounced_targets.has(_overlap_body):
 					continue
 				if not _overlap_body.collision_layer & _projectile_updater.projectile_collision_mask:

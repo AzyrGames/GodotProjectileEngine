@@ -148,12 +148,12 @@ func init_base_properties() -> void:
 
 func apply_custom_data() -> void:
 	if !projectile_template_2d: return 
-	if projectile_template_2d.custom_data.size() <= 0: return
-	if !projectile_template_2d.custom_data[0] is Dictionary: return
-	for _key in projectile_template_2d.custom_data[0]:
-		# print(_key, " - ", projectile_template_2d.custom_data[0].get(_key))
-		set(_key, projectile_template_2d.custom_data[0].get(_key))
-		# print(get(_key))
+	#if projectile_template_2d.custom_data.size() <= 0: return
+	#if !projectile_template_2d.custom_data[0] is Dictionary: return
+	#for _key in projectile_template_2d.custom_data[0]:
+		## print(_key, " - ", projectile_template_2d.custom_data[0].get(_key))
+		#set(_key, projectile_template_2d.custom_data[0].get(_key))
+		## print(get(_key))
 
 
 func setup_projectile_behavior() -> void:
