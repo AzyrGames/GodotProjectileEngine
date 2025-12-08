@@ -30,7 +30,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg", "res://addons/remove_orphan_uid/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg", "res://addons/remove_orphan_uid/plugin.cfg")
 
 [gdunit4]
 
