@@ -10,7 +10,7 @@ Base class for update, physics interactions, and rendering [ProjectileInstance2D
 | Base Speed | `projectile_speed` | `float` | Base movement speed |
 | Collision Layer | `projectile_collision_layer` | `int` | Physics collision layer bits |
 | Collision Mask | `projectile_collision_mask` | `int` | Physics collision mask bits |
-| Max Pooling | `projectile_max_pooling` | `int` | Maximum pooled projectile instances |
+| Max Pooling | `projectile_pooling_amount` | `int` | Maximum pooled projectile instances |
 | Instance Array | `projectile_instance_array` | `Array[ProjectileInstance2D]` | All pooled instances |
 | Active Indices | `projectile_active_index` | `Array[int]` | Indices of active projectiles |
 

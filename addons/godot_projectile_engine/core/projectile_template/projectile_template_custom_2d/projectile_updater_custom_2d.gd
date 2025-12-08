@@ -147,7 +147,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 		projectile_pooling_index += 1
 
-		if projectile_pooling_index >= projectile_max_pooling:
+		if projectile_pooling_index >= projectile_pooling_amount:
 			projectile_pooling_index = 0
 
 	update_projectile_instances(get_physics_process_delta_time())

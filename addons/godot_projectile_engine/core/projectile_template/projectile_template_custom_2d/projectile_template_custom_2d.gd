@@ -5,11 +5,6 @@ class_name ProjectileTemplateCustom2D
 
 ## Movement speed of the projectile in pixels per second
 @export var speed: float = 100
-# ## The normalized Direction of the projectile moving toward
-# @export var direction : Vector2 = Vector2.RIGHT
-## Number of projectiles to preload in the object pool for better performance
-@export var projectile_pooling_amount: int = 500
-
 @export_group("Texture")
 ## The Projectile Instance Texture
 @export var texture: Texture2D

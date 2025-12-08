@@ -8,7 +8,7 @@ var RS := RenderingServer
 var projectile_template_2d: ProjectileTemplate2D
 var projectile_custom_data: ProjectileCustomData
 
-var projectile_max_pooling: int
+var projectile_pooling_amount: int
 var projectile_pooling_index: int = 0
 
 var projectile_speed: float = 100.0
@@ -22,12 +22,14 @@ var projectile_texture_modulate: Color
 var projectile_texture_z_index: int
 var projectile_reverse_z_index: bool = false
 
+var projectile_life_time_second_max: float
+var projectile_life_distance_max: float
+
 var projectile_collision_shape: Shape2D
 var projectile_collision_layer: int = 0
 var projectile_collision_mask: int = 0
-
-var projectile_life_time_second_max: float
-var projectile_life_distance_max: float
+var destroy_on_body_collide: bool
+var destroy_on_area_collide: bool
 
 var projectile_area_rid: RID
 
@@ -36,8 +38,8 @@ var projectile_overlapping_bodies: Dictionary
 
 var projectile_instances: Array[ProjectileInstance2D]
 var projectile_canvas_item_rids: Array[RID]
-var projectile_active_indexes: Array[int]
-var projectile_remove_indexes: Array[int]
+var projectile_active_indexes: PackedInt32Array
+var projectile_remove_indexes: PackedInt32Array
 
 var projectile_instance_callable: Callable
 
@@ -45,7 +47,13 @@ var _projectile_instance: ProjectileInstance2D
 
 
 func _ready() -> void:
+	print("setup Projectile Updater")
 	setup_projectile_updater()
+
+
+func _exit_tree():
+	if projectile_template_2d and projectile_template_2d.changed.is_connected(_on_projectile_template_changed):
+		projectile_template_2d.changed.disconnect(_on_projectile_template_changed)
 
 
 func _physics_process(delta: float) -> void:
@@ -64,7 +72,8 @@ func setup_projectile_updater() -> void:
 	pass
 
 func update_updater_variables() -> void:
-	projectile_template_2d = projectile_template_2d as ProjectileTemplateObject2D
+	# projectile_template_2d = projectile_template_2d as ProjectileTemplateObject2D
+	projectile_pooling_amount = projectile_template_2d.projectile_pooling_amount
 	projectile_speed = projectile_template_2d.speed
 
 	projectile_texture = projectile_template_2d.texture
@@ -83,6 +92,9 @@ func update_updater_variables() -> void:
 
 	projectile_life_time_second_max = projectile_template_2d.life_time_second_max
 	projectile_life_distance_max = projectile_template_2d.life_distance_max
+
+	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
+	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 	pass
 
 
@@ -90,12 +102,12 @@ func _on_projectile_template_changed() -> void:
 	update_updater_variables()
 	if projectile_reverse_z_index != projectile_template_2d.reverse_z_index:
 		if !projectile_reverse_z_index:
-			for _index in projectile_max_pooling:
+			for _index in projectile_pooling_amount:
 				RS.canvas_item_set_draw_index(
 					projectile_instances[_index].canvas_item_rid, _index
 					)
 		else:
-			for _index in projectile_max_pooling:
+			for _index in projectile_pooling_amount:
 				RS.canvas_item_set_draw_index(
 					projectile_instances[_index].canvas_item_rid, -_index
 					)
@@ -116,19 +128,24 @@ func setup_projectile_area_rid() -> void:
 	PS.area_set_transform(projectile_area_rid, Transform2D())
 	setup_area_callback(projectile_area_rid)
 
-
 	projectile_template_2d.projectile_area_rid = projectile_area_rid
 
 func create_projectile_pool() -> void:
 	var _transform_2d := Transform2D()
 	var _collision_rid: RID
 	var _canvas_item_id: RID
+	var _texture_rect2: Rect2
 
-	if projectile_template_2d.collision_shape:
-		_collision_rid = projectile_template_2d.collision_shape.get_rid()
-	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
+	if projectile_collision_shape:
+		_collision_rid = projectile_collision_shape.get_rid()
 
-	for _index in range(projectile_max_pooling):
+	if projectile_texture:
+		_texture_rect2 = Rect2(
+			- projectile_texture.get_size() / 2,
+			projectile_texture.get_size()
+			)
+
+	for _index in range(projectile_pooling_amount):
 		if _collision_rid:
 			PS.area_add_shape(projectile_area_rid, _collision_rid, _transform_2d, true)
 		_projectile_instance = projectile_instance_callable.call()
@@ -137,7 +154,7 @@ func create_projectile_pool() -> void:
 		_projectile_instance.projectile_updater_2d = self
 	
 		if projectile_custom_data:
-			_projectile_instance.projectile_custom_data = projectile_custom_data
+			_projectile_instance.custom_data = projectile_custom_data
 
 		_projectile_instance.area_rid = projectile_area_rid
 		_projectile_instance.area_index = _index
@@ -149,7 +166,7 @@ func create_projectile_pool() -> void:
 		RS.canvas_item_set_z_index(_canvas_item_id, projectile_texture_z_index)
 
 		## Apply reverse z index
-		if projectile_template_2d.reverse_z_index:
+		if projectile_reverse_z_index:
 			RS.canvas_item_set_draw_index(_canvas_item_id, -_index)
 		else:
 			RS.canvas_item_set_draw_index(_canvas_item_id, _index)
@@ -161,14 +178,12 @@ func create_projectile_pool() -> void:
 		if projectile_texture:
 			RS.canvas_item_add_texture_rect(
 				_canvas_item_id,
-				Rect2(-projectile_texture.get_size() / 2,
-				projectile_texture.get_size()),
+				_texture_rect2,
 				projectile_texture
 				)
 
 		_projectile_instance.canvas_item_rid = _canvas_item_id
 		projectile_canvas_item_rids.append(_canvas_item_id)
-
 
 func setup_area_callback(_projectile_area: RID) -> void:
 	PS.area_set_area_monitor_callback(_projectile_area, _area_monitor_callback)
@@ -177,7 +192,7 @@ func setup_area_callback(_projectile_area: RID) -> void:
 
 
 func _area_monitor_callback(
-	status: int, area_rid: RID, 
+	status: int, area_rid: RID,
 	instance_id: int, area_shape_idx: int, self_shape_idx: int
 	) -> void:
 	var _instance_node: Area2D = instance_from_id(instance_id)
@@ -221,7 +236,7 @@ func _area_monitor_callback(
 	pass
 
 
-func _body_monitor_callback(status: int, body_rid: RID, 
+func _body_monitor_callback(status: int, body_rid: RID,
 	instance_id: int, body_shape_idx: int, self_shape_idx: int
 	) -> void:
 	var _instance_node: Node = instance_from_id(instance_id)
@@ -264,7 +279,7 @@ func _body_monitor_callback(status: int, body_rid: RID,
 
 
 func process_projectile_collided(instance_index: int) -> void:
-	if instance_index not in projectile_remove_indexes:
+	if !projectile_remove_indexes.has(instance_index):
 		projectile_remove_indexes.append(instance_index)
 	pass
 
@@ -273,6 +288,7 @@ func process_projectile_collided(instance_index: int) -> void:
 
 #region Spawn Projectile 
 
+## Spawn projectiles using output from PatternComposer Nodes
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
 	pass
 
@@ -281,43 +297,56 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 
 #region Update Projectile
 
+## Update all active Projetile instances
 func update_projectile_instances(delta: float) -> void:
 	pass
 
 #endregion
 
+## Clear and free all Projectile instances and other RIDs
 func clear_projectile_updater() -> void:
-	for instance: ProjectileInstanceCustom2D in projectile_instances:
-		instance.queue_free()
+	# Disconnect signals
+	if projectile_template_2d and projectile_template_2d.changed.is_connected(_on_projectile_template_changed):
+		projectile_template_2d.changed.disconnect(_on_projectile_template_changed)
+	
+	# Free physics resources
+	if projectile_area_rid != RID():
 		PS.area_clear_shapes(projectile_area_rid)
+		PS.free_rid(projectile_area_rid)
+		projectile_area_rid = RID()
 
+	# Free rendering resources
+	for rid in projectile_canvas_item_rids:
+		if rid != RID():
+			RS.free_rid(rid)
+	projectile_canvas_item_rids.clear()
 
+	# Clear instances
+	for instance in projectile_instances:
+		if is_instance_valid(instance):
+			instance.free()
+	projectile_instances.clear()
+
+	# Reset tracking
+	projectile_active_indexes.clear()
+	projectile_remove_indexes.clear()
+	projectile_overlapping_areas.clear()
+	projectile_overlapping_bodies.clear()
+
+	# Nullify references
+	projectile_template_2d = null
+
+## Get current active Projetile count
 func get_active_projectile_count() -> int:
 	return projectile_active_indexes.size()
 	pass
 
 
-## Clear all ProjectileInstances in this ProjectileUpdater
+## Clear all Projectile instances in this ProjectileUpdater
 func clear_projectiles() -> void:
-	for _index in range(projectile_max_pooling):
+	for _index in range(projectile_pooling_amount):
 		if projectile_active_indexes.has(_index):
 			projectile_active_indexes.erase(_index)
 		PS.area_set_shape_disabled(projectile_area_rid, _index, true)
 	projectile_active_indexes.clear()
 	pass
-
-
-func hasprojectile_overlapping_areas(area_idx: int = -1) -> bool:
-	return projectile_overlapping_areas.has(area_idx)
-
-
-func getprojectile_overlapping_areas(area_idx: int = -1) -> Array:
-	return projectile_overlapping_areas.get(area_idx)
-
-
-func hasprojectile_overlapping_bodies(area_idx: int = -1) -> bool:
-	return projectile_overlapping_bodies.has(area_idx)
-
-
-func getprojectile_overlapping_bodies(area_idx: int = -1) -> Array:
-	return projectile_overlapping_bodies.get(area_idx) as Array

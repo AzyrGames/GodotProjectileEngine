@@ -1,4 +1,4 @@
 extends Resource
 class_name ProjectileCustomData
 
-var custom_data: Dictionary
+@export var custom_data: Array[Variant]
