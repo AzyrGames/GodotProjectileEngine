@@ -48,13 +48,11 @@ func _ready() -> void:
 
 func activate_projectile_spawner() -> void:
 	setup_projectile_spawner()
-	connect_audio()
 	connect_timing_scheduler()
 	pass
 
 
 func setup_projectile_spawner() -> void:
-	print("setup Projectile Updater")
 	projectile_composer = ProjectileEngine.projectile_composer_nodes.get(projectile_composer_name)
 	if !projectile_composer:
 		print_debug(projectile_composer_name + " PatternComposer ID is not valid")
@@ -123,7 +121,7 @@ func create_projectile_updater() -> void:
 			create_projectile_updater_custom_2d()
 
 		ProjectileTemplateNode2D:
-				create_projectile_node_manager_2d()
+			create_projectile_node_manager_2d()
 		_:
 			return
 		#built-in classes don't have a script
@@ -202,7 +200,6 @@ func setup_spawn_marker() -> void:
 
 func deactive_projectile_spanwer() -> void:
 	disconnect_timing_scheduler()
-	disconnect_audio()
 	pass
 
 
@@ -240,50 +237,4 @@ func play_audio() -> void:
 		audio_stream.playing = true
 	if audio_stream_2d:
 		audio_stream_2d.playing = true
-	pass
-
-
-func connect_audio() -> void:
-	# if audio_stream_2d:
-	# 	projectile_spawned.connect(play_audio)
-	# if !timing_scheduler.scheduler_timed.is_connected(play_audio):
-	# if !audio_stream: return
-	# if !timing_scheduler.scheduler_timed.is_connected(play_audio):
-	# 	timing_scheduler.scheduler_timed.connect(play_audio)
-	# if !audio_stream_2d: return
-	# if !timing_scheduler.scheduler_timed.is_connected(play_audio):
-	# 	timing_scheduler.scheduler_timed.connect(play_audio)
-	pass
-
-func disconnect_audio() -> void:
-	# if !audio_stream: return
-	# if timing_scheduler.scheduler_timed.is_connected(play_audio):
-	# 	timing_scheduler.scheduler_timed.disconnect(play_audio)
-	# if !audio_stream_2d: return
-	# if !timing_scheduler.scheduler_timed.is_connected(play_audio):
-	# 	timing_scheduler.scheduler_timed.disconnect(play_audio)
-	pass
-
-
-func _instance_node(_file_path: String) -> Node:
-	var _packed_scene: PackedScene = load(_file_path)
-	if !_packed_scene:
-		print_debug("Scene not valid: " + _file_path)
-		print_stack()
-		return null
-	var _node_instance: Node = _packed_scene.instantiate()
-	if !_node_instance:
-		print_debug("Node not valid: " + _file_path)
-		print_stack()
-		return null
-	return _node_instance
-
-
-func _load_projectile_node(_file_path: String) -> PackedScene:
-	var _packed_projectile_node: PackedScene = load(_file_path)
-	if !_packed_projectile_node:
-		print_debug("Scene not valid: " + _file_path)
-		print_stack()
-		return null
-	return _packed_projectile_node
 	pass

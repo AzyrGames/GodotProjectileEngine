@@ -47,7 +47,6 @@ var _projectile_instance: ProjectileInstance2D
 
 
 func _ready() -> void:
-	print("setup Projectile Updater")
 	setup_projectile_updater()
 
 
