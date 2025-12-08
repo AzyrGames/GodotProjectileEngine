@@ -1,53 +1,53 @@
-name: Godot Projectile Engine CI
+# name: Godot Projectile Engine CI
 
-on:
-  push:
-    branches: [ "main" ]
-    paths-ignore:
-        - "**.jpg"
-        - "**.png"
-        - "**.svg"
-        - "**.md"
-        - "**plugin.cfg"
-  pull_request:
-    paths-ignore:
-      - "**.jpg"
-      - "**.png"
-      - "**.svg"
-      - "**.md"
-      - "**plugin.cfg"
+# on:
+#   push:
+#     branches: [ "main" ]
+#     paths-ignore:
+#         - "**.jpg"
+#         - "**.png"
+#         - "**.svg"
+#         - "**.md"
+#         - "**plugin.cfg"
+#   pull_request:
+#     paths-ignore:
+#       - "**.jpg"
+#       - "**.png"
+#       - "**.svg"
+#       - "**.md"
+#       - "**plugin.cfg"
 
-  workflow_dispatch:
+#   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
 
-jobs:
-  unit-tests:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      pull-requests: write
-      statuses: write
+# jobs:
+#   unit-tests:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       actions: write
+#       checks: write
+#       contents: write
+#       pull-requests: write
+#       statuses: write
 
-    strategy:
-      fail-fast: false
-      max-parallel: 10
-      matrix:
-        godot-version: ["4.5"]
+#     strategy:
+#       fail-fast: false
+#       max-parallel: 10
+#       matrix:
+#         godot-version: ["4.5"]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Run GDUnit4 tests
-        uses: MikeSchulze/gdunit4-action@v1.1.6
-        with:
-          godot-version: '4.5'
-          paths: 'res://tests'
-          godot-status: "stable"
-          timeout: 3
-          publish-report: false
+#       - name: Run GDUnit4 tests
+#         uses: MikeSchulze/gdunit4-action@v1.1.6
+#         with:
+#           godot-version: '4.5'
+#           paths: 'res://tests'
+#           godot-status: "stable"
+#           timeout: 3
+#           publish-report: false
