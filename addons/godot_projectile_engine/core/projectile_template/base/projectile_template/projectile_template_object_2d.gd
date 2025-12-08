@@ -1,0 +1,2 @@
+extends ProjectileTemplate2D
+class_name ProjectileTemplateObject2D

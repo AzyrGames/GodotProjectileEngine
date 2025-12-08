@@ -3,6 +3,10 @@ class_name ProjectileInstanceAdvanced2D
 
 
 var base_speed: float
+var base_rotation: float
+var base_scale: Vector2
+var base_skew: float
+
 var speed_max: float
 var speed_acceleration: float
 var direction_rotation_speed: float

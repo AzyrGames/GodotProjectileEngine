@@ -8,7 +8,7 @@ Manages pooling and lifecycle of [ProjectileNode2D](/manual/projectile_template_
 | Projectile Template | `projectile_template_2d` | `ProjectileTemplate2D` | Associated template configuration |
 | Node Array | `projectile_node_array` | `Array[Projectile2D]` | Pooled node instances |
 | Active Nodes | `active_nodes` | `Array[Projectile2D]` | Currently active projectiles |
-| Max Pooling | `projectile_max_pooling` | `int` | Maximum pooled instances |
+| Max Pooling | `projectile_pooling_amount` | `int` | Maximum pooled instances |
 
 ## Key Methods
 - `setup_projectile_manager()` - Initializes pooling system from template

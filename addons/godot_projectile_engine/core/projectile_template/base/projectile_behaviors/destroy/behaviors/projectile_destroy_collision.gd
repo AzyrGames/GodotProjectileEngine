@@ -56,8 +56,8 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 		if !_behavior_owner.monitorable or !_behavior_owner.monitoring:
 			return false
 		if destroy_on_area_collide:
-			if _behavior_owner.has_overlapping_areas():
-				for _overlap_area in _behavior_owner.get_overlapping_areas():
+			if _behavior_owner.hasprojectile_overlapping_areas():
+				for _overlap_area in _behavior_owner.getprojectile_overlapping_areas():
 					if not _overlap_area.collision_layer & _behavior_owner.collision_mask:
 						continue
 					if wait_projectile_piercing:
@@ -94,8 +94,8 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 
 					return true
 		if destroy_on_body_collide:
-			if _behavior_owner.has_overlapping_bodies():
-				for _overlap_body in _behavior_owner.get_overlapping_bodies():
+			if _behavior_owner.hasprojectile_overlapping_bodies():
+				for _overlap_body in _behavior_owner.getprojectile_overlapping_bodies():
 					var _overlap_body_collision_layer : int = ProjectileEngine.get_collider_collision_layer(_overlap_body)
 					if not _overlap_body_collision_layer & _behavior_owner.collision_mask:
 						continue
@@ -136,10 +136,10 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 	if _behavior_owner is ProjectileInstance2D:
 		if destroy_on_area_collide:
 			_projectile_updater = _behavior_owner.projectile_updater
-			if _projectile_updater.has_overlapping_areas(_behavior_owner.area_index):
-				for _overlap_area in _projectile_updater.get_overlapping_areas(_behavior_owner.area_index):
+			if _projectile_updater.hasprojectile_overlapping_areas(_behavior_owner.area_index):
+				for _overlap_area in _projectile_updater.getprojectile_overlapping_areas(_behavior_owner.area_index):
 					if !_overlap_area:
-						_projectile_updater.get_overlapping_areas(_behavior_owner.area_index).erase(_overlap_area)
+						_projectile_updater.getprojectile_overlapping_areas(_behavior_owner.area_index).erase(_overlap_area)
 						continue
 					_overlap_area_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_area)
 					if not _overlap_area_collision_layer & _projectile_updater.projectile_collision_mask:
@@ -179,10 +179,10 @@ func process_behavior(_value, _context: Dictionary) -> bool:
 					return true
 
 		if destroy_on_body_collide:
-			if _projectile_updater.has_overlapping_bodies(_behavior_owner.area_index):
-				for _overlap_body in _projectile_updater.get_overlapping_bodies(_behavior_owner.area_index):
+			if _projectile_updater.hasprojectile_overlapping_bodies(_behavior_owner.area_index):
+				for _overlap_body in _projectile_updater.getprojectile_overlapping_bodies(_behavior_owner.area_index):
 					if !_overlap_body:
-						_projectile_updater.get_overlapping_bodies(_behavior_owner.body_index).erase(_overlap_body)
+						_projectile_updater.getprojectile_overlapping_bodies(_behavior_owner.body_index).erase(_overlap_body)
 						continue
 					_overlap_body_collision_layer = ProjectileEngine.get_collider_collision_layer(_overlap_body)
 					if not _overlap_body_collision_layer & _projectile_updater.projectile_collision_mask:

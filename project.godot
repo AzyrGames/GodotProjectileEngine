@@ -21,6 +21,8 @@ ProjectileEngine="*res://addons/godot_projectile_engine/GodotProjectileEngine.gd
 [debug]
 
 gdscript/warnings/untyped_declaration=2
+gdscript/warnings/unsafe_property_access=2
+gdscript/warnings/unsafe_method_access=2
 
 [display]
 
@@ -35,7 +37,6 @@ enabled=PackedStringArray("res://addons/godot_projectile_engine/plugin.cfg", "re
 settings/test/test_lookup_folder="tests"
 ui/inspector/tree_view_mode=1
 ui/toolbar/run_overall=true
-report/godot/push_error=true
 hooks/session_hooks=Dictionary[String, bool]({
 "res://addons/gdUnit4/src/core/hooks/GdUnitHtmlReporterTestSessionHook.gd": false,
 "res://addons/gdUnit4/src/core/hooks/GdUnitXMLReporterTestSessionHook.gd": false

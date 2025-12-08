@@ -5,7 +5,7 @@ class_name ProjectileNodeManager2D
 var projectile_template_2d : ProjectileTemplate2D
 
 var projectile_pooling_index : int = 0
-var projectile_max_pooling : int
+var projectile_pooling_amount : int
 
 var projectile_node_array : Array[Projectile2D]
 var active_nodes : Array[Projectile2D]
@@ -40,12 +40,12 @@ func setup_projectile_manager() -> void:
 
 
 func create_projectile_pool() -> void:
-	projectile_max_pooling = projectile_template_2d.projectile_pooling_amount
+	projectile_pooling_amount = projectile_template_2d.projectile_pooling_amount
 	projectile_node_array.clear()
 	if projectile_template_2d.projectile_pooling_amount <= 0:
-		projectile_max_pooling = -1
+		projectile_pooling_amount = -1
 		return
-	for _index in projectile_max_pooling:
+	for _index in projectile_pooling_amount:
 		_projectile_node_2d = projectile_node_2d_packedscene.instantiate()
 		_projectile_node_2d.projectile_template_2d = projectile_template_2d
 		_projectile_node_2d.projectile_node_manager = self
@@ -65,7 +65,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 	if !_is_valid_projectile_node_2d:
 		push_warning("ProjectileNode2D is not vailid")
 		return
-	if projectile_max_pooling > 0:
+	if projectile_pooling_amount > 0:
 		for _pattern_composer_data : PatternComposerData in pattern_composer_pack:
 			_projectile_node_2d = projectile_node_array[projectile_pooling_index]
 			_projectile_node_2d.projectile_template_2d = projectile_template_2d
@@ -80,7 +80,7 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 			_projectile_node_2d.setup_projectile_2d()
 
 			projectile_pooling_index += 1
-			if projectile_pooling_index >= projectile_max_pooling:
+			if projectile_pooling_index >= projectile_pooling_amount:
 				projectile_pooling_index = 0
 	
 			active_nodes.append(_projectile_node_2d)
