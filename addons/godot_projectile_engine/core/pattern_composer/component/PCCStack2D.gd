@@ -1,7 +1,8 @@
-## Projectile Pattern Component
 @icon("uid://hhcp20t33vtb")
 extends PatternComposerComponent
 class_name PCCStack2D
+## Stack Projectile with current direction
+
 
 @export var stack_amount: int = 3
 @export var stack_distance: float = 15.0
@@ -14,10 +15,7 @@ class_name PCCStack2D
 var _offset_distance: Vector2
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if stack_amount_random != Vector3i.ZERO:
 		stack_amount = ProjectileEngine.get_random_int_value(stack_amount_random)
 	if stack_distance_random != Vector3.ZERO:

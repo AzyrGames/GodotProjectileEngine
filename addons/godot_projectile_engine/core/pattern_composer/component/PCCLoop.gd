@@ -14,10 +14,7 @@ var _new_sub_pattern_composer_data: Array[PatternComposerData]
 func _physics_process(delta: float) -> void:
 	pass
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData], 
-	_pattern_composer_context : PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if !active: return _pattern_composer_pack
 
 	_new_pattern_composer_pack.clear()
@@ -28,7 +25,7 @@ func process_pattern(
 			if pattern_component is not PatternComposerComponent: continue
 			if !pattern_component.active: continue 
 			_new_sub_pattern_composer_data = pattern_component.process_pattern(
-				_new_sub_pattern_composer_data, _pattern_composer_context
+				_new_sub_pattern_composer_data
 				)
 		_new_pattern_composer_pack.append_array(_new_sub_pattern_composer_data)
 	return _new_pattern_composer_pack

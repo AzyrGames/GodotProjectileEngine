@@ -12,7 +12,7 @@ An Global Autoload for Godot Projectile Engine. Acts as the Singleton of the God
 ### 1. Manager Registries
 - `projectile_updater_2d_nodes`: Tracks all active ProjectileUpdater2D instances
 - `projectile_node_manager_2d_nodes`: Manages ProjectileNodeManager2D instances
-- `projectile_composer_nodes`: Stores PatternComposer2D nodes
+- `pattern_composer_nodes`: Stores PatternComposer2D nodes
 - `projectile_wrapper_2d_nodes`: Keeps track of ProjectileWrapper2D nodes
 
 ### 2. Enum Configurations

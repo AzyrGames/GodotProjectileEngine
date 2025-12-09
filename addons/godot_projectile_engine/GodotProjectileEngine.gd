@@ -120,7 +120,7 @@ var projectile_boundary_2d : ProjectileBoundary2D
 
 var projectile_wrapper_2d_nodes : Dictionary[String, Array]
 
-var projectile_composer_nodes : Dictionary[String, PatternComposer2D]
+var pattern_composer_nodes : Dictionary[String, PatternComposer2D]
 
 var projectile_updater_2d_nodes : Dictionary[RID, ProjectileUpdater2D]
 var projectile_node_manager_2d_nodes : Dictionary[ProjectileTemplate2D, ProjectileNodeManager2D]
@@ -164,6 +164,16 @@ func get_projectile_instance(area_rid: RID, area_shape_index: int) -> Projectile
 	return _projectile_updater_2d_node.projectile_instances[area_shape_index]
 	pass
 
+## Get Pattern Composer node with the corepsonding Pattern Composer's name
+func get_pattern_composer(_pattern_composer_name: String = "") -> PatternComposer2D:
+	if _pattern_composer_name == "":
+		print_debug("Pattern Composer name is empty")
+		return null
+	if !pattern_composer_nodes.has(_pattern_composer_name):
+		print_debug(_pattern_composer_name + " - is not a existing Pattern Composer name")
+		return null
+	return pattern_composer_nodes.get(_pattern_composer_name)
+
 ## Count all active Projectiles
 func get_active_projectile_count() -> int:
 	return get_active_projectile_instance_count() + get_active_projectile_node_count()
@@ -198,7 +208,7 @@ func refresh_projectile_engine() -> void:
 	projectile_boundary_2d = null
 	projectile_updater_2d_nodes.clear()
 	projectile_node_manager_2d_nodes.clear()
-	projectile_composer_nodes.clear()
+	pattern_composer_nodes.clear()
 	pass
 
 
@@ -211,7 +221,6 @@ func clear_all_projectiles() -> void:
 
 ## Clear all ProjectileInstances
 func clear_projectile_instances() -> void:
-	print(projectile_updater_2d_nodes)
 	for _projectile_udpater_node : ProjectileUpdater2D in projectile_updater_2d_nodes.values():
 		if is_instance_valid(_projectile_udpater_node):
 			_projectile_udpater_node.clear_projectiles()
@@ -220,7 +229,6 @@ func clear_projectile_instances() -> void:
 
 ## Clear all ProjectileNode2Ds
 func clear_projectile_nodes() -> void:
-	print(projectile_node_manager_2d_nodes)
 	for _projectile_node_manager : ProjectileNodeManager2D in projectile_node_manager_2d_nodes.values():
 		if is_instance_valid(_projectile_node_manager):
 			_projectile_node_manager.clear_projectiles()
