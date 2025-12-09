@@ -54,7 +54,7 @@ var projectile_behaviors: Array[ProjectileBehavior] = []
 func update_updater_variables() -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
 	projectile_instance_callable = Callable(ProjectileInstanceCustom2D, "new")
-	
+	projectile_custom_data = projectile_template_2d.custom_data
 	projectile_behaviors = []
 	projectile_behaviors.append_array(projectile_template_2d.speed_projectile_behaviors)
 	projectile_behaviors.append_array(projectile_template_2d.direction_projectile_behaviors)

@@ -16,7 +16,6 @@
 script = ExtResource("5_hqtxl")
 projectile_2d_path = &"res://addons/godot_projectile_engine/examples/assets/projectile_node/example_projectile_node_2d_basic.tscn"
 projectile_pooling_amount = 100
-custom_data = []
 metadata/_custom_type_script = "uid://drg85m51aqbj7"
 
 [node name="Example1FirstProjectile" type="Node2D"]
@@ -30,8 +29,8 @@ metadata/_custom_type_script = "uid://dn7rm61wq3t3s"
 [node name="ProjectileSpawner2D" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
 position = Vector2(-192, -96)
 script = ExtResource("2_hqtxl")
-projectile_composer_name = "pattern_single_1"
 projectile_template_2d = ExtResource("3_6ng22")
+projectile_composer_name = "pattern_single_1"
 timing_scheduler = NodePath("../TimingScheduler")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
@@ -39,8 +38,8 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawner2D2" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
 position = Vector2(-192, -32)
 script = ExtResource("2_hqtxl")
-projectile_composer_name = "pattern_single_1"
 projectile_template_2d = ExtResource("4_xtu64")
+projectile_composer_name = "pattern_single_1"
 timing_scheduler = NodePath("../TimingScheduler")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
@@ -48,8 +47,9 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawner2D3" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
 position = Vector2(-192, 32)
 script = ExtResource("2_hqtxl")
-projectile_composer_name = "pattern_single_1"
+active = false
 projectile_template_2d = ExtResource("5_s46se")
+projectile_composer_name = "pattern_single_1"
 timing_scheduler = NodePath("../TimingScheduler")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"
@@ -57,8 +57,8 @@ metadata/_custom_type_script = "uid://cnqgcej10tinn"
 [node name="ProjectileSpawner2D4" type="Node2D" parent="." node_paths=PackedStringArray("timing_scheduler", "audio_stream")]
 position = Vector2(-192, 96)
 script = ExtResource("2_hqtxl")
-projectile_composer_name = "pattern_single_1"
 projectile_template_2d = SubResource("Resource_rogq1")
+projectile_composer_name = "pattern_single_1"
 timing_scheduler = NodePath("../TimingScheduler")
 audio_stream = NodePath("../AudioStreamPlayer")
 metadata/_custom_type_script = "uid://cnqgcej10tinn"

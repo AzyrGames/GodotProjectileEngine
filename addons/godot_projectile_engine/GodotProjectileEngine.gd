@@ -144,6 +144,15 @@ func _ready() -> void:
 	pass
 
 
+func get_updater_node(_projectile_template: ProjectileTemplate2D) -> ProjectileUpdater2D:
+	if !_projectile_template.get("projectile_area_rid"):
+		return null
+	if !projectile_updater_2d_nodes.has(_projectile_template.projectile_area_rid):
+		return null
+	if !is_instance_valid(projectile_updater_2d_nodes.get(_projectile_template.projectile_area_rid)):
+		return null
+	return projectile_updater_2d_nodes.get(_projectile_template.projectile_area_rid)
+
 func get_projectile_instance(area_rid: RID, area_shape_index: int) -> ProjectileInstance2D:
 	if !projectile_updater_2d_nodes.has(area_rid):
 		return null
@@ -154,7 +163,6 @@ func get_projectile_instance(area_rid: RID, area_shape_index: int) -> Projectile
 		return null
 	return _projectile_updater_2d_node.projectile_instances[area_shape_index]
 	pass
-
 
 ## Count all active Projectiles
 func get_active_projectile_count() -> int:

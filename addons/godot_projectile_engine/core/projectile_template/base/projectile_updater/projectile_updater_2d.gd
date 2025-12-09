@@ -47,7 +47,6 @@ var _projectile_instance: ProjectileInstance2D
 
 
 func _ready() -> void:
-	print("setup Projectile Updater")
 	setup_projectile_updater()
 
 
@@ -73,6 +72,7 @@ func setup_projectile_updater() -> void:
 
 func update_updater_variables() -> void:
 	# projectile_template_2d = projectile_template_2d as ProjectileTemplateObject2D
+	projectile_custom_data = projectile_template_2d.custom_data
 	projectile_pooling_amount = projectile_template_2d.projectile_pooling_amount
 	projectile_speed = projectile_template_2d.speed
 
