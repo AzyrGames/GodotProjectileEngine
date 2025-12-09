@@ -12,7 +12,7 @@ Base class for all pattern composer components. These components define specific
 
 ## Components
 - [PCCCustomShape2D](#pcccustomshape2d)
-- [PCCPolygon2D](#pccpolygon2d)
+- [PCCCircle2D](#pccCircle2D)
 - [PCCLoop](#pccloop)
 - [PCCShape2D](#pccshape2d)
 - [PCCSingle2D](#pccsingle2d)
@@ -31,7 +31,7 @@ Generates positions based on a Curve2D resource:
 | Reset Per Spawn | `reset_per_spawn` | bool | Reset point index per spawn |
 | Uniform Distance | `uniform_distance` | float | Distance between points |
 
-### PCCPolygon2D
+### PCCCircle2D
 Creates polygon-shaped patterns:
 
 | Name | Variable Name | Variable Types | Descriptions |

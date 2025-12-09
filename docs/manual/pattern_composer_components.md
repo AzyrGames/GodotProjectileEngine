@@ -2,7 +2,7 @@
 ## Components
 - [PCCCustomShape2D](#pcccustomshape2d)
 - [PCCGroup](#pccgroup)
-- [PCCPolygon2D](#pccpolygon2d)
+- [PCCCircle2D](#pccCircle2D)
 - [PCCLoop](#pccloop)
 - [PCCShape2D](#pccshape2d)
 - [PCCSingle2D](#pccsingle2d)
@@ -22,8 +22,8 @@ The `PCCCustomShape2D` component generates projectile positions based on a Curve
 | Uniform Distance | uniform_distance | float | Distance between points for uniform sampling |
 ## PCCGroup
 The `PCCGroup` component groups other PatternComposerComponent nodes together. It extends the `PatternComposerComponent` class and processes each child component in sequence.
-## PCCPolygon2D
-The `PCCPolygon2D` component generates projectile positions in a polygon shape.
+## PCCCircle2D
+The `PCCCircle2D` component generates projectile positions in a polygon shape.
 
 | Name | Variable Name | Variable Types | Descriptions |
 |------|---------------|----------------|--------------|

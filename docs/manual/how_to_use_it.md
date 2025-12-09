@@ -55,7 +55,7 @@ For your first projectile pattern, we will create a classic spinning bullet patt
         -   Set the `rotation_speed` to `17`.
         -   Set the `rotation_process_mode` to `Ticks`.
         -   This node will now rotate 17 degrees every time a new pattern is spawned (i.e., every tick).
-    2.  Create a new child `PPCPolygon2D` Node.
+    2.  Create a new child `PPCCircle2D` Node.
         -   Set the `polygon_sides` to `7`.
 -   Save the current scene.
 -   Run the scene. If everything goes correctly, you will see your first spinning projectile pattern.
