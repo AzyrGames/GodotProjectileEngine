@@ -22,10 +22,7 @@ var _polygon_points_cache: PackedVector2Array = PackedVector2Array()
 var _perimeter_lengths_cache: PackedFloat32Array = PackedFloat32Array()
 var _total_perimeter_cache: float = 0.0
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	_new_pattern_composer_pack.clear()
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()

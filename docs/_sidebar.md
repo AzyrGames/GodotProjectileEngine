@@ -35,7 +35,7 @@
   - [<img src="assets/icons/icons_pcc_polygon.svg"> **Pattern Composer Overview**](manual/pattern_composer.md)
     - [<img src="assets/icons/icons_projectile_updater.svg"> PatternComposer2D](manual/pattern_composer_2d.md)
     - [<img src="assets/icons/icons_projectile_updater.svg"> PatternComposerComponent](manual/pattern_composer_component.md)
-    - [<img src="assets/icons/icons_projectile_updater.svg">  PatternComposerData](manual/pattern_composer_data.md)
+    - [<img src="assets/icons/icons_projectile_updater.svg">  PatternComposerData](manual/pattern_composer_context_data.md)
     <!-- - [Pattern Composer Components](manual/pattern_composer_components.md) -->
 
 - [Contribute](contributing.md)

@@ -24,10 +24,7 @@ enum SpreadType {
 @export var spread_angle_random: Vector3
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if spread_amount_random != Vector3i.ZERO:
 		spread_amount = ProjectileEngine.get_random_int_value(spread_amount_random)
 	if spread_distance_random != Vector3.ZERO:
@@ -89,10 +86,3 @@ func _add_projectile_hybrid_spread(_pattern_composer_data: PatternComposerData) 
 		_new_pattern_composer_data.position += (_new_pattern_composer_data.direction * _offset_distance)
 		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
 	return _new_sub_pattern_composer_data
-
-
-#func _deg_to_dir(deg: float) -> Vector2:
-#	var radian_angle := deg_to_rad(deg)
-#	var x := cos(radian_angle)
-#	var y := sin(radian_angle)
-#	return Vector2(x, y)

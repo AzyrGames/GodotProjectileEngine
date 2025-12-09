@@ -14,7 +14,7 @@ enum ShapeSampleMethod {
 @export var shape_sample_method: ShapeSampleMethod = ShapeSampleMethod.POINTS
 @export var point_per_spawn: int = 1
 @export var reset_per_spawn: bool = false
-@export var uniform_distance: float = 10.0:  # Distance between points for uniform sampling
+@export var uniform_distance: float = 10.0: # Distance between points for uniform sampling
 	set(value):
 		uniform_distance = value
 		_uniform_points_cache.clear()
@@ -33,8 +33,7 @@ var _new_sub_pattern_composer_data: Array[PatternComposerData]
 
 
 func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
+	_pattern_composer_pack: Array[PatternComposerData]
 ) -> Array[PatternComposerData]:
 	_new_pattern_composer_pack.clear()
 	
@@ -272,7 +271,7 @@ func _get_uniform_distance_points() -> PackedVector2Array:
 	# Generate points at uniform distances
 	var current_distance := 0.0
 	var target_distance := 0.0
-	var safety_counter := 1000  # Prevent infinite loops
+	var safety_counter := 1000 # Prevent infinite loops
 	
 	while target_distance < total_length && safety_counter > 0:
 		safety_counter -= 1
