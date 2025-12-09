@@ -14,7 +14,7 @@ signal projectile_spawned(_projectile_template: ProjectileTemplate2D)
 		else:
 			deactive_projectile_spanwer()
 @export var projectile_template_2d: ProjectileTemplate2D
-@export var projectile_composer_name: String
+@export var pattern_composer_name: String
 @export var timing_scheduler: TimingScheduler
 @export var use_spawn_markers: bool = false
 @export_group("Audio")
@@ -47,19 +47,9 @@ func _ready() -> void:
 
 
 func activate_projectile_spawner() -> void:
-	setup_projectile_spawner()
 	connect_timing_scheduler()
 	pass
 
-
-func setup_projectile_spawner() -> void:
-	projectile_composer = ProjectileEngine.projectile_composer_nodes.get(projectile_composer_name)
-	if !projectile_composer:
-		print_debug(projectile_composer_name + " PatternComposer ID is not valid")
-		return
-	if typeof(projectile_template_2d) != TYPE_OBJECT:
-		return
-	
 
 func spawn_pattern() -> void:
 	if !active: return
@@ -67,22 +57,14 @@ func spawn_pattern() -> void:
 		print_debug("No Projectile Environment")
 		return
 
-	if !pattern_composer_context:
-		pattern_composer_context = PatternComposerContext.new()
-	pattern_composer_context.projectile_spawner = self
-	pattern_composer_context.use_spawn_markers = use_spawn_markers
-	pattern_composer_context.position = global_position
-	pattern_composer_context.projectile_template_2d = projectile_template_2d
-	if use_spawn_markers:
-		pattern_composer_context.projectile_spawn_markers = projectile_spawn_markers
-	else:
-		pattern_composer_context.projectile_spawn_markers.clear()
-
 	if typeof(projectile_template_2d) != TYPE_OBJECT:
+		print_debug("Projectile template is not Valid")
 		return
 
+	setup_pattern_composer_context()
+
 	if !projectile_composer:
-		setup_projectile_spawner()
+		projectile_composer = ProjectileEngine.get_pattern_composer(pattern_composer_name)
 
 	play_audio()
 
@@ -93,17 +75,14 @@ func spawn_pattern() -> void:
 	elif projectile_updater_2d != _check_projectile_updater:
 		projectile_updater_2d = _check_projectile_updater
 
+	_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
 	match projectile_template_2d.get_script():
 		ProjectileTemplateNode2D:
-			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
 			projectile_node_manager_2d.spawn_projectile_pattern(_pattern_composer_pack)
 			projectile_spawned.emit(projectile_template_2d)
-		_:
-			_pattern_composer_pack = projectile_composer.request_pattern(pattern_composer_context)
+		ProjectileTemplateSimple2D, ProjectileTemplateAdvanced2D, ProjectileTemplateCustom2D:
 			projectile_updater_2d.spawn_projectile_pattern(_pattern_composer_pack)
 			projectile_spawned.emit(projectile_template_2d)
-
-		## built-in classes don't have a script
 		null:
 			return
 	pass
@@ -188,6 +167,21 @@ func create_projectile_node_manager_2d() -> void:
 			projectile_template_2d, projectile_node_manager_2d
 			)
 	projectile_node_manager_2d.setup_projectile_manager()
+	pass
+
+
+func setup_pattern_composer_context() -> void:
+	if !pattern_composer_context:
+		pattern_composer_context = PatternComposerContext.new()
+
+	pattern_composer_context.projectile_spawner = self
+	pattern_composer_context.use_spawn_markers = use_spawn_markers
+	pattern_composer_context.position = global_position
+	pattern_composer_context.projectile_template_2d = projectile_template_2d
+	if use_spawn_markers:
+		pattern_composer_context.projectile_spawn_markers = projectile_spawn_markers
+	else:
+		pattern_composer_context.projectile_spawn_markers.clear()
 	pass
 
 
