@@ -10,7 +10,7 @@ class_name PCCSingle2D
 enum DirectionType {
 	INHERIT, ## Use the current ProjectileSpawner direction
 	FIXED, ## Overwrite the direction with [param fixed_direction]
-	TARGET_GROUP, ## 
+	TARGET_GROUP, ##
 	MOUSE, ## Direction from ProjectileSpawner to the mouse position
 }
 
@@ -31,7 +31,7 @@ var _request_tick: bool = false
 ## Group node selection method 
 @export var group_selection: ProjectileEngine.TargetGroupSelection
 ## Direction Rotation as degrees
-@export_range(-360, 360, 0.1, "radians_as_degrees","suffix:°") var direction_rotation: float = 0
+@export_range(-360, 360, 0.1, "radians_as_degrees", "suffix:°") var direction_rotation: float = 0
 
 ## Direction Rotation Speed as degrees
 @export var rotation_speed: float = 0
@@ -63,7 +63,6 @@ func _ready() -> void:
 
 
 func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
-	
 	_new_pattern_composer_pack = []
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()

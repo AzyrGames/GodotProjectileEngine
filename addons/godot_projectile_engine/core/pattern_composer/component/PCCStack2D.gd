@@ -1,7 +1,8 @@
-## Projectile Pattern Component
 @icon("uid://hhcp20t33vtb")
 extends PatternComposerComponent
 class_name PCCStack2D
+## Stack Projectile with current direction
+
 
 @export var stack_amount: int = 3
 @export var stack_distance: float = 15.0

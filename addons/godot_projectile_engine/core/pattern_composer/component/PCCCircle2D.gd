@@ -36,10 +36,14 @@ func _add_projectile_circle(_pattern_composer_data: PatternComposerData) -> Arra
 	for i in range(circle_point):
 		_new_pattern_composer_data = _pattern_composer_data.duplicate()
 		_theta = PI * 2 / circle_point * i
-		_point_position = _pattern_composer_data.position + \
+		_point_position = (
+			_pattern_composer_data.position +
 			radius * Vector2.from_angle(
-				_theta + _pattern_composer_data.direction.angle() + \
-				_pattern_composer_data.direction_rotation)
+				_theta +
+				_pattern_composer_data.direction.angle() +
+				_pattern_composer_data.direction_rotation
+				)
+		)
 		_new_pattern_composer_data.position = _point_position
 		
 		if spread_out:

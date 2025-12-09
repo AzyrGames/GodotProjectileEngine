@@ -86,10 +86,3 @@ func _add_projectile_hybrid_spread(_pattern_composer_data: PatternComposerData) 
 		_new_pattern_composer_data.position += (_new_pattern_composer_data.direction * _offset_distance)
 		_new_sub_pattern_composer_data.append(_new_pattern_composer_data)
 	return _new_sub_pattern_composer_data
-
-
-#func _deg_to_dir(deg: float) -> Vector2:
-#	var radian_angle := deg_to_rad(deg)
-#	var x := cos(radian_angle)
-#	var y := sin(radian_angle)
-#	return Vector2(x, y)
