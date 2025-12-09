@@ -18,10 +18,7 @@ var _point_direction_rotation: float
 var _new_polygon_composer_data: Array[PatternComposerData] = []
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if radius_random != Vector3.ZERO:
 		radius = ProjectileEngine.get_random_float_value(radius_random)
 	if polygon_sides_random != Vector3i.ZERO:

@@ -62,10 +62,7 @@ func _ready() -> void:
 		rotation_speed = ProjectileEngine.get_random_float_value(rotation_speed_random)
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	
 	_new_pattern_composer_pack = []
 	for _pattern_composer_data: PatternComposerData in _pattern_composer_pack:

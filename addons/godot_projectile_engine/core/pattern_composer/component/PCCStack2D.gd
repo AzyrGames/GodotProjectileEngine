@@ -14,10 +14,7 @@ class_name PCCStack2D
 var _offset_distance: Vector2
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if stack_amount_random != Vector3i.ZERO:
 		stack_amount = ProjectileEngine.get_random_int_value(stack_amount_random)
 	if stack_distance_random != Vector3.ZERO:

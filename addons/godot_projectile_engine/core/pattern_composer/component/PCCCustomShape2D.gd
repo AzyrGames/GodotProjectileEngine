@@ -33,8 +33,7 @@ var _new_sub_pattern_composer_data: Array[PatternComposerData]
 
 
 func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
+	_pattern_composer_pack: Array[PatternComposerData]
 ) -> Array[PatternComposerData]:
 	_new_pattern_composer_pack.clear()
 	

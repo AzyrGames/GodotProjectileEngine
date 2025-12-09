@@ -56,7 +56,6 @@ func request_pattern(_pattern_composer_context: PatternComposerContext) -> Array
 	# Init new PatternComposerContext slot in pattern composer data if not exist
 	if !pattern_composer_context_data.has(_pattern_composer_context):
 		pattern_composer_context_data[_pattern_composer_context] = [] as Array[PatternComposerData]
-	print(pattern_composer_context_data)
 
 	if check_using_projecitle_spawn_maker(_pattern_composer_context):
 		update_projectile_spawn_makers(_pattern_composer_context)
@@ -73,7 +72,7 @@ func get_pattern(_pattern_composer_context: PatternComposerContext) -> void:
 	for pattern_component in get_children():
 		if pattern_component is not PatternComposerComponent: continue
 		if !pattern_component.active: continue
-		_new_pattern_composer_pack = pattern_component.process_pattern(_new_pattern_composer_pack, _pattern_composer_context)
+		_new_pattern_composer_pack = pattern_component.process_pattern(_new_pattern_composer_pack)
 	pass
 
 ## Check if using marker and atleast one of the marker is active
@@ -90,7 +89,6 @@ func update_single_spawner(_pattern_composer_context: PatternComposerContext) ->
 	# Warning that use spawn maker but no active ProjectileSpawnMarker2D was found
 	if _pattern_composer_context.use_spawn_markers:
 		push_warning("No active ProjectileSpawnMarker2D was found! Fallback to use ProjectileSpawner2D position")
-	print(pattern_composer_context_data)
 	var _pattern_composer_data: Array[PatternComposerData] = pattern_composer_context_data.get(_pattern_composer_context)
 
 	# Remove the projectile_spawn_marker data

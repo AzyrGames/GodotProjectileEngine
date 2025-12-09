@@ -24,10 +24,7 @@ enum SpreadType {
 @export var spread_angle_random: Vector3
 
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData],
-	_pattern_composer_context: PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	if spread_amount_random != Vector3i.ZERO:
 		spread_amount = ProjectileEngine.get_random_int_value(spread_amount_random)
 	if spread_distance_random != Vector3.ZERO:

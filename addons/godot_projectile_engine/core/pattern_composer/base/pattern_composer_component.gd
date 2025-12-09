@@ -8,10 +8,7 @@ class_name PatternComposerComponent
 var _new_pattern_composer_pack: Array[PatternComposerData]
 var _new_pattern_composer_data: PatternComposerData
 
-func process_pattern(
-	_pattern_composer_pack: Array[PatternComposerData], 
-	_pattern_composer_context : PatternComposerContext
-	) -> Array:
+func process_pattern(_pattern_composer_pack: Array[PatternComposerData]) -> Array:
 	return _pattern_composer_pack
 
 
