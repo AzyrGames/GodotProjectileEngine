@@ -35,5 +35,5 @@ enum ProcessMode {
 # 	return []
 
 ## Processes the behavior and returns modified values
-func process_behavior(_active_p_instances: Array[ProjectileInstance2D], _delta: float) -> void:
+func process_behavior(_values: Array, _delta: float):
 	pass

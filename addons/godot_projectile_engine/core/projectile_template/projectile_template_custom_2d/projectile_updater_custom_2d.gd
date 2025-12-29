@@ -182,7 +182,15 @@ func update_projectile_instances(_delta: float) -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
 	
 	if projectile_template_2d.speed_projectile_behaviors:
-		projectile_template_2d.speed_projectile_behaviors.process_behavior(_active_projectile_instances, _delta)
+		var _speed_values : Array
+		for _active_projectile_instance in _active_projectile_instances:
+			_speed_values.append(_active_projectile_instance.speed)
+		var _new_speed_values : Array = projectile_template_2d.speed_projectile_behaviors.process_behavior(_speed_values, _delta)
+		for _speed_index in _new_speed_values.size():
+			if _new_speed_values[_speed_index] != _speed_values[_speed_index]:
+				_active_projectile_instances[_speed_index].last_speed = _speed_values[_speed_index]
+				_active_projectile_instances[_speed_index].speed = _new_speed_values[_speed_index]
+
 	for _active_projectile_instance in _active_projectile_instances:
 		var _velocity_delta: Vector2
 		if _active_projectile_instance.last_speed != _active_projectile_instance.speed:

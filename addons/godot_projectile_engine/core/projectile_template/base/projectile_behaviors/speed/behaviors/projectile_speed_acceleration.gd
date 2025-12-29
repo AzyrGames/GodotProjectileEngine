@@ -11,12 +11,13 @@ class_name ProjectileSpeedAcceleration
 
 ## Processes speed behavior by applying acceleration
 
-func process_behavior(_active_p_instances: Array[ProjectileInstance2D], _delta: float) -> void:
-	for _active_p_instance in _active_p_instances:
-		_active_p_instance.last_speed = _active_p_instance.speed
-		if _active_p_instance.speed >= max_speed: 
+func process_behavior(_values: Array, _delta: float) -> Array:
+	var _new_values : Array = _values.duplicate()
+	for _index in _new_values.size():
+		if _new_values[_index] is not float: continue
+		if _new_values[_index] >= max_speed: 
 			continue
-		_active_p_instance.speed = move_toward(
-		_active_p_instance.speed, max_speed, acceleration_speed * _delta
+		_new_values[_index] = move_toward(
+		_new_values[_index], max_speed, acceleration_speed * _delta
 		)
-	pass
+	return _new_values
