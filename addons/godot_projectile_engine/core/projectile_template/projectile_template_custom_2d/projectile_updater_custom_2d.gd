@@ -52,29 +52,31 @@ var _behavior_contest_requests_persist: Array[ProjectileEngine.BehaviorContext]
 var projectile_behaviors: Array[ProjectileBehavior] = []
 
 func update_updater_variables() -> void:
+	super ()
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
 	projectile_instance_callable = Callable(ProjectileInstanceCustom2D, "new")
 	projectile_custom_data = projectile_template_2d.custom_data
-	projectile_behaviors = []
-	projectile_behaviors.append_array(projectile_template_2d.speed_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.direction_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.rotation_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.texture_scale_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.destroy_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.bouncing_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.piercing_projectile_behaviors)
-	projectile_behaviors.append_array(projectile_template_2d.trigger_projectile_behaviors)
+# 	projectile_behaviors = []
+# 	projectile_behaviors.append_array(projectile_template_2d.speed_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.direction_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.rotation_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.texture_scale_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.destroy_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.bouncing_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.piercing_projectile_behaviors)
+# 	projectile_behaviors.append_array(projectile_template_2d.trigger_projectile_behaviors)
 	
-	for _projectile_behavior in projectile_behaviors:
-		if !_projectile_behavior: continue
-		if !_projectile_behavior.active: continue
-		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
-		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
+# 	for _projectile_behavior in projectile_behaviors:
+# 		if !_projectile_behavior: continue
+# 		if !_projectile_behavior.active: continue
+# 		_behavior_context_requests_normal.append_array(_projectile_behavior._request_behavior_context())
+# 		_behavior_contest_requests_persist.append_array(_projectile_behavior._request_persist_behavior_context())
 
 #region Spawn Projectile
 
 func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData]) -> void:
 	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
+	# print(projectile_instances)
 	for _pattern_composer_data: PatternComposerData in pattern_composer_pack:
 		_projectile_instance = projectile_instances[projectile_pooling_index]
 		_projectile_instance = _projectile_instance as ProjectileInstanceCustom2D
@@ -124,6 +126,9 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		_projectile_instance.base_texture_rotation = _projectile_instance.texture_rotation
 		_projectile_instance.base_scale = _projectile_instance.texture_scale
 
+		RS.canvas_item_set_visible(_projectile_instance.canvas_item_rid, true)
+		RS.canvas_item_set_transform(_projectile_instance.canvas_item_rid, _projectile_instance.transform_2d)
+
 		if projectile_template_2d.collision_shape:
 			PS.area_set_shape_transform(
 				projectile_area_rid,
@@ -150,124 +155,18 @@ func spawn_projectile_pattern(pattern_composer_pack: Array[PatternComposerData])
 		if projectile_pooling_index >= projectile_pooling_amount:
 			projectile_pooling_index = 0
 
-	update_projectile_instances(get_physics_process_delta_time())
+	# update_projectile_instances(get_physics_process_delta_time())
 #endregion
 
 
-#region Update Projectile
+# region Update Projectile
 
-func update_projectile_instances(delta: float) -> void:
-	# Check for projectile destroy condition
+func update_projectile_instances(_delta: float) -> void:
+	## Check destroy condition
 	for index: int in projectile_active_indexes:
 		_projectile_instance = projectile_instances[index]
-
-		_projectile_instance.behavior_context.clear()
-		_projectile_instance.behavior_update_context.clear()
-
-		process_behavior_context_request(
-			_projectile_instance.behavior_update_context,
-			_projectile_instance,
-			_behavior_context_requests_normal
-			)
-
-		for behavior_persist_context_key in _projectile_instance.behavior_persist_context.keys():
-			if !_projectile_instance.behavior_persist_context.has(behavior_persist_context_key):
-				_projectile_instance.behavior_persist_context.erase(behavior_persist_context_key)
-
-		process_behavior_context_request(
-			_projectile_instance.behavior_persist_context,
-			_projectile_instance,
-			_behavior_contest_requests_persist
-			)
-
-		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_update_context, true)
-		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_persist_context, true)
-
-		_projectile_instance.life_time_second += delta
-		_projectile_instance.life_distance += _projectile_instance.velocity.length()
-
-		# Refresh Projectile Behavior Array Process
-		for _behavior_key in _projectile_instance.behavior_context.keys():
-			if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-				continue
-			for _behavior_variable in _projectile_instance.behavior_context.get(_behavior_key):
-				if _behavior_variable is not BehaviorVariable: continue
-				_behavior_variable.is_processed = false
-
-		# Projectile Trigger Behaviors
-		if projectile_template_2d.trigger_projectile_behaviors.size() > 0:
-			for _trigger_behavior in projectile_template_2d.trigger_projectile_behaviors:
-				if !_trigger_behavior:
-					continue
-				if !_trigger_behavior.active:
-					continue
-				var _trigger_behavior_values: Dictionary = _trigger_behavior.process_behavior(
-					null, _projectile_instance.behavior_context
-					)
-				if _trigger_behavior_values.has("is_trigger"):
-					if _trigger_behavior_values.is_trigger:
-						ProjectileEngine.projectile_instance_triggered.emit(
-							_trigger_behavior.trigger_name, _projectile_instance
-							)
-				if _trigger_behavior_values.has("is_destroy"):
-					if _trigger_behavior_values.is_destroy:
-						projectile_remove_indexes.append(index)
-						continue
-
-		# Projectile Piercing Behaviors
-		for _projectile_behavior in projectile_template_2d.piercing_projectile_behaviors:
-			if !_projectile_behavior:
-				continue
-			if !_projectile_behavior.active:
-				continue
-
-			var _piercing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
-				null, _projectile_instance.behavior_context
-				)
-
-			if _piercing_behavior_values.size() <= 0:
-				continue
-			if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
-				ProjectileEngine.projectile_instance_pierced.emit(
-					_projectile_instance,
-					_piercing_behavior_values.get("pierced_node")
-					)
-
-		# Projectile Bouncing Behaviors
-		for _projectile_behavior in projectile_template_2d.bouncing_projectile_behaviors:
-			if !_projectile_behavior:
-				continue
-			if !_projectile_behavior.active:
-				continue
-
-			var projectile_bouncing_helper = ProjectileEngine.projectile_environment.projectile_bouncing_helper
-
-			if projectile_bouncing_helper == null:
-				ProjectileEngine.projectile_environment.request_bouncing_helper(
-					projectile_collision_shape
-					)
-				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.projectile_collision_layer
-				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.projectile_collision_mask
-
-			var _bouncing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
-				null, _projectile_instance.behavior_context
-				)
-			if _bouncing_behavior_values.size() <= 0:
-				continue
-			if _bouncing_behavior_values.has("is_bouncing"): # and _bouncing_behavior_values.has(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE):
-				_projectile_instance.direction = _bouncing_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE)
-				pass
-
-		# Projectile Destroy Behaviors
-		for _projectile_behavior in projectile_template_2d.destroy_projectile_behaviors:
-			if !_projectile_behavior:
-				continue
-			if !_projectile_behavior.active:
-				continue
-
-			if _projectile_behavior.process_behavior(null, _projectile_instance.behavior_context):
-				projectile_remove_indexes.append(index)
-
+		if _projectile_instance.life_time_second > 60:
+			projectile_remove_indexes.append(index)
 
 	# Destroy projectile
 	if projectile_remove_indexes.size() > 0:
@@ -276,6 +175,149 @@ func update_projectile_instances(delta: float) -> void:
 			if projectile_template_2d.collision_shape:
 				PS.area_set_shape_disabled(projectile_area_rid, index, true)
 		projectile_remove_indexes.clear()
+
+	var _active_projectile_instances: Array[ProjectileInstance2D]
+	for _index in projectile_active_indexes:
+		_active_projectile_instances.append(projectile_instances[_index])
+	projectile_template_2d = projectile_template_2d as ProjectileTemplateCustom2D
+	
+	if projectile_template_2d.speed_projectile_behaviors:
+		projectile_template_2d.speed_projectile_behaviors.process_behavior(_active_projectile_instances, _delta)
+	for _active_projectile_instance in _active_projectile_instances:
+		var _velocity_delta: Vector2
+		if _active_projectile_instance.last_speed != _active_projectile_instance.speed:
+			var _new_velocity: Vector2 = _active_projectile_instance.speed * _active_projectile_instance.direction * _delta
+			_velocity_delta = _new_velocity - _active_projectile_instance.velocity
+			_active_projectile_instance.velocity += _velocity_delta
+		if _active_projectile_instance.velocity != Vector2.ZERO:
+			_active_projectile_instance.global_position += _active_projectile_instance.velocity
+			_active_projectile_instance.transform_2d = _active_projectile_instance.transform_2d.translated(_active_projectile_instance.velocity)
+			RS.canvas_item_set_transform(
+				_active_projectile_instance.canvas_item_rid,
+				_active_projectile_instance.transform_2d
+				)
+
+
+# func update_projectile_instances(delta: float) -> void:
+# 	# Check for projectile destroy condition
+# 	for index: int in projectile_active_indexes:
+# 		_projectile_instance = projectile_instances[index]
+
+# 		_projectile_instance.behavior_context.clear()
+# 		_projectile_instance.behavior_update_context.clear()
+
+# 		process_behavior_context_request(
+# 			_projectile_instance.behavior_update_context,
+# 			_projectile_instance,
+# 			_behavior_context_requests_normal
+# 			)
+
+# 		for behavior_persist_context_key in _projectile_instance.behavior_persist_context.keys():
+# 			if !_projectile_instance.behavior_persist_context.has(behavior_persist_context_key):
+# 				_projectile_instance.behavior_persist_context.erase(behavior_persist_context_key)
+
+# 		process_behavior_context_request(
+# 			_projectile_instance.behavior_persist_context,
+# 			_projectile_instance,
+# 			_behavior_contest_requests_persist
+# 			)
+
+# 		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_update_context, true)
+# 		_projectile_instance.behavior_context.merge(_projectile_instance.behavior_persist_context, true)
+
+# 		_projectile_instance.life_time_second += delta
+# 		_projectile_instance.life_distance += _projectile_instance.velocity.length()
+
+# 		# Refresh Projectile Behavior Array Process
+# 		for _behavior_key in _projectile_instance.behavior_context.keys():
+# 			if _behavior_key != ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+# 				continue
+# 			for _behavior_variable in _projectile_instance.behavior_context.get(_behavior_key):
+# 				if _behavior_variable is not BehaviorVariable: continue
+# 				_behavior_variable.is_processed = false
+
+# 		# Projectile Trigger Behaviors
+# 		if projectile_template_2d.trigger_projectile_behaviors.size() > 0:
+# 			for _trigger_behavior in projectile_template_2d.trigger_projectile_behaviors:
+# 				if !_trigger_behavior:
+# 					continue
+# 				if !_trigger_behavior.active:
+# 					continue
+# 				var _trigger_behavior_values: Dictionary = _trigger_behavior.process_behavior(
+# 					null, _projectile_instance.behavior_context
+# 					)
+# 				if _trigger_behavior_values.has("is_trigger"):
+# 					if _trigger_behavior_values.is_trigger:
+# 						ProjectileEngine.projectile_instance_triggered.emit(
+# 							_trigger_behavior.trigger_name, _projectile_instance
+# 							)
+# 				if _trigger_behavior_values.has("is_destroy"):
+# 					if _trigger_behavior_values.is_destroy:
+# 						projectile_remove_indexes.append(index)
+# 						continue
+
+# 		# Projectile Piercing Behaviors
+# 		for _projectile_behavior in projectile_template_2d.piercing_projectile_behaviors:
+# 			if !_projectile_behavior:
+# 				continue
+# 			if !_projectile_behavior.active:
+# 				continue
+
+# 			var _piercing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
+# 				null, _projectile_instance.behavior_context
+# 				)
+
+# 			if _piercing_behavior_values.size() <= 0:
+# 				continue
+# 			if _piercing_behavior_values.has("is_piercing") and _piercing_behavior_values.has("pierced_node"):
+# 				ProjectileEngine.projectile_instance_pierced.emit(
+# 					_projectile_instance,
+# 					_piercing_behavior_values.get("pierced_node")
+# 					)
+
+# 		# Projectile Bouncing Behaviors
+# 		for _projectile_behavior in projectile_template_2d.bouncing_projectile_behaviors:
+# 			if !_projectile_behavior:
+# 				continue
+# 			if !_projectile_behavior.active:
+# 				continue
+
+# 			var projectile_bouncing_helper = ProjectileEngine.projectile_environment.projectile_bouncing_helper
+
+# 			if projectile_bouncing_helper == null:
+# 				ProjectileEngine.projectile_environment.request_bouncing_helper(
+# 					projectile_collision_shape
+# 					)
+# 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_layer = self.projectile_collision_layer
+# 				ProjectileEngine.projectile_environment.projectile_bouncing_helper.collision_mask = self.projectile_collision_mask
+
+# 			var _bouncing_behavior_values: Dictionary = _projectile_behavior.process_behavior(
+# 				null, _projectile_instance.behavior_context
+# 				)
+# 			if _bouncing_behavior_values.size() <= 0:
+# 				continue
+# 			if _bouncing_behavior_values.has("is_bouncing"): # and _bouncing_behavior_values.has(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE):
+# 				_projectile_instance.direction = _bouncing_behavior_values.get(ProjectileEngine.DirectionModify.DIRECTION_OVERWRITE)
+# 				pass
+
+# 		# Projectile Destroy Behaviors
+# 		for _projectile_behavior in projectile_template_2d.destroy_projectile_behaviors:
+# 			if !_projectile_behavior:
+# 				continue
+# 			if !_projectile_behavior.active:
+# 				continue
+
+# 			if _projectile_behavior.process_behavior(null, _projectile_instance.behavior_context):
+# 				projectile_remove_indexes.append(index)
+
+
+# 	# Destroy projectile
+# 	if projectile_remove_indexes.size() > 0:
+# 		for index: int in projectile_remove_indexes:
+# 			projectile_active_indexes.erase(index)
+# 			if projectile_template_2d.collision_shape:
+# 				PS.area_set_shape_disabled(projectile_area_rid, index, true)
+# 		projectile_remove_indexes.clear()
 	
 	# ## Update Active Projectile Instances
 	# for _active_projectile_instance: ProjectileInstanceCustom2D in _active_projectile_instances:
@@ -495,56 +537,56 @@ func update_projectile_behavior_context() -> void:
 	pass
 
 
-func process_behavior_context_request(
-	_behavior_context: Dictionary,
-	projectile_instance: ProjectileInstanceCustom2D,
-	_behavior_context_requests: Array[ProjectileEngine.BehaviorContext]
-	) -> void:
-	for _behavior_context_request in _behavior_context_requests:
-		match _behavior_context_request:
-			ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
-				_behavior_context.get_or_add(_behavior_context_request, get_physics_process_delta_time())
+# func process_behavior_context_request(
+# 	_behavior_context: Dictionary,
+# 	projectile_instance: ProjectileInstanceCustom2D,
+# 	_behavior_context_requests: Array[ProjectileEngine.BehaviorContext]
+# 	) -> void:
+# 	for _behavior_context_request in _behavior_context_requests:
+# 		match _behavior_context_request:
+# 			ProjectileEngine.BehaviorContext.PHYSICS_DELTA:
+# 				_behavior_context.get_or_add(_behavior_context_request, get_physics_process_delta_time())
 
-			ProjectileEngine.BehaviorContext.GLOBAL_POSITION:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.global_position)
+# 			ProjectileEngine.BehaviorContext.GLOBAL_POSITION:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.global_position)
 
-			ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER:
-				_behavior_context.get_or_add(_behavior_context_request, projectile_instance)
+# 			ProjectileEngine.BehaviorContext.BEHAVIOR_OWNER:
+# 				_behavior_context.get_or_add(_behavior_context_request, projectile_instance)
 
-			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_time_second)
+# 			ProjectileEngine.BehaviorContext.LIFE_TIME_SECOND:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_time_second)
 
-			ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_distance)
+# 			ProjectileEngine.BehaviorContext.LIFE_DISTANCE:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.life_distance)
 
-			ProjectileEngine.BehaviorContext.BASE_SPEED:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_speed)
+# 			ProjectileEngine.BehaviorContext.BASE_SPEED:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_speed)
 
-			ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
-				_behavior_context.get_or_add(_behavior_context_request, [])
+# 			ProjectileEngine.BehaviorContext.ARRAY_VARIABLE:
+# 				_behavior_context.get_or_add(_behavior_context_request, [])
 
-			ProjectileEngine.BehaviorContext.DIRECTION:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction)
+# 			ProjectileEngine.BehaviorContext.DIRECTION:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction)
 
-			ProjectileEngine.BehaviorContext.DIRECTION_ROTATION:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction_rotation)
+# 			ProjectileEngine.BehaviorContext.DIRECTION_ROTATION:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.direction_rotation)
 
-			ProjectileEngine.BehaviorContext.BASE_DIRECTION:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_direction)
+# 			ProjectileEngine.BehaviorContext.BASE_DIRECTION:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.base_direction)
 
-			ProjectileEngine.BehaviorContext.ROTATION:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.texture_rotation)
+# 			ProjectileEngine.BehaviorContext.ROTATION:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.texture_rotation)
 
-			ProjectileEngine.BehaviorContext.BASE_SCALE:
-				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.texture_scale)
+# 			ProjectileEngine.BehaviorContext.BASE_SCALE:
+# 				_behavior_context.get_or_add(_behavior_context_request, _projectile_instance.texture_scale)
 
-			ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
-				var _rng_array := []
-				_rng_array.append(RandomNumberGenerator.new())
-				_rng_array.append(false)
-				_behavior_context.get_or_add(_behavior_context_request, _rng_array)
-			_:
-				pass
-	return
+# 			ProjectileEngine.BehaviorContext.RANDOM_NUMBER_GENERATOR:
+# 				var _rng_array := []
+# 				_rng_array.append(RandomNumberGenerator.new())
+# 				_rng_array.append(false)
+# 				_behavior_context.get_or_add(_behavior_context_request, _rng_array)
+# 			_:
+# 				pass
+# 	return
 
 #endregion

@@ -90,11 +90,11 @@ func update_updater_variables() -> void:
 	projectile_collision_layer = projectile_template_2d.collision_layer
 	projectile_collision_mask = projectile_template_2d.collision_mask
 
-	projectile_life_time_second_max = projectile_template_2d.life_time_second_max
-	projectile_life_distance_max = projectile_template_2d.life_distance_max
+	# projectile_life_time_second_max = projectile_template_2d.life_time_second_max
+	# projectile_life_distance_max = projectile_template_2d.life_distance_max
 
-	destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
-	destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
+	# destroy_on_body_collide = projectile_template_2d.destroy_on_body_collide
+	# destroy_on_area_collide = projectile_template_2d.destroy_on_area_collide
 	pass
 
 

@@ -5,6 +5,6 @@ class_name ProjectileBehaviorBouncing
 
 var _bouncing_behavior_values : Dictionary
 
-func process_behavior(_value, _context: Dictionary) -> Dictionary:
-	return {}
+# func process_behavior(_value, _context: Dictionary) -> Dictionary:
+# 	return {}
 

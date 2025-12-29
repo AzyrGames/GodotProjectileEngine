@@ -8,10 +8,11 @@ var area_rid: RID
 var area_index: int
 var canvas_item_rid: RID
 
+# var base_speed: float
 var speed: float
+var last_speed: float
 var direction: Vector2 = Vector2.RIGHT
 var direction_rotation: float = 0
-
 var velocity: Vector2 = Vector2.ZERO
 
 var transform_2d: Transform2D
